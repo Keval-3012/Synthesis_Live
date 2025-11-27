@@ -71,5 +71,8 @@ namespace Repository.IRepository
         List<SalesDataModel> GetNetSalesData(DateTime startdate, DateTime enddate, string storeids);
         List<GroupWiseStateStore> ViewBagGroupId(int UserId);
         List<int> GetStoreBySelectedGroupId(int? GroupID, int UserId);
+        int GetUserGroupWiseStateStoreId(int UserId);
+        List<int> GetUserAccessibleStores(int UserId);
+
     }
 }

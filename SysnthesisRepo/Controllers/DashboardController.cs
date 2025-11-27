@@ -78,7 +78,10 @@ namespace SysnthesisRepo.Controllers
                     {
                         //Db class is Check Error by usertype id and StoreID.
                         var Roles = _DashboardRepository.CheckError(UserTypeId, StoreID);
-                        if (!Roles.Contains("ViewDashboardDailyDashboard"))
+                        // Check if user has accessible stores through GroupWiseStateStore
+                        var accessibleStores = _DashboardRepository.GetUserAccessibleStores(UserId);
+                        // Allow access if user has ViewDashboardDailyDashboard role OR has accessible stores
+                        if (!Roles.Contains("ViewDashboardDailyDashboard") && accessibleStores.Count == 0)
                         {
                             return View("~/Views/Shared/Error.cshtml");
                             //goto Exit;
@@ -98,6 +101,21 @@ namespace SysnthesisRepo.Controllers
                 if (StateId == null)
                 {
                     StateId = 0;
+                }
+
+                // If All Stores selected (StoreID = 0) and no GroupID specified, use user's GroupWiseStateStoreId
+                if (StoreID == 0 && (GroupID == null || GroupID == 0))
+                {
+                    var userGroupId = _DashboardRepository.GetUserAccessibleStores(UserId);
+                    if (userGroupId.Count > 0)
+                    {
+                        // Get the user's GroupWiseStateStoreId to filter data
+                        var userGroupWiseId = _DashboardRepository.GetUserGroupWiseStateStoreId(UserId);
+                        if (userGroupWiseId > 0)
+                        {
+                            GroupID = userGroupWiseId;
+                        }
+                    }
                 }
 
                 //Using this db class get startdate.
@@ -150,6 +168,9 @@ namespace SysnthesisRepo.Controllers
             DashboardDaily obj = new DashboardDaily();
             try
             {
+                var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+                var UserId = _CommonRepository.getUserId(UserName);
+
                 string StoreID = "0";
                 if (Session["storeid"] != null)
                 {
@@ -167,6 +188,22 @@ namespace SysnthesisRepo.Controllers
                 {
                     GroupID = 0;
                 }
+
+                // If All Stores selected (StoreID = "0") and no GroupID specified, use user's GroupWiseStateStoreId
+                if (StoreID == "0" && GroupID == 0)
+                {
+                    var userGroupId = _DashboardRepository.GetUserAccessibleStores(UserId);
+                    if (userGroupId.Count > 0)
+                    {
+                        // Get the user's GroupWiseStateStoreId to filter data
+                        var userGroupWiseId = _DashboardRepository.GetUserGroupWiseStateStoreId(UserId);
+                        if (userGroupWiseId > 0)
+                        {
+                            GroupID = userGroupWiseId;
+                        }
+                    }
+                }
+
                 ViewBag.Startdate = date;
                 //Get Dashboard Daily data.
                 obj = _DashboardRepository.getDashboardDailyData(date, StoreID, StateId, GroupID);
@@ -183,6 +220,9 @@ namespace SysnthesisRepo.Controllers
             DashboardDaily obj = new DashboardDaily();
             try
             {
+                var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+                var UserId = _CommonRepository.getUserId(UserName);
+
                 if (StateId == null)
                 {
                     StateId = 0;
@@ -196,6 +236,22 @@ namespace SysnthesisRepo.Controllers
                 {
                     StoreID = StoreId;
                 }
+
+                // If All Stores selected (StoreID = "0") and no GroupID specified, use user's GroupWiseStateStoreId
+                if (StoreID == "0" && GroupID == 0)
+                {
+                    var userGroupId = _DashboardRepository.GetUserAccessibleStores(UserId);
+                    if (userGroupId.Count > 0)
+                    {
+                        // Get the user's GroupWiseStateStoreId to filter data
+                        var userGroupWiseId = _DashboardRepository.GetUserGroupWiseStateStoreId(UserId);
+                        if (userGroupWiseId > 0)
+                        {
+                            GroupID = userGroupWiseId;
+                        }
+                    }
+                }
+
                 ViewBag.Startdate = date;
                 //Get Dashboard Daily data.
                 obj = _DashboardRepository.getDashboardDailyData(date, StoreID, StateId,GroupID);

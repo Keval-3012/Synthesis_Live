@@ -72,15 +72,17 @@ namespace SysnthesisRepo.Controllers
                     StoreID = Convert.ToInt32(Convert.ToString(Session["storeid"]));
                 }
                 ViewBag.Storeidvalue = StoreID;
+
+                // Get user's accessible stores from UserRoles table
+                List<int> accessibleStores = _DashboardRepository.GetUserAccessibleStoresByUserType(UserTypeId);
+
                 if (UserTypeId != 1)
                 {
                     if (StoreID == 0)
                     {
                         //Db class is Check Error by usertype id and StoreID.
                         var Roles = _DashboardRepository.CheckError(UserTypeId, StoreID);
-                        // Check if user has accessible stores through GroupWiseStateStore
-                        var accessibleStores = _DashboardRepository.GetUserAccessibleStores(UserId);
-                        // Allow access if user has ViewDashboardDailyDashboard role OR has accessible stores
+                        // Allow access if user has ViewDashboardDailyDashboard role OR has accessible stores from UserRoles
                         if (!Roles.Contains("ViewDashboardDailyDashboard") && accessibleStores.Count == 0)
                         {
                             return View("~/Views/Shared/Error.cshtml");
@@ -103,26 +105,18 @@ namespace SysnthesisRepo.Controllers
                     StateId = 0;
                 }
 
-                // If All Stores selected (StoreID = 0) and no GroupID specified, use user's GroupWiseStateStoreId
-                if (StoreID == 0 && (GroupID == null || GroupID == 0))
-                {
-                    var userGroupId = _DashboardRepository.GetUserAccessibleStores(UserId);
-                    if (userGroupId.Count > 0)
-                    {
-                        // Get the user's GroupWiseStateStoreId to filter data
-                        var userGroupWiseId = _DashboardRepository.GetUserGroupWiseStateStoreId(UserId);
-                        if (userGroupWiseId > 0)
-                        {
-                            GroupID = userGroupWiseId;
-                        }
-                    }
-                }
-
                 //Using this db class get startdate.
                 var Startdate = _DashboardRepository.Startdate(StoreID);
                 ViewBag.Startdate = Startdate;
                 //Get Dashboard Daily Details using Startdate,storeId and StateId.
                 obj = _DashboardRepository.Dashboard_Daily(Startdate, StoreID, StateId, GroupID);
+
+                // Filter store list to show only accessible stores when All Stores is selected
+                if (StoreID == 0 && accessibleStores.Count > 0 && obj.StoreList != null)
+                {
+                    obj.StoreList = obj.StoreList.Where(s => s.Id == 0 || accessibleStores.Contains(s.Id)).ToList();
+                }
+
                 //List<DailyDashboardXML> dailyDashboardXML = new List<DailyDashboardXML>();
                 //for (int i = 0; i < 24; i++)
                 //{
@@ -170,6 +164,7 @@ namespace SysnthesisRepo.Controllers
             {
                 var UserName = System.Web.HttpContext.Current.User.Identity.Name;
                 var UserId = _CommonRepository.getUserId(UserName);
+                var UserTypeId = _CommonRepository.getUserTypeId(UserName);
 
                 string StoreID = "0";
                 if (Session["storeid"] != null)
@@ -189,24 +184,18 @@ namespace SysnthesisRepo.Controllers
                     GroupID = 0;
                 }
 
-                // If All Stores selected (StoreID = "0") and no GroupID specified, use user's GroupWiseStateStoreId
-                if (StoreID == "0" && GroupID == 0)
-                {
-                    var userGroupId = _DashboardRepository.GetUserAccessibleStores(UserId);
-                    if (userGroupId.Count > 0)
-                    {
-                        // Get the user's GroupWiseStateStoreId to filter data
-                        var userGroupWiseId = _DashboardRepository.GetUserGroupWiseStateStoreId(UserId);
-                        if (userGroupWiseId > 0)
-                        {
-                            GroupID = userGroupWiseId;
-                        }
-                    }
-                }
+                // Get user's accessible stores from UserRoles table
+                List<int> accessibleStores = _DashboardRepository.GetUserAccessibleStoresByUserType(UserTypeId);
 
                 ViewBag.Startdate = date;
                 //Get Dashboard Daily data.
                 obj = _DashboardRepository.getDashboardDailyData(date, StoreID, StateId, GroupID);
+
+                // Filter store list to show only accessible stores when All Stores is selected
+                if (StoreID == "0" && accessibleStores.Count > 0 && obj.StoreList != null)
+                {
+                    obj.StoreList = obj.StoreList.Where(s => s.Id == 0 || accessibleStores.Contains(s.Id)).ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -222,6 +211,7 @@ namespace SysnthesisRepo.Controllers
             {
                 var UserName = System.Web.HttpContext.Current.User.Identity.Name;
                 var UserId = _CommonRepository.getUserId(UserName);
+                var UserTypeId = _CommonRepository.getUserTypeId(UserName);
 
                 if (StateId == null)
                 {
@@ -237,24 +227,18 @@ namespace SysnthesisRepo.Controllers
                     StoreID = StoreId;
                 }
 
-                // If All Stores selected (StoreID = "0") and no GroupID specified, use user's GroupWiseStateStoreId
-                if (StoreID == "0" && GroupID == 0)
-                {
-                    var userGroupId = _DashboardRepository.GetUserAccessibleStores(UserId);
-                    if (userGroupId.Count > 0)
-                    {
-                        // Get the user's GroupWiseStateStoreId to filter data
-                        var userGroupWiseId = _DashboardRepository.GetUserGroupWiseStateStoreId(UserId);
-                        if (userGroupWiseId > 0)
-                        {
-                            GroupID = userGroupWiseId;
-                        }
-                    }
-                }
+                // Get user's accessible stores from UserRoles table
+                List<int> accessibleStores = _DashboardRepository.GetUserAccessibleStoresByUserType(UserTypeId);
 
                 ViewBag.Startdate = date;
                 //Get Dashboard Daily data.
                 obj = _DashboardRepository.getDashboardDailyData(date, StoreID, StateId,GroupID);
+
+                // Filter store list to show only accessible stores when All Stores is selected
+                if (StoreID == "0" && accessibleStores.Count > 0 && obj.StoreList != null)
+                {
+                    obj.StoreList = obj.StoreList.Where(s => s.Id == 0 || accessibleStores.Contains(s.Id)).ToList();
+                }
             }
             catch (Exception ex)
             {

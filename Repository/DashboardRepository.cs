@@ -54,6 +54,56 @@ namespace Repository
             return list;
         }
 
+        /// <summary>
+        /// Check if user has accessible stores through GroupWiseStateStore
+        /// </summary>
+        /// <param name="UserId">User ID</param>
+        /// <returns>List of accessible store IDs</returns>
+        public List<int> GetUserAccessibleStores(int UserId)
+        {
+            List<int> accessibleStores = new List<int>();
+            try
+            {
+                var GroupId = _context.UserMasters.Where(s => s.UserId == UserId).Select(s => s.GroupWiseStateStoreId).FirstOrDefault();
+                if (GroupId != null && GroupId > 0)
+                {
+                    var storenames = _context.GroupWiseStateStores.Where(s => s.GroupWiseStateStoreId == GroupId).Select(s => s.StoreName).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(storenames))
+                    {
+                        accessibleStores = storenames.Split(',').Select(s => int.Parse(s.Trim())).ToList();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("DashboardRepository - GetUserAccessibleStores - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return accessibleStores;
+        }
+
+        /// <summary>
+        /// Get user's GroupWiseStateStoreId
+        /// </summary>
+        /// <param name="UserId">User ID</param>
+        /// <returns>GroupWiseStateStoreId</returns>
+        public int GetUserGroupWiseStateStoreId(int UserId)
+        {
+            int groupWiseStateStoreId = 0;
+            try
+            {
+                var GroupId = _context.UserMasters.Where(s => s.UserId == UserId).Select(s => s.GroupWiseStateStoreId).FirstOrDefault();
+                if (GroupId != null && GroupId > 0)
+                {
+                    groupWiseStateStoreId = GroupId.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("DashboardRepository - GetUserGroupWiseStateStoreId - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return groupWiseStateStoreId;
+        }
+
         public string Startdate(int StoreID)
         {
             string startdt = "";

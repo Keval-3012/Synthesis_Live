@@ -55,53 +55,27 @@ namespace Repository
         }
 
         /// <summary>
-        /// Check if user has accessible stores through GroupWiseStateStore
+        /// Get accessible stores from UserRoles table by UserTypeId
         /// </summary>
-        /// <param name="UserId">User ID</param>
+        /// <param name="UserTypeId">UserType ID</param>
         /// <returns>List of accessible store IDs</returns>
-        public List<int> GetUserAccessibleStores(int UserId)
+        public List<int> GetUserAccessibleStoresByUserType(int UserTypeId)
         {
             List<int> accessibleStores = new List<int>();
             try
             {
-                var GroupId = _context.UserMasters.Where(s => s.UserId == UserId).Select(s => s.GroupWiseStateStoreId).FirstOrDefault();
-                if (GroupId != null && GroupId > 0)
-                {
-                    var storenames = _context.GroupWiseStateStores.Where(s => s.GroupWiseStateStoreId == GroupId).Select(s => s.StoreName).FirstOrDefault();
-                    if (!string.IsNullOrEmpty(storenames))
-                    {
-                        accessibleStores = storenames.Split(',').Select(s => int.Parse(s.Trim())).ToList();
-                    }
-                }
+                // Get distinct store IDs from UserRoles table for this UserTypeId
+                accessibleStores = _context.userRoles
+                    .Where(s => s.UserTypeId == UserTypeId && s.StoreId != null && s.StoreId > 0)
+                    .Select(s => s.StoreId.Value)
+                    .Distinct()
+                    .ToList();
             }
             catch (Exception ex)
             {
-                logger.Error("DashboardRepository - GetUserAccessibleStores - " + DateTime.Now + " - " + ex.Message.ToString());
+                logger.Error("DashboardRepository - GetUserAccessibleStoresByUserType - " + DateTime.Now + " - " + ex.Message.ToString());
             }
             return accessibleStores;
-        }
-
-        /// <summary>
-        /// Get user's GroupWiseStateStoreId
-        /// </summary>
-        /// <param name="UserId">User ID</param>
-        /// <returns>GroupWiseStateStoreId</returns>
-        public int GetUserGroupWiseStateStoreId(int UserId)
-        {
-            int groupWiseStateStoreId = 0;
-            try
-            {
-                var GroupId = _context.UserMasters.Where(s => s.UserId == UserId).Select(s => s.GroupWiseStateStoreId).FirstOrDefault();
-                if (GroupId != null && GroupId > 0)
-                {
-                    groupWiseStateStoreId = GroupId.Value;
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error("DashboardRepository - GetUserGroupWiseStateStoreId - " + DateTime.Now + " - " + ex.Message.ToString());
-            }
-            return groupWiseStateStoreId;
         }
 
         public string Startdate(int StoreID)

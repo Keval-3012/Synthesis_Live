@@ -1,0 +1,1009 @@
+﻿@using EntityModels.Models
+@model EntityModels.Models.SplitInvoice
+@using Utility;
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+<script type="text/javascript" src='~/Content/Admin/js/bootstrap.file-input.js'></script>
+<link href="~/Content/Admin/assets/css/SplitInvoice.css" rel="stylesheet" />
+
+<style>
+    .loading-containers {
+        z-index: 200000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.8)url(../img/white_trans.png) repeat left top !important;
+    }
+
+        .loading-containers .loaders {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            -webkit-animation: typing 1s linear infinite alternate;
+            -moz-animation: Typing 1s linear infinite alternate;
+            animation: typing 1s linear infinite alternate;
+            margin: 50vh auto;
+            position: relative;
+            left: -12px;
+        }
+
+    .checkbox-editor-field {
+        display: inline-flex;
+    }
+
+    .chkstore {
+        margin-top: 2%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .chkstoreinput {
+        width: 20px;
+    }
+
+    .percentagewidth {
+        width: 70px;
+    }
+</style>
+
+<style>
+    .InvoiceTool {
+        cursor: pointer;
+        color: #0c9dcc;
+        font-weight: 600;
+        background: rgba(0,0,0,0.1);
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="animate-panelmessesgarea padbtmzero">
+
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Success1")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('@ViewBag.CreateIn');
+        </script>
+    }
+
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+    {
+        <script>
+
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.CreateInApprove');
+
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Success2")
+    {
+        <script>
+
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.SentApprove');
+
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "DepartmentError")
+    {
+        <script>
+
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.error('@ViewBag.LeastOnedep');
+
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Delete")
+    {
+        <script>
+            MyfunSuccess();
+        </script>
+    }
+
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Error")
+    {
+        <script>
+            MyfunError();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Exists")
+    {
+        <script>
+            showpopupnew();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Existence")
+    {
+        <script>
+            showpopupExist();
+        </script>
+    }
+
+    @if (Convert.ToString(ViewBag.StatusMessage) == "InvalidPDFSize")
+    {
+        <script>
+            InvalidPDFSize();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "InvalidFile")
+    {
+        <script>
+            InvalidPDFSize();
+        </script>
+    }
+</div>
+
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+
+<div class="header-small special_bg">
+    <h3>Add Split Invoice </h3>
+</div>
+
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+<div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+    <div class="row">
+        <input type="hidden" id="CurrentDate" value="@ViewBag.CurrentDate" />
+        <div class="col-md-6 col-sm-6 leftpart">
+            @if (!String.IsNullOrEmpty(Model.UploadInvoice))
+            {
+                @Html.HiddenFor(model => model.UploadPdfAutomationId)
+                <div hidden>
+                    <div class="input_edite uplaodpdfbox">
+                        @Html.TextBoxFor(model => model.UploadInvoice, new { type = "file" })
+                        @Html.HiddenFor(s => s.UploadInvoice)
+                        <div data-provides="fileupload">
+                            <span id="spaninvoice">
+                            </span>
+                        </div>
+                        <div class="clear"></div>
+                    </div><div class="clear"></div>
+                    <div class="invoiceimage min_height10"></div>
+                </div>
+
+                <div class="pdf_popup_area">
+                    @if (!string.IsNullOrEmpty(Model.UploadInvoice))
+                    {
+                        string filePath = Model.UploadInvoice;
+
+                        if (filePath.Contains(@"\") || filePath.Contains("/"))
+                        {
+                            <iframe src="~/UserFiles/Automatic-Invoice-File/@Model.UploadInvoice" frameborder="0" width="100%" height="1000" id="ifrm"></iframe>
+                        }
+                        else
+                        {
+                            <iframe src="~/UserFiles/BulkUploadFile/@Model.UploadInvoice" frameborder="0" width="100%" height="1000" id="ifrm"></iframe>
+                        }
+                    }
+                </div>
+                <div class="clear"></div>
+            }
+            else
+            {
+                <div>
+                    <div class="invoiceimage paddnone0"></div>
+                    <div class="uploadscanbutton">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <span class="btn btn-file" id="spaninvoice">
+                                <span class="fileupload-new"> <span class="btnbox btnupload"> <img src="~/Content/Admin/images/icon_pdfblack.png" alt="" class="blackicon" /> <img src="~/Content/Admin/images/icon_pdfwhite.png" alt="" class="whiteicon" /> <span>Upload Pdf</span> </span> </span> <span class="fileupload-exists">Change</span>
+                                @Html.Hidden("flagaddnew")
+
+                                @Html.TextBoxFor(model => model.UploadInvoice, new { type = "file" })
+
+                            </span><span class="fileupload-preview" id="spnvalue"></span> <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none" id="aclose">×</a>
+                            @Html.ValidationMessageFor(model => model.UploadInvoice)
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            }
+            <div id="popupDepartment" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Department</div>
+                    <div class="modal-body ">Enter at least In One Department Amount.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="popupAMountCheck" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Split Invoice Amount Mismatch</div>
+                    <div class="modal-body ">Total of selected store's invoice amount(s) mismatch with total invoice amount.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupidext" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">PDF</div>
+                    <div class="modal-body ">Please upload only pdf files.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">PDF</div>
+                    <div class="modal-body ">Please import the scanned document before you save the Invoice.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupSize" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Invalid PDF Size</div>
+                    <div class="modal-body ">File Size is too Big.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupStoreid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Invoice</div>
+                    <div class="modal-body ">Please select the store for add Invoice.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupExists" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content ">
+                    <div class="modal-header text-center">
+                        <button type="button" onclick="Duplicatepopupclose()" class="close">&times;</button>
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Duplicate found</div>
+                    <div class="modal-body ">This invoice already exists in the database.</div>
+                    <div class="modal-footer " style="text-align:center">
+                        <input type="hidden" id="hndinvoiceid" />
+                        <a data-dismiss="modal" onclick="" id="hrefopeninvoice" onclose="Setvalues();" href="@Url.Action("Details", "Invoices", new { Id = ViewBag.invoiceid })" target="_blank" class="btn">Open Invoice</a>
+                        <a onclick="Duplicatepopupclose()" class="btn" data-dismiss="modal">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupcheckExistsagain" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content duplicatedata">
+                    <div class="modal-header text-center">
+                        <button type="button" onclick="SubDuplicatepopupclose()" class="close">&times;</button>
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Potential Duplicate</div>
+                    <div class="modal-body ">
+                        Another invoice already exists with this number.
+                        <div style="text-align:center" id="divdisplayduplicateinvoice">
+                        </div>
+                    </div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a dat-dismiss="modal" onclick="DisableKeepandSave()" class="btn" data-dismiss="modal" id="btnPopupKeepandSave">Keep and Save</a>
+                        <a onclick="SubDuplicatepopupclose()" href="@Url.Action("Index", "Invoices")" class="btn" data-dismiss="modal">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div id="popupDisplayduplicateinvoice" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                <div class="modal-content duplicatedata">
+                    <div class="modal-header text-center">
+                        <button type="button" onclick="" class="close">&times;</button>
+                        <i class="glyphicon glyphicon-fire"></i>
+                    </div>
+                    <div class="modal-title">Duplicate found</div>
+                    <div class="modal-body ">
+                        This invoice already exists in the database.
+                    </div>
+                    <div class="modal-footer " style="text-align:center">
+                        <a onclick="DisplayDuplicatepopupclose()" class="btn" data-dismiss="modal">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 rightpart">
+            <h3>Invoice Information</h3>
+            <div class="formmain">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label> Payment Method</label> <span class="highlight">*</span>
+                            @Html.DropDownListFor(model => model.PaymentTypeId, null, "Select Payment Method", new { id = "Payment_type", @class = "myval drpcls", maxlength = 100 })
+                            @Html.ValidationMessageFor(model => model.PaymentTypeId)
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Invoice Type </label><span class="highlight">*</span>
+                            @Html.DropDownList("InvoiceTypeId", null, "Select Type ", new { id = "Type_id", @class = "form-control myval drpcls", onchange = "ddLTypeChange(this.value)" })
+                            @Html.ValidationMessageFor(model => model.InvoiceTypeId)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Invoice #</label><span class="highlight">*</span>
+                            @Html.TextBoxFor(model => model.InvoiceNumber, new { maxlength = 35, id = "InvoiceNumber", name = "InvoiceNumber", Type = "text", @class = "form-control drpcls" })
+                            <span class="highlight"> @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "form-error-msg show" })</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Invoice Date</label><span class="highlight">*</span>
+                            <div class="">
+                                @Html.HiddenFor(model => model.TotalAmount)
+                                @Html.TextBoxFor(model => model.strInvoiceDate, new { autocomplete = "off", onkeydown = "return false", maxlength = 100, @class = "datepicker form-control drpcls", @id = "InvoiceDate" })
+                                @Html.ValidationMessageFor(model => model.strInvoiceDate)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="greenBox">
+
+                    <div class="row displayFlexCenter">
+                        <div class="col-md-3">
+                            <label class="splitFieldLable">Invoice Amount</label>
+                            <input type="text" class="form-control decimalOnly groupOfTexbox decimalOnly addamtcls  required  drpcls" data-val="true" data-val-number="The field InvoiceAmount must be a number." data-val-required="The InvoiceAmount field is required." id="InvoiceAmount" maxlength="35" name="InvoiceAmount" value="0">
+
+                        </div>
+                        <div class="InvoiceSplitContainer">
+                            <label class="InvoiceSplit" for="splitEqually">
+                                <input type="radio" id="SplitEqually" name="splitType" checked="checked">
+                                Split Equally
+                            </label>
+                            <label class="InvoiceSplit" for="splitPercentage">
+                                <input type="radio" id="Percentage"
+                                       name="splitType">
+                                Percentage
+                            </label>
+                            <label class="InvoiceSplit" for="splitCustom">
+                                <input type="radio" id="Custom" name="splitType">
+                                Custom
+                            </label>
+                        </div>
+                    </div>
+
+                    <label class="splitFieldLable" style="margin-top:30px;margin-bottom: -10px;">Split Between</label>
+
+                    <div class="splitBetweenContainer percentage" id="dvStorePercentage">
+                        @for (int i = 0; i < Model.StoreMaster.Count; i++)
+                        {
+                            <div>
+                                <label class="splitFieldLable">
+                                    @Html.CheckBoxFor(m => m.StoreMaster[i].Selected, new { @class = "chkstoreonclick" })
+                                    @Html.HiddenFor(m => m.StoreMaster[i].StoreId)
+                                    @Html.DisplayFor(m => m.StoreMaster[i].StoreName)
+                                    @Html.HiddenFor(m => m.StoreMaster[i].StoreId, new { @id = "hdnPercentageStoreId" })
+                                </label>
+                                @Html.HiddenFor(m => m.StoreMaster[i].StoreId, new { @id = "hdnPercentageStoreId" })
+                                <input type="text" id="txtPercentage" class="form-control" placeholder="%" value="0" />
+                            </div>
+                        }
+                    </div>
+                    <div id="dvbindstore">
+                    </div>
+
+                    <div id="tbladdon" class="tbladdoncls">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="form-group">
+                                    <span class="invoiceamttl">Total Invoice Amount</span>
+                                    <input type="hidden" id="totalamounrt" value="@Model.TotalAmount" />
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-7 padleftzero">
+                                <div class="form-group">
+                                    @if (Model.TotalAmount != null)
+                                    {
+                                        <span id="spanamount" class="spanamount" style="padding-left: 0px;">
+                                            @Model.TotalAmount
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <b><span class="spncredit spncredit2" style="color:red;display:none;"> - </span></b><span id="spanamount" class="spanamount" style="padding-left: 0px;display:none">
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Note
+                    </label>
+                    @Html.TextAreaFor(model => model.Note, new { maxlenght = 250, @class = "form-control addinvoicearea" })
+                </div>
+
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ApproveInvoice"))
+                {
+                    <div class="row" id="divNoNeedForApproval" style="display:none;">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="chk" id="QuickInvoice" checked="checked" type="checkbox" name="QuickInvoice">
+                                    <label for="QuickInvoice">No need for approval</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input class="chk" id="QBtransferss" type="checkbox" name="QBtransferss">
+                                <label for="QBtransferss">No QB transfer</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="from-group row">
+                    <div class="col-sm-12">
+                        <input type="submit" value="Save" id="btnInvoiceSubmit" name="btnsubmit" class="buttonbox btn_spcial btnSave" onclick="return validatedrptext(1,'Save')" />
+                        @if (String.IsNullOrEmpty(Model.UploadInvoice))
+                        {
+                            @Html.ActionLink("Cancel", "Index", "Invoices", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Cancel", "InvoiceAutomationGrid", "Invoices", new { }, new { @class = "buttonbox btncancel" })
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear">
+</div>
+
+<script>
+$(document).ready(function () {
+    var today = document.getElementById("CurrentDate").value;
+    $('#InvoiceDate').datetimepicker({
+        format: 'MMM DD,YYYY',
+        useCurrent: false,
+        maxDate: moment(),
+        minDate: new Date('@ViewBag.closingyear', 01 - 1, 01),
+    });
+});
+
+var isValid = '@Html.Raw(Json.Encode(ViewData.ModelState.IsValid))'
+if (isValid == "true") {
+        drpStoreselect();
+    }
+
+function drpStoreselect(iii) {
+        getVendorList(iii);
+        getDepartmentList(iii);
+        PaymentTypeList(iii);
+        GetStoreWiseApprovalRights(iii);
+        GetStoreWiseCRApprovalRights(iii);
+    }
+
+    function getVendorList(iii) {
+        var StoreId = iii;
+        if (StoreId != "" && StoreId != undefined) {
+            $.ajax({
+                url: '/Invoices/getVendorList',
+                type: "GET",
+                dataType: "JSON",
+                data: { StoreId: StoreId },
+                success: function (states) {
+                    $("#VendorId_" + StoreId + "").html("");
+                    $("select#VendorId_" + StoreId+"").html('<option value="">--Select--</option>');
+                    $.each(states, function (data, value) {
+
+                        $("#VendorId_" + StoreId+"").append(
+                            $('<option></option>').val(value.VendorId).html(value.VendorName));
+                    });
+                }
+            });
+        }
+        getDepartmentList(iii);
+    }
+
+    function DisableKeepandSave() {
+        $("#CheckDup").val(js++);
+        if ($("#btnPopupKeepandSave").attr("disabled") == undefined) {
+            $("#btnPopupKeepandSave").attr("disabled", true);
+        }
+        if ($("#btnPopupKeepandSave").attr("disabled") == "disabled") {
+            document.getElementById('frmMain').submit();
+        }
+
+    }
+
+function getDepartmentList(iii) {
+
+        var StoreId = iii;
+        if (StoreId != "" && StoreId != undefined) {
+            $.ajax({
+                url: '/Invoices/getDepartmentList',
+                type: "GET",
+                dataType: "JSON",
+                data: { StoreId: StoreId },
+                success: function (states) {
+                    $("#Drp_1-" + iii + "").html("");
+                    $("select#Drp_1-" + iii + "").html('<option value="">--Select--</option>');
+
+                    $.each(states, function (data, value) {
+                        $("#Drp_1-" + iii + "").append(
+                            "<option value=" + value.DepartmentId + ">" + value.DepartmentName + "</option>")
+                    });
+                }
+            });
+        }
+    }
+
+function GetStoreWiseApprovalRights(iii) {
+        var StoreId = iii;
+        $.ajax({
+            type: "POST",
+            url: "@AdminSiteConfiguration.GetURL()/Invoices/GetroleForJSApproval?Role=nnfapprovalInvoice&StoreId=" + StoreId +"&ModuleID=1",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+                if ($('#divNoNeedForApproval').length) {
+                    if (response == "False") {
+                        $("#divNoNeedForApproval").css('display', 'none');
+                    }
+                    else {
+                        $("#divNoNeedForApproval").css('display', 'block');
+                    }
+                    $("#QuickInvoice").prop('checked', false);
+                }
+            },
+            failure: function (response) {
+                $("#divNoNeedForApproval").css('display', 'none');
+            }
+        });
+    }
+
+function GetStoreWiseCRApprovalRights(iii) {
+        var StoreId = iii;
+        $.ajax({
+            type: "POST",
+            url: "@AdminSiteConfiguration.GetURL()/Invoices/GetroleForJSApproval?Role=nnfapprovalCrdMemoInvoice&StoreId=" + StoreId +"&ModuleID=1",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response)
+            {
+
+                if (response == "False") {
+                    $("#QuickCR").val(0);
+                    $("#divNoNeedForCRApproval").hide();
+                }
+                else {
+                    $("#QuickCR").val(1);
+                    if ($('#Type_id').val() == "1") {
+                        $("#divNoNeedForCRApproval").show();
+                    }
+                    else if ($("#discountype").val() == "2" || $("#discountype").val() == "3") {
+                        $("#divNoNeedForCRApproval").show();
+                    }
+                    else {
+                        $("#divNoNeedForCRApproval").hide();
+                    }
+                }
+                $("#QuickCRInvoice").prop('checked', false);
+            },
+            failure: function (response) {
+                $("#QuickCR").val(0);
+                $("#divNoNeedForCRApproval").hide();
+            }
+        });
+    }
+
+function PaymentTypeList(iii) {
+        var Store_idval = iii;
+        $(".select2-container").remove();
+        $('#Payment_type').html(null);
+       $("#Payment_type").append("<option selected='selected' value=''>Select Payment Method</option>");
+
+        $.getJSON('@AdminSiteConfiguration.GetURL()/Invoices/BindPaymentType/?Store_idval=' + Store_idval, function (data) {
+            $.each(data, function (i, LstVendor) {
+                $("#Payment_type").append(
+                    "<option value=" + LstVendor.Value + ">" + LstVendor.Text + "</option>");
+            });
+            if (Store_idval != 11) {
+                $("#Payment_type").val(2).trigger('change');;
+            }
+            else {
+                $("#Payment_type").prop("selectedIndex", 0).val();
+            }
+        });
+
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+    }
+
+var uploadField = document.getElementById("UploadInvoice");
+uploadField.onchange = function () {
+    if (this.files[0].size > 30971520) {
+            $("#popupSize").show();
+            this.value = "";
+        };
+    };
+
+$(document).ready(function () {
+        var today = document.getElementById("CurrentDate").value;
+        $('#Invoice_Date').datetimepicker({
+            format: 'MMM DD,YYYY',
+            useCurrent: false,
+            maxDate: today
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $('.btnSave').click(function () {
+         var isvalid = true;
+         var custom = $('#Custom')[0].checked;
+         if (custom == false || custom == true) {
+             let tamt = $("#InvoiceAmount").val();
+             let spanamt = $("#spanamount")[0].innerHTML.toString().replace('$', '').replace(',', '').trim();
+             if (tamt != null && spanamt != null) {
+                 if (Math.round(tamt) != Math.round(spanamt)) {
+                     $('#popupAMountCheck').show();
+                     isvalid = false;
+                     return false;
+                 }
+                 else {
+                     $('#popupAMountCheck').hide();
+
+                 }
+             }
+         }
+
+         if (isvalid == true) {
+
+             var fileUpload = $("#UploadInvoice").get(0);
+             var files = fileUpload.files;
+             var fileData = new FormData();
+             fileData.append(files[0].name, files[0]);
+
+             var objDeptList = [];
+             var objdept = new Object();
+             var objTeam = new Object();
+
+             var qb1 = $('#QBtransferss');
+             var qb2 = $('#QuickInvoice');
+             fileData.append("PaymentTypeId", $('#Payment_type').val());
+             fileData.append("InvoiceTypeId", $('#Type_id').val());
+             fileData.append("InvoiceNumber", $('#InvoiceNumber').val());
+             fileData.append("strInvoiceDate", $('#InvoiceDate').val());
+             fileData.append("InvoiceAmount", $('#InvoiceAmount').val());
+             fileData.append("TotalAmount", $('#TotalAmount').val());
+             fileData.append("QBtransferss", qb1[0].checked);
+             if ($('#QuickInvoice').length == 0) {
+                 fileData.append("QuickInvoice", false);
+             }
+             else {
+                 fileData.append("QuickInvoice", qb2[0].checked);
+             }
+             fileData.append("Note", $('#Note').val());
+
+             var data = document.getElementById('dvbindstore');
+             if (data != null && data != '' && data != undefined) {
+
+                 for (var i = 0; i < data.children.length; i++) {
+
+                     var sid = data.children[i].id;
+                     var vendorid = $('#VendorId_' + sid).val();
+
+                     var data1 = data.getElementsByClassName('trrowcls_' + sid);
+                     for (var j = 0; j < data1.length; j++) {
+
+                         var amtid = data1[j].children[0].children[2].id;
+                         var dptid = data1[j].children[0].children[0].id;
+                         var objdept = new Object();
+                         objdept["StoreId"] = sid;
+                         objdept["VendorId"] = vendorid;
+                         objdept["DepartmentId"] = $("#" + dptid).val();
+                         objdept["Amount"] = $("#" + amtid).val();
+                         objDeptList.push(objdept);
+                     }
+                 }
+             }
+
+             for (var i = 0; i < objDeptList.length; i++) {
+
+                 fileData.append("InvoiceDepartmentDetails[" + i + "].StoreId", objDeptList[i].StoreId)
+                 fileData.append("InvoiceDepartmentDetails[" + i + "].VendorId", objDeptList[i].VendorId)
+                 fileData.append("InvoiceDepartmentDetails[" + i + "].DepartmentId", objDeptList[i].DepartmentId)
+                 fileData.append("InvoiceDepartmentDetails[" + i + "].Amount", objDeptList[i].Amount)
+             }
+             fileData.append("btnsubmit", "save");
+
+             $.ajax({
+                 url: '@Url.Action("CreateSplitInvoice", "Invoices")',
+                 type: "POST",
+                 data: fileData,
+                 dataType: "json",
+                 processData: false,
+                 beforeSend: function () { Loader(1); },
+                 contentType: false,
+                 success: function (Result) {
+                     if (Result.success == 'Success') {
+
+                         var url = '@Url.Action("IndexBeta", "Invoices")';
+                         window.location.href = url;
+                     }
+                     else {
+                         toastr.error(Result.success);
+                     }
+                     Loader(0);
+                 },
+                 error: function (Result) {
+                 }
+             });
+
+         }
+    });
+</script>
+
+<script type="text/javascript">
+function validatedrptext(myVald) {
+        var Flg = 0;
+        $('.drpcls').each(function () {
+            if ($(this).val() == null || $(this).val() == "") {
+                Flg = 1;
+                $(this).addClass('input-validation-error');
+                event.preventDefault();
+            }
+            else {
+
+                $(this).removeClass('input-validation-error');
+                $(this).addClass('input-validation-valid');
+            }
+        });
+        if ($("#InvoiceDate").val() === null || $("#InvoiceDate").val() === '') {
+            $("#InvoiceDate").addClass('input-validation-error');
+            event.preventDefault();
+        }
+        else {
+
+            $("#InvoiceDate").removeClass('input-validation-error');
+            $("#InvoiceDate").addClass('input-validation-valid');
+        }
+        if (myVald == 1) {
+            var scaninvoice = $("#UploadInvoice").val();
+            if ('@Model.UploadInvoice' != '')
+            {
+                scaninvoice = document.getElementById("UploadInvoice").defaultvalue;
+            }
+
+            if (scaninvoice == "") {
+                $('#popupid').show();
+                return false;
+            }
+            else {
+                $('#popupid').hide();
+            }
+            var i = $(".checkvalidation").length;
+
+            var k = 0;
+            var Amount;
+
+            var data = document.getElementById('dvbindstore');
+            if (data != null && data != '' && data != undefined) {
+                for (var i = 0; i < data.children.length; i++) {
+                    var sid = data.children[i].id;
+                    var data1 = data.children[i].getElementsByClassName('trrowcls_' + sid);
+                    for (var j = 0; j < data1.length; j++) {
+                        var data2 = data1[j].getElementsByClassName('setAmount');
+                        if (data != null && data != '' && data != undefined) {
+                            var id = data2[0].id;
+                            Amount = $('#' + id).val();
+                            if (Amount == "") {
+                                k++;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (k >0) {
+                $('#popupDepartment').show();
+                return false;
+            }
+            else {
+                $('#popupDepartment').hide();
+            }
+
+
+        }
+        $("#hdnreqval").val("1");
+        if (Flg == 0) {
+            if ($("#frmMain").valid()) {
+                CheckExistence();
+                $(".loading-containers").attr("style", "display:block");
+                $(".headermainbox").attr("style", "z-index:0");
+                $(".page-sidebar").attr("style", "z-index:0");
+            }
+            else {
+                event.preventDefault();
+            }
+        }
+        else {
+            event.preventDefault();
+        }
+    }
+
+$(document).ready(function () {
+    var today = document.getElementById("CurrentDate").value;
+    $('#InvoiceDate').datetimepicker({
+        format: 'MMM DD,YYYY',
+        useCurrent: false,
+        maxDate: today,
+        minDate: new Date('@ViewBag.closingyear', 01 - 1, 01),
+    });
+    GetStoreWiseCRApprovalRights();
+    BinddiscountData();
+
+    $('#frmMain').attr('autocomplete', 'off');
+    CheckField();
+
+    $('.groupOfTexbox').keypress(function (event) {
+        return isNumber(event, this);
+    });
+    $('.groupOfTexboxInt').keypress(function (event) {
+        return isNumberint(event, this);
+    });
+    GetStoreWiseApprovalRights();
+});
+</script>
+
+<script src="~/Form_JS/CreateSplitInvoice.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+
+<style>
+    .spical_modal .modal-header {
+        position: relative;
+    }
+
+        .spical_modal .modal-header .close {
+            position: relative;
+            z-index: 999;
+            right: 9px;
+            top: 3px;
+        }
+</style>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+

@@ -1,0 +1,115 @@
+2025-11-06 14:48:08.1063|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 2:48:08 PM
+2025-11-06 14:48:23.0145|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 2:48:23 PM - An error occurred while sending the request.
+2025-11-06 14:53:03.4153|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 2:53:03 PM
+2025-11-06 14:53:49.2039|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 2:53:49 PM
+2025-11-06 14:59:43.0927|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 2:59:43 PM
+2025-11-06 14:59:43.0927|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 2:59:43 PM
+2025-11-06 14:59:52.8425|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 2:59:52 PM - An error occurred while sending the request.
+2025-11-06 15:00:03.6993|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 3:00:03 PM
+2025-11-06 15:00:55.4133|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 3:00:55 PM
+2025-11-06 15:00:56.8037|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:00:56 PM
+2025-11-06 15:01:00.3315|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:01:00 PM
+2025-11-06 15:01:07.8630|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:01:07 PM
+2025-11-06 15:01:52.7518|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 3:01:52 PM
+2025-11-06 15:01:55.0888|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:01:55 PM
+2025-11-06 15:13:27.5825|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 3:13:27 PM
+2025-11-06 15:13:29.6705|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:13:29 PM
+2025-11-06 15:13:40.0821|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:13:40 PM
+2025-11-06 15:13:48.2447|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 3:13:48 PM
+2025-11-06 15:13:49.8465|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:13:49 PM
+2025-11-06 15:13:53.3072|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:13:53 PM
+2025-11-06 15:13:57.0614|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:13:57 PM
+2025-11-06 15:20:25.0617|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 3:20:25 PM
+2025-11-06 15:21:51.7377|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 3:21:51 PM - An error occurred while sending the request.
+2025-11-06 15:22:30.0792|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 3:22:30 PM
+2025-11-06 15:22:48.9670|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:22:48 PM
+2025-11-06 15:23:09.6307|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:23:09 PM
+2025-11-06 15:23:13.1805|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:23:13 PM
+2025-11-06 15:23:35.3466|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:23:35 PM
+2025-11-06 15:23:58.8582|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 11/6/2025 3:23:58 PM
+2025-11-06 15:30:24.4058|ERROR|Repository.UserRolesRepository|UserRolesRepository - GetUserTypeMastersByGroupID - 11/6/2025 3:30:24 PM - The entity or complex type 'EntityModels.Models.UserTypeMaster' cannot be constructed in a LINQ to Entities query.
+2025-11-06 15:31:05.1357|ERROR|Repository.UserRolesRepository|UserRolesRepository - GetUserTypeMastersByGroupID - 11/6/2025 3:31:05 PM - The entity or complex type 'EntityModels.Models.UserTypeMaster' cannot be constructed in a LINQ to Entities query.
+2025-11-06 15:32:08.0010|ERROR|Repository.UserRolesRepository|UserRolesRepository - GetUserTypeMastersByGroupID - 11/6/2025 3:32:08 PM - The entity or complex type 'EntityModels.Models.UserTypeMaster' cannot be constructed in a LINQ to Entities query.
+2025-11-06 15:40:24.7144|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 11/6/2025 3:40:24 PM
+2025-11-06 15:40:29.8863|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 11/6/2025 3:40:29 PM
+2025-11-06 15:40:32.8464|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:40:32 PM
+2025-11-06 15:40:42.7929|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:40:42 PM
+2025-11-06 15:40:44.2079|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:40:44 PM
+2025-11-06 15:40:45.6156|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 3:40:45 PM
+2025-11-06 15:55:38.4723|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 3:55:38 PM
+2025-11-06 15:56:22.2606|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 3:56:22 PM - An error occurred while sending the request.
+2025-11-06 15:57:20.9776|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 3:57:20 PM
+2025-11-06 15:57:42.4025|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 11/6/2025 3:57:42 PM - 'object' does not contain a definition for 'GroupId'
+2025-11-06 15:58:18.9819|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 3:58:18 PM
+2025-11-06 15:58:24.9397|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 3:58:24 PM - An error occurred while sending the request.
+2025-11-06 15:58:43.0355|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 3:58:42 PM
+2025-11-06 16:13:43.2790|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 4:13:43 PM
+2025-11-06 16:13:43.4864|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:13:43 PM
+2025-11-06 16:14:46.7160|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 4:14:46 PM - An error occurred while sending the request.
+2025-11-06 16:15:22.4505|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:15:22 PM
+2025-11-06 16:49:30.9264|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 4:49:30 PM
+2025-11-06 16:49:31.1263|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:49:31 PM
+2025-11-06 16:49:37.3224|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:49:40.9088|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 4:49:40 PM - An error occurred while sending the request.
+2025-11-06 16:49:50.8496|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:49:50 PM
+2025-11-06 16:49:50.8586|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:51:07.0734|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 4:51:07 PM
+2025-11-06 16:51:15.7570|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 4:51:15 PM - An error occurred while sending the request.
+2025-11-06 16:51:33.7367|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:51:33 PM
+2025-11-06 16:51:34.2294|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:51:36.8238|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 16:51:40.2296|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:51:41.7980|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:51:41 PM
+2025-11-06 16:51:41.8312|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:51:46.7256|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 16:51:55.8203|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:55:14.9889|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:55:14 PM
+2025-11-06 16:55:15.4233|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:57:34.2900|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:57:34 PM
+2025-11-06 16:57:34.7049|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 16:57:50.8189|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 16:59:56.4541|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 4:59:56 PM
+2025-11-06 16:59:56.8604|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:00:03.2694|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:00:06.1529|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:00:07.8737|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 17:00:53.1203|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:01:25.9766|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 5:01:25 PM
+2025-11-06 17:01:26.3788|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:01:29.9519|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:01:32.8069|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 17:01:34.4615|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:01:45.2345|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 5:01:45 PM
+2025-11-06 17:01:45.6229|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:02:25.8429|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 5:02:25 PM
+2025-11-06 17:02:26.2743|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:02:30.0611|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:02:32.5937|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 17:02:41.2706|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 5:02:41 PM
+2025-11-06 17:02:41.6797|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:02:45.3640|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:02:47.7220|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 17:02:49.1785|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:03:28.6862|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 5:03:28 PM
+2025-11-06 17:03:29.1237|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 17:03:32.7657|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 17:03:35.3451|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 17:03:42.4590|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 5:03:42 PM
+2025-11-06 17:03:44.8449|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 5:03:44 PM
+2025-11-06 17:04:54.5346|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 5:04:54 PM
+2025-11-06 17:04:56.6296|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 5:04:56 PM
+2025-11-06 18:30:04.6875|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 6:30:04 PM
+2025-11-06 18:30:04.6875|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/6/2025 6:30:04 PM
+2025-11-06 18:30:14.7843|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 11/6/2025 6:30:14 PM - Object reference not set to an instance of an object.
+2025-11-06 18:30:17.1529|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/6/2025 6:30:17 PM - An error occurred while sending the request.
+2025-11-06 18:30:27.6395|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/6/2025 6:30:27 PM
+2025-11-06 18:30:28.2201|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-06 18:30:44.6646|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 1 stores for GroupId: 4
+2025-11-06 18:30:48.4012|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 11 stores for GroupId: 2
+2025-11-06 18:31:16.8731|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/6/2025 6:31:16 PM
+2025-11-06 18:31:17.7086|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 6:31:17 PM
+2025-11-06 18:31:25.2895|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/6/2025 6:31:25 PM
+2025-11-06 18:31:49.9148|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 11/6/2025 6:31:49 PM
+2025-11-06 18:32:15.2307|ERROR|Repository.UserRolesRepository|UserRolesRepository - GetUserTypeMastersByGroupID - 11/6/2025 6:32:15 PM - The entity or complex type 'EntityModels.Models.UserTypeMaster' cannot be constructed in a LINQ to Entities query.
+2025-11-06 18:32:39.4702|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasourceChildList - 11/6/2025 6:32:39 PM
+2025-11-06 18:32:39.5198|ERROR|Repository.UserMastersRepository|UserMastersRepository - GetUserRoleStoreList - 11/6/2025 6:32:39 PM - The cast to value type 'System.Int32' failed because the materialized value is null. Either the result type's generic parameter or the query must use a nullable type.

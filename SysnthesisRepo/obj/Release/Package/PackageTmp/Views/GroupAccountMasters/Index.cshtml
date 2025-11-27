@@ -1,0 +1,199 @@
+﻿@model IEnumerable<EntityModels.Models.ConfigurationGroup>
+@{
+}
+
+@if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+{
+<script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        toastr.success('@ViewBag.CreateSuccess');
+</script>
+}
+@if (Convert.ToString(ViewBag.StatusMessage) == "Delete")
+{
+<script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.success('@ViewBag.DeleteSuccess');
+</script>
+}
+@if (Convert.ToString(ViewBag.StatusMessage) == "Edit")
+{
+<script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        toastr.success('@ViewBag.UpdateSuccess');
+</script>
+}
+@if (Convert.ToString(ViewBag.StatusMessage) == "Exists")
+{
+<script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.success('@ViewBag.AlreadyExists');
+</script>
+}
+@if (Convert.ToString(ViewBag.StatusMessage) == "Error")
+{
+    <script>
+        MyfunError();
+    </script>
+}
+@if (Convert.ToString(ViewBag.StatusMessage) == "NoItem")
+{
+<script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.success('@ViewBag.NoFound');
+</script>
+}
+
+@if (Convert.ToString(ViewBag.StatusMessage) == "NoStoreSelected")
+{
+    <script>
+        PopUpSelectStore();
+    </script>
+}
+@if (Convert.ToString(ViewBag.StatusMessage) != "NoStoreSelected")
+{
+    <div class="special_new">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Group Accounts
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        @{
+                            Html.RenderAction("Grid");
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Other Deposite Accounts
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        @{
+                            Html.RenderAction("OtherDepositeAccount");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+</script>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

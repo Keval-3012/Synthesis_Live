@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+@{
+    Html.RenderAction("Grid");
+}
+
+<script>
+    function docReady(fn) {
+
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }    
+    docReady(function () {
+
+        Loader(0);
+
+    });
+
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $(".loading-container").attr("style", "display:block;")
+        }
+        else {
+            $(".loading-container").attr("style", "display:none;")
+        }
+
+    }
+</script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

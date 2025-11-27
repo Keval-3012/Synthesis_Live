@@ -1,0 +1,1490 @@
+@import url(https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap);
+
+/** {
+    font-family: "Maven Pro",sans-serif !important
+}
+
+body {
+    margin: 0;
+    padding: 0
+}*/
+.notes-wrapper h1, .notes-wrapper h2, .notes-wrapper h3 {
+    font-family: "Maven Pro",sans-serif !important;
+    font-weight: 600 !important;
+    color: #000;
+}
+
+.full-w-wrapper {
+    /* width: 100vw;*/ right: 0;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background-color: rgba(0,0,0,.1);
+    box-sizing: border-box;
+    position: fixed;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    z-index: 999999;
+    display: none;
+}
+
+    .full-w-wrapper .notes-wrapper {
+        width: 47vw;
+        min-width: 500px;
+        height: 100vh;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 0;
+        box-sizing: border-box;
+        box-shadow: 0 0 10px rgba(0,0,0,.08);
+        cursor: default;
+        position: relative
+    }
+
+        .full-w-wrapper .notes-wrapper .notes-header-container {
+            padding: 0;
+            background: #ececec;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            justify-content: space-between;
+            border-bottom: 1px dotted rgba(0,0,0,.5);
+            padding-right: 1rem;
+            z-index: 10000;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            width: 100%
+        }
+
+            .full-w-wrapper .notes-wrapper .notes-header-container .headerActionBar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: .5rem
+            }
+
+            .full-w-wrapper .notes-wrapper .notes-header-container > ul {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                box-sizing: border-box;
+                list-style: none;
+                gap: 0;
+                margin: 0;
+                padding: 0;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none
+            }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container > ul li {
+                    font-size: 14px;
+                    padding: .5rem .5rem .5rem 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    height: 40px;
+                    cursor: pointer;
+                    gap: .5rem;
+                    padding: .5rem 1rem;
+                    background: #ececec;
+                    transition: all .1s ease;
+                    border-bottom: 3px solid transparent
+                }
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container > ul li img {
+                        width: 18px
+                    }
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container > ul li.active, .full-w-wrapper .notes-wrapper .notes-header-container > ul li:hover {
+                        border-bottom: 3px solid red;
+                        background: #fff;
+                        box-shadow: 2px 0 3px rgba(0,0,0,.05);
+                        z-index: 100
+                    }
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container > ul li span.tagNumber {
+                        width: 24px;
+                        height: 24px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 50%;
+                        background: rgba(0,0,0,.1);
+                        transition: all .1s ease;
+                        font-size: 10px;
+                        font-weight: 700
+                    }
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container > ul li span:nth-child(1) {
+                        transition: all .1s ease
+                    }
+
+                    /*.full-w-wrapper .notes-wrapper .notes-header-container > ul li.active span {
+                        font-weight: 700;
+                        color: #000;
+                    }*/
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container > ul li.active span.tagNumber {
+                        background: red;
+                        color: #fff
+                    }
+
+            .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn {
+                background-color: #00b21c;
+                border: 0;
+                padding: .5rem 1rem;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 700;
+                transition: all .15s ease;
+                position: absolute;
+                width: 105px;
+                right: 4.5rem
+            }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn > img.arrow-down {
+                    width: 15px;
+                    margin-left: .5rem;
+                    transition: transform .1s ease
+                }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn > span {
+                    color: #fff;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    user-select: none
+                }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn ul#creatNotesMenu {
+                    display: none;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    background: #fff;
+                    width: 150px;
+                    border-radius: 12px;
+                    list-style: none;
+                    padding: .5rem;
+                    z-index: 11000;
+                    margin: 0;
+                    border: 1px solid #f3f3f3;
+                    box-shadow: 0 0 10px rgba(0,0,0,.1);
+                    overflow: hidden;
+                    box-sizing: border-box
+                }
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn ul#creatNotesMenu li {
+                        background: 0 0;
+                        width: 100%;
+                        padding: .5rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 1.5rem;
+                        box-sizing: border-box;
+                        border-radius: 6px;
+                        transition: all .15s ease
+                    }
+
+                        .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn ul#creatNotesMenu li:hover {
+                            background: #f3f3f3
+                        }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container button#createNotesBtn:hover {
+                    background-color: #00b91f
+                }
+
+            .full-w-wrapper .notes-wrapper .notes-header-container button#closeNotePopUp {
+                width: 30px;
+                height: 30px;
+                padding: 0;
+                background: #fff;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 0;
+                border-radius: 15px;
+                border: 1px solid rgba(0,0,0,.3);
+                transition: all .15s ease;
+                cursor: pointer;
+                position: absolute;
+                right: 1rem
+            }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container button#closeNotePopUp:hover {
+                    background: #000;
+                    border: 1px solid rgba(0,0,0,.3)
+                }
+
+                    .full-w-wrapper .notes-wrapper .notes-header-container button#closeNotePopUp:hover img {
+                        filter: invert(0)
+                    }
+
+                .full-w-wrapper .notes-wrapper .notes-header-container button#closeNotePopUp img {
+                    width: 20px;
+                    height: 20px;
+                    filter: invert(1);
+                    transition: all .15s ease
+                }
+
+        .full-w-wrapper .notes-wrapper .notes-module-container {
+            width: 100%;
+            height: calc(100vh - 50px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            overflow-y: auto;
+            padding: 1rem 0;
+            background: #eee;
+        }
+
+            .full-w-wrapper .notes-wrapper .notes-module-container::-webkit-scrollbar {
+                width: 5px
+            }
+
+            .full-w-wrapper .notes-wrapper .notes-module-container::-webkit-scrollbar-track {
+                background: #dadada;
+                border-radius: 3px
+            }
+
+            .full-w-wrapper .notes-wrapper .notes-module-container::-webkit-scrollbar-thumb {
+                background: #828282;
+                border-radius: 3px
+            }
+
+@supports not selector(::-webkit-scrollbar) {
+    .full-w-wrapper .notes-wrapper .notes-module-container * {
+        scrollbar-color: #828282 #dadada
+    }
+}
+
+.full-w-wrapper .notes-wrapper .notes-module-container .add-note {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    background: #fff;
+    padding: 1rem;
+    gap: .5rem;
+    border-bottom: 1px solid rgba(0,0,0,.1)
+}
+
+    .full-w-wrapper .notes-wrapper .notes-module-container .add-note h2 {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        margin: 0;
+        padding: 0;
+        font-weight: 600;
+        color: #000
+    }
+
+    .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        padding: 1rem 0;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        outline: 0;
+        box-sizing: border-box;
+        transition: all .15s ease;
+        background: 0 0
+    }
+
+        .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:active, .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:focus, .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:hover {
+            border-bottom: 1px dotted rgba(0,0,0,.4)
+        }
+
+            .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:active::-moz-placeholder, .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:focus::-moz-placeholder, .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:hover::-moz-placeholder {
+                color: #000
+            }
+
+            .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:active::placeholder, .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:focus::placeholder, .full-w-wrapper .notes-wrapper .notes-module-container .add-note input[type=text]#noteTitle:hover::placeholder {
+                color: #000
+            }
+
+    .full-w-wrapper .notes-wrapper .notes-module-container .add-note #noteEditor {
+        background-color: transparent;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        width: 100%
+    }
+
+.full-w-wrapper .notes-wrapper .notes-module-container .note-listing {
+    width: 100%;
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: .5rem;
+    padding: 1rem 1rem;
+    box-sizing: border-box
+}
+
+    .full-w-wrapper .notes-wrapper .notes-module-container .note-listing .note {
+        display: flex;
+        width: 100%;
+        background: #FFFFFF;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 8px;
+        padding: 1rem;
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 1rem;
+        box-shadow: 0 0 5px transparent;
+        cursor: pointer;
+        transition: all .3s ease
+    }
+
+        .full-w-wrapper .notes-wrapper .notes-module-container .note-listing .note:hover {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,.2);
+            box-shadow: 0 0 5px rgba(0,0,0,.1)
+        }
+
+        .full-w-wrapper .notes-wrapper .notes-module-container .note-listing .note .note-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            border-bottom: 1px solid rgba(0,0,0,.1);
+            padding: 0 0 5px;
+        }
+
+            .full-w-wrapper .notes-wrapper .notes-module-container .note-listing .note .note-header h1 {
+                font-size: 2.5rem;
+                line-height: 2.6rem;
+                margin: 0;
+                padding: 0;
+                color: #000;
+            }
+
+        .full-w-wrapper .notes-wrapper .notes-module-container .note-listing .note .note-body {
+            font-size: 14px;
+            line-height: 18px;
+            margin: 0;
+            padding: 0;
+            width: 100%
+        }
+
+.full-w-wrapper .notes-wrapper .task-module-container {
+    width: 100%;
+    height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    overflow-y: auto
+}
+
+    .full-w-wrapper .notes-wrapper .task-module-container::-webkit-scrollbar {
+        width: 5px
+    }
+
+    .full-w-wrapper .notes-wrapper .task-module-container::-webkit-scrollbar-track {
+        background: #dadada;
+        border-radius: 3px
+    }
+
+    .full-w-wrapper .notes-wrapper .task-module-container::-webkit-scrollbar-thumb {
+        background: #828282;
+        border-radius: 3px
+    }
+
+@supports not selector(::-webkit-scrollbar) {
+    .full-w-wrapper .notes-wrapper .task-module-container * {
+        scrollbar-color: #828282 #dadada
+    }
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    background: #fff;
+    padding: 1rem;
+    gap: .5rem;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    border-radius: 12px
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .task-listing .task h1 {
+    font-size: 1.25rem !important;
+    line-height: 1.25rem !important;
+    font-weight: 400;
+    width: 80%;
+    margin: 0;
+    padding: 0;
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task h2 {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin: 0;
+    padding: 0;
+    font-weight: normal !important;
+    color: #000
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task textarea {
+    width: 100%;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    height: 130px;
+    background: rgba(248, 248, 248, .8);
+    font-size: 14px;
+    line-height: 14px;
+    outline: 0;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 6px
+}
+
+    .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:active, .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:focus, .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:hover {
+        border: 1px solid rgba(0,0,0,.3)
+    }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:active::-moz-placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:focus::-moz-placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:hover::-moz-placeholder {
+            color: #000
+        }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:active::placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:focus::placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task textarea:hover::placeholder {
+            color: #000
+        }
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    padding: 1rem 0;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    outline: 0;
+    box-sizing: border-box;
+    transition: all .15s ease;
+    background: 0 0
+}
+
+    .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:active, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:focus, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:hover {
+        border-bottom: 1px dotted rgba(0,0,0,.4)
+    }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:active::-moz-placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:focus::-moz-placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:hover::-moz-placeholder {
+            color: #000
+        }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:active::placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:focus::placeholder, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=text]#taskName:hover::placeholder {
+            color: #000
+        }
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=date] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    outline: 0;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 6px
+}
+
+.full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder div.taskControlGroup input[type=datetime-local] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    outline: 0;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 6px
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=date]:active, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=date]:focus, .full-w-wrapper .notes-wrapper .task-module-container .add-task input[type=date]:hover {
+    border: 1px solid rgba(0,0,0,.3)
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task label {
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 700
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task select {
+    width: 100%;
+    padding: .5rem .5rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+    line-height: 1rem;
+    outline: 0;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 6px
+}
+
+    .full-w-wrapper .notes-wrapper .task-module-container .add-task select:active, .full-w-wrapper .notes-wrapper .task-module-container .add-task select:focus, .full-w-wrapper .notes-wrapper .task-module-container .add-task select:hover {
+        border: 1px solid rgba(0,0,0,.3)
+    }
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task .taskControls {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    margin-top: .5rem
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .add-task div.taskControlGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: .5rem;
+    flex: 1;
+    width: 100%;
+    max-width: 240px
+}
+
+.full-w-wrapper .notes-wrapper .task-module-container .task-listing {
+    width: 100%;
+    background: #ededed;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: .5rem;
+    padding: 1rem 1rem;
+    box-sizing: border-box
+}
+
+    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task {
+        display: flex;
+        width: 100%;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 8px;
+        padding: 1.2rem 1rem;
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 1rem;
+        cursor: pointer;
+        box-shadow: 0 0 5px transparent;
+        order: 2;
+    }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task.dueToday {
+            border: 2px solid #f19100;
+            position: relative;
+            margin-top: 10px;
+            order: 1;
+        }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task.dueToday::before {
+                content: "Due Today";
+                position: absolute;
+                background: #f19100;
+                padding: 5px 10px;
+                border-radius: 6px;
+                color: #fff;
+                font-size: 12px;
+                line-height: 12px;
+                font-weight: 700;
+                top: -10px;
+                left: 1rem
+            }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task.dueToday:hover {
+                background: #fff;
+                border: 2px solid #f18100;
+                box-shadow: 0 0 5px rgba(0,0,0,.1)
+            }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task.overDue {
+            border: 2px solid #f12c00;
+            position: relative;
+            margin-top: 10px;
+            background: #ffefef;
+            box-shadow: 0 5px 20px rgba(255,0,0,.1); 
+            order: 0;
+        }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task.overDue::before {
+                content: "Overdue";
+                position: absolute;
+                background: #f12c00;
+                padding: 5px 10px;
+                border-radius: 6px;
+                color: #fff;
+                font-size: 12px;
+                line-height: 12px;
+                font-weight: 700;
+                top: -10px;
+                left: 1rem
+            }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task.overDue:hover {
+                background: #ffefef;
+                border: 2px solid #f14000;
+                box-shadow: 0 0 5px rgba(0,0,0,.1);
+                box-shadow: 0 5px 20px rgba(255,0,0,.25)
+            }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task span.dueDate {
+            font-size: 14px;
+            line-height: 14px;
+            font-weight: 400;
+            color: #000;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none
+        }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task span.dueDate::before {
+                font-size: 12px;
+                line-height: 12px;
+                content: "Due on";
+                font-weight: 700;
+                background: #ededed;
+                padding: .2rem .4rem;
+                border-radius: 4px;
+                margin-right: .5rem
+            }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task span.assignedBy {
+            font-size: 14px;
+            line-height: 14px;
+            font-weight: 400;
+            color: #000
+        }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task span.assignedBy a {
+                font-size: 12px;
+                line-height: 12px;
+                content: "Assigned by";
+                font-weight: 700;
+                background: #ededed;
+                padding: .2rem .4rem;
+                border-radius: 4px;
+                margin-right: .5rem;
+                text-decoration: none;
+                color: #000
+            }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task > h1,
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task > h2 {
+            font-size: 1.25rem !important;
+            line-height: 1.25rem !important;
+            font-weight: 400;
+            width: 80%;
+            margin: 0;
+            padding: 0;
+            color: #000 !important;
+            font-weight: 400 !important;
+        }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task > h1 {
+            font-weight: 700 !important;
+        }
+
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task:hover {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,.2);
+            box-shadow: 0 0 5px rgba(0,0,0,.1)
+        }
+
+        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%
+        }
+
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed {
+                background: #3c4045;
+                color: #fff;
+                padding: .3rem .5rem;
+                border: 0;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all .15s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                border-radius: 2rem;
+                box-shadow: 0 0 0 transparent
+            }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .5rem;
+                    font-size: 12px;
+                    line-height: 12px
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed img {
+                    width: 16px;
+                    height: 16px;
+                    transition: all .15s ease
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed:hover {
+                    background: #00cf22;
+                    box-shadow: 0 5px 10px rgba(0,0,0,.15)
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completedts:hover {
+                    background: #3c4045;
+                    color: #fff;
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed:hover img {
+                    filter: saturate(0) brightness(2)
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed .button-content {
+                    display: flex;
+                    align-items: center
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed .button-text {
+                    margin-left: 8px
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed .loader {
+                    border: 2px solid #f3f3f3;
+                    border-top: 2px solid #fff;
+                    border-radius: 50%;
+                    width: 16px;
+                    height: 16px;
+                    animation: spin 1s linear infinite;
+                    margin-left: 8px;
+                    display: none
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.processing {
+                    background-color: #000
+                }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.processing .default-icon {
+                        display: none
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.processing .loader-icon {
+                        display: block;
+                        animation: rotate .5s linear infinite
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.processing .button-text {
+                        margin-left: 8px;
+                        content: "Processing"
+                    }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed {
+                    background-color: #495054;
+                    filter: saturate(0) brightness(1)
+                }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed:hover {
+                        box-shadow: 0 5px 10px transparent
+                    }
+
+                        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed:hover img {
+                            filter: saturate(0) brightness(2)
+                        }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed .button-content {
+                        display: none
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed .loader {
+                        display: none
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed .completed-content {
+                        display: flex;
+                        align-items: center
+                    }
+
+                        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completed.completed .completed-content .button-text {
+                            margin-left: 8px
+                        }
+
+
+            /*after edit task*/
+            .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts {
+                background: #3c4045;
+                color: #fff;
+                padding: .3rem .5rem;
+                border: 0;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all .15s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                border-radius: 2rem;
+                box-shadow: 0 0 0 transparent
+            }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .5rem;
+                    font-size: 12px;
+                    line-height: 12px
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts img {
+                    width: 16px;
+                    height: 16px;
+                    transition: all .15s ease
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts:hover {
+                    background: #00cf22;
+                    box-shadow: 0 5px 10px rgba(0,0,0,.15)
+                }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts:hover img {
+                        filter: saturate(0) brightness(2)
+                    }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts .button-contentts {
+                    display: flex;
+                    align-items: center
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts .button-textts {
+                    margin-left: 8px
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts .loader {
+                    border: 2px solid #f3f3f3;
+                    border-top: 2px solid #fff;
+                    border-radius: 50%;
+                    width: 16px;
+                    height: 16px;
+                    animation: spin 1s linear infinite;
+                    margin-left: 8px;
+                    display: none
+                }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.processingts {
+                    background-color: #000
+                }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.processingts .default-iconts {
+                        display: none
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.processingts .loader-iconts {
+                        display: block;
+                        animation: rotate .5s linear infinite
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.processingts .button-textts {
+                        margin-left: 8px;
+                        content: "Processing"
+                    }
+
+                .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts {
+                    background-color: #495054;
+                    filter: saturate(0) brightness(1)
+                }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts:hover {
+                        box-shadow: 0 5px 10px transparent
+                    }
+
+                        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts:hover img {
+                            filter: saturate(0) brightness(2)
+                        }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts .button-contentts {
+                        display: none
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts .loader {
+                        display: none
+                    }
+
+                    .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts .completed-contentts {
+                        display: flex;
+                        align-items: center
+                    }
+
+                        .full-w-wrapper .notes-wrapper .task-module-container .task-listing .task .taskHeader button.mark-completedts.completedts .completed-contentts .button-textts {
+                            margin-left: 8px
+                        }
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.full-w-wrapper .notes-wrapper .reminder-module-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: #e9eced
+}
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container::-webkit-scrollbar {
+        width: 5px
+    }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container::-webkit-scrollbar-track {
+        background: #dadada;
+        border-radius: 3px
+    }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container::-webkit-scrollbar-thumb {
+        background: #828282;
+        border-radius: 3px
+    }
+
+@supports not selector(::-webkit-scrollbar) {
+    .full-w-wrapper .notes-wrapper .reminder-module-container * {
+        scrollbar-color: #828282 #dadada
+    }
+}
+
+.full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    background: #fff;
+    padding: 1rem;
+    gap: .5rem;
+    border-bottom: 1px solid rgba(0,0,0,.1)
+}
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder h2 {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        margin: 0;
+        padding: 0;
+        font-weight: 600;
+        color: #000
+    }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea {
+        width: 100%;
+        padding: 1.5rem;
+        box-sizing: border-box;
+        height: 130px;
+        font-size: 14px;
+        line-height: 14px;
+        outline: 0;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 6px
+    }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:active, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:focus, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:hover {
+            border: 1px solid rgba(0,0,0,.3)
+        }
+
+            .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:active::-moz-placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:focus::-moz-placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:hover::-moz-placeholder {
+                color: #000
+            }
+
+            .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:active::placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:focus::placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder textarea:hover::placeholder {
+                color: #000
+            }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        padding: 1rem 0;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+        outline: 0;
+        box-sizing: border-box;
+        transition: all .15s ease;
+        background: 0 0
+    }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:active, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:focus, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:hover {
+            border-bottom: 1px dotted rgba(0,0,0,.4)
+        }
+
+            .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:active::-moz-placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:focus::-moz-placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:hover::-moz-placeholder {
+                color: #000
+            }
+
+            .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:active::placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:focus::placeholder, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=text]#reminderTitle:hover::placeholder {
+                color: #000
+            }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=date] {
+        width: 100%;
+        padding: .5rem 1rem;
+        box-sizing: border-box;
+        font-size: 1rem;
+        line-height: 1rem;
+        outline: 0;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 6px
+    }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=date]:active, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=date]:focus, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder input[type=date]:hover {
+            border: 1px solid rgba(0,0,0,.3)
+        }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder label {
+        font-size: 12px;
+        line-height: 12px;
+        font-weight: 700
+    }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder select {
+        width: 100%;
+        padding: .5rem .5rem;
+        box-sizing: border-box;
+        font-size: 1rem;
+        line-height: 1rem;
+        outline: 0;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 6px
+    }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder select:active, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder select:focus, .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder select:hover {
+            border: 1px solid rgba(0,0,0,.3)
+        }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder .taskControls {
+        display: flex;
+        width: 100%;
+        gap: 1rem;
+        margin-top: .5rem
+    }
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .add-reminder div.taskControlGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: .5rem;
+        flex: 1;
+        width: 100%;
+        max-width: 240px
+    }
+
+.full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: 1rem 1rem;
+    box-sizing: border-box
+}
+
+    .full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder {
+        display: flex;
+        width: 100%;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-radius: 12px;
+        padding: 1rem;
+        box-sizing: border-box;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        box-shadow: 0 0 5px transparent;
+        transition: all .12s ease;
+        flex-wrap: wrap;
+        width: 100% !important;
+        cursor: pointer;
+    }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder:hover {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,.2);
+            box-shadow: 0 0 5px rgba(0,0,0,.1)
+        }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder .reminder-section-01 {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1rem;
+            width: 75% !important;
+        }
+
+            .full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder .reminder-section-01 > h1,
+            .full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder .reminder-section-01 > h2 {
+                font-size: 1.25rem !important;
+                line-height: 1.25rem !important;
+                font-weight: 400;
+                width: 80%;
+                margin: 0;
+                padding: 0;
+                color: #000 !important;
+                font-weight: 700 !important;
+            }
+
+        .full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder .reminderContent {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 12px;
+            font-weight: 400 !important;
+            border-top: 1px solid #ccc;
+            padding-top: 1rem;
+        }
+
+.full-w-wrapper .notes-wrapper.unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none
+}
+
+.full-w-wrapper .notes-wrapper div.actionBar {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+	.full-w-wrapper .notes-wrapper div.actionBar a, .full-w-wrapper .notes-wrapper div.actionBar > div {
+		background: transparent;
+		padding: 4px;
+		border-radius: 6px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid transparent;
+		transition: all .15s ease;
+		box-shadow: 0 0 0 transparent
+	}
+	
+	.full-w-wrapper .notes-wrapper div.actionBar > div {
+    background: trasparent;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: all .15s ease;
+    box-shadow: 0 0 0 transparent;
+    cursor: pointer
+}
+
+    .full-w-wrapper .notes-wrapper div.actionBar > div img {
+        width: 16px;
+        height: 16px
+    }
+
+    .full-w-wrapper .notes-wrapper div.actionBar > div:hover {
+        border: 1px solid rgba(0,0,0,.12);
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,.15);
+        transform: scale(1.05)
+    }
+
+        .full-w-wrapper .notes-wrapper div.actionBar a img {
+            width: 16px;
+            height: 16px
+        }
+
+        .full-w-wrapper .notes-wrapper div.actionBar a:hover {
+            border: 1px solid rgba(0,0,0,.12);
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,.15);
+            transform: scale(1.05)
+        }
+
+.full-w-wrapper .notes-wrapper .actionButtons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .5rem;
+    padding: .5rem 0;
+    box-sizing: border-box
+}
+
+    .full-w-wrapper .notes-wrapper .actionButtons button {
+        font-size: 1rem;
+        padding: .5rem 1.5rem;
+        border: 0;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all .15s ease
+    }
+
+        .full-w-wrapper .notes-wrapper .actionButtons button.save {
+            background: #00b21c;
+            color: #fff;
+            padding: .5rem 2.5rem
+        }
+
+            .full-w-wrapper .notes-wrapper .actionButtons button.save:hover {
+                background: #00cf22
+            }
+
+        .full-w-wrapper .notes-wrapper .actionButtons button.cancel {
+            background: #d3d3d3;
+            padding: .5rem 1rem
+        }
+
+            .full-w-wrapper .notes-wrapper .actionButtons button.cancel:hover {
+                background: #e3e3e3
+            }
+
+.full-w-wrapper .notes-wrapper.resizable-indicator::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: rgba(0,0,0,0);
+    pointer-events: none;
+    border-left: 1px dashed rgba(0,0,0,.7)
+}
+
+.ql-toolbar {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: .5rem;
+    width: 100%
+}
+
+    .ql-toolbar .ql-header .ql-picker-label {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color: #fff;
+        color: #333
+    }
+
+    .ql-toolbar .ql-header .ql-picker-options {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 3px
+    }
+
+    .ql-toolbar .ql-header .ql-picker-item {
+        padding: 6px;
+        color: #333
+    }
+
+        .ql-toolbar .ql-header .ql-picker-item:hover {
+            background-color: #e0e0e0
+        }
+
+    .ql-toolbar button.ql-bold, .ql-toolbar button.ql-italic, .ql-toolbar button.ql-strike, .ql-toolbar button.ql-underline {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        color: #333;
+        border-radius: 3px;
+        margin-right: 5px
+    }
+
+        .ql-toolbar button.ql-bold:hover, .ql-toolbar button.ql-italic:hover, .ql-toolbar button.ql-strike:hover, .ql-toolbar button.ql-underline:hover {
+            background-color: #e0e0e0
+        }
+
+    .ql-toolbar button.ql-list[value=bullet], .ql-toolbar button.ql-list[value=ordered] {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        color: #333;
+        border-radius: 3px;
+        margin-right: 5px
+    }
+
+        .ql-toolbar button.ql-list[value=bullet]:hover, .ql-toolbar button.ql-list[value=ordered]:hover {
+            background-color: #e0e0e0
+        }
+
+    .ql-toolbar button.ql-clean {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        color: #333;
+        border-radius: 3px
+    }
+
+        .ql-toolbar button.ql-clean:hover {
+            background-color: #e0e0e0
+        }
+
+    .ql-toolbar button.ql-active {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff
+    }
+
+.ql-snow .ql-picker {
+    height: 32px !important;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 4px
+}
+
+.ql-snow .ql-editor h1, .ql-snow .ql-editor h2, .ql-snow .ql-editor h3 {
+    color: #000;
+}
+
+.note-popup-active {
+    overflow: hidden;
+}
+
+.note-body ol, .note-body ul {
+    margin: 0 0 0 40px;
+}
+
+/*.actionBar div {
+    padding: 4px;
+}*/
+
+.note-body h1 {
+    font-size: 2.2rem;
+    line-height: 2.4rem;
+    margin: 0 0 10px;
+}
+
+.note-body h2 {
+    font-size: 1.8rem;
+    line-height: 2rem;
+    margin: 0 0 10px;
+}
+
+.note-body h3 {
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+    margin: 0 0 10px;
+}
+
+.backdrop-popup {
+    background-color: rgba(0,0,0,.1);
+    box-sizing: border-box;
+    position: fixed;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    z-index: 99999;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+.note-popup-active .backdrop-popup {
+    display: block;
+}
+
+
+
+.full-w-wrapper .notes-wrapper .notes-header-container #createNotesBtn {
+    position: absolute;
+    width: 135px;
+    right: 1.8rem
+}
+
+    .full-w-wrapper .notes-wrapper .notes-header-container #createNotesBtn #createNote, .full-w-wrapper .notes-wrapper .notes-header-container #createNotesBtn #createTask,
+    .full-w-wrapper .notes-wrapper .notes-header-container #createNotesBtn #createReminder {
+        background-color: #00b21c;
+        border: 0;
+        padding: .5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all .15s ease;
+        display: none;
+        color: #fff;
+        font-size: 15px;
+        letter-spacing: 0.05rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .full-w-wrapper .notes-wrapper .notes-header-container #createNotesBtn #createNote {
+        display: flex;
+    }
+
+.select2-container.select2-container--default.select2-container--open {
+    z-index: 999999 !important;
+}
+
+.task-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder h1 {
+    font-size: 2.5rem;
+    line-height: 2.6rem;
+    margin: 0;
+    padding: 0;
+    color: #000;
+}
+
+.full-w-wrapper .notes-wrapper .reminder-module-container .reminder-listing .reminder h2 {
+    font-size: 2.1rem !important;
+    line-height: 2.4rem !important;
+    font-weight: 400 !important;
+    width: 80%;
+    margin: 0;
+    padding: 0;
+    color: #000;
+}
+
+.reminder-list {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.full-w-wrapper .notes-wrapper .notes-module-container .note-listing .note .note-header > h2 {
+    font-size: 1.5rem;
+    font-family: Quicksand, sans-serif !important;
+    line-height: 1.5rem;
+    margin: 0;
+    padding: 0;
+    font-weight: 700 !important;
+    color: #000 !important;
+}

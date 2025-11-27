@@ -1,0 +1,295 @@
+﻿@model List<EntityModels.Models.InvoiceUserProductMapLogList>
+@{
+
+    Layout = null;
+}
+@using Syncfusion.EJ2
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+
+    #modl {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .Edit {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .fixeds {
+        top: 248px;
+        position: fixed;
+        width: auto;
+        z-index: 999;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+
+    .abc {
+        color: blue;
+    }
+</style>
+<div id="loadbox"></div>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div id="grddata">
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body headertopbox special_bg" style="padding: 18px 20px 0px 20px !important;">
+            <div class="page-header-main position-relative gridPageHeader">
+                <div class="gridHeaderContainer1">
+                    <span class="gridTitle">Product Mapping Log</span>
+                </div>
+            </div>
+
+            <div class="control-section">
+                @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().AllowExcelExport().AllowPdfExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("AddEditRemove").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).Columns(col =>
+           {
+               col.Field("CDateTime").HeaderText("Date and Time").Filter(new { type = "Excel" }).Width("150").Add();
+               col.Field("Name").HeaderText("Name").Width("200").Add();
+               col.Field("Operation").HeaderText("Operation").Width("150").Add();
+               col.Field("InvoiceNumber").HeaderText("Invoice #").Width("150").Template("#InvoiceNoTemplate").Add();
+               col.Field("ItemNoOrUPCCode").HeaderText("Item No / UPC").Width("150").Add();
+               col.Field("Description").HeaderText("Item Name / Description").Width("200").Add();
+               col.Field("AffectedRows").HeaderText("Affected Rows").Width("150").Add();
+           }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(false).AllowEditing(false).AllowDeleting(false).ShowDeleteConfirmDialog(false).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Toolbar(new List<string>() { "Search", "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClick").Render()
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-jsrender" id="InvoiceNoTemplate">
+    <a onclick="Setvalues();" href="/Invoices/Details/${InvoiceId}" style="color:#3c7be5" target="_blank">${InvoiceNumber}</a>
+</script>
+<script>
+    $(document).ready(function () {
+        localStorage.removeItem("checkvalue");
+        AddEditRemove();
+        $("#InlineEditing_toolbarItems").find(".e-toolbar-items.e-tbar-pos").addClass("gridToolbar");
+        $("#InlineEditing_toolbarItems").find(".e-toolbar-items.e-tbar-pos").find(".e-toolbar-left").addClass("gridButtonContainer");
+    });
+    function dataBound(e) {
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+    var elem;
+    var dObj;
+    function create(args) {
+        elem = document.createElement('input');
+        return elem;
+    }
+    function write(args) {
+        let multiselectDatasource = [
+            { Country: 'France', Id: '1' },
+            { Country: 'Germany', Id: '2' },
+            { Country: 'Brazil', Id: '3' },
+            { Country: 'Switzerland', Id: '4' },
+            { Country: 'Venezuela', Id: '5' },
+        ];
+        dObj = new ej.dropdowns.MultiSelect({
+            value: args.rowData[args.column.field] ? args.rowData[args.column.field].split(',') : [],
+            placeholder: 'Add KeyWord',
+            //dataSource: multiselectDatasource,
+            //fields: { value: 'Country', text: 'Country' },
+            floatLabelType: 'Never',
+            mode: 'Box',
+            allowCustomValue: true
+        });
+        dObj.appendTo(elem);
+    }
+
+    function destroy() {
+        dObj.destroy();
+    }
+    function read(args) {
+        return dObj.value.join(',');
+    }
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $(".loading-container").attr("style", "display:block;")
+        }
+        else {
+            $(".loading-container").attr("style", "display:none;")
+        }
+
+    }
+    function GetLinkedItems(args) {
+        var grid = document.getElementById("InlineEditing").ej2_instances[0];
+        var checked = document.getElementById('checkedLinked').ej2_instances[0];
+        var checkvalue = checked.checked;
+        localStorage.setItem("checkvalue", checkvalue);
+        AddEditRemove();
+    }
+    function AddEditRemove(args) {
+        // extending the default UrlAdaptor
+
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.data))
+                    return data.data;
+                else
+                    return data;
+            }
+        }
+
+        var grid = document.querySelector('#InlineEditing').ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ProductMappingLog/UrlDatasource",
+            adaptor: new CustomAdaptor()
+        });
+
+    };
+</script>
+<style>
+    #typeddl {
+        min-width: 100px;
+    }
+</style>
+<script>
+
+    function rowPositionChange(args) {
+        var grid = document.getElementById("InlineEditing").ej2_instances[0];
+        grid.editSettings.newRowPosition = this.value;
+    }
+
+    function actionComplete(args) {
+    }
+    function actionBegin(args) {
+        
+    }
+
+    function toolbarClick(args) {
+        var gridObj = document.getElementById("InlineEditing").ej2_instances[0];
+        if (args.item.id === "InlineEditing_excelexport") {
+            gridObj.serverPdfExport("/ProductMappingLog/ExcelExport");
+        }
+        if (args.item.id === "InlineEditing_pdfexport") {
+            gridObj.serverPdfExport("/ProductMappingLog/PdfExport");
+        }
+    }
+</script>
+@Html.EJS().ScriptManager()

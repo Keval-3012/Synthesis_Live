@@ -1,0 +1,574 @@
+@using Utility
+<!-- /Page Sidebar -->
+@{
+    Layout = null;
+}
+
+@{
+    string ControllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    string ActionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    string id = null;
+    //
+    if (HttpContext.Current.Request.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = HttpContext.Current.Request.RequestContext.RouteData.Values["id"].ToString();
+    }
+
+    if (ControllerName.ToLower() != "admininclude" && ActionName.ToLower() != "error" && ActionName.ToLower() != "pdfviewerdata")
+    {
+        Session["CurrentPageName"] = ControllerName + "/" + ActionName;
+
+    }
+
+    <div class="page-sidebar  sidebar-fixed menu-compact " id="sidebar">
+        <aside id="menu" class="printorder">
+            <div id="navigation" class="printorder">
+                <ul class="nav sidebar-menu fnt_set2 icon_color_wight">
+
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDashboardWeeklyDashboard") || Roles.IsUserInRole("ViewDashboardDailyDashboard") || Roles.IsUserInRole("ViewDashboardPeriodicDashboard") || Roles.IsUserInRole("ViewWeeklyDashboard") || Roles.IsUserInRole("ViewDailyDashboard") || Roles.IsUserInRole("ViewPeriodicDashboard"))
+                    {
+
+                        <li @{if (ControllerName == "dashboard") { <text> class="active open" </text>  }}>
+                            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDashboardDailyDashboard") || Roles.IsUserInRole("ViewDailyDashboard"))
+                            {
+                                <a href="@Url.Action("Daily", "Dashboard")" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/dashboard.svg" alt="" /></i><span>Dashboards</span>  </a>
+                            }
+                            else if (Roles.IsUserInRole("ViewDashboardWeeklyDashboard") || Roles.IsUserInRole("ViewWeeklyDashboard"))
+                            {
+                                <a href="@Url.Action("Weekly", "Dashboard")" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/dashboard.svg" alt="" /></i><span>Dashboards</span>  </a>
+                            }
+                            else if (Roles.IsUserInRole("ViewDashboardPeriodicDashboard") || Roles.IsUserInRole("ViewPeriodicDashboard"))
+                            {
+                                <a href="@Url.Action("Periodic", "Dashboard")" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/dashboard.svg" alt="" /></i><span>Dashboards</span>  </a>
+                            }
+                            <ul class="submenu">
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDashboardDailyDashboard") || Roles.IsUserInRole("ViewDailyDashboard"))
+                                {
+                                    <li @{if (ControllerName == "dashboard" && ActionName == "daily") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Daily", "Dashboard")">
+                                            <span class="menu-text">Daily Dashboard</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDashboardWeeklyDashboard") || Roles.IsUserInRole("ViewWeeklyDashboard"))
+                                {
+                                    <li @{if (ControllerName == "dashboard" && ActionName == "weekly") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Weekly", "Dashboard")">
+                                            <span class="menu-text">Weekly Dashboard</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewPeriodicDashboard") || Roles.IsUserInRole("ViewDashboardPeriodicDashboard"))
+                                {
+                                    <li @{if (ControllerName == "dashboard" && ActionName == "periodic") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Periodic", "Dashboard")">
+                                            <span class="menu-text">Periodic Dashboard</span>
+                                        </a>
+                                    </li>
+
+                                }
+                                @if (Roles.IsUserInRole("Administrator"))
+                                {
+                                    <li @{if (ControllerName == "dashboard" && ActionName == "yearly") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Yearly", "Dashboard")">
+                                            <span class="menu-text">Yearly Dashboard</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewPriceComparison"))
+                                {
+                                    <li @{if (ControllerName == "productprice" && ActionName == "ProductPrice") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("ProductPrice", "ProductPrice")">
+                                            <span>Cost Price Comparison</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewSellPriceComparison"))
+                                {
+                                    <li @{if (ControllerName == "sellprice" && ActionName == "SellPrice") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("SellPrice", "SellPrice")">
+                                            <span>Sales Price Comparison</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewTopSellerPrice"))
+                                {
+                                    <li @{if (ControllerName == "TopsellerPrice" && ActionName == "TopSellerPrice") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("TopSellerPrice", "TopsellerPrice")">
+                                            <span>Top Seller Items</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+
+                    <li @{if (ControllerName == "invoices" || ControllerName == "bulkuploadfile") { <text> class="active open" </text>  }}>
+                        <a href="@Url.Action("IndexBeta", "Invoices")" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/invoice.svg" alt="" /></i><span>Invoices</span>  </a>
+                        <ul class="submenu">
+                            <li @{if (ControllerName == "invoices" && ActionName == "IndexBeta") { <text> class="active" </text>  }}>
+                                <a onclick="SetItem()" href="@Url.Action("IndexBeta", "Invoices")">
+                                    <span class="menu-text">View Invoices</span>
+                                </a>
+                            </li>
+                            @*@if (Roles.IsUserInRole("Administrator"))
+                                {
+                                    <li @{if (ControllerName == "invoices" && ActionName == "indexbeta") { <text> class="active" </text>  }}>
+                                        <a onclick="SetItem()" href="@Url.Action("IndexBeta", "Invoices")">
+                                            <span class="menu-text">View Invoices Beta</span>
+                                        </a>
+                                    </li>
+                                }*@
+                            @*@if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateInvoice") || Roles.IsUserInRole("UpdateInvoice") || Roles.IsUserInRole("DeleteInvoice"))
+                                {
+                                    <li @{if (ControllerName == "invoices" && ActionName == "create") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Create", "Invoices")">
+                                            <span class="menu-text">Add Invoice</span>
+                                        </a>
+                                    </li>
+                                }*@
+                            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewBulkUploadFile"))
+                            {
+                                <li @{if (ControllerName == "invoices" && ActionName == "InvoiceAutomationGrid") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("InvoiceAutomationGrid", "Invoices")">
+                                        <span>Add Invoice(s)</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateSplitInvoice"))
+                            {
+                                <li @{if (ControllerName == "invoices" && ActionName == "createsplitinvoice") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("CreateSplitInvoice", "Invoices")">
+                                        <span class="menu-text">Add Split Invoice</span>
+                                    </a>
+                                </li>
+                            }
+                            @*@if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewBulkUploadFile"))
+                                {
+                                    <li @{if (ControllerName == "bulkuploadfile" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "BulkUploadFile")">
+                                            <span>Add Bulk Invoices</span>
+                                        </a>
+                                    </li>
+                                }*@
+                            @if (Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if (ControllerName == "Invoices" && ActionName == "index") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("ViewInvoice", "Invoices")">
+                                        <span>Invoice File Read</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if (ControllerName == "Invoices" && ActionName == "InvoiceCount") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("InvoiceCount", "Invoices")">
+                                        <span>Invoice Counts</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewInvoiceProducts") || Roles.IsUserInRole("ViewItemsLibrary") || Roles.IsUserInRole("ViewLineItems"))
+                    {
+
+                        <li @{if (ControllerName == "invoicepreview" || ControllerName == "productmappings") { <text> class="active open" </text>  }}>
+                            <a href="#" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/price-finder.svg" alt="" /></i><span>Inventory</span>  </a>
+                            <ul class="submenu">
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewItemsLibrary"))
+                                {
+                                    <li @{if (ControllerName == "productsmappings") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("ImportProductExcel", "ProductMappings")">
+                                            <span class="menu-text">Items Library</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewInvoiceProducts"))
+                                {
+                                    <li @{if (ControllerName == "invoicepreview") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "InvoicePreview")">
+                                            <span class="menu-text">Vendor Product Lists</span>
+                                        </a>
+                                    </li>
+
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewLineItems"))
+                                {
+                                    <li @{if (ControllerName == "lineitem" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "LineItem")">
+                                            <span>Line Items</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator"))
+                                {
+                                    <li @{if (ControllerName == "itemmovement" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "ItemMovement")">
+                                            <span>Items Movement Reports</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("AllExpenseCheck") || Roles.IsUserInRole("IncludeExpenseCheck") || Roles.IsUserInRole("ExcludeExpenseCheck") || Roles.IsUserInRole("ViewHomeExpenseDetail") || Roles.IsUserInRole("ViewUnclearedChecks")
+                        || Roles.IsUserInRole("AddExpenseExpenseCheck") || Roles.IsUserInRole("UpdateExpenseExpenseCheck") || Roles.IsUserInRole("DeleteExpenseExpenseCheck") || Roles.IsUserInRole("AddBulkExpensesExpenseCheck") || Roles.IsUserInRole("AddCheckExpenseCheck") 
+                        || Roles.IsUserInRole("UpdateCheckExpenseCheck") || Roles.IsUserInRole("DeleteCheckExpenseCheck") || Roles.IsUserInRole("PrintExpenseCheck") || Roles.IsUserInRole("AddBulkChecksExpenseCheck"))
+                    {
+                        <li @{if ((ControllerName == "ExpenseAccounts" && ActionName == "expensecheckindexnew") || (ControllerName == "expenseweeklysetting" && ActionName == "homeexpenseindexnew")) { <text> class="active" </text>  }}>
+                            <a href="#" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/expenses.svg" alt="" /></i> <span>Expense</span> </a>
+                            <ul class="submenu">
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("AllExpenseCheck") || Roles.IsUserInRole("IncludeExpenseCheck") || Roles.IsUserInRole("ExcludeExpenseCheck") || Roles.IsUserInRole("AddExpenseExpenseCheck") || Roles.IsUserInRole("UpdateExpenseExpenseCheck")
+                                    || Roles.IsUserInRole("DeleteExpenseExpenseCheck") || Roles.IsUserInRole("AddCheckExpenseCheck") || Roles.IsUserInRole("UpdateCheckExpenseCheck") || Roles.IsUserInRole("DeleteCheckExpenseCheck") || Roles.IsUserInRole("PrintExpenseCheck"))
+                                {
+                                    <li @{if ((ControllerName == "ExpenseAccounts" && ActionName == "ExpenseCheckIndexNew")) { <text> class="active" </text>  }}><a href="@Url.Action("ExpenseCheckIndexNew", "ExpenseAccounts")"> <span>Expenses/Checks</span> </a></li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("AddExpenseExpenseCheck"))
+                                {
+                                    <li @{if ((ControllerName == "ExpenseAccounts" && ActionName == "ExpenseAddNew")) { <text> class="active" </text>  }}><a href="@Url.Action("ExpenseAddNew", "ExpenseAccounts")"> <span>Add Expense</span> </a></li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator")  || Roles.IsUserInRole("AddBulkExpensesExpenseCheck"))
+                                {
+                                    <li @{if ((ControllerName == "ExpenseAccounts" && ActionName == "ExpenseBulkTransaction")) { <text> class="active" </text>  }}><a href="@Url.Action("ExpenseBulkTransaction", "ExpenseAccounts")"> <span>Add Bulk Expenses</span> </a></li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("AddCheckExpenseCheck"))
+                                {
+                                    <li @{if ((ControllerName == "ExpenseAccounts" && ActionName == "CheckAddNew")) { <text> class="active" </text>  }}><a href="@Url.Action("CheckAddNew", "ExpenseAccounts")"> <span>Add Check</span> </a></li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("AddBulkChecksExpenseCheck"))
+                                {
+                                    <li @{if ((ControllerName == "ExpenseAccounts" && ActionName == "ExpenseCheckBulkTransaction")) { <text> class="active" </text>  }}><a href="@Url.Action("ExpenseCheckBulkTransaction", "ExpenseAccounts")"> <span>Add Bulk Checks</span> </a></li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewHomeExpenseDetail"))
+                                {
+                                    <li @{if ((ControllerName == "ExpenseWeeklySetting" && ActionName == "HomeExpenseIndexNew")) { <text> class="active" </text>  }}><a href="@Url.Action("HomeExpenseIndexNew", "ExpenseWeeklySetting")"> <span>Homesome Expenses</span> </a></li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewUnclearedChecks"))
+                                {
+                                    <li @{if ((ControllerName == "CheckListExpense" && ActionName == "checklistindexnew")) { <text> class="active" </text>  }}><a href="@Url.Action("checklistindexnew", "CheckListExpense")"> <span>Uncleared Checks</span> </a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    @*@if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewPayrollReports"))
+                        {
+                            <li @{if ((ControllerName == "pdfread" && ActionName == "getdetail") || (ControllerName == "pdfread" && ActionName == "create")) { <text> class="active" </text>  }}>
+                                <a href="#" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/payroll.svg" alt="" /></i> <span>Payroll</span> </a>
+                                <ul class="submenu">
+                                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewSalesSummaryReport"))
+                                    {
+                                        <li @{if ((ControllerName == "pdfread" && ActionName == "getdetail") || (ControllerName == "pdfread" && ActionName == "create")) { <text> class="active" </text>  }}>
+                                            <a href="@Url.Action("Create", "PDFRead")"><span>Payroll Files </span> </a>
+                                        </li>
+                                    }
+                                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewTimeCard"))
+                                    {
+                                        <li @{if ((ControllerName == "ManageIPAddress" && ActionName == "UserTimeHourse")) { <text> class="active" </text>  }}>
+                                            <a href="@Url.Action("UserTimeHourse", "ManageIPAddress")"><span>Employee Timecards </span> </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }*@
+
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewSalesSummaryReport") || Roles.IsUserInRole("ViewCOGsReport") || Roles.IsUserInRole("ViewOperatingRatioReport") || Roles.IsUserInRole("ActivityLogSettings") || Roles.IsUserInRole("ViewCOGsReport"))
+                    {
+                        <li @{if ((ControllerName == "report" && ActionName == "salessummaryreport") || (ControllerName == "invoicereport" && ActionName == "index") || (ControllerName == "report" && ActionName == "operatingratioreport")) { <text> class="active open" </text>  }}>
+                            <a href="#" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/report.svg" alt="" /></i> <span>Reports</span> </a>
+                            <ul class="submenu">
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewSalesSummaryReport"))
+                                {
+                                    <li @{if (ControllerName == "report" && ActionName == "salessummaryreport") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("SalesSummaryReport", "Report")">
+                                            <span class="menu-text">Sales Summary Report</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewCOGsReport"))
+                                {
+                                    <li @{if (ControllerName == "invoicereport" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "InvoiceReport")">
+                                            <span class="menu-text">COGS/Bills Report</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewExpenseReport"))
+                                {
+                                    <li @{if (ControllerName == "expensereport" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "ExpenseReport")">
+                                            <span class="menu-text">Expense Report</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewOperatingRatioReport"))
+                                {
+                                    <li @{if (ControllerName == "report" && ActionName == "operatingratioreport") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("OperatingRatioReport", "Report")">
+                                            <span class="menu-text">Operating Ratios Report</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewPayrollAnalysisReport"))
+                                {
+                                    <li @{if (ControllerName == "report" && ActionName == "PayrollAnalysisReport") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("PayrollAnalysisReport", "Report")">
+                                            <span class="menu-text">Payroll Analysis Report</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </li>
+                    }
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewQBVendor") || Roles.IsUserInRole("ViewQBDepartment"))
+                    {
+                        <li @{if (ControllerName == "qbconfiguration" || ControllerName == "vendormasters" || ControllerName == "ChartofAccounts") { <text> class="active open" </text>  }}>
+                            <a href="#" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/quickBooks.svg" alt="" /></i> <span>Quickbooks </span> </a>
+                            <ul class="submenu">
+                                @if (Roles.IsUserInRole("Administrator"))
+                                {
+                                    <li @{if (ControllerName == "QBConfiguration") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("QBSyncOnlineData", "QBConfiguration")">
+                                            <span class="menu-text">QuickBook Sync Start/Stop</span>
+                                        </a>
+                                    </li>
+                                    <li @{if (ControllerName == "QBConfiguration") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "QBConfiguration")">
+                                            <span class="menu-text">Quickbooks Configuration</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewQBVendor"))
+                                {
+                                    <li @{if (ControllerName == "vendormasters") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "VendorMasters")">
+                                            <span class="menu-text">Vendors</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewQBDepartment"))
+                                {
+                                    <li @{if (ControllerName == "ChartofAccounts") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "ChartofAccounts")">
+                                            <span class="menu-text">Chart of Accounts</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator"))
+                                {
+                                    <li @{if (ControllerName == "vendormasters") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("MergeVendor", "vendormasters")">
+                                            <span class="menu-text">Merge Vendor</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDailyPOSFeeds") || Roles.IsUserInRole("ViewShiftWiseReport") || Roles.IsUserInRole("ViewJournalEntries"))
+                    {
+                        <li @{if ((ControllerName == "report" && ActionName == "dailyposfeeds") || ControllerName == "terminal" || ControllerName == "journalentries" || ControllerName == "stats" || ControllerName == "generalentries") { <text> class="active open" </text>  }}>
+                            <a href="#" class="menu-dropdown"><i class="menu-icon"><img src="~/Content/Admin/images/register.svg" alt="" /></i> <span>Registers</span> </a>
+                            <ul class="submenu">
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDailyPOSFeeds"))
+                                {
+                                    <li @{if (ControllerName == "report" && ActionName == "dailyposfeeds") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("DailyPosFeeds", "Report")">
+                                            <span class="menu-text">Daily POS Feeds</span>
+                                        </a>
+                                    </li>
+                                    //}
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewShiftWiseReport"))
+                                {
+                                    <li @{if (ControllerName == "terminal" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "Terminal")">
+                                            <span class="menu-text">Shifts/Registers Close Out</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewJournalEntries"))
+                                {
+                                    <li @{if ((ControllerName == "journalentries" && ActionName == "index") || (ControllerName == "journalentries" && ActionName == "detail")) { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("JournalEntriesIndex", "JournalEntries")"><span>Journal Entries </span> </a>
+                                    </li>
+                                }
+                                @*@if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewPayrollReports"))
+                                    {
+                                        <li @{if ((ControllerName == "report" && ActionName == "payrollexpense") || (ControllerName == "report" && ActionName == "payrollexpensedetail")) { <text> class="active" </text>  }}>
+                                            <a href="@Url.Action("PayrollExpense", "Report")">
+                                                <span class="menu-text">Payroll Expense</span>
+                                            </a>
+                                        </li>
+                                    }*@
+                                @if (Roles.IsUserInRole("Administrator"))
+                                {
+                                    <li @{if (ControllerName == "deletehourlyfiles" && ActionName == "index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("DeleteHourlyFileIndex", "DeleteHourlyFiles")">
+                                            <span>Hourly POS feeds</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    <li @{if ((ControllerName == "HRStoreManagers" && ActionName == "Index") || (ControllerName == "HRDepartmentMasters" && ActionName == "Index") || (ControllerName == "HRConsentMasters" && ActionName == "ConsentStatusList") || (ControllerName == "HRAdmins" && ActionName == "Index") || (ControllerName == "HREmployee" && ActionName == "Index") || (ControllerName == "pdfread" && ActionName == "getdetail") || (ControllerName == "pdfread" && ActionName == "create") || (ControllerName == "ManageIPAddress" && ActionName == "UserTimeHourse") || (ControllerName == "report" && ActionName == "payrollexpense")) { <text> class="active open" </text>  }}>
+                        @if (ViewBag.HRAdmin == true || ViewBag.HRSuperAdmin == true || Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewManageDepartmentHRModule") || Roles.IsUserInRole("ViewConsentStatusHRModule") || Roles.IsUserInRole("ViewEmployeeListHRModule") || Roles.IsUserInRole("ViewPayrollReports") || Roles.IsUserInRole("ViewTimeCard"))
+                        {
+                            <a href="@Url.Action("Index", "HREmployee")" class="menu-dropdown"><i class="menu-icon other-nav"><img src="~/Content/Admin/images/hr.svg" alt="" /></i> <span>HR</span> </a>
+                        }
+                        <ul class="submenu">
+                            @if (ViewBag.HRAdmin == true || ViewBag.HRSuperAdmin == true || Roles.IsUserInRole("ViewPayrollReports") || Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if ((ControllerName == "pdfread" && ActionName == "getdetail") || (ControllerName == "pdfread" && ActionName == "create")) { <text> class="" </text>  }}>
+                                    <a href="@Url.Action("Create", "PDFRead")">
+                                        <span>Payroll Files</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.HRAdmin == true || Roles.IsUserInRole("ViewEmployeeListHRModule") || Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if (ControllerName == "HREmployee" && ActionName == "Index") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("Index", "HREmployee")">
+                                        <span>Employees List</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.HRAdmin == true || ViewBag.HRSuperAdmin == true || Roles.IsUserInRole("ViewTimeCard") || Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if ((ControllerName == "ManageIPAddress" && ActionName == "UserTimeHourse")) { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("UserTimeHourse", "ManageIPAddress")">
+                                        <span>Employees Timecards</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewPayrollReports"))
+                            {
+                                <li @{if ((ControllerName == "report" && ActionName == "payrollexpensesindex") || (ControllerName == "report" && ActionName == "payrollexpensedetail")) { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("PayrollExpensesIndex", "Report")">
+                                        <span class="menu-text">Payroll Expense</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.HRAdmin == true || Roles.IsUserInRole("ViewConsentStatusHRModule") || Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if (ControllerName == "HRConsentMasters" && ActionName == "ConsentStatusList") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("ConsentStatusList", "HRConsentMasters")">
+                                        <span>Consent Status</span>
+                                    </a>
+                                </li>
+                            }
+                            @*@if (ViewBag.HRSuperAdmin == true)
+                                {
+                                    <li @{if (ControllerName == "HRAdmins" && ActionName == "Index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "HRAdmins")">
+                                            <span>HR Admins</span>
+                                        </a>
+                                    </li>
+                                }*@
+                            @if (ViewBag.HRAdmin == true || Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if (ControllerName == "HRStoreManagers" && ActionName == "Index") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("Index", "HRStoreManagers")">
+                                        <span>Mobile App User</span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.HRSuperAdmin == true || Roles.IsUserInRole("ViewManageDepartmentHRModule") || Roles.IsUserInRole("Administrator"))
+                            {
+                                <li @{if (ControllerName == "HRDepartmentMasters" && ActionName == "Index") { <text> class="active" </text>  }}>
+                                    <a href="@Url.Action("Index", "HRDepartmentMasters")">
+                                        <span>Store Departments</span>
+                                    </a>
+                                </li>
+                            }
+                            @*@if (ViewBag.HRAdmin == true)
+                                {
+                                    <li @{if (ControllerName == "HRConsentMasters" && ActionName == "Index") { <text> class="active" </text>  }}>
+                                        <a href="@Url.Action("Index", "HRConsentMasters")">
+                                            <span>Consent</span>
+                                        </a>
+                                    </li>
+                                }*@
+
+                            @*@if (ViewBag.HRAdmin == true)
+                                 {
+                                     <li @{if (ControllerName == "HRTraining" && ActionName == "Index") { <text> class="active" </text>  }}>
+                                         <a href="@Url.Action("Index", "HRTraining")">
+                                             <span>Reset Training</span>
+                                         </a>
+                                     </li>
+                                }*@
+                        </ul>
+                    </li>
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewDocument") || Roles.IsUserInRole("CreateDocument") || Roles.IsUserInRole("UpdateDocument") || Roles.IsUserInRole("DeleteDocument"))
+                    {
+                        <li @{if (ControllerName == "documents") { <text> class="active" </text>  }}>
+                            <a href="@Url.Action("MyDocumentIndex", "Documents")"><i class="menu-icon"><img src="~/Content/Admin/images/documents.svg" alt="" /></i> <span> My Documents</span> </a>
+                        </li>
+                    }
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewCustomerModule") || Roles.IsUserInRole("CreateCustomersCustomerModule"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "CustomerInformation")" class="menu-dropdown"><i class="menu-icon other-nav"><img src="~/Content/Admin/images/crm.svg" /></i><span>CRM</span> </a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="@Url.Action("Index","CustomerInformation")"> <span>Customers Information</span> </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("CustomerReciept","CustomerInformation")"><span>Customers Receipts </span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </aside>
+    </div>
+}
+
+<script>
+    function SetItem() {
+        localStorage.removeItem("DashboardFilter_AmtMinimum");
+        localStorage.removeItem("DashboardFilter_AmtMaximum");
+        localStorage.removeItem("DashboardFilter_StartDate");
+        localStorage.removeItem("DashboardFilter_EndDate");
+        localStorage.removeItem("DashboardFilter_Payment1");
+        localStorage.removeItem("DashboardFilter_Payment2");
+        localStorage.removeItem("DashboardFilter_Department");
+        localStorage.removeItem("Dashboard_Vendor");
+        localStorage.removeItem("DashboardFilter_SearchVendor");
+        localStorage.removeItem("Dashboard_SearchFlg");
+        localStorage.removeItem("VendorIsAsc");
+
+        localStorage.removeItem("PriceFilter_StartDate");
+        localStorage.removeItem("PriceFilter_EndDate");
+        localStorage.removeItem("PriceFilter_Store");
+        localStorage.removeItem("PriceFilter_SearchVendor");
+        localStorage.removeItem("PriceFilter_SearchFlg");
+        localStorage.removeItem("PriceFilter_Vendors");
+
+        localStorage.removeItem("ECheckFilter_StartDate");
+        localStorage.removeItem("ECheckFilter_EndDate");
+        localStorage.removeItem("ECheckFilter_Store");
+        localStorage.removeItem("ECheckFilter_SearchVendor");
+        localStorage.removeItem("ECheckFilter_SearchFlg");
+
+        localStorage.removeItem("DepartmentIsAsc");
+            $.ajax({
+                url: '@AdminSiteConfiguration.GetURL()/Invoices/ClearSession',
+                data: {},
+                beforeSend: function () {
+                },
+                success: function (response) {
+                }
+            });
+    }
+</script>

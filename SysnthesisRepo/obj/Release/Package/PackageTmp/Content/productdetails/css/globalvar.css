@@ -1,0 +1,60 @@
+.green02bg {
+  background: #4CC010;
+}
+
+.green01bg {
+  background: #AEEB8E;
+}
+
+.lightgrey01bg {
+  background: #D7D7D7;
+}
+
+.Red01bg {
+  background: #FF9999;
+}
+
+.Red02bg {
+  background: #CD2020;
+}
+
+::-webkit-input-placeholder {
+  color: #fff !important;
+}
+
+::-moz-placeholder {
+  color: #fff !important;
+}
+
+:-ms-input-placeholder {
+  color: #fff !important;
+}
+
+:-moz-placeholder {
+  color: #fff !important;
+}
+
+.box01bg {
+  background: #7EEDF9 !important;
+}
+
+.box02bg {
+  background: #A27EF9 !important;
+}
+
+.box03bg {
+  background: #F97EB3 !important;
+}
+
+.box04bg {
+  background: #ECB623 !important;
+}
+
+.box05bg {
+  background: #EC8123 !important;
+}
+
+.box06bg {
+  background: #23BCEC !important;
+}
+/*# sourceMappingURL=globalvar.css.map */

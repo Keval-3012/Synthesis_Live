@@ -1,0 +1,68 @@
+﻿@model EntityModels.Models.Terminal_Select
+@using EntityModels.Models;
+@using Utility;
+@{
+    Layout = null;
+}
+<div class="tab-content">
+    <div id="data" class="tab-pane in active">
+        <div class="tabsublinks">
+            @if (Model.ShiftData != null && Model.ShiftData.Count != 0)
+            {
+                <ul class="nav nav-tabs" id="mySubTab">
+                    @{
+                        if (Model.ShiftData[0].ShiftdataList != null)
+                        {
+                            for (int k = 0; k < Model.ShiftData[0].ShiftdataList.Count; k++)
+                            {
+                                var shiftidval = "shift" + k;
+                                var terminalid_val = "ter" + k;
+                                var lishiftid = "lishift_" + Model.ShiftData[0].ShiftdataList[k].Id.ToString();
+                                var aa1 = "lishifts_" + Model.ShiftData[0].ShiftdataList[k].SalesActivitySummaryId.ToString();
+                                <input type="hidden" id="@shiftidval" name="@shiftidval" value="@Model.ShiftData[0].ShiftdataList[k].SalesActivitySummaryId.ToString()" />
+                                <input type="hidden" id="@terminalid_val" name="@terminalid_val" value="@Model.ShiftData[0].terminalid.ToString()" />
+                                <li class="lishift" id="@lishiftid">
+                                    <a id="@aa1" href="#@Model.ShiftData[0].ShiftdataList[k].SalesActivitySummaryId" class="tt" data-toggle="tab" aria-expanded="true" onclick="BindShifttenderData(@Model.ShiftData[0].terminalid,@Model.ShiftData[0].ShiftdataList[k].SalesActivitySummaryId)">@Model.ShiftData[0].ShiftdataList[k].ShiftName</a>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+                <div class="customer-count">
+                    <span>Customer Count (All Shifts)  <strong>@AdminSiteConfiguration.RoundPriceWithComma(Convert.ToString(Model.ShiftData[0].CustomerCount))</strong></span>
+                    <span>Net Sales with Taxes <strong>$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.ShiftData[0].SalesAmount))</strong></span>
+                </div>
+                <div id="shifttenderdata">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }   
+    docReady(function () {
+        $("#lblCustCount").text(@Model.Coustomercount);
+        $("#lblTotalSaleAmt").text(@Model.totalsalesamount);
+        $("#lblTotalAvgSale").text("@Model.totalavgsales");
+        $("#lblTotalCash").text("@Model.totalcash");
+        $("#lblTotalOverShort").text("@Model.totalOverShort");
+        var aa = @Model.totalOverShort;
+        if (aa == 0) {
+            $("#lblTotalOverShort").css("color", "grey");
+        }
+        else if (aa < 0) {
+            $("#lblTotalOverShort").css("color", "red");
+        }
+        else {
+            $("#lblTotalOverShort").css("color", "green");
+        }
+    });
+</script>

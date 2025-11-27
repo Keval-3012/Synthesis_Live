@@ -1,0 +1,777 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .header {
+        color: black;
+        font-size: 35px;
+        margin: 0px;
+    }
+
+    .change {
+        color: black !important;
+        text-decoration: unset;
+    }
+
+    .tooltipTop {
+        display: inline-block;
+        position: relative;
+        border-bottom: 1px dotted #666;
+        text-align: left;
+    }
+
+        .tooltipTop .top {
+            min-width: 100px;
+            transform: translate(-50%, -100%);
+            padding: 10px 20px;
+            color: #444444;
+            background-color: #EEEEEE;
+            font-weight: normal;
+            font-size: 13px;
+            border-radius: 8px;
+            position: fixed;
+            z-index: 99999;
+            box-sizing: border-box;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .tooltipTop:hover .top {
+            display: block;
+        }
+
+        .tooltipTop .top i {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -12px;
+            width: 24px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+            .tooltipTop .top i::after {
+                content: '';
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                left: 50%;
+                transform: translate(-50%,-50%) rotate(45deg);
+                background-color: #EEEEEE;
+                box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            }
+
+    .greybox {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: lightgrey;
+        margin-left:7px;
+    }
+
+    .Green01box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #AEEB8E;
+        margin-left:7px;
+    }
+
+    .Red01box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #FF9999;
+        margin-left: 7px;
+    }
+
+    .Green02box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #4CC010;
+        margin-left: 7px;
+    }
+
+    .Red02box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #CD2020;
+        margin-left: 7px;
+    }
+    .selectedFilterColor{
+        border:5px solid;
+        border-color:black;
+    }
+    .e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+        /* background-color: red; */
+        /* border-color: #ced4da; */
+        width: 20px;
+        height: 20px;
+       
+    }
+    .e-checkbox-wrapper .e-check, .e-css.e-checkbox-wrapper .e-check {
+        font-size: 12px;
+    }
+    ul li {
+        list-style-type: none;
+    }
+
+    .gridboxs {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 0px;
+    }
+
+        .gridboxs li {
+            margin: 0px 4px;
+            color: #979797;
+        }
+
+            .gridboxs li:first-child {
+                margin-left: 0px;
+            }
+
+            .gridboxs li:last-child {
+                margin-right: 0px;
+            }
+
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 78px !important;
+    }
+
+    .exludefilterbox span {
+        height: 32px !important;
+        width: 32px !important;
+        margin-right: 12px;
+    }
+</style>
+<div class="row" style="padding: 25px 25px;">
+    <div class="col-md-12">
+        <h1 class="header">Price Comparison</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3" style="margin-left: 17px;">
+        @Html.EJS().DateRangePicker("daterangepicker").StartDate(ViewBag.StartDate).EndDate(ViewBag.EndDate).Change("OnChange").Render()
+    </div>
+    <div class="col-md-3" style="margin-left: 17px;">
+
+        @Html.EJS().DropDownList("Vendor").DataSource(
+                     (IEnumerable<Object>)ViewBag.Vendor).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorName" }).Value("All").Change("OnChangeVendor").AllowFiltering(true).Filtering("onfilteringvendor").Render()
+    </div>
+    <div class="col-md-2" style="margin-left: 17px;">
+        @Html.EJS().DropDownList("Department").Placeholder("Select a Department").DataSource(
+                    (IEnumerable<Object>)ViewBag.Department).Fields(new DropDownListFieldSettings { Text = "DepartmentName", Value = "DepartmentName" }).AllowFiltering(true).Filtering("onfiltering").Enabled(false).Render()
+    </div>
+
+    <div class="col-md-2" style="margin-left: 17px;">
+        @Html.EJS().CheckBox("checkedgreen01").Checked(false).Change("Getdatabycolor").CssClass("Green01box").Value("1").Render()
+        @*<span class="Green01box" id="Green01box"></span>*@
+        @Html.EJS().CheckBox("checkedgreen02").Checked(false).Change("Getdatabycolor").CssClass("Green02box").Value("0").Render()
+        @*<span class="Green02box" id="Green02box"></span>*@
+        @Html.EJS().CheckBox("checkedgrey").Checked(false).Change("Getdatabycolor").CssClass("greybox").Value("2").Render()
+       @* <span class="greybox" id="greybox"></span>*@
+        @Html.EJS().CheckBox("checkedRed01").Checked(false).Change("Getdatabycolor").CssClass("Red01box").Value("3").Render()
+       @* <span class="Red01box" id="Red01box"></span>*@
+        @Html.EJS().CheckBox("checkedRed02").Checked(false).Change("Getdatabycolor").CssClass("Red02box").Value("4").Render()
+       @* <span class="Red02box" id="Red02box"></span>*@
+
+    </div>
+    <div class="col-md-1" style="margin-left: -17px;">
+        <button type="button" class="btnadddocument" onclick="undofilters();" style="width:100px; border:none;">Reset</button>
+    </div>
+
+</div>
+<div id="gridvaluechange" style="margin: 12px 20px 10px 20px"></div>
+<script id="template" type="text/x-template">
+    <div>
+        <p style="margin: 0px;">${UPC}</p>
+        ${if(Brand != null)}
+        <p style="margin: 0px;">${Brand}</p>
+        ${else}
+        <p style="margin: 0px; display:none;">${Brand}</p>
+        ${/if}
+        <a href="/LineItem/ProductDetailLineItem?UPC=${InvoiceUpc}" target="_blank">${Descritpion}</a>
+    </div>
+</script>
+<script id="boxItem" type="text/x-template">
+    ${statusDetail(data)}
+</script>
+
+<script>
+    function dataBound(e) {
+        
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+
+
+    function undofilters()
+    {
+        localStorage.removeItem("Colorvalue");
+        window.location.href = "@Url.RouteUrl(new { Controller = "ProductPrice", Action = "ProductPrice" })";
+    }
+        function onfiltering(e) {
+            
+            var CBObj = document.getElementById("Department").ej2_instances[0];
+            var query = new ej.data.Query();
+            query = (e.text !== '') ? query.where('DepartmentName', 'contains', e.text, true) : query;
+            e.updateData(CBObj.dataSource, query)
+        }
+        function onfilteringvendor(e) {
+            
+            var CBObj = document.getElementById("Vendor").ej2_instances[0];
+            var query = new ej.data.Query();
+            query = (e.text !== '') ? query.where('VendorName', 'contains', e.text, true) : query;
+            e.updateData(CBObj.dataSource, query)
+        }
+    function statusDetail(e) {
+        
+        var grid = document.querySelector(".e-grid").ej2_instances[0]
+        var div = document.createElement('div');
+        var ul = document.createElement('ul');
+        ul.className = 'gridboxs';
+        if (e[e.column.field] != null) {
+            var value = e[e.column.field];
+            var get = value.split("$");
+            var li;
+            var a;
+            var divch;
+            var p;
+            get.forEach(function (item) {
+                
+                li = document.createElement('li');
+                a = document.createElement('a');
+                divch = document.createElement('div');
+                if (item != "") {
+                    var getval = item.split("^");
+                    
+                        if (getval[1] == "0") {
+                            a.href = '/Invoices/Details/' + getval[2];
+                            a.className = 'Green02box change tooltipTop';
+                            a.style = 'text-decoration: unset;';
+                            a.target = '_blank';
+                            a.textContent = getval[0];
+                            divch.className = 'top';
+                            divch.innerHTML = "<p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i>";
+                            a.appendChild(divch);
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                            //    tbody += "<li><a href='/Invoices/Details/" + getval[2] + "' class='Green02box change tooltipTop' style='text-decoration: unset;' target='_blank'>" + getval[0] + "
+                            //'<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div></a></li>";
+                        }
+                        else if (getval[1] == "1") {
+                            a.href = '/Invoices/Details/' + getval[2];
+                            a.className = 'Green01box change tooltipTop';
+                            a.style = 'text-decoration: unset;';
+                            a.target = '_blank';
+                            a.innerHTML = "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div>" + getval[0];
+
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                            //tbody += "<li><a href='/Invoices/Details/" + getval[2] + "' class='Green01box change tooltipTop' style='text-decoration: unset;' target='_blank'>" + getval[0] + "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div></a></li>";
+
+                        }
+                        else if (getval[1] == "2") {
+                            a.href = '/Invoices/Details/' + getval[2];
+                            a.className = 'greybox change tooltipTop';
+                            a.style = 'text-decoration: unset;';
+                            a.target = '_blank';
+                            a.innerHTML = "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div>" + getval[0];
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                            //tbody += "<li><a href='/Invoices/Details/" + getval[2] + "'  class='greybox change tooltipTop' style='text-decoration: unset;' target='_blank'>" + getval[0] + "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div></a></li>";
+
+                        }
+                        else if (getval[1] == "3") {
+                            a.href = '/Invoices/Details/' + getval[2];
+                            a.className = 'Red01box change tooltipTop';
+                            a.style = 'text-decoration: unset;';
+                            a.target = '_blank';
+                            a.innerHTML = "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div>" + getval[0];
+
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                            //tbody += "<li><a href='/Invoices/Details/" + getval[2] + "' class='Red01box change tooltipTop' style='text-decoration: unset;' target='_blank'>" + getval[0] + "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div></a></li>";
+
+                        }
+                        else if (getval[1] == "4") {
+                            a.href = '/Invoices/Details/' + getval[2];
+                            a.className = 'Red02box change tooltipTop';
+                            a.style = 'text-decoration: unset;';
+                            a.target = '_blank';
+                            a.innerHTML = "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div>" + getval[0];
+
+                            li.appendChild(a);
+                            ul.appendChild(li);
+                            //tbody += "<li><a href='/Invoices/Details/" + getval[2] + "' class='Red02box change tooltipTop' style='text-decoration: unset;' target='_blank'>" + getval[0] + "<div class='top'><p>InvoiceDate:" + getval[3] + "<br>InvoiceNumber:" + getval[4] + "<br>VendorName:" + getval[5] + "</p><i></i></div></a></li>";
+
+                        }
+                    
+                }
+                else {
+                    li.textContent = '-';
+                    ul.appendChild(li);
+                }
+            });
+
+        }
+        else {
+            li = document.createElement('li');
+            li.textContent = '-';
+            ul.appendChild(li);
+        }
+        //if (e.Status === "Active") {
+        //    span.className = 'statustxt e-activecolor';
+        //    span.textContent = "Active"
+        //    div.className = 'statustemp e-activecolor'
+        //}
+        //if (e.Status === "Inactive") {
+        //    span = document.createElement('span');
+        //    span.className = 'statustxt e-inactivecolor';
+        //    span.textContent = "Inactive"
+        //    div.className = 'statustemp e-inactivecolor'
+        //}
+        div.appendChild(ul);
+
+        return div.outerHTML;
+    }
+    function Getdatabycolor(args) {
+        
+        var ColorFilter = "";
+        $(".e-checkbox").each(function (index,obj) {
+            
+            var x = $(obj).is(":checked");
+            if (x == true) {
+                ColorFilter += obj.value +"," ;
+            }
+        })
+        ColorFilter = ColorFilter.trim();
+        $('#gridvaluechange').html('');
+        var vendor = document.getElementById('Vendor').ej2_instances[0];
+        var daterangepicker = document.getElementById('daterangepicker').ej2_instances[0];
+          $.ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")",
+            type: "POST",
+              data: JSON.stringify({ value: daterangepicker.value, vendorname: vendor.value, ColorFilter: ColorFilter}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Item', width: 350, template: '#template', minWidth: 300, },
+                    { field: 'Descritpion', headerText: 'Descritpion', width: 120, visible: false },
+                    { field: 'Brand', headerText: 'Brand', width: 120, visible: false },
+                    { field: 'UPC', headerText: 'Upc', width: 100, visible: false },
+                    { field: 'InvoiceUpc', headerText: 'InvoiceUpc', width: 100, visible: false })
+
+                for (var key in columnsIn) {
+                    if (key == "UPC") {
+
+                    } else if (key == "Descritpion") {
+                    } else if (key == "InvoiceUpc") {
+                    } else if (key == "Brand") {
+                    } else {
+                        ColumeGrid.push({ field: key, headerText: key, width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100})
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    toolbar: ['Search'],
+                    searchSettings: { fields: ['Descritpion', 'UPC'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                         if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+                });
+                grid.appendTo('#gridvaluechange');
+            },
+            error: function (response) {
+            }
+        });
+         @*var ajax = new ej.base.Ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+             data: JSON.stringify({ value: daterangepicker.value }),
+        });
+        ajax.send().then((data) => {
+
+        });*@
+    }
+
+
+
+    $(document).ready(function () {
+       
+        var daterangepicker = document.getElementById('daterangepicker').ej2_instances[0];
+        $.ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")",
+            type: "POST",
+            data: JSON.stringify({ value: daterangepicker.value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Item', width: 350, template: '#template', minWidth: 300, },
+                    { field: 'Descritpion', headerText: 'Descritpion', width: 120, visible: false },
+                    { field: 'Brand', headerText: 'Brand', width: 120, visible: false },
+                    { field: 'UPC', headerText: 'Upc', width: 100, visible: false },
+                    { field: 'InvoiceUpc', headerText: 'InvoiceUpc', width: 100, visible: false })
+
+                for (var key in columnsIn) {
+                    if (key == "UPC") {
+
+                    } else if (key == "Descritpion") {
+                    } else if (key == "InvoiceUpc") {
+                    } else if (key == "Brand") {
+                    } else {
+                        ColumeGrid.push({ field: key, headerText: key, width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100})
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    toolbar: ['Search'],
+                    searchSettings: { fields: ['Descritpion', 'UPC'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                         if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+                });
+                grid.appendTo('#gridvaluechange');
+            },
+            error: function (response) {
+            }
+        });
+         @*var ajax = new ej.base.Ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+             data: JSON.stringify({ value: daterangepicker.value }),
+        });
+        ajax.send().then((data) => {
+
+        });*@
+    });
+        function OnChange(args) {
+            
+            var ColorFilter = "";
+            $(".e-checkbox").each(function (index, obj) {
+                
+                var x = $(obj).is(":checked");
+                if (x == true) {
+                    ColorFilter += obj.value + ",";
+                }
+            })
+            ColorFilter = ColorFilter.trim();
+        $('#gridvaluechange').html('');
+            var vendor = document.getElementById('Vendor').ej2_instances[0];
+         $.ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")",
+             type: "POST",
+             data: JSON.stringify({ value: args.value, vendorname: vendor.value, ColorFilter: ColorFilter}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Item', width: 350, template: '#template', minWidth: 300,},
+                    { field: 'Descritpion', headerText: 'Descritpion', width: 120, visible: false },
+                    { field: 'Brand', headerText: 'Brand', width: 120, visible: false },
+                    { field: 'UPC', headerText: 'Upc', width: 100, visible: false },
+                    { field: 'InvoiceUpc', headerText: 'InvoiceUpc', width: 100, visible: false })
+
+                for (var key in columnsIn) {
+                    if (key == "UPC") {
+
+                    } else if (key == "Descritpion") {
+                    } else if (key == "InvoiceUpc") {
+                    } else if (key == "Brand") {
+                    } else {
+                        ColumeGrid.push({ field: key, headerText: key, template: '#boxItem', textAlign: 'Center', minWidth: 100  ,width: 150 })
+                    //    Field.push(key);
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    toolbar: ['Search'],
+                    searchSettings: { fields: ['Descritpion', 'UPC'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+
+                });
+                grid.appendTo('#gridvaluechange');
+            },
+            error: function (response) {
+            }
+        });
+        @*var ajax = new ej.base.Ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ value: args.value }),
+        });
+        ajax.send().then((data) => {
+            $("#gridvaluechange").html(data);
+        });*@
+    }
+    function OnChangeVendor() {
+        
+        var ColorFilter = "";
+        $(".e-checkbox").each(function (index, obj) {
+            
+            var x = $(obj).is(":checked");
+            if (x == true) {
+                ColorFilter += obj.value + ",";
+            }
+        })
+        ColorFilter = ColorFilter.trim();
+        $('#gridvaluechange').html('');
+        var daterangepicker = document.getElementById('daterangepicker').ej2_instances[0];
+        var vendor = document.getElementById('Vendor').ej2_instances[0];
+         $.ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")",
+             type: "POST",
+             data: JSON.stringify({ value: daterangepicker.value, vendorname: vendor.value,ColorFilter: ColorFilter }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Item', width: 350, template: '#template', minWidth: 300,},
+                    { field: 'Descritpion', headerText: 'Descritpion', width: 120, visible: false },
+                    { field: 'Brand', headerText: 'Brand', width: 120, visible: false },
+                    { field: 'UPC', headerText: 'Upc', width: 100, visible: false },
+                    { field: 'InvoiceUpc', headerText: 'InvoiceUpc', width: 100, visible: false })
+
+                for (var key in columnsIn) {
+                    if (key == "UPC") {
+
+                    } else if (key == "Descritpion") {
+                    } else if (key == "InvoiceUpc") {
+                    } else if (key == "Brand") {
+                    } else {
+                        ColumeGrid.push({ field: key, headerText: key, template: '#boxItem', textAlign: 'Center', minWidth: 100  ,width: 150 })
+                    //    Field.push(key);
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    toolbar: ['Search'],
+                    searchSettings: { fields: ['Descritpion', 'UPC'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+
+                });
+                grid.appendTo('#gridvaluechange');
+            },
+            error: function (response) {
+            }
+        });
+        @*var ajax = new ej.base.Ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ value: args.value }),
+        });
+        ajax.send().then((data) => {
+            $("#gridvaluechange").html(data);
+        });*@
+    }
+
+    @*function FilterByColors(args) {
+        
+        $('#gridvaluechange').html('');
+        if (args == 0) {
+            $("#Green02box").addClass("selectedFilterColor");
+            $("#Green01box").removeClass("selectedFilterColor");
+            $("#greybox").removeClass("selectedFilterColor");
+            $("#Red01box").removeClass("selectedFilterColor");
+            $("#Red02box").removeClass("selectedFilterColor");
+        }
+        else if (args == 1) {
+            $("#Green01box").addClass("selectedFilterColor");
+            $("#Green02box").removeClass("selectedFilterColor");
+            $("#greybox").removeClass("selectedFilterColor");
+            $("#Red01box").removeClass("selectedFilterColor");
+            $("#Red02box").removeClass("selectedFilterColor");
+        }
+        else if (args == 2) {
+            $("#greybox").addClass("selectedFilterColor");
+            $("#Green01box").removeClass("selectedFilterColor");
+            $("#Green02box").removeClass("selectedFilterColor");
+            $("#Red01box").removeClass("selectedFilterColor");
+            $("#Red02box").removeClass("selectedFilterColor");
+        }
+        else if (args == 3) {
+            $("#Red01box").addClass("selectedFilterColor");
+            $("#greybox").removeClass("selectedFilterColor");
+            $("#Green01box").removeClass("selectedFilterColor");
+            $("#Green02box").removeClass("selectedFilterColor");
+            $("#Red02box").removeClass("selectedFilterColor");
+        }
+        else if (args == 4) {
+            $("#Red02box").addClass("selectedFilterColor");
+            $("#Red01box").removeClass("selectedFilterColor");
+            $("#greybox").removeClass("selectedFilterColor");
+            $("#Green01box").removeClass("selectedFilterColor");
+            $("#Green02box").removeClass("selectedFilterColor");
+
+
+        }
+
+        var daterangepicker = document.getElementById('daterangepicker').ej2_instances[0];
+        var vendor = document.getElementById('Vendor').ej2_instances[0];
+        localStorage.setItem("Colorvalue", args);
+
+         $.ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")",
+             type: "POST",
+             data: JSON.stringify({ value: daterangepicker.value, vendorname: vendor.value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Item', width: 350, template: '#template', minWidth: 300,},
+                    { field: 'Descritpion', headerText: 'Descritpion', width: 120, visible: false },
+                    { field: 'Brand', headerText: 'Brand', width: 120, visible: false },
+                    { field: 'UPC', headerText: 'Upc', width: 100, visible: false },
+                    { field: 'InvoiceUpc', headerText: 'InvoiceUpc', width: 100, visible: false })
+
+                for (var key in columnsIn) {
+                    if (key == "UPC") {
+
+                    } else if (key == "Descritpion") {
+                    } else if (key == "InvoiceUpc") {
+                    } else if (key == "Brand") {
+                    } else {
+                        ColumeGrid.push({ field: key, headerText: key, template: '#boxItem', textAlign: 'Center', minWidth: 100  ,width: 150 })
+                    //    Field.push(key);
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    toolbar: ['Search'],
+                    searchSettings: { fields: ['Descritpion', 'UPC'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                    },
+                    resizeSettings: { mode: "Auto" },
+
+                });
+                grid.appendTo('#gridvaluechange');
+            },
+            error: function (response) {
+            }
+        });
+    }*@
+</script>
+@Html.EJS().ScriptManager()

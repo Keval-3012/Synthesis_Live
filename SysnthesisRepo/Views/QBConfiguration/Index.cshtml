@@ -1,0 +1,67 @@
+﻿@model  List<EntityModels.Models.QBOnlineConfiguration1>
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+@using Utility
+<style>
+    .whitebox {
+        background-color: white;
+    }
+</style>
+<link href="../Contents/Admin/assets/css/style.css" rel="stylesheet" />
+<div class="header-small special_bg">
+    <h3>Quickbooks Configuration </h3>
+</div>
+<div class="page-body">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 pad_10 boxx">
+                <div class="config_box grey_box" id="box">
+                    <div class="top_content">
+                        <p>@item.Name</p>
+                        @if (item.QBType == "Online")
+                        {
+                            <a href="#" class="btn_config btn_green online">Online Connected</a>
+                        }
+                        else if (item.QBType == "Desktop")
+                        {
+                            <a href="#" class="btn_config btn_blue desktop">Offline Connected</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn_config btn_grey">Not Connected</a>
+                        }
+                    </div>
+                    <div class="center_content">
+                        <p>Select Quickbooks Connection Type</p>
+                        @if (item.QBType == "Online")
+                        {
+                            <label class="radio-inline"><input type="radio" name="@item.Name" checked="checked">Online</label>
+                            <label class="radio-inline"><input type="radio" onclick="check(this.id, this.name)" id="@item.StoreId" name="@item.Name">Desktop</label>
+                        }
+                        else if (item.QBType == "Desktop")
+                        {
+                            <label class="radio-inline"><input type="radio" name="@item.Name">Online</label>
+                            <label class="radio-inline"><input type="radio" onclick="check(this.id, this.name)" id="@item.StoreId" name="@item.Name" checked="checked">Desktop</label>
+                        }
+                        else
+                        {
+                            <label class="radio-inline"><input type="radio" name="@item.Name">Online</label>
+                            <label class="radio-inline" id="DeskstopUrl3"><input type="radio" onclick="check(this.id, this.name)" id="@item.StoreId" name="@item.Name">Desktop</label>
+                        }
+
+                    </div>
+                    <div class="bottom_content">
+                        <a href="#" class="btn_config btn_green" style="display:inline-flex;width:53%;" onclick="InsertQuickbook(@item.StoreId)">Connect Quickbooks</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/Form_JS/QBConfiguration.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

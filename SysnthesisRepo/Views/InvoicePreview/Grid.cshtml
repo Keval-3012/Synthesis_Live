@@ -1,0 +1,387 @@
+
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Popups
+
+@using SynthesisViewModal
+@using Utility
+@using Syncfusion.EJ2.DropDowns
+@{
+
+    Layout = null;
+}
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .delete {
+        background: #e53939;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+</style>
+<style>
+    .itemDetailsSection {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        background: #e0e0e0;
+        width: 100%;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        height: 180px;
+        padding: 2em;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+        .itemDetailsSection .storeNameforPopup {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            position: absolute;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: auto;
+            font-weight: bold;
+            top: 0px;
+            left: calc(50% - 60px);
+            background: white;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding: 8px 0px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 9px;
+        }
+
+        .itemDetailsSection .itemArea {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+            .itemDetailsSection .itemArea .itemSectionTitle {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            .itemDetailsSection .itemArea .itemSectionName {
+                font-size: 25px;
+            }
+
+        .itemDetailsSection .storeVendorArea {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: end;
+            -ms-flex-align: end;
+            align-items: flex-end;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+            .itemDetailsSection .storeVendorArea span.vendorTitle {
+                font-size: 15px;
+                font-weight: bold;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+            .itemDetailsSection .storeVendorArea span.vendorNameTitle {
+                font-size: 25px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+    .e-dlg-overlay {
+        background-color: rgba(0,0,0,0.7);
+        backdrop-filter: blur(5px);
+    }
+</style>
+<style type="text/css">
+    #loading {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        margin: -50px 0px 0px -50px;
+    }
+</style>
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+<input type="text" id="txtid" class="form-control" style="display:none;">
+<input type="text" id="VendorN" class="form-control" style="display:none;">
+<input type="text" id="ProductVendorId" name="ProductVendorId" style="display:none;" />
+
+<div id="loading" style="display:none">
+    <img id="loading-image" src="~/Content/image/loading.gif" alt="loading">
+</div>
+
+<div>
+    <div id="grddata">
+        <div id="progress" class="modal">
+            <div class="center">
+            </div>
+        </div>
+        <div class="animate-panelmessesgarea padbtmzero">
+        </div>
+        <div class="addinvoice" style="padding-top:0px!important;">
+            <input type="hidden" id="hdnpagevalue" value="0" />
+            <div class="page-body headertopbox special_bg">
+                <div class="page-header-main position-relative " style="height: 68px !important;">
+                    <div class="inv-pre">
+                        <div class="inv-pre-left">
+                            <h2>Products List</h2>
+                            <div>
+                                @Html.EJS().DropDownList("VendorName").Change("GetGridValue").Value("All").DataSource((IEnumerable<Object>)ViewBag.VendorName).Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Vendors", Value = "Vendors" }).Render()
+                                @*@Html.EJS().DropDownList("VendorName").Width("300px").Placeholder("Select a game").PopupHeight("200px").PopupWidth("300px").DataSource((IEnumerable<object>)ViewBag.VendorName).Render()*@
+                            </div>
+                            @*<div class="exc-btn">
+
+                                <button type="button" class="pdfUnclearExportBtn" style="background-color:red" id="pdf" onclick="toolbarClick(this)"><img src="~/Content/Admin/images/icon_pdf.png" alt=""></button>
+                                &nbsp;&nbsp;
+                                <button type="button" style="background-color:green" class="exlUnclearExportBtn" id="excel" onclick="toolbarClick(this)"><img src="~/Content/Admin/images/icon_excel.png" alt=""></button>
+                            </div>*@
+                        </div>
+                        <div class="inv-pre-right">
+                            @if (Roles.IsUserInRole("Administrator"))
+                            {
+                                <span>
+                                    <button type="button" data-toggle="modal" data-target="#ImportModal" class="buttonbox btnsubmit">Import</button>
+                                </span>
+                            }
+
+                            @*<span>
+
+            <button type="button" data-toggle="modal" class="buttonbox delete" style="margin-right:4px;padding-top:2px;float:right;" id="btnDelete" onclick="DeleteAll();">Delete</button>
+        </span>*@
+                        </div>
+                            </div>
+                        </div>
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewInvoice"))
+                {
+                    <div id="GridJ2"></div>
+
+                }
+
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewInvoice"))
+                {
+
+                    <div id="GridJ3"></div>
+                }
+                @*@Html.EJS().Dialog("defaultDialog").Header("Syncfusion Components inside Dialog").AnimationSettings(new DialogAnimationSettings() { Effect = DialogEffect.None }).ContentTemplate(@<div id="dialogTemp">
+                    </div>).ShowCloseIcon(true).CloseOnEscape(true).Buttons(ViewBag.DefaultButtons).Created("created").Width("700px").Target("#target").Render()*@
+            </div>
+
+            <div class="modal fade" id="ImportModal" role="dialog">
+                <div class="modal-dialog" style="width: 900px;">
+                    <div class="modal-content" style="margin-top:30%">
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Import</h4>
+                        </div>
+
+                        <div class="modal-body">
+
+                            @using (Html.BeginForm("ImportProductVendorExcel", "ProductMappings", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="col-md-4">
+                                            <label style="font-weight:bold;">
+                                                Vendor Name<span class="highlight">*</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.EJS().AutoComplete("Vendors").DataSource((IEnumerable<Object>)ViewBag.VendorNameforExcel).ShowPopupButton(true).Fields(new AutoCompleteFieldSettings { GroupBy = "Vendors", Value = "Vendors" }).Render()
+                                            @*@Html.TextBox("Vendors", null, new { @class = "form-control", @Autocomplete = "off" })*@
+                                            <span style="color:red" id="vendorerror">@ViewBag.Error</span>
+                                            @*@Html.ValidationMessageFor(model => model.UPCCode, "", new { @class = "highlight1" })*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-4">
+                                            <label style="font-weight:bold;">
+                                                Select File :
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span>
+                                                <input type="file" name="postedFile" id="fileinput" />
+                                                <span style="color:red" id="fileerror"></span>
+                                                @*<input class="form-control" type="file" name="importFile" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="padding: 3px;" />*@
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="~/UserFiles/SampleFiles/ProductVendorSample.xlsx" class="btn btn-info">Download Sample</a>
+                                        <input type="submit" id="UploadPDF" value="Import Data" class="btn btn-success" onclick="return isreturned()" />
+                                    </div>
+                                </div>
+                                <br />
+                                <span style="color:green">@ViewBag.Message</span>
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@{
+
+    List<DialogDialogButton> commands = new List<DialogDialogButton>();
+
+    commands.Add(new DialogDialogButton() { Click = "dlgButtonClick", ButtonModel = new DefaultButtonModels() { content = "Save Mapping", isPrimary = true } });
+    commands.Add(new DialogDialogButton() { Click = "CancelBouttonClick", ButtonModel = new DefaultButtonModels() { content = "Cancel" } });
+
+    List<DialogDialogButton> buttonsdata = new List<DialogDialogButton>() { };
+    buttonsdata.Add(new DialogDialogButton() { Click = "RemoveButtonClick", ButtonModel = new DefaultButtonModels() { content = "Remove Linked", isPrimary = true } });
+    buttonsdata.Add(new DialogDialogButton() { Click = "LinkedCancelBouttonClick", ButtonModel = new DefaultButtonModels() { content = "Cancel" } });
+}
+@Html.EJS().Dialog("ajax_dialog").IsModal(true).Visible(false).Created("created").Header("<div class='itemDetailsSection'></div>").ShowCloseIcon(false).CloseOnEscape(true).ContentTemplate(@<div id="dialogTemp">
+</div>).Buttons(commands).Width("1000px").Target("body").Render()
+
+@Html.EJS().Dialog("ajax_dialog1").IsModal(true).Visible(false).Created("created1").Header("Linked Product").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="dialogTempData">
+</div>).Buttons(buttonsdata).Width("1000px").Target("body").Render()
+
+<script type="text/x-jsrender" id="toggleTemplate">
+    <input type="checkbox" name="chkSelect" id="chkSelect">
+</script>
+
+
+<script>
+   var Successmapped = '@ViewBag.Successmapped'
+    var VendorName1 = '@ViewBag.VendorName1'
+    var File = '@ViewBag.File'
+    var RemoveMap = '@ViewBag.RemoveMap'
+    var AddVendor = '@ViewBag.AddVendor'
+    var Suredelete = '@ViewBag.Suredelete'
+    var DeleteSuccess = '@ViewBag.DeleteSuccess'
+
+    
+</script>
+<script src="~/Form_JS/InvoicePreview.js"></script>
+@Html.EJS().ScriptManager()
+
+

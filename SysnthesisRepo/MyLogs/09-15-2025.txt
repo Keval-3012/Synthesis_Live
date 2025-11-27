@@ -1,0 +1,9 @@
+2025-09-15 17:07:04.1915|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/15/2025 5:07:04 PM
+2025-09-15 17:16:02.2771|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/15/2025 5:16:02 PM
+2025-09-15 17:16:16.0518|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 9/15/2025 5:16:16 PM - An error occurred while sending the request.
+2025-09-15 17:16:31.4094|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 9/15/2025 5:16:31 PM - String was not recognized as a valid DateTime.
+2025-09-15 17:21:34.9582|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/15/2025 5:21:34 PM
+2025-09-15 17:23:44.7847|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 9/15/2025 5:23:44 PM - An error occurred while sending the request.
+2025-09-15 17:23:51.5105|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 9/15/2025 5:23:51 PM - String was not recognized as a valid DateTime.
+2025-09-15 17:25:29.9288|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/15/2025 5:25:29 PM
+2025-09-15 17:25:36.9254|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 9/15/2025 5:25:36 PM - An error occurred while sending the request.

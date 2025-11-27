@@ -1,0 +1,2 @@
+8/5/2025 11:15:01 AM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+8/5/2025 11:15:10 AM  Create JournalEntry. Message:AuthenticationFailed

@@ -1,0 +1,44 @@
+﻿@model EntityModels.Models.PayPeriodSettings
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div id="globalTabContent">
+    <div id="PanAddUpdate">
+        <div class="header-small special_bg">
+            <h3>Add Pay Cycle </h3>
+        </div>
+        @using (Html.BeginForm("AddPayPeriodSettings", "ManageIPAddress", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Name<span class="highlight">*</span>
+                                    </label>
+                                    @Html.EnumDropDownListFor(model => model.Day, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Day, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="from-group row">
+                            <div class="col-sm-8 ">
+                                <input id="btnSave" type="submit" value="Add"
+                                       class="buttonbox btnsubmit" />
+                            </div>
+                        </div>
+                    </div>
+                </div><br /><br />
+            </div>
+            <div class="clear">
+            </div>
+        }
+    </div>
+</div>

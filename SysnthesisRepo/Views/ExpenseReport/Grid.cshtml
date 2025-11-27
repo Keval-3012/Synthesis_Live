@@ -1,0 +1,629 @@
+﻿@model IEnumerable<EntityModels.Models.ExpenseCheckSelect>
+@using EntityModels.Models
+@using Utility
+@{
+    Layout = null;
+    DBContext db = new DBContext();
+}
+
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+</style>
+<link href="~/Content/Admin/assets/css/printstyle.css" rel="stylesheet" media="print" />
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+
+        @if (ViewBag.StatusMessage.ToString() == "SuccessEdit")
+        {
+            <script>
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('Invoice Updated Successfully.');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Success")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('Invoice created Successfully.');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Delete")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success('Invoice deleted Successfully');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Edit")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('Invoice updated Successfully');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Error")
+        {
+            <script>
+                MyfunError();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "NoItem")
+        {
+            <script>
+                MyfunNoItem();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Exists")
+        {
+            <script>
+                MyfunExists();
+            </script>
+        }
+    </div>
+    <div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer " style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <div class="page-body headertopbox purplebox printpadzero">
+            <div class="page-header-main position-relative printarea printpadzero">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Reports</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="actionbox">
+                            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DownloadExpenseReport"))
+                            {
+                                <a href="javascript:window.print();">
+                                    <img src="@Url.Content("~/Content/Admin/images/icon_print.png")" alt="" />
+                                </a>
+                                <a href="@Url.Action("ExportPDFData", "ExpenseReport", new { startdate = ViewBag.startdate, enddate = ViewBag.enddate, payment = ViewBag.payment, deptname = ViewBag.deptname, Status = ViewBag.Status, VendorName = @ViewBag.VendorName, AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum })"><img src="~/Content/Admin/images/icon_pdf.png" alt="" /></a>
+                                <a href="@Url.Action("ExportExcelData", "ExpenseReport", new { startdate = ViewBag.startdate, enddate = ViewBag.enddate, payment = ViewBag.payment, deptname = ViewBag.deptname, Status = ViewBag.Status, VendorName = @ViewBag.VendorName, AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum })"><img src="~/Content/Admin/images/icon_excel.png" alt="" /></a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="reportsearch">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3">
+                            <label>Filter by Expense Type</label>
+                            <table>
+                                <td class="pad10">
+                                    <input class="chk" id="radio1" type="checkbox" name="radio" value="Expense">
+                                    <label for="radio1">Expense</label>
+                                </td>
+                                <td>
+                                    <input class="chk" id="radio2" type="checkbox" name="radio" value="Check">
+                                    <label for="radio2">Check</label>
+                                </td>
+                            </table>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-3">
+                            <label>Filter by Date</label>
+                            <table>
+                                <tr>
+                                    <td class="padright10">
+                                        <input name="txtstartdate" detail="Expense Report StartDate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                                    </td>
+                                    <td>
+                                        <input name="txtenddate" detail="Expense Report EndDate" data-val="true" data-val-date="The field Startdate must be a date." data-val-required=" " type="text" maxlength="100" id="txtenddate" onkeydown="return false" placeholder="To" class="datepicker form-control">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <label class="mob_martop10">Departments</label>
+                            @Html.DropDownList("FltDepartmentId", null, "Select Department", new { @class = "myval", id = "DrpLstdept" })
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-2 hide">
+                            <label class="mob_martop10">Status</label>
+                            @Html.DropDownList("FltStatus", ViewBag.EnumList as SelectList, "Select Status", new { @class = "myval", id = "Drpstatus" })
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <label class="mob_martop10">Name</label>
+                            @Html.DropDownList("FltVendorId", null, "Select Vendor Name", new { @class = "myval", id = "VendorName" })
+                        </div>
+
+                        <div class="col-lg-2 col-md-3 col-sm-3">
+                            <label>Filter by Amount</label>
+                            <table>
+                                <tr>
+                                    <td class="padright10">
+                                        <input name="AmtMinimum" data-val="true" maxlength="18" type="text" id="AmtMinimum" onchange="Minimum()" placeholder="Min" class="form-control decimalOnly">
+                                    </td>
+                                    <td>
+                                        <input name="AmtMaximum" data-val="true" maxlength="18" type="text" id="AmtMaximum" onchange="Maximum()" placeholder="Max" class="form-control decimalOnly">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-2">
+                            <input type="submit" name="btnSearch" value="Show Report" id="btnSearch" onclick="javascript:FunSearchRecord();" class="btn btn-danger btn-sm pull-right martop25" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="printbox printboxaarea" style="background: #f1f1f1!important;   box-shadow: 0px 4px 6px #dddddd; margin:-20px 0px 0px!important; padding:20px 0px 15px!important;">
+                <h3 style="font-size:35px;">@ViewBag.StoreNamevalue</h3>
+                <div class="filterfirstprint">
+                    <ul>
+                        @{
+                            int DeptId = Convert.ToInt32(ViewBag.deptname);
+                            var startdateval = ViewBag.startdate;
+                            var Enddateval = ViewBag.enddate;
+                        }
+                        @if (!string.IsNullOrEmpty(ViewBag.DepartmentNameDisp))
+                        {
+                            <li style="font-size:14px;"><span style="font-size:20px;">Department </span> <br />@ViewBag.DepartmentNameDisp</li>
+                        }
+                        else
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Department </span> <br />NA</li>
+                        }
+                        @if (!string.IsNullOrEmpty(startdateval) && !string.IsNullOrEmpty(Enddateval))
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Date Range </span> <br />@ViewBag.startdate - @ViewBag.enddate</li>
+                        }
+                        else
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Date Range </span> <br />NA</li>
+                        }
+                        @if (ViewBag.payment == "")
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Payment Method </span> <br />Expense & Check</li>
+                        }
+                        else
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Payment Method </span> <br />@ViewBag.payment</li>
+                        }
+                    </ul>
+                    <ul class="marbtm40">
+                        @{
+                            if (!string.IsNullOrEmpty(ViewBag.VendorNameDisp))
+                            {
+                                <li style="font-size:14px;"><span style="font-size:15px;">Vendor Name</span><br />@ViewBag.VendorNameDisp</li>
+                            }
+                            else
+                            {
+                                <li style="font-size:14px;"><span style="font-size:15px;">Vendor Name</span><br />NA</li>
+                            }
+                            var amtmaxval = ViewBag.AmtMaximum;
+                            var amtminval = ViewBag.AmtMinimum;
+                        }
+                        @if (amtmaxval > 0 || amtminval > 0)
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Amount Range</span> <br />@ViewBag.AmtMaximum - @ViewBag.AmtMinimum</li>
+                        }
+                        else
+                        {
+                            <li style="font-size:14px;"><span style="font-size:15px;">Amount Range</span> <br />NA</li>
+                        }
+
+                        @{
+                            if (!string.IsNullOrEmpty(ViewBag.StatusDisp))
+                            {
+                                <li style="font-size:14px;"><span style="font-size:15px;">Status </span> <br />@ViewBag.StatusDisp</li>
+                            }
+                            else
+                            {
+                                <li style="font-size:14px;"><span style="font-size:15px;">Status </span> <br />NA</li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @if (Convert.ToString(Session["storeid"].ToString()) != "0" || Roles.IsUserInRole("Administrator"))
+        {
+            if (Model.Count() > 0)
+            {
+                <div class="datagrid pad10">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:left"><a class="textred" onclick="javascript:FunSortData('VendorName');" style="color:#fff; text-decoration:none; cursor:pointer;">Vendor Name</a></th>
+                                    <th class="text-align-left">Type</th>
+                                    <th style="text-align:left"><a class="textred" onclick="javascript:FunSortData('InvoiceId');" style="color:#fff; text-decoration:none; cursor:pointer;">Doc #</a></th>
+                                    @{
+                                        string storeid = ViewBag.Storeidvalue;
+                                    }
+                                    @if (Roles.IsUserInRole("Administrator") && @storeid == "0")
+                                    {
+                                        <th class="text-align-center">Store Name</th>
+                                    }
+                                    <th class="text-align-center"><a class="textred" onclick="javascript:FunSortData('InvoiceDate');" style="color:#fff; text-decoration:none; cursor:pointer;">Date</a></th>
+                                    <th style="text-align:right">Amount</th>
+
+
+                                    <th class="text-align-center">Created On</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr class="even datagrid">
+                                            <td class="fntlight" style="width:22%;text-align:left">@Html.Raw(item.VendorName)</td>
+                                            <td class="fntlight text-align-left" style="width:5%">@Html.Raw(item.Type)</td>
+                                            <td class="fntlight" style="width:7%;text-align:left">@Html.Raw(item.DocNumber)</td>
+                                            @{
+                                                string store_id = ViewBag.Storeidvalue;
+                                            }
+                                            @if (Roles.IsUserInRole("Administrator") && @store_id == "0")
+                                            {
+                                                <td class="fntlight text-align-center" style="width:5%">@item.StoreName</td>
+                                            }
+                                            <td style="width:10%;text-align:center" class="text-align-center">
+                                                @AdminSiteConfiguration.GetDateformat(Convert.ToString(item.InvoiceDate))
+                                            </td>
+                                            <td style="width:10%;text-align:right">
+
+                                                @*@if (item.InvoiceTypeId == 2)
+                                                    {
+                                                        <span style="color:red"> - @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount))) </span>
+                                                    }
+
+                                                    else
+                                                    {*@
+                                                @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.Amount)))
+                                                @*}*@
+                                            </td>
+
+
+
+                                            <td style="width:10%;text-align:center" class="text-align-center">
+                                                @AdminSiteConfiguration.GetDateformat(Convert.ToString(item.CreateOn))
+                                            </td>
+                                        </tr>
+                                    }
+
+                                    <tr class="invoicetotalcountbox">
+                                        <td colspan="4"><h1>Expense  Total</h1></td>
+                                        @*<td colspan="2" class="invoiceamt"><span>Invoice </span>$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(ViewBag.TotalInvoiceType)) <span class="dashline">-</span></td>
+                                            <td colspan="2" class="cashamt"><span>Credit Memo </span> $  @AdminSiteConfiguration.PriceWithComma(Convert.ToString(ViewBag.TotalCreditMemo)) </td>*@
+                                        <td colspan="4" class="totalamt">
+                                            <span class="dashline">=</span> <span>Total </span>
+                                            @{ var total1 = ViewBag.TotalInvoiceType;}
+                                            @{
+                                                @*if (ViewBag.TotalInvoiceType < ViewBag.TotalCreditMemo)
+                                                    {
+
+                                                        <span style="font-size:25px !important">- $ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(((total1) * (-1))))</span>
+                                                    }
+                                                    else
+                                                    {*@
+                                                @AdminSiteConfiguration.PriceWithComma(Convert.ToString(total1))
+                                                @*}*@
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+
+                                <tr class="paginationGrid">
+                                    <td class="left-text dataTables_length showdata" colspan="3" style="padding-top: 0px!important;">
+                                        <div class="recordbox showingrecords">
+                                            <span class="selectbox">
+                                                @{
+                                                    List<SelectListItem> listItem_Records = new List<SelectListItem>();
+                                                    string[] Records = AdminSiteConfiguration.GetArrayForRecordReport().ToString().Split(',');
+                                                    foreach (string word in Records)
+                                                    {
+                                                        listItem_Records.Add(new SelectListItem
+                                                        {
+                                                            Text = word.Split(':')[0],
+                                                            Value = word.Split(':')[1]
+                                                        });
+                                                    }
+                                                    @Html.DropDownList("SelectRecords", listItem_Records, new { @class = "myval", @onchange = "javascript:FunPageRecord(this.value);" })
+                                                }
+                                            </span><span class="text_record">Records</span>
+                                        </div>
+                                        <div class="showdatabox showdataboxrecord">
+                                            <span style="float:left">Showing @ViewBag.startIndex to @ViewBag.endIndex of @ViewBag.TotalDataCount entries</span>
+                                        </div>
+                                    </td>
+                                    <td colspan="6">
+                                        <div class="pagination">
+                                            @if (ViewBag.LastPageIndex > 1)
+                                            {
+                                                if (ViewBag.CurrentPageIndex != 1)
+                                                {
+                                                    <a id="btnPageFirst" style="cursor:pointer" onclick="javascript:FunPageIndex(1);" class=" Linkbutton firstpage nextbtn">First</a>
+                                                    <a id="btnPagePrevious" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    -1);" class=" Linkbutton Linkbutton prebtn">Previous</a>
+                                                }
+                                                int PageIndex = 3;
+                                                int StartPageIndex = ViewBag.CurrentPageIndex - PageIndex;//10-3=7
+                                                int EndPageIndex = ViewBag.CurrentPageIndex + PageIndex;//10+3=13
+
+                                                if (StartPageIndex < 1)
+                                                {
+                                                    EndPageIndex = EndPageIndex - StartPageIndex;
+                                                }
+
+                                                if (EndPageIndex > ViewBag.LastPageIndex)
+                                                {
+                                                    StartPageIndex = (StartPageIndex - (EndPageIndex - ViewBag.LastPageIndex)) + 1;
+                                                }
+
+                                                for (int i = 1; i <= ViewBag.LastPageIndex; i++)
+                                                {
+
+                                                    if ((StartPageIndex < i && EndPageIndex > i))
+                                                    {
+                                                        if (ViewBag.CurrentPageIndex == i)
+                                                        {
+                                                            <span Style="min-width: 25px; display: inline-block;">@i          </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="btnnum" style="cursor:pointer" onclick="javascript:FunPageIndex(@i);">@i</a>
+                                                        }
+                                                    }
+                                                }
+                                                if (ViewBag.CurrentPageIndex != ViewBag.LastPageIndex)
+                                                {
+                                                    <a id="btnPageNext" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    +1);" class=" Linkbutton nextbtn">Next</a>
+                                                    <a id="btnPageLast" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.LastPageIndex);" class=" Linkbutton lastpage nextbtn">Last</a>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    @*}*@
+</div>
+<script>
+    function docReady(fn) {
+
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }
+    docReady(function () {
+        //alert();
+        $('#Validation').hide();
+        $('#txtstartdate').attr('autocomplete', 'off');
+        $('#txtenddate').attr('autocomplete', 'off');
+        $('#AmtMinimum').attr('autocomplete', 'off');
+        $('#AmtMaximum').attr('autocomplete', 'off');
+        Loader(0);
+        var currentDate = new Date();
+        $('#txtstartdate').datetimepicker({
+            format: 'MM/DD/YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+        $('#txtenddate').datetimepicker({
+            format: 'MM/DD/YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+
+        $('#txtstartdate').on("dp.change", function (e) {
+            $('#txtenddate').data("DateTimePicker").minDate(e.date);
+        });
+        $('#txtenddate').click("dp.change", function (e) {
+            $('#txtenddate').data("DateTimePicker").minDate($('#txtstartdate').val());
+        });
+        document.getElementsByName('radio').value  = '@ViewBag.payment';
+        bind();
+
+
+    });
+
+    function bind() {
+
+        $(".myval").select2({
+            allowclear: true,
+        });
+        if (document.getElementById('SelectRecords') != null) {
+            document.getElementById('SelectRecords').value = @ViewBag.PageSize;
+        }
+
+        $(".select2-container").remove();
+        var pay = '@ViewBag.payment';
+
+        if (pay == "Expense") {
+            $("#radio1").prop('checked', true);
+        }
+        else if (pay == "Check") {
+            $("#radio2").prop('checked', true);
+        }
+
+        var dept = @ViewBag.deptname;
+        if (dept != '0') {
+            document.getElementById('DrpLstdept').value = @ViewBag.deptname;
+        }
+        document.getElementById('txtstartdate').value = "@ViewBag.startdate";
+        document.getElementById('txtenddate').value = "@ViewBag.enddate";
+        var Vender = @ViewBag.VendorName;
+        if (Vender != '0') {
+            document.getElementById('VendorName').value = @ViewBag.VendorName;
+        }
+        var AmtMinimum = @ViewBag.AmtMinimum;
+        if (AmtMinimum != '0') {
+            document.getElementById('AmtMinimum').value = "@ViewBag.AmtMinimum";
+        }
+        var AmtMaximum = @ViewBag.AmtMaximum;
+        if (AmtMaximum != '0') {
+            document.getElementById('AmtMaximum').value = "@ViewBag.AmtMaximum";
+        }
+
+        var statusid = @ViewBag.Status;
+        if (statusid != '0') {
+            document.getElementById('Drpstatus').value = @ViewBag.Status;
+        }
+
+        // $("#radio").val('@ViewBag.payment');
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+        if (document.getElementById('SelectRecords') != null) {
+            document.getElementById('SelectRecords').value = @ViewBag.PageSize;
+        }
+    }
+
+    function FunSearchRecord() {
+        var chk;
+        var chkArray = [];
+        $(".chk:checked").each(function () {
+            chkArray.push($(this).val());
+        });
+
+        if (chkArray.length > 1) {
+            chk = '';
+        }
+        if (chkArray.length == 1) {
+            chk = chkArray.toString();
+        }
+
+        window.FunSearchRecord = FunSearchRecord
+        //  var element_txtSearchTitle = document.getElementById('txtSearchTitle').value;
+        var element_dept = document.getElementById('DrpLstdept').value;
+        var element_txtstartdate = document.getElementById('txtstartdate').value;
+        var element_txtenddate = document.getElementById('txtenddate').value;
+        var element_Status = document.getElementById('Drpstatus').value;
+        var element_chkpayment = chk;
+        var element_VendorName = document.getElementById('VendorName').value;
+        var element_AmtMaximum = document.getElementById('AmtMaximum').value;
+        var element_AmtMinimum = document.getElementById('AmtMinimum').value;
+        GetData(1, 1, '@ViewBag.OrderByVal', @ViewBag.IsAscVal, @ViewBag.PageSize, '', '', element_dept, element_txtstartdate, element_txtenddate, element_chkpayment, '', element_Status, element_VendorName, element_AmtMaximum, element_AmtMinimum);
+    }
+
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0, pageindex, '@ViewBag.OrderByVal', @ViewBag.IsAscVal, @ViewBag.PageSize, '@ViewBag.Alpha', @ViewBag.SearchRecords, '@ViewBag.deptname', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.payment', '@ViewBag.Store_val', '@ViewBag.Status', '@ViewBag.VendorName', '@ViewBag.AmtMaximum', '@ViewBag.AmtMinimum');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+        GetData(0, @ViewBag.CurrentPageIndex, SortData, @ViewBag.AscVal, @ViewBag.PageSize, '@ViewBag.Alpha', @ViewBag.SearchRecords, '@ViewBag.deptname', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.payment', '@ViewBag.Store_val', '@ViewBag.Status', '@ViewBag.VendorName', '@ViewBag.AmtMaximum', '@ViewBag.AmtMinimum');
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0, 1, '@ViewBag.OrderByVal', @ViewBag.IsAscVal, PageRecord, '@ViewBag.Alpha', @ViewBag.SearchRecords, '@ViewBag.deptname', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.payment', '@ViewBag.Store_val', '@ViewBag.Status', '@ViewBag.VendorName', '@ViewBag.AmtMaximum', '@ViewBag.AmtMinimum');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1, 1, '@ViewBag.OrderByVal', @ViewBag.IsAscVal, @ViewBag.PageSize, alpha, @ViewBag.SearchRecords, '@ViewBag.deptname', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.payment', '@ViewBag.Store_val', '@ViewBag.Status', '@ViewBag.VendorName', '@ViewBag.AmtMaximum', '@ViewBag.AmtMinimum');
+    }
+</script>
+<script src="~/Form_JS/ExpenseReport.js"></script>

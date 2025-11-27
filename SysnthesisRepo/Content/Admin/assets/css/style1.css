@@ -1,0 +1,339 @@
+.stickyBtn {
+  position: fixed;
+}
+
+.rightpart {
+  background: #E1E1E1;
+}
+
+.formmain .form-control {
+  border-radius: 4px !important;
+  border: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.formmain label {
+  color: #000;
+}
+
+.formmain .select2-container .select2-selection--single {
+  border: 0px !important;
+  border-radius: 4px !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.formmain .select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100%;
+  top: 2px;
+}
+
+#pdfSection.active .leftpart {
+  width: 100%;
+  text-align: center;
+}
+
+#pdfSection.active .leftpart img {
+  margin: 0 auto;
+}
+
+#pdfSection.active .rightpart {
+  display: none;
+}
+
+.button_bottom #btn1 {
+  bottom: 0 !important;
+}
+
+#minusBox {
+  cursor: pointer;
+}
+
+.greenBox {
+  background: -webkit-gradient(linear, left top, right top, color-stop(5%, #4ab487), color-stop(63%, #247d4f));
+  background: linear-gradient(to right, #4ab487 5%, #247d4f 63%);
+  border-radius: 7px;
+}
+
+.greenBox label {
+  color: #fff;
+}
+
+.greenBox .btnaddbox {
+  height: auto;
+  width: auto;
+  display: inline-block;
+  text-decoration: none !important;
+  padding: 8px 17px;
+  background: #115934;
+  border-radius: 4px !important;
+}
+
+.greenBox .btnaddbox:hover, .greenBox .btnaddbox:focus {
+  color: #fff;
+}
+
+#addDiscount {
+  cursor: pointer;
+}
+
+.pddleft0 {
+  padding-left: 0;
+}
+
+.pddright0 {
+  padding-right: 0;
+}
+
+.dollarpersign {
+  font-size: 28px;
+  color: #fff;
+  text-align: right;
+}
+
+.btnSave {
+  background: url(../../images/save.svg) no-repeat 15px center #DB3F40;
+  min-width: 180px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  padding: 8px 15px !important;
+  display: inline-block;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  color: #fff;
+  border-radius: 4px !important;
+  background-size: 20px !important;
+}
+
+.btnSave:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btnSave:hover {
+  background: url(../../images/save.svg) no-repeat 15px center #a52f2f;
+}
+
+.btnCancel {
+  background: url(../../images/cancel.svg) no-repeat 15px center #5F5F5F;
+  min-width: 130px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  padding: 8px 15px !important;
+  display: inline-block;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  color: #fff;
+  border-radius: 4px !important;
+  background-size: 24px !important;
+}
+
+.btnCancel:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btnCancel:hover {
+  background: url(../../images/cancel.svg) no-repeat 15px center #444444;
+}
+
+.btnBlue {
+  background: url(../../images/save.svg) no-repeat 15px center #047DFF;
+  min-width: 285px;
+  font-size: 16px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  padding: 8px 15px !important;
+  display: inline-block;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  color: #fff;
+  border-radius: 4px !important;
+  background-size: 20px !important;
+}
+
+.btnBlue:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btnBlue:hover {
+  background: url(../../images/save.svg) no-repeat 15px center #005ec4;
+}
+
+.btnGreen {
+  background: url(../../images/save.svg) no-repeat 15px center #31852D;
+  min-width: 235px;
+  font-size: 16px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  padding: 8px 15px !important;
+  display: inline-block;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  color: #fff;
+  border-radius: 4px !important;
+  background-size: 20px !important;
+}
+
+.btnGreen:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btnGreen:hover {
+  background: url(../../images/save.svg) no-repeat 15px center #115934;
+}
+
+#right_panel {
+  position: fixed;
+  bottom: -100%;
+  padding-left: 4px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  background-color: #CDCDCD;
+  z-index: 99999;
+}
+
+#right_panel.active {
+  height: 300px;
+  bottom: 0px;
+}
+
+#right_panel.active #btn1 {
+  bottom: 274px;
+}
+
+#right_panel:after {
+  content: " ";
+  background-color: #ccc;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  top: 0px;
+  cursor: n-resize;
+  opacity: 0;
+  z-index: 9999;
+}
+
+.btnsticky {
+  position: fixed;
+  background: #000;
+  bottom: 0;
+  color: #fff;
+  border: 0px;
+  padding: 10px 15px;
+  left: 40%;
+  right: 0;
+  min-width: 230px;
+  margin: 0 auto;
+  text-align: center;
+  cursor: pointer;
+  z-index: 222;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-transform: capitalize;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 4px;
+}
+
+.btnsticky span {
+  padding: 1px 8px;
+  display: inline-block;
+  border: 1px solid #fff;
+}
+
+.popUpContent {
+  padding: 30px 30px 60px 30px;
+}
+
+.popUpContent .actionBar {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.popUpContent table {
+  width: 100%;
+}
+
+.popUpContent table .btndel i {
+  font-size: 16px !important;
+}
+
+.popUpContent table thead th {
+  background: #000;
+  color: #fff;
+  padding: 5px;
+  font-weight: normal;
+}
+
+.popUpContent table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.popUpContent table tr:nth-child(even) {
+  background-color: #F9F9F9;
+}
+
+.popUpContent table tr td {
+  padding: 8px 8px;
+}
+
+.popUpContent table .dispFlex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.popUpContent table .dispFlex button {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 10%;
+          flex: 0 0 10%;
+  margin-left: 5px;
+}
+
+.popUpContent table .form-control.disabled {
+  background: #E3E3E3;
+}
+
+.popUpContent .addBox {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.popUpContent .addBox a {
+  display: inline-block;
+}
+
+.popUpContent .addBox i {
+  color: #9F9F9F;
+  font-size: 40px;
+}
+
+@media (max-width: 1191px) {
+  .pddleft0#divpercentage, .pddleft0#divdiscountamt {
+    padding-left: 15px;
+  }
+}
+/*# sourceMappingURL=style1.css.map */

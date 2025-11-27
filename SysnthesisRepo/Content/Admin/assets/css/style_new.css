@@ -1,0 +1,385 @@
+.overflowHidden {
+  overflow: hidden;
+}
+
+.headertopbox .topBar {
+  background: #ffffff;
+  padding: 0px;
+  margin: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.headertopbox .topBar ul.tabBar {
+  padding: 0px;
+  margin-bottom: 2px;
+}
+
+.headertopbox .topBar ul.tabBar li {
+  list-style: none;
+  display: inline-block;
+}
+
+.headertopbox .topBar ul.tabBar li a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 12px 15px;
+  text-decoration: none !important;
+  color: #000;
+  font-size: 15px;
+}
+
+.headertopbox .topBar ul.tabBar li a span {
+  background: #D0D0D0;
+  border-radius: .25rem;
+  padding: .25em .4em;
+  font-size: 11px;
+  margin-left: 30px;
+}
+
+.headertopbox .topBar ul.tabBar li.active a {
+  color: #ffffff;
+  background: #000;
+}
+
+.headertopbox .topBar ul.tabBar li.active a span {
+  background: #484848;
+}
+
+.headertopbox .fileUploadBtn {
+  background: #047DFF;
+  color: #ffffff !important;
+  padding: 8px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.headertopbox .fileUploadBtn i {
+  margin-right: 5px;
+}
+
+.headertopbox .topRightBar {
+  padding: 0px 0px !important;
+  margin: 0px;
+}
+
+.headertopbox .topRightBar li {
+  display: inline-block;
+  list-style: none;
+  padding: 0px 0 0 10px;
+}
+
+.headertopbox .actionMenu {
+  min-width: 115px;
+}
+
+.dragdropdownBox {
+  text-align: center;
+  width: 100%;
+  display: none;
+  color: #000;
+}
+
+.dragdropdownBox.active {
+  display: block;
+}
+
+.dragdropdownBox .uploadBox {
+  max-width: 70%;
+  margin: 0 auto;
+  height: 72vh;
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.dragdropdownBox .dropBox {
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  border: 1px dashed #6d6d6d;
+  border-radius: 10px;
+  height: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.dragdropdownBox .dropBox img {
+  margin-bottom: 20px;
+}
+
+.dragdropdownBox .dropBox p {
+  margin: 0px;
+  font-size: 20px;
+}
+
+.dragdropdownBox .buttonsBar {
+  margin-top: 10px;
+}
+
+.dragdropdownBox .selectFiles {
+  background: url(../../images/icons/pdf_icon.svg) no-repeat 15px center #047DFF;
+  background-size: 20px !important;
+  display: inline-block;
+  min-width: 150px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  color: #ffffff !important;
+  padding: 8px 15px !important;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.dragdropdownBox .selectFiles:hover {
+  background: url(../../images/icons/pdf_icon.svg) no-repeat 15px center #005ec4;
+}
+
+.btnCancel {
+  background: url(../../images/icons/cancel.svg) no-repeat 15px center #5F5F5F;
+  min-width: 120px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  text-decoration: none !important;
+  padding: 8px 15px !important;
+  display: inline-block;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  background-size: 20px !important;
+}
+
+.btnCancel:hover {
+  background: url(../../images/icons/cancel.svg) no-repeat 15px center #444444;
+}
+
+.greenBtn {
+  background: url(../../images/icons/tick.svg) no-repeat 15px center #31852D;
+  min-width: 120px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: right;
+  text-decoration: none !important;
+  padding: 8px 15px !important;
+  display: inline-block;
+  -webkit-transition: all 0.5s ease-in-out !important;
+  transition: all 0.5s ease-in-out !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  background-size: 20px !important;
+}
+
+.greenBtn:hover {
+  background: url(../../images/icons/tick.svg) no-repeat 15px center #266623;
+}
+
+.fileUploadBox {
+  position: relative;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  color: #DCDCDC;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -7px;
+  right: 0;
+  z-index: 2;
+  padding: 50px;
+  color: #ffffff;
+  margin: 0px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.fileUploadBox.active {
+  height: 100vh;
+  width: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.fileUploadBox .flexBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.fileUploadBox .gridtablebox {
+  margin-top: 25px;
+  width: 100%;
+  display: none;
+  color: #484848;
+}
+
+.fileUploadBox .gridtablebox p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.fileUploadBox .gridtablebox .flexRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.fileUploadBox .gridtablebox .gridtable {
+  max-height: 60vh;
+}
+
+.fileUploadBox .gridtablebox.active {
+  display: block;
+}
+
+.fileUploadBox .gridtablebox table {
+  width: 100%;
+}
+
+.fileUploadBox .gridtablebox table tr td {
+  background: #DCDCDC;
+  padding: 10px 20px;
+  border-top: 6px solid #ffffff;
+  border-bottom: 6px solid #ffffff;
+  font-size: 16px;
+  color: #000;
+}
+
+.fileUploadBox .gridtablebox table tr td:nth-child(1) {
+  width: 90%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.fileUploadBox .gridtablebox table tr td:nth-child(1) img {
+  margin-right: 10px;
+  height: 25px;
+}
+
+.fileUploadBox .gridtablebox table tr td:nth-child(2) {
+  width: 10%;
+  text-align: right;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.box {
+  display: inline-block;
+}
+
+.downloadIcon {
+  height: 50px;
+}
+
+.checkicon {
+  height: 20px;
+}
+
+.trash {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+[class*="loader-"] {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  color: inherit;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.loader-05 {
+  border: .2em solid transparent;
+  border-top-color: #047DFF;
+  border-radius: 50%;
+  -webkit-animation: 1s loader-05 linear infinite;
+          animation: 1s loader-05 linear infinite;
+  position: relative;
+}
+
+.loader-05:before {
+  content: '';
+  display: block;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  top: -.2em;
+  left: -.2em;
+  border: 0.2em dotted #047DFF;
+  border-radius: 50%;
+  opacity: .5;
+}
+
+@-webkit-keyframes loader-05 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-05 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+/*# sourceMappingURL=style_new.css.map */

@@ -1,0 +1,347 @@
+﻿@model EntityModels.Models.DashboardDaily
+@using Utility
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+    var StoreId = ViewBag.Storeidvalue;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link href="~/Content/Admin/assets/css/dashboard.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+<script src="~/Content/Admin/js/DashboardChart/bar-multicolor.js"></script>
+<script src="~/Content/Admin/js/DashboardChart/Chart.min.js"></script>
+
+@{
+    var user = HttpContext.Current.User;
+}
+
+<body>
+
+    <div class="synthesisdashboardcontainer">
+        <div class="top-dshbosrd w-100">
+            <div class="daily-top-sec">
+                <div class="input-sec">
+                    <input name="DailyChartDate" type="text" maxlength="100" id="DailyChartDate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                </div>
+                <div class="input-sec clshide">
+                    @*<label>StateWise Data</label>*@
+                    @Html.DropDownList("StateId", null, "ALL", new { id = "StateId", @class = "form-control myval drpcls", @onchange = "GetStateWisedata();", detail = "State" })
+                </div>
+                @if (ViewBag.GroupWiseStateStoreId != null && ((IEnumerable<SelectListItem>)ViewBag.GroupWiseStateStoreId).Any())
+                {
+                    <div class="input-sec clshide">
+                        <label>GroupWise Data</label>
+                        @Html.DropDownList("GroupWiseStateStoreId", ViewBag.GroupWiseStateStoreId as SelectList, "-Select Group-", new { id = "GroupWiseStateStoreId", @class = "form-control myval drpcls", @onchange = "GetGroupWisedata();", detail = "GroupName" })
+                    </div>
+                }
+                <div class="store-list-type">
+                    <ul>
+                        @foreach (var item in Model.StoreList)
+                        {
+                            if (item.Text != "ALL")
+                            {
+                                <li><input type="checkbox" id="@item.Id" name="Commonstores" value="@item.Id" detail="Daily dashboard - Stores" class="clsdailystores"><label for="@item.Id">@item.Text</label></li>
+                            }
+
+
+                        }
+                    </ul>
+                </div>
+            </div>
+            @*Himanshu 12/03/2024*@
+            <div class="top-btn-sec">
+                @if (user.IsInRole("Administrator"))
+                {
+                    <div class="salesgraphexport">
+                        <a href="#" class="btn-addinvoice" id="salesgraphexport">Export Sales Data</a>
+                    </div>
+                }
+                <div class="exportPdfButton">
+                    <button type="button" id="exportPdfButton"><img style="width: 30px;" src="~/Content/images/pdf.svg" alt=""></button>
+                </div>
+                <div class="exportExcelButton">
+                    <button type="button" id="exportExcelButton"><img style="width: 30px;" src="~/Content/images/excel.svg" alt=""></button>
+                </div>
+            </div>
+            @*Himanshu*@
+        </div>
+
+        <div class="top-widget-row">
+            <div class="tw-box">
+                <span id="AllVoidsAmt">$ @Model.AllVoidsAmt</span>
+                <span>All Voids</span>
+                <div class="badge" id="AllVoids">@Model.AllVoids</div>
+
+            </div>
+
+            <div class="tw-box">
+                <span id="ItemCorrectsAmt">$ @Model.ItemCorrectsAmt</span>
+                <span>Item Corrects</span>
+                <div class="badge" id="ItemCorrects">@Model.ItemCorrects</div>
+            </div>
+
+            <div class="tw-box">
+                <span id="ItemReturnsAmt">$ @Model.ItemReturnsAmt</span>
+                <span>Returns</span>
+                <div class="badge" id="ItemReturns">@Model.ItemReturns</div>
+            </div>
+
+            <div class="tw-box">
+                <span id="CashPayout">$ @Model.CashPayout</span>
+                <span>Cash Payouts</span>
+            </div>
+            <div class="tw-box overShort">
+                <span id="Over">$ @Model.Over</span>
+                <span>Over / Short</span>
+            </div>
+
+        </div>
+        <div class="middle-widget-row">
+            <div class="middle-widget-cd">
+
+                <div class="mw-weekdatatable">
+                    <div class="currentWeekgrowth">
+                        <div class="currentdaytime"><span id="currentday">Current @Model.DayName</span><span id="currenttime">@Model.HourTime</span></div>
+
+                        <div class="cwg-box">
+                            <div class="cwg-title">Net Sales  (+Tax)</div>
+                            <span id="TotalSalesCurrentDay" class="ValueDown price-value">$ @Model.TotalSalesCurrentDay</span>
+                            <div id="clsvalup" class="valueUpCell">
+                                <span id="SalesGrowth">@Model.SalesGrowth%</span>
+                                <img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                            </div>
+                        </div>
+
+                        <div class="cwg-box">
+                            <div class="cwg-title">Customer Count</div>
+                            <span id="CustomerCountCurrentDay" class="ValueDown price-value">@Model.CustomerCountCurrentDay</span>
+                            <div id="clsvalup1" class="valueUpCell">
+                                <span id="CustomerCountGrowth">@Model.CustomerCountGrowth%</span>
+                                <img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                            </div>
+                        </div>
+
+                        <div class="cwg-box">
+                            <div class="cwg-title">Average Sale</div>
+                            <span id="AverageSaleCurrentDay" class="ValueDown price-value">@Model.AverageSaleCurrentDay</span>
+                            <div id="clsvalup2" class="valueUpCell">
+                                <span id="AveragesalesGrowth">@Model.AveragesalesGrowth%</span>
+                                <img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="currentWeekgrowth">
+                        <div class="lastweekdaytime"><span id="lastday">Last @Model.DayName</span><span id="lasttime">@Model.HourTime</span></div>
+                        <div class="cwg-box">
+                            <div class="cwg-title">
+                                Net Sales (+Tax)
+                            </div>
+                            <span class="ValueDown price-value" id="TotalSalesLastWeek">$ @Model.TotalSalesLastWeek</span>
+                        </div>
+                        <div class="cwg-box">
+                            <div class="cwg-title">
+                                Customer Count
+                            </div>
+                            <span id="CustomerCountLastWeek" class="price-value">@Model.CustomerCountLastWeek</span>
+                        </div>
+                        <div class="cwg-box">
+                            <div class="cwg-title">
+                                Average Sale
+                            </div>
+                            <span id="AverageSalesLastWeek" class="price-value">$ @Model.AverageSalesLastWeek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="smallwidgetcontainer">
+                <div class="middle-widget-two">
+
+
+                    <div class="middle-widget-two-Offline">
+
+                        <div class="offlinestore">
+
+                            <img src="/Content/Admin/images/Dashboard/offline-store.png">
+                            <span>In-Store</span>
+                            <span id="Offline">@Model.Offline%</span>
+                        </div>
+
+                    </div>
+                    <div class="vs"><span>Vs</span></div>
+                    <div class="middle-widget-two-online">
+                        <div class="offlinestore">
+
+                            <img src="/Content/Admin/images/Dashboard/online-store.png">
+                            <span>Online</span>
+                            <span id="Online">@Model.Online%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoices">
+
+                    <span>Invoices</span>
+                    <div class="added">
+                        <span>Added</span>
+                        <span id="InvoicesAdded">@Model.InvoicesAdded</span>
+                    </div>
+                    <div class="approved">
+                        <span>Processed</span>
+                        <span id="InvoicesApproved">@Model.InvoicesApproved</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="spacing-full"></div>
+        @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewBAIFDailyDashboard"))
+        {
+            <div class="bankaccountinfo">
+                <section class="bankaccounttitlearea">
+                    <span class="bankaccountinfotitile">Bank Account Info</span>
+                    <img class="refreshIcon" id="Refresh" src="~/Content/images/refresh.svg" onclick="BankAccountDetailValueRefresh()" hidden>
+                </section>
+                <a onclick="BankAccountDetail()" detail="Bank Account Info - Show" id="Show">Show</a>
+                <a onclick="HideBankAccountDetail()" detail="Bank Account Info - Hide" id="Hide" hidden>Hide</a>
+                <ul id="BankAccountDetail">
+                </ul>
+            </div>
+        }
+        <div class="spacing-full"></div>
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span id="graphtitle">Daily Sales Graph</span>
+                <div class="totals">
+                    <span id="graphTotal"></span>
+                    <div class="total-values" data-toolTip="totalsData">
+                        <div class="StoreValues" id="dvTotalStore">
+                        </div>
+                        <div class="DepartmentValues" id="dvTotalDepartment">
+                        </div>
+                    </div>
+                </div>
+                <div class="graphOptions">
+                    <input type="radio" id="sales" name='radio' detail="Hourly Sales Graph" value="1" class="clsRadio" checked="checked">
+                    <label for="sales">Sales</label><br>
+                    <input type="radio" id="customers" name="radio" detail="Hourly Customer Count Graph" value="2" class="clsRadio">
+                    <label for="customers">Customer Count</label><br>
+                    <input type="radio" id="averageSales" name="radio" detail="Hourly Average Sale Graph" value="3" class="clsRadio">
+                    <label for="averageSales">Average Sale</label>
+                </div>
+            </div>
+            <div class="graphPlaceHolder">
+                <div id="loadingMessage" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <canvas id="bar-chartcanvas"></canvas>
+
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+                <h2>Stores</h2>
+                <div class="storeList">
+                    @foreach (var item in Model.StoreList)
+                    {
+
+                        <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" detail="Hourly Sales Graph - Stores" class="clsdailychartstores"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+                </div>
+
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" detail="Hourly Sales Graph - Departments" class="clsdailychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span>Sales and Hours Worked</span>
+                <div class="legends">
+                    <ul>
+                        <li>74-84</li>
+                        <li>2589</li>
+                        <li>14th Street</li>
+                        <li>Maywood</li>
+                        <li>2840</li>
+                        <li>1407</li>
+                        <li>180</li>
+                        <li>170</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+            <div class="graphPlaceHolder small">
+                <div id="loading2" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <canvas id="bar-chartcanvas2"></canvas>
+
+            </div>
+
+            <div class="departmentWiseSales">
+                <span>Sales per 1 Hour Worked</span>
+                <div class="departmentWiseSalesWidgets">
+                </div>
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class="refineContainer">
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.PayrollDepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="hourlychartdepartments" value="@item.Text" detail="Sales and Hours Worked - Departments" class="clshourlychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        @*Himanshu Added 03-02-2025*@
+        <div class="modal fade" id="ExportSalesModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style="margin-top:14%">
+                    <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Export Sales Data</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="export-selection">
+                            <div class="input-startdate">
+                                <label>From Date<span style="color:red">*</span></label>
+                                <input name="SalesStartDate" type="text" maxlength="100" id="SalesStartDate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                            </div>
+                            <div class="input-enddate">
+                                <label>To Date<span style="color:red">*</span></label>
+                                <input name="SalesEndDate" type="text" maxlength="100" id="SalesEndDate" placeholder="To" class="datepicker form-control" onkeydown="return false">
+                            </div>
+                            <a href="#" class="btn-addinvoice" id="salesgraphexportexcel">Download Excel</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer modal-delete-footer">
+
+                        <button type="button" class="buttonbox btncancel btnnetsalecancle" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+    var Startdate = '@ViewBag.Startdate';
+    var storeid = '@Session["storeid"]';
+</script>
+<script src="~/Form_JS/Daily.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+

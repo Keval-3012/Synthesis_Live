@@ -1,0 +1,295 @@
+
+.header {
+    color: black;
+    font-size: 35px;
+    margin: 0px;
+}
+
+.tooltipTop {
+    display: inline-block;
+    position: relative;
+    border-bottom: 1px dotted #666;
+    text-align: left;
+}
+
+    .tooltipTop .top {
+        min-width: 100px;
+        transform: translate(-50%, -100%);
+        padding: 10px 20px;
+        color: #444444;
+        background-color: #EEEEEE;
+        font-weight: normal;
+        font-size: 13px;
+        border-radius: 8px;
+        position: fixed;
+        z-index: 99999;
+        box-sizing: border-box;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+        display: none;
+    }
+
+    .tooltipTop:hover .top {
+        display: block;
+    }
+
+    .tooltipTop .top i {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -12px;
+        width: 24px;
+        height: 12px;
+        overflow: hidden;
+    }
+
+        .tooltipTop .top i::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            left: 50%;
+            transform: translate(-50%,-50%) rotate(45deg);
+            background-color: #EEEEEE;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+        }
+
+.greybox {
+    padding: 8px 8px;
+    border-radius: 7px;
+    background: lightgrey;
+    margin-left: 7px;
+}
+
+.Green01box {
+    padding: 8px 8px;
+    border-radius: 7px;
+    background: #AEEB8E;
+    margin-left: 7px;
+}
+
+.Red01box {
+    padding: 8px 8px;
+    border-radius: 7px;
+    background: #FF9999;
+    margin-left: 7px;
+}
+
+.Green02box {
+    padding: 8px 8px;
+    border-radius: 7px;
+    background: #4CC010;
+    margin-left: 7px;
+}
+
+.Red02box {
+    padding: 8px 8px;
+    border-radius: 7px;
+    background: #CD2020;
+    margin-left: 7px;
+}
+
+.selectedFilterColor {
+    border: 5px solid;
+    border-color: black;
+}
+
+.e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+    /* background-color: red; */
+    /* border-color: #ced4da; */
+    width: 20px;
+    height: 20px;
+}
+
+.e-checkbox-wrapper .e-check, .e-css.e-checkbox-wrapper .e-check {
+    font-size: 12px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+
+
+.e-gridheader.e-lib.e-droppable.e-sticky {
+    top: 78px !important;
+}
+
+.exludefilterbox span {
+    height: 32px !important;
+    width: 32px !important;
+    margin-right: 12px;
+}
+
+
+.gridboxs {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 0px;
+    list-style: none;
+    position: relative;
+    padding: 0px;
+}
+
+    .gridboxs li {
+        text-align: center;
+        width: auto;
+        padding: 0px 5px;
+        margin: 3px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        -webkit-transition: all 0.15s ease-in-out;
+        transition: all 0.15s ease-in-out;
+        background: white;
+        position: relative;
+        font-size: 11px;
+    }
+
+        .gridboxs li:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            -webkit-box-shadow: 0px 6px 10px;
+            box-shadow: 0px 6px 10px;
+        }
+
+    .gridboxs:hover .priceTableToolTip {
+        display: block;
+    }
+
+    .gridboxs li.priceLightGreen {
+        background: #afde6a !important;
+        color: #d0ffd0;
+        border: 1px solid #3fb53f;
+    }
+
+    .gridboxs li.priceDarkGreen {
+        background: #62a003 !important;
+        color: #397839;
+        border: 1px solid #9cf97f;
+    }
+
+    .gridboxs li.priceGrey {
+        background: #dadada !important;
+        color: #646464;
+        border: 1px solid #aeaeae;
+    }
+
+    .gridboxs li.priceLightRed {
+        background: #ff9292 !important;
+        color: #ffe9e9;
+        border: 1px solid #fa5a5a;
+    }
+
+    .gridboxs li.priceDarkRed {
+        background: #791f1f !important;
+        color: #ffa7a7;
+        border: 1px solid #e51515;
+    }
+
+.itenInfoContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+    .itenInfoContainer a {
+        text-decoration: none;
+        font-size: 12px;
+        margin-top: 5px;
+        color: #596dff;
+    }
+
+    .itenInfoContainer ul.gridProductInfo {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+        .itenInfoContainer ul.gridProductInfo li:nth-child(1) {
+            font-size: 12px;
+            background: #dfdfdf;
+            border: 1px solid #b7b7b7;
+            padding: 2px 4px;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .itenInfoContainer ul.gridProductInfo li:nth-child(2) {
+            font-size: 12px;
+            padding: 3px 5px;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+
+.priceTitleContainer {
+    display: flex;
+    width: 100%;
+    background: white;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 25px;
+    box-shadow: 0px 0px 20px rgb(0 0 0 / 20%);
+}
+
+
+
+.pricefilterContainer {
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: #38363d;
+    box-shadow: 0px 10px 20px rgb(0 0 0 / 20%);
+    box-sizing: border-box;
+    padding: 10px 25px;
+    margin: auto;
+}
+
+.priceDateRangePicker {
+    margin-right: 15px;
+    width: 18%;
+}
+
+.vendorFilterContainer {
+    display: flex;
+}
+
+.priceDepartmentFilter {
+    display: flex;
+}
+
+.priceColorFilter {
+    display: flex;
+}
+
+

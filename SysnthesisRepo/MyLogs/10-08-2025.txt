@@ -1,0 +1,7 @@
+2025-10-08 13:53:37.0298|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/8/2025 1:53:37 PM
+2025-10-08 13:56:30.6656|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/8/2025 1:56:30 PM - An error occurred while sending the request.
+2025-10-08 13:57:47.2053|ERROR|Repository.PayrollAccountRepository|PayrollAccountRepository - UpdatePRAccount - 10/8/2025 1:57:47 PM - An error occurred while updating the entries. See the inner exception for details.
+2025-10-08 13:57:58.6160|ERROR|Repository.PayrollAccountRepository|PayrollAccountRepository - UpdatePRAccount - 10/8/2025 1:57:58 PM - An error occurred while updating the entries. See the inner exception for details.
+2025-10-08 13:58:11.8785|ERROR|Repository.PayrollAccountRepository|PayrollAccountRepository - UpdatePRAccount - 10/8/2025 1:58:11 PM - An error occurred while updating the entries. See the inner exception for details.
+2025-10-08 14:23:01.4011|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/8/2025 2:23:01 PM
+2025-10-08 14:23:16.4588|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/8/2025 2:23:16 PM - An error occurred while sending the request.

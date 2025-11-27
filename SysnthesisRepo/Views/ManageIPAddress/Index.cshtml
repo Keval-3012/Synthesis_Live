@@ -1,0 +1,290 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .fabric .empimg {
+        background-color: #0078d6;
+    }
+
+    .material .empimg {
+        background-color: #e3165b;
+    }
+
+    .highcontrast .empimg {
+        background-color: #ffd939;
+    }
+
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .highcontrast .e-userimg.sf-icon-Male::before,
+    .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .bootstrap .empimg {
+        background-color: #0078d6;
+    }
+
+    .bootstrap4 .empimg,
+    .bootstrap5 .empimg {
+        background-color: #0078d6;
+    }
+
+    .tailwind .empimg {
+        background-color: #4f46e5;
+    }
+
+    .fluent .empimg {
+        background-color: #106EBE;
+    }
+
+    #Emptext {
+        top: -12px;
+        left: 41px;
+        position: relative;
+    }
+
+    .e-grid.e-rtl #Emptext {
+        top: -12px;
+        left: -41px;
+        position: relative;
+    }
+
+    .empimg {
+        height: 27px;
+        width: 29px;
+        border-radius: 14px;
+    }
+
+
+    .e-userimg.sf-icon-Male::before,
+    .e-userimg.sf-icon-FeMale::before {
+        font-size: 13px;
+    }
+
+    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+        margin: 0px 8px;
+        line-height: 26px;
+        color: white;
+        font-size: 13px;
+    }
+
+        .e-userimg.sf-icon-Male::before {
+            content: '\e700';
+        }
+
+        .e-userimg.sf-icon-FeMale::before {
+            content: '\e701';
+        }
+
+
+    td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+    }
+
+    .e-hightheme td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+        color: white;
+    }
+
+    .e-bigger .e-grid .statustxt {
+        position: relative;
+        top: -2px;
+    }
+
+    .rating .star {
+        font-size: 132%;
+        color: var(--light-gray-color);
+    }
+
+        .rating .star.checked {
+            color: #ffa600;
+        }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #00cc00;
+        position: relative;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #e60000;
+        position: relative;
+    }
+
+    .bootstrap5 td.e-rowcell .statustxt.e-inactivecolor,
+    .bootstrap5 td.e-rowcell .statustxt.e-activecolor {
+        top: 8px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        position: relative;
+        top: 1.5px;
+    }
+
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        top: -0.5px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext #Trusttext {
+        margin-left: -4px;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+    }
+
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+    }
+
+    .statustxt.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #e60000;
+    }
+
+    #Trusttext {
+        position: relative;
+        top: 1px;
+    }
+
+    .e-image {
+        height: 13px;
+        width: 14px;
+    }
+
+    .statustemp.e-inactivecolor {
+        width: 64px;
+    }
+
+    .statustemp.e-activecolor {
+        width: 57px;
+    }
+
+    .statustemp {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .highcontrast #msg {
+        color: #FFFFFF
+    }
+
+
+    #msg {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.95;
+        color: #333;
+        float: right;
+        margin-top: 3px;
+    }
+
+    @@media only screen and (max-width: 370px) {
+        #msg {
+            float: left;
+            margin-top: 3px;
+        }
+
+        #GridOverview {
+            margin-top: 36px;
+        }
+    }
+
+    #samplecontainer {
+        padding-top: 5px;
+    }
+
+    #myProgress {
+        position: relative;
+        height: 18px;
+        width: 10em;
+        text-align: left;
+        background-color: white;
+    }
+
+    .highcontrast .e-grid #myProgress {
+        background-color: black;
+    }
+
+    #myBar {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        background-color: #00b300;
+    }
+
+        #myBar.progressdisable {
+            background-color: #df2222;
+        }
+
+    #label {
+        position: relative;
+        left: 10px;
+        line-height: 18px;
+        font-size: 10px;
+        color: white;
+    }
+
+    div#InlineEditing_dialogEdit_wrapper {
+        width: 1100px !important;
+    }
+    .e-control.e-toolbar.e-lib.e-keyboard.e-sticky {
+        top: 78px !important;
+    }
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 134px !important;
+    }
+</style>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div class="header-small special_bg">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Timeclock IP Controls</h3>
+        </div>
+
+    </div>
+</div>
+
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditing").Created("created").AllowFiltering().AllowSorting().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+    {
+    col.Type("checkbox").Width("50").Add();
+    col.Field("IpAdressInfoID").IsPrimaryKey(true).HeaderText("IpAdressInfo ID").Visible(false).Add();
+    col.Field("StaticIp").HeaderText("IP Address").Width("250").Add();
+    col.Field("Location").HeaderText("Location").Width("150").Add();
+    col.Field("Status").HeaderText("Status").Width("100").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTemp" }).Template("#statusTemplate").Add();
+    }).ActionBegin("actionBegin").ActionComplete("actionComplete").QueryCellInfo("queryCellInfo").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Search" }).Render()
+</div>
+
+
+<script type="text/x-jsrender" id="statusTemplate">
+    <div id="status" class="statustemp">
+        <span class="statustxt">${Status}</span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="StatusItemTemp">
+    ${statusDetail(data)}
+</script>
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+<script src="~/Form_JS/ManageIPAddress.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+@Html.EJS().ScriptManager()
+
+
+

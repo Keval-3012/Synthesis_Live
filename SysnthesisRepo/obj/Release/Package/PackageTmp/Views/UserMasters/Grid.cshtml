@@ -1,0 +1,474 @@
+﻿@model IEnumerable<EntityModels.Models.UserMaster>
+@using EntityModels.Models;
+@using Utility;
+
+@{
+
+    Layout = null;
+}
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+</style>
+
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+        @if (ViewBag.StatusMessageString != null)
+        {
+            if (ViewBag.StatusMessageString != "")
+            {
+                <script>
+                MyCustomToster('@ViewBag.StatusMessageString');
+                </script>
+            }
+        }
+    </div>
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="searchfinal">
+            <div class="widget-body shadownone brdrgray">
+                <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="dataTables_filter">
+                        <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+
+                            <tr>
+                                <td style="text-align:left !important;width:40% !important">
+                                    <div class="col-md-6">
+                                        @Html.DropDownList("GroupId", null, "-- Select --", htmlAttributes: new { @class = "myval", onchange = "getStoreData();", style = "width:100% !important" })
+                                    </div>
+                                    @*<div class="col-md-6">
+                                        @Html.DropDownList("StoreId", null, "-- All --", htmlAttributes: new { @class = "myval", onchange = "getUserData();", style = "width:100% !important" })
+                                    </div>*@
+                                </td>
+                                <td style="width:70% !important">
+                                    <div class="input-group postion_div">
+                                        <input name="txtSearchTitle" type="text" maxlength="100" id="txtSearchTitle" placeholder="UserName" class="form-control m-b">
+                                        <a href="#" class="search_close" onclick="cleartextsearch();">x</a>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class=".searchfinal .btnsearchicon" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            @{
+
+                DBContext db = new DBContext();
+                <div class="datagrid martop15">
+                    <div class="table-responsive">
+
+                        <table class="table table-striped table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th width="10%">&nbsp;</th>
+
+                                    <th width="20%"><a class="textred" onclick="javascript:FunSortData('FirstName');" style="color:#fff; text-decoration:none; cursor:pointer;">Name</a></th>
+                                    <th width="20%"><a class="textred" onclick="javascript:FunSortData('Group');" style="color:#fff; text-decoration:none; cursor:pointer;">Group</a></th>
+                                    <th width="20%"><a class="textred" onclick="javascript:FunSortData('UserType');" style="color:#fff; text-decoration:none; cursor:pointer;">Assigned Role</a></th>
+                                    <th width="20%"><a class="textred" onclick="javascript:FunSortData('UserName');" style="color:#fff; text-decoration:none; cursor:pointer;">User Name</a></th>
+                                    <th class="text-right" width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{if (Model.Count() > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            var imgname = "imgdiv" + @item.UserId.ToString();
+                                            var divvalue = "div" + @item.UserId.ToString();
+                                            var trvalue = "tr" + @item.UserId.ToString();
+                                            var CatInGalary = 0;
+
+                                            <tr class="even">
+                                                <td>
+                                                    @{
+                                                        if (item.StoreName.Count() > 0)
+                                                        {
+                                                            <text>
+                                                                <a href="JavaScript:divexpandcollapse('@divvalue','@trvalue');"><img id="@imgname" src="../Content/Admin/images/btn_rowplus.png" /></a>
+                                                            </text>
+                                                        }
+                                                    }
+
+                                                </td>
+
+                                                <td style="vertical-align:middle;text-align:left;">@Html.Raw(item.FirstName)</td>
+                                                <td style="vertical-align:middle;text-align:left;">@Html.Raw(item.Group) </td>
+                                                <td style="vertical-align:middle;text-align:left;">@Html.Raw(item.UserType)</td>
+                                                <td style="vertical-align:middle;text-align:left;">@Html.Raw(item.UserName) </td>
+                                                <td style="vertical-align:middle;text-align:right" class="img_with img_color">
+                                                    <input type="hidden" id="ID" name="ID" value="@item.UserId" />
+                                                    <a href="@Url.Action("Edit", "UserMasters", new { id = item.UserId })" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+
+                                                    @{
+                                                        var UserIdD = @item.UserId + "D";
+                                                    }
+
+                                                    @*@if (CatInGalary == 0)
+                                                    {
+                                                        <a href="#" onclick="return ComfirmDelete(@item.UserId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="../Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                                    }*@
+                                                    @*<a href="@Url.Action("Details", "UserMasters", new { Id = item.UserId })" class="" data-toggle="tooltip" data-placement="top" data-original-title="Detail"><img src="~/Content/Admin/images/file-text.svg" alt="" /></a>*@
+                                                    <a href="#" data-toggle="modal"><img src="~/Content/Admin/images/icon_resetpassword.png" alt="" data-toggle="tooltip" data-placement="top" data-original-title="Reset Password" onclick="return ComfirmReset(@item.UserId);" /></a>
+                                                    <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                                        <div class="modal-content ">
+                                                            <div class="modal-header text-center">
+                                                                <i class="glyphicon glyphicon-trash"></i>
+                                                            </div>
+                                                            <div class="modal-title">Message</div>
+                                                            <div class="modal-body ">Are you sure want to delete this User?</div>
+                                                            <div class="modal-footer" style="text-align:center">
+                                                                <a class="btn btn-danger" onclick="Delete(@item.UserId);">Ok </a>
+                                                                <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr id="@trvalue" style="display:none;">
+                                                <td colspan="7">
+                                                    <div id="@divvalue" style="display:none;">
+                                                        <table class="table table-bordered">
+                                                            @{
+                                                                foreach (var item1 in item.StoreName)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@Html.Raw(item1)</td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="7" class="text-center">
+                                                No Data Available
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                                <tr class="paginationGrid">
+                                    <td class="left-text dataTables_length showdata" colspan="2" style="padding-top: 0px!important;">
+                                        <div class="recordbox">
+                                            <span class="selectbox">
+                                                @{
+                                                    List<SelectListItem> listItem_Records = new List<SelectListItem>();
+                                                    string[] Records = AdminSiteConfiguration.GetArrayForRecord().ToString().Split(',');
+                                                    foreach (string word in Records)
+                                                    {
+                                                        listItem_Records.Add(new SelectListItem
+                                                        {
+                                                            Text = word.Split(':')[0],
+                                                            Value = word.Split(':')[1]
+                                                        });
+                                                    }
+
+                                                    @Html.DropDownList("SelectRecords", listItem_Records, new { @class = "myval", @onchange = "javascript:FunPageRecord(this.value);" })
+                                                }
+                                            </span><span class="text_record">Records</span>
+                                        </div>
+                                        <div class="showdatabox">
+                                            <span style="float:left">Showing @ViewBag.startIndex to @ViewBag.endIndex of @ViewBag.TotalDataCount entries</span>
+                                        </div>
+
+                                    </td>
+                                    <td colspan="8">
+
+                                        <div class="pagination">
+                                            @if (ViewBag.LastPageIndex > 1)
+                                            {
+                                                if (ViewBag.CurrentPageIndex != 1)
+                                                {
+                                                    <a id="btnPageFirst" style="cursor:pointer" onclick="javascript:FunPageIndex(1);" class=" Linkbutton firstpage nextbtn">First</a>
+                                                    <a id="btnPagePrevious" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    -1);" class=" Linkbutton Linkbutton prebtn">Previous</a>
+                                                }
+                                                int PageIndex = 3;
+                                                int StartPageIndex = ViewBag.CurrentPageIndex - PageIndex;//10-3=7
+                                                int EndPageIndex = ViewBag.CurrentPageIndex + PageIndex;//10+3=13
+
+                                                if (StartPageIndex < 1)
+                                                {
+                                                    EndPageIndex = EndPageIndex - StartPageIndex;
+                                                }
+
+                                                if (EndPageIndex > ViewBag.LastPageIndex)
+                                                {
+                                                    StartPageIndex = (StartPageIndex - (EndPageIndex - ViewBag.LastPageIndex)) + 1;
+                                                }
+
+                                                for (int i = 1; i <= ViewBag.LastPageIndex; i++)
+                                                {
+
+                                                    if ((StartPageIndex < i && EndPageIndex > i))
+                                                    {
+                                                        if (ViewBag.CurrentPageIndex == i)
+                                                        {
+                                                            <span Style="min-width: 25px; display: inline-block;">@i          </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="btnnum" style="cursor:pointer" onclick="javascript:FunPageIndex(@i);">@i</a>
+                                                        }
+                                                    }
+                                                }
+                                                if (ViewBag.CurrentPageIndex != ViewBag.LastPageIndex)
+                                                {
+                                                    <a id="btnPageNext" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    +1);" class=" Linkbutton nextbtn">Next</a>
+                                                    <a id="btnPageLast" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.LastPageIndex);" class=" Linkbutton lastpage nextbtn">Last</a>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+<div id="displayAddPanelPopup">
+</div>
+
+<script>
+    function divexpandcollapse(divname, trname) {
+
+        var div = document.getElementById(divname);
+        var img = document.getElementById('img' + divname);
+        var tr = document.getElementById(trname);
+
+        if (div.style.display == "none") {
+            div.style.display = "inline";
+            tr.style.display = "";
+            img.src = "../Content/Admin/images/btn_rowminus.png";
+
+        } else {
+            div.style.display = "none";
+            tr.style.display = "none";
+            img.src = "../Content/Admin/images/btn_rowplus.png";
+        }
+    }
+    function FunSearchRecord()//Search
+    {
+        window.FunSearchRecord=FunSearchRecord
+        var element_txtSearchTitle = document.getElementById('txtSearchTitle').value;
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'','',element_txtSearchTitle);
+    }
+
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+        GetData(0,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'');
+    }
+
+    function GetData(IsBindData_val,PageIndex,orderby_val,isAsc_val,PageSize_val,alpha_val,SearchRecords_val,SearchTitle_val)
+    {
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/grid',
+            data: {IsBindData: IsBindData_val, currentPageIndex: PageIndex,orderby:orderby_val.trim(),IsAsc:isAsc_val,PageSize:PageSize_val,SearchRecords:SearchRecords_val,Alpha:alpha_val,SearchTitle:SearchTitle_val},
+            beforeSend: function () { Loader(1);
+                $("#preloader").show();
+                $("#status").show();
+            },
+            // async: false,
+            success: function (response) {
+                //    $("body").html(response);
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                $("#GroupId").addClass("myval");
+                $("#StoreId").addClass("myval");
+                $("#preloader").hide();
+                $("#status").hide();
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+
+    document.getElementById('txtSearchTitle').onkeypress=function(e){
+        if(e.keyCode==13){
+            document.getElementById('btnSearch').click();
+        }
+    }
+
+    function bind(){
+
+        $(".myval").select2({
+            //placeholder: "select",
+            allowclear: true,
+            //minimumResultsForSearch: -1
+        });
+        if(document.getElementById('SelectRecords')!=null)
+        {
+            document.getElementById('SelectRecords').value = @ViewBag.PageSize;
+        }
+        document.getElementById('txtSearchTitle').value = '@ViewBag.SearchTitle';
+
+        $(".select2-container").remove();
+
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+    }
+    function ComfirmDelete(ID)
+    {
+         var DivId = "#" + ID + "D";
+        $(DivId).show();
+    }
+
+    function Delete(ID)
+    {
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/DeleteConfirmed',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+                if (response === '@ViewBag.UserDeleted') {
+                    MyCustomToster(response);
+                    GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+                $(".divIDClass").hide();
+                }
+                else if (response != "") {
+                    alert(response);
+                    $(".divIDClass").hide();
+                }
+                @*GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+                $(".divIDClass").hide();
+                window.location.reload();*@
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    function closemodal(){
+
+        $(".divIDClass").hide();
+
+    }
+
+    var ComfirmReset = function (ID) {
+        $.ajax({
+            url: 'UserMasters/Resetpassword',
+            data: { Reg_userid: ID},
+            async: false,
+            success: function (response) {
+                $("#displayAddPanelPopup").html(response);
+                $("#displayAddPanelPopup").show();
+            },
+            error:function()
+            {
+            }
+        });
+    }
+    function Reset(ID)
+    {
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/Reset',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+
+                GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+            },
+            error:function()
+            {
+                //return false;
+            }
+        });
+    }
+    function closeExcelmodal() {
+        $('.modal-backdrop').addClass('hidebox');
+        $('.modal-backdrop').removeClass('show');
+        $('#mymodal').removeAttr("style");
+    }
+
+</script>
+<script>
+    function getUserData() {
+        var StoreId = $('#StoreId').val();
+        var GroupId = $('#GroupId').val();
+        $.ajax({
+            url: '/UserMasters/getUserData',
+            type: "post",
+            cache: false,
+            data: { StoreId: StoreId, GroupId: GroupId },
+            success: function (states) {
+                $("#grddata").html('');
+                $("#grddata").html(states);
+            }
+        });
+    }
+    function getStoreData() {
+        var GroupId = $('#GroupId').val();
+
+        $.ajax({
+            url: '/UserMasters/getStoreData',
+            type: "GET",
+            dataType: "JSON",
+            data: { GroupId: GroupId },
+            success: function (states) {
+                $("#StoreId").html("");
+                $('select#StoreId').html('<option value="">-- All --</option>');
+                $.each(states, function (data, value) {
+                    $("#StoreId").append(
+                        $('<option></option>').val(value.StoreId).html(value.Name));
+                });
+            }
+        });
+    }
+</script>
+
+

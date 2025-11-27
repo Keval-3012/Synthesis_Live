@@ -1,0 +1,216 @@
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\Repository.dll.config
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\Repository.dll
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\Repository.pdb
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityFramework.dll
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityModels.dll
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityModels.pdb
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityModels.dll.config
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityFramework.xml
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\obj\Debug\Repository.csproj.CopyComplete
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\obj\Debug\Repository.dll
+D:\Maulik\NewSysnthesis\SysnthesisRepo\Repository\obj\Debug\Repository.pdb
+D:\Kirtan GIt\JP\Synthesis-new\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Kirtan GIt\JP\Synthesis-new\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Kirtan GIt\JP\Synthesis-new\Repository\obj\Debug\Repository.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\obj\Debug\Repository.pdb
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\Repository.dll.config
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\Repository.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\Repository.pdb
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityFramework.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityModels.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\Utility.dll
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityModels.pdb
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityModels.dll.config
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.pdb
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\Utility.pdb
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityFramework.xml
+D:\Kirtan GIt\JP\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Kirtan GIt\JP\Synthesis-new\Repository\obj\Debug\Repository.csproj.CopyComplete
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Repository.dll.config
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Repository.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Repository.pdb
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityFramework.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityModels.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Newtonsoft.Json.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\NLog.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Syncfusion.EJ2.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\SynthesisQBOnline.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Utility.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\RestSharp.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Syncfusion.Licensing.dll
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityModels.pdb
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityModels.dll.config
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\SynthesisQBOnline.pdb
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.pdb
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\Utility.pdb
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityFramework.xml
+D:\Kirtan\Project\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Kirtan\Project\Synthesis-new\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Kirtan\Project\Synthesis-new\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Kirtan\Project\Synthesis-new\Repository\obj\Debug\Repository.csproj.CopyComplete
+D:\Kirtan\Project\Synthesis-new\Repository\obj\Debug\Repository.dll
+D:\Kirtan\Project\Synthesis-new\Repository\obj\Debug\Repository.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Repository.dll.config
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Repository.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Repository.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityFramework.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityModels.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Newtonsoft.Json.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\NLog.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Syncfusion.EJ2.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\SynthesisQBOnline.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Utility.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\RestSharp.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Syncfusion.Licensing.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityModels.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityModels.dll.config
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\SynthesisQBOnline.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\Utility.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityFramework.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\obj\Debug\Repository.csproj.CopyComplete
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\obj\Debug\Repository.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\Repository\obj\Debug\Repository.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Repository.dll.config
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Repository.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Repository.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityFramework.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityModels.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Newtonsoft.Json.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\NLog.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Syncfusion.EJ2.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\SynthesisQBOnline.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Utility.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\RestSharp.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Syncfusion.Licensing.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityModels.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityModels.dll.config
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\SynthesisQBOnline.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\SynthesisViewModal.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\Utility.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityFramework.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\bin\Debug\EntityFramework.SqlServer.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\obj\Debug\Repository.csproj.CopyComplete
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\obj\Debug\Repository.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\Repository\obj\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Repository.dll.config
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Syncfusion.EJ2.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Syncfusion.Licensing.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\obj\Debug\Repository.csproj.Up2Date
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\obj\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\Repository\obj\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Repository.dll.config
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Syncfusion.EJ2.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Syncfusion.Licensing.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.Up2Date
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\obj\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\Repository\obj\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Repository.dll.config
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Syncfusion.EJ2.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Syncfusion.Licensing.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.Up2Date
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Repository.dll.config
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Repository.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.SqlServer.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Syncfusion.EJ2.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Syncfusion.Licensing.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\bin\Debug\EntityFramework.SqlServer.xml
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.csproj.Up2Date
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\Repository\obj\Debug\Repository.pdb

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<EntityModels.Models.PayrollDetails>
+@{
+    var hasDepartments = ViewBag.HasDepartments ?? false;
+}
+<br />
+<button class="btn btn-warning" type="button" onclick="@("window.location.href='" + @Url.Action("Create", "PDFRead") + "'");"><i class='icon_spac fa fa-navicon'></i>Back</button>
+<br />
+<table class="table">
+    <thead style="background-color:lightgray">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Value)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (hasDepartments)
+        {
+            foreach (var deptname in ViewBag.DepartmentNameList)
+            {
+                bool isFirstRowForDept = true;
+                foreach (var item in Model)
+                {
+                    if (deptname == item.DepartmentName)
+                    {
+                        if (isFirstRowForDept)
+                        {
+                            <tr>
+                                <td colspan="2" style="font-weight:bold;">
+                                    Dep: @deptname
+                                </td>
+                            </tr>
+                            isFirstRowForDept = false;
+                        }
+
+                        <tr>
+                            <td>@Html.Raw(item.Name)</td>
+                            <td>@Html.Raw(item.Value)</td>
+                        </tr>
+                    }
+                }
+            }
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.Raw(item.Name)</td>
+                    <td>@Html.Raw(item.Value)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

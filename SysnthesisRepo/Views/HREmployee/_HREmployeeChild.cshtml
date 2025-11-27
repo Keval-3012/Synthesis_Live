@@ -1,0 +1,113 @@
+﻿@model SynthesisViewModal.HRViewModel.HREmployeeChildViewModal
+@using Syncfusion.EJ2
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <h4>Employee Information</h4>
+</div>
+<div class="form-group">
+    @Html.HiddenFor(a => a.EmployeeChildId)
+    <div class="col-md-3">
+        <label>Employee Id <span class="redSpan">*</span></label>
+        @Html.TextBoxFor(a => a.OfficeEmployeeID, new { @class = "form-control", placeholder = "Employee Id", @maxlength = "10", autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.OfficeEmployeeID, "", new { @class = "form-error-msg show" })
+    </div>
+    <div class="col-md-3">
+        <label>Hire Date</label>
+        @Html.EJS().DatePickerFor(m => m.sHireDate).EnableMask(true).Format("MM/dd/yyyy").Render()
+        @*@Html.TextBoxFor(m => m.sHireDate, new { @class = "form-control", placeholder = "Hire Date", autocomplete = "off" })*@
+        @Html.ValidationMessageFor(m => m.sHireDate, "", new { @class = "form-error-msg show" })
+    </div>
+    <div class="col-md-3">
+        <label>Store <span class="redSpan">*</span></label>
+        @Html.DropDownListFor(x => x.StoreId, null, new { @class = "form-control select2" })
+        @Html.ValidationMessageFor(m => m.StoreId, "", new { @class = "form-error-msg show" })
+
+    </div>
+    <div class="col-md-3 hidden">
+        <label>Sr No.<span class="redSpan">*</span></label>
+        @Html.TextBoxFor(a => a.SrNo, new { @class = "form-control", placeholder = "Sr No.", @maxlength = "10", autocomplete = "off", @readonly = "readonly" })
+    </div>
+</div>
+<div class="form-group">
+
+
+    <div class="col-md-3">
+        <label>Department <span class="redSpan">*</span></label>
+        @Html.DropDownListFor(x => x.DepartmentId, null, new { @class = "form-control select2" })
+        @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "form-error-msg show" })
+
+    </div>
+    <div class="col-md-3">
+        <label>Employment Type <span class="redSpan">*</span></label>
+        @Html.DropDownListFor(x => x.EmployeementTypeStatus, null, new { @class = "form-control select2" })
+        @Html.HiddenFor(m => m.EmployeementTypeStatus)
+        @Html.ValidationMessageFor(m => m.EmployeementTypeStatus, "", new { @class = "form-error-msg show" })
+    </div>
+    <div class="col-md-3">
+        <label>Status <span class="redSpan">*</span></label>
+        @Html.DropDownListFor(x => x.Status, null, new { @class = "form-control select2", onchange = "return ChangeterminationDateContainer()" })
+        @Html.HiddenFor(m => m.Status)
+        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "form-error-msg show" })
+    </div>
+    <div class="col-md-3" id="terminationDateContainer">
+        <label class="cssTerminationdate"></label>
+        @Html.EJS().DatePickerFor(m => m.sTerminationDate).EnableMask(true).Format("MM/dd/yyyy").Render()
+        @*@Html.TextBoxFor(m => m.sTerminationDate, new { @class = "form-control", placeholder = "TerminationDate", @value = DateTime.Now.ToShortDateString(), autocomplete = "off" })*@
+        @Html.ValidationMessageFor(m => m.sTerminationDate, "", new { @class = "form-error-msg show" })
+    </div>
+    <div class="col-md-2" style="padding-top: 32px;">
+        <button type="submit" form="frmID" value="Add" class="btn btn-success "><span class="ul-btn__icon"><i class="fa fa-plus"></i></span></button>
+    </div>
+</div>
+
+<br />
+<br />
+@{ Html.RenderAction("PartialIndex", "HREmployee"); }
+<script>
+
+    $(document).ready(function () {
+        // Hide the Termination Date field initially
+        $("#terminationDateContainer").hide();
+
+        //$("#Status").change(function () {
+        //    var selectedStatus = $(this).val();
+
+        //    if (selectedStatus === "0" ) {
+        //        // Hide the Termination Date field
+        //        $("#terminationDateContainer").hide();
+        //    }
+        //    else if (selectedStatus === "1") {
+        //        // Hide the Termination Date field
+        //        $("#terminationDateContainer").hide();
+        //    }
+        //    else {
+        //        // Show the Termination Date field
+        //        $("#terminationDateContainer").show();
+        //    }
+        //});
+    });
+    function ChangeterminationDateContainer() {
+        var selectedStatus = $("#Status").val();
+        var label = $(".cssTerminationdate");
+
+        if (selectedStatus === "0") {
+            // Hide the Termination Date field
+            $("#terminationDateContainer").hide();
+        }
+        else if (selectedStatus === "1") {
+            // Hide the Termination Date field
+            $("#terminationDateContainer").hide();
+        }
+        else {
+            // Show the Termination Date field
+            $("#terminationDateContainer").show();
+            if (selectedStatus === "2") {
+                label.text("Termination Date");
+            } else if (selectedStatus === "3") {
+                label.text("Deceased Date");
+            } else if (selectedStatus === "4") {
+                label.text("Resigned Date");
+            }
+        }
+    }
+</script>
+@Html.EJS().ScriptManager()

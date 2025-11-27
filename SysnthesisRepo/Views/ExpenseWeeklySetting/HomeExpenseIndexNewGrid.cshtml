@@ -1,0 +1,765 @@
+﻿
+@using Syncfusion.EJ2
+@model IEnumerable<EntityModels.Models.HomeExpensesDetail>
+@*@using wwwroot.Areas.Admin.Models
+    @using wwwroot.Class*@
+@using Utility;
+@using EntityModels.Models;
+
+@using System.Configuration;
+@{
+    Layout = null;
+}
+@{
+    int i = 1;
+}
+@{
+    string storeid = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+}
+
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .modal-header {
+        border-bottom: 3px solid #a52f2f;
+    }
+
+    .header-small {
+        margin-top: 0px !important;
+    }
+
+    #IModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    #popupid {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    .wraptd {
+        white-space: normal !important;
+    }
+</style>
+
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #ccc;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
+<style>
+    .show-read-more .more-text {
+        display: none;
+    }
+
+    #modl {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    #UploadFile {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    #dvBody {
+        max-width: 1850px;
+        min-width: 750px;
+        height: 350px;
+    }
+</style>
+
+
+<style>
+    .page-header-main {
+        padding: 0;
+    }
+
+    .page-sidebar.sidebar-fixed {
+        top: 78px !important;
+    }
+</style>
+<style>
+    .fabric .empimg {
+        background-color: #0078d6;
+    }
+
+    .material .empimg {
+        background-color: #e3165b;
+    }
+
+    .highcontrast .empimg {
+        background-color: #ffd939;
+    }
+
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .highcontrast .e-userimg.sf-icon-Male::before,
+    .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .bootstrap .empimg {
+        background-color: #0078d6;
+    }
+
+    .bootstrap4 .empimg,
+    .bootstrap5 .empimg {
+        background-color: #0078d6;
+    }
+
+    .tailwind .empimg {
+        background-color: #4f46e5;
+    }
+
+    .fluent .empimg {
+        background-color: #106EBE;
+    }
+
+    #Emptext {
+        top: -12px;
+        left: 41px;
+        position: relative;
+    }
+
+    .e-grid.e-rtl #Emptext {
+        top: -12px;
+        left: -41px;
+        position: relative;
+    }
+
+    .empimg {
+        height: 27px;
+        width: 29px;
+        border-radius: 14px;
+    }
+
+
+    .e-userimg.sf-icon-Male::before,
+    .e-userimg.sf-icon-FeMale::before {
+        font-size: 13px;
+    }
+
+    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+        margin: 0px 8px;
+        line-height: 26px;
+        color: white;
+        font-size: 13px;
+    }
+
+        .e-userimg.sf-icon-Male::before {
+            content: '\e700';
+        }
+
+        .e-userimg.sf-icon-FeMale::before {
+            content: '\e701';
+        }
+
+
+    td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+    }
+
+    .e-hightheme td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+        color: white;
+    }
+
+    .e-bigger .e-grid .statustxt {
+        position: relative;
+        top: -2px;
+    }
+
+    .e-bigger .e-grid .statustxts {
+        position: relative;
+        top: -2px;
+    }
+
+    .rating .star {
+        font-size: 132%;
+        color: lightgrey;
+    }
+
+        .rating .star.checked {
+            color: #ffa600;
+        }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #00cc00;
+        position: relative;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #e60000;
+        position: relative;
+    }
+
+    .bootstrap5 td.e-rowcell .statustxt.e-inactivecolor,
+    .bootstrap5 td.e-rowcell .statustxt.e-activecolor {
+        top: 8px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        position: relative;
+        top: 1.5px;
+    }
+
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        top: -0.5px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext #Trusttext {
+        margin-left: -4px;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+    }
+
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+    }
+
+    .statustemps.e-inactivecolor {
+        background-color: #ffd7cc;
+    }
+
+    .statustemps.e-activecolor {
+        background-color: #ccffcc;
+    }
+
+    .statustxts.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxts.e-inactivecolor {
+        color: #e60000;
+    }
+
+    .statustxt.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #e60000;
+    }
+
+    #Trusttext {
+        position: relative;
+        top: 1px;
+    }
+
+    .e-image {
+        height: 13px;
+        width: 14px;
+    }
+
+    .statustemp.e-inactivecolor {
+        width: 64px;
+    }
+
+    .statustemp.e-activecolor {
+        width: 57px;
+    }
+
+    .statustemp {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .statustemps.e-inactivecolor {
+        width: 64px;
+    }
+
+    .statustemps.e-activecolor {
+        width: 57px;
+    }
+
+    .statustemps {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .highcontrast #msg {
+        color: #FFFFFF
+    }
+
+
+    #msg {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.95;
+        color: #333;
+        float: right;
+        margin-top: 3px;
+    }
+
+    @@media only screen and (max-width: 370px) {
+        #msg {
+            float: left;
+            margin-top: 3px;
+        }
+
+        #GridOverview {
+            margin-top: 36px;
+        }
+    }
+
+    #samplecontainer {
+        padding-top: 5px;
+    }
+
+    #myProgress {
+        position: relative;
+        height: 18px;
+        width: 10em;
+        text-align: left;
+        background-color: white;
+    }
+
+    .highcontrast .e-grid #myProgress {
+        background-color: black;
+    }
+
+    #myBar {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        background-color: #00b300;
+    }
+
+        #myBar.progressdisable {
+            background-color: #df2222;
+        }
+
+    #label {
+        position: relative;
+        left: 10px;
+        line-height: 18px;
+        font-size: 10px;
+        color: white;
+    }
+
+    div#InlineEditing_dialogEdit_wrapper {
+        width: 1100px !important;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+</style>
+
+<style>
+
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+
+    .statusBadge {
+        width: 90px !important;
+        object-fit: contain !important;
+    }
+
+    .e-input-group.e-search.clear {
+        display: none;
+    }
+
+    .viewBtnUnclearCheck {
+        width: auto;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(83, 115, 244);
+        box-shadow: 0px 0px 20px rgba(83, 115, 244,0.3);
+        border-radius: 6px;
+        border: 0px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .viewBtnUnclearCheck:hover, .resetBtnUnclearCheck:hover {
+        text-decoration: none;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .resetBtnUnclearCheck {
+        width: auto;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(244, 161, 83);
+        box-shadow: 0px 0px 20px rgb(244, 161, 83,0.3);
+        border-radius: 6px;
+        border: 0px;
+        margin: 0px 10px;
+        height: 35px;
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+
+
+<div id="loadbox"></div>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+    </div>
+    @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body headertopbox special_bg">
+            <div class="page-header-main position-relative" style="height:80px !important">
+                <h2 style="margin-top:18px; margin-left:20px">Homesome Expenses</h2>
+                <div style="display:flex;">
+
+                    <div style="max-width:180px; margin-top:10px">
+                        <label>StartDate</label>
+                        @Html.EJS().DatePicker("StartDate").Format("MM-dd-yyyy").Change("OnChangeStartDate").Max(DateTime.Now).Render()
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="max-width: 180px; margin-top: 10px">
+                        <label>EndDate</label>
+                        @Html.EJS().DatePicker("EndDate").Format("MM-dd-yyyy").Change("OnChangeEndDate").Max(DateTime.Now).Render()
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="display:flex;align-items:center;justify-content:center;padding-top:30px;">
+                        <a href="javascript:viewdata();" class="viewBtnUnclearCheck" data-toggle="tooltip" data-placement="top" data-original-title="" title="">Filter</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="resetBtnUnclearCheck" onclick="reset();">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+
+            @if (storeid == "0")
+            {
+
+
+                <div class="control-section">
+
+                    @Html.EJS().Grid("InlineExpenseEditing").AllowSorting().AllowFiltering().EnableInfiniteScrolling().Height("90vh").FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/ExpenseWeeklySetting/UrlDatasourceExpense").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+
+
+                   col.Field("NickName").HeaderText("Store Name").Width("50").Add();
+                   col.Field("PaymentFees").HeaderText("Payment Fees").Width("50").Format("$ ###0.#0").Add();
+                   col.Field("DeliveryCost").HeaderText("Delivery Cost").Width("50").Format("$ ###0.#0").Add();
+                   col.Field("TipsPaid").HeaderText("Tips Paid").Width("50").Format("$ ###0.#0").Add();
+                   col.Field("ExpenseDate").HeaderText("Expense Date").Format("MM-dd-yyyy").Width("60").Add();
+                   col.Field("Status").HeaderText("Status").Width("50").Template("#Status").AllowSorting(false).Add();
+                   col.Field("PaymentFeesStatus").HeaderText("QB Status").Width("50").Template("#PaymentFeesStatus").AllowSorting(false).Add();
+               }).DataBound("dataBound").ActionBegin("ActionBegin").PageSettings(page => page.PageSize(50)).Toolbar(new List<string>() { "Search", "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClick").Render()
+
+
+                </div>
+            }
+            else
+            {
+                <div class="control-section">
+
+                    @Html.EJS().Grid("InlineExpenseEditing").AllowSorting().AllowFiltering().EnableInfiniteScrolling().Height("90vh").FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/ExpenseWeeklySetting/UrlDatasourceExpense").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+
+                   col.Field("PaymentFees").HeaderText("Payment Fees").Width("50").Format("$ ###0.#0").Add();
+                   col.Field("DeliveryCost").HeaderText("Delivery Cost").Width("50").Format("$ ###0.#0").Add();
+                   col.Field("TipsPaid").HeaderText("Tips Paid").Width("50").Format("$ ###0.#0").Add();
+                   col.Field("ExpenseDate").HeaderText("Expense Date").Format("MM-dd-yyyy").Width("60").Add();
+                   col.Field("Status").HeaderText("Status").Width("50").Template("#Status").AllowSorting(false).Add();
+                   col.Field("PaymentFeesStatus").HeaderText("QB Status").Width("50").Template("#PaymentFeesStatus").AllowSorting(false).Add();
+
+               }).DataBound("dataBound").ActionBegin("ActionBegin").PageSettings(page => page.PageSize(50)).Toolbar(new List<string>() { "Search", "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClick").Render()
+
+
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/x-jsrender" id="PaymentFeesStatus">
+    ${if(PaymentFeesStatus == "UnSynced")}
+    <img src="/QBImages/NoQBSync.png" class="statusBadge" />
+    ${else if(PaymentFeesStatus == "Pending")}
+    <img src="/QBImages/pendingqbsync.png" class="statusBadge" />
+    ${else}
+    <img src="/QBImages/syncedqbsync.png" class="statusBadge">
+    ${/if}
+</script>
+<script type="text/x-jsrender" id="DeliveryCostStatus">
+    ${if(DeliveryCostStatus == "UnSynced")}
+    <img src="/QBImages/NoQBSync.png" class="statusBadge" />
+    ${else if(DeliveryCostStatus == "Pending")}
+    <img src="/QBImages/pendingqbsync.png" class="statusBadge" />
+    ${else}
+    <img src="/QBImages/syncedqbsync.png" class="statusBadge">
+    ${/if}
+</script>
+<script type="text/x-jsrender" id="TipsPaidStatus">
+    ${if(TipsPaidStatus == "UnSynced")}
+    <img src="/QBImages/NoQBSync.png" class="statusBadge" />
+    ${else if(TipsPaidStatus == "Pending")}
+    <img src="/QBImages/pendingqbsync.png" class="statusBadge" />
+    ${else}
+    <img src="/QBImages/syncedqbsync.png" class="statusBadge">
+    ${/if}
+</script>
+
+<script type="text/x-jsrender" id="Status">
+    ${if(Status == 0)}
+    <a href="javascript:ChangeStatus(${ID});"><img src="/QBImages/Pending.png" class="statusBadge" /></a>
+    ${else}
+    <img src="/QBImages/Approved.png" class="statusBadge" />
+    ${/if}
+</script>
+<script type="text/x-jsrender" id="amountTemplate">
+    <span style="text-align:right">@Html.Raw("$ ")${Amount}</span>
+</script>
+<div id="ModelPopup">
+
+</div>
+
+<script>
+    var OrderByVal = '@ViewBag.OrderByVal';
+    var IsAscVal = '@ViewBag.IsAscVal';
+    var SearchRecords = '@ViewBag.SearchRecords';
+    var Alpha = '@ViewBag.Alpha';
+    var PageSize = '@ViewBag.PageSize';
+    var storeid = '@ViewBag.storeid'
+</script>
+<script src="~/Form_JS/HomeExpense.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+@Html.EJS().ScriptManager()
+
+

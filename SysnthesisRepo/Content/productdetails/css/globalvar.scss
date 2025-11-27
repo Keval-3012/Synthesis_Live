@@ -1,0 +1,66 @@
+
+$Red01:#FF9999;
+$Red02:#CD2020;
+$red03:#672630;
+$Orange01:#C08B10;
+$Orange02:#C05710;
+$Green01:#AEEB8E;
+$Green02:#4CC010;
+$Green03:#264615;
+$grey01:#25232B;
+$grey02:#333239;
+$lightgrey01:#D7D7D7;
+
+
+
+$blackbg:#000;
+$blackbg01:#0B0B0B;
+$blackbg02:#161616;
+$whitebg:#fff;
+$hyperlinkbg:#0099FF;
+
+$titlefont:#393939;
+$textcolor:#2A2A2A;
+$fontfamily: 'Maven Pro', sans-serif;
+$btn01:#EEEEEE;
+
+
+.green02bg{background:$Green02;}
+.green01bg{background:$Green01;}
+.lightgrey01bg{background:$lightgrey01;}
+.Red01bg{background:$Red01;}
+.Red02bg{background:$Red02;}
+
+
+ 
+::-webkit-input-placeholder { color: $whitebg !important;}
+::-moz-placeholder {color: $whitebg !important;}
+:-ms-input-placeholder {color: $whitebg !important;}
+:-moz-placeholder {  color: $whitebg !important;}
+
+
+//index 2
+
+$gradient01: linear-gradient(90deg, rgba(50,190,161,1) 20%, rgba(36,214,220,1) 74%);
+$lightblack:#323339;
+
+
+$fontcolor01:#4A4A4A;
+$fontcolor02:#49BED4;
+
+
+
+$boxbg01:#7EEDF9;
+$boxbg02:#A27EF9;
+$boxbg03:#F97EB3;
+$boxbg04:#ECB623;
+$boxbg05:#EC8123;
+$boxbg06:#23BCEC;
+
+
+.box01bg{background:$boxbg01 !important;}
+.box02bg{background:$boxbg02 !important;}
+.box03bg{background:$boxbg03 !important;}
+.box04bg{background:$boxbg04 !important;}
+.box05bg{background:$boxbg05 !important;}
+.box06bg{background:$boxbg06 !important;}

@@ -1,0 +1,245 @@
+﻿using EntityModels.Models;
+using NLog;
+using Repository.IRepository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Security;
+using System.Xml.Linq;
+using Utility;
+
+namespace Repository
+{
+    public class MastersBindRepository : IMastersBindRepository
+    {
+        private DBContext db;
+        Logger logger = LogManager.GetCurrentClassLogger();
+
+        public MastersBindRepository(DBContext context)
+        {
+            db = context;
+        }
+
+        public List<DepartmentMaster> GetDepartmentMasters(int storeid)
+        {
+            List<DepartmentMaster> departmentMasters = new List<DepartmentMaster>();
+            try
+            {
+                departmentMasters = db.DepartmentMasters.Where(a => a.IsActive == true && a.StoreId == storeid).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetDepartmentMasters - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return departmentMasters;
+        }
+
+        public List<DepartmentMaster> GetAllDepartmentMasters()
+        {
+            List<DepartmentMaster> departmentMasters = new List<DepartmentMaster>();
+            try
+            {
+                departmentMasters = db.DepartmentMasters.Where(a => a.IsActive == true).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetAllDepartmentMasters - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return departmentMasters;
+        }
+
+        public List<TypicalBalanceMaster> GetTypicalbalance()
+        {
+            List<TypicalBalanceMaster> typicalBalanceMaster = new List<TypicalBalanceMaster>();
+            try
+            {
+                typicalBalanceMaster = db.TypicalBalanceMasters.ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetTypicalbalance - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return typicalBalanceMaster;
+        }
+
+        public List<VendorMaster> GetVendorMaster(int StoreId)
+        {
+            List<VendorMaster> vendorMaster = new List<VendorMaster>();
+            try
+            {
+                vendorMaster = db.VendorMasters.Where(a => a.StoreId == StoreId && a.IsActive == true).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetVendorMaster - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return vendorMaster;
+        }
+
+        public List<CustomerMaster> GetCustomerMasters(int StoreId)
+        {
+            List<CustomerMaster> customerMaster = new List<CustomerMaster>();
+            try
+            {
+                customerMaster = db.CustomerMasters.Where(a => a.StoreId == StoreId).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetCustomerMasters - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return customerMaster;
+        }
+
+        public List<StateMaster> GetStateMasters()
+        {
+            List<StateMaster> StateMaster= new List<StateMaster>();
+            try
+            {
+                StateMaster=db.StateMasters.ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetStateMasters - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return StateMaster;
+        }
+
+        public List<AccountTypeMaster> GetAccountTypeMasters()
+        {
+            List<AccountTypeMaster> accountTypeMasters = new List<AccountTypeMaster>();
+            try
+            {
+                accountTypeMasters= db.AccountTypeMasters.ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetAccountTypeMasters - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return accountTypeMasters;
+        }
+
+        public List<StoreMaster> GetStoreMasters()
+        {
+            List<StoreMaster> storeMasters = new List<StoreMaster>();
+            try
+            {
+                storeMasters = db.StoreMasters.Where(s => s.IsActive == true).ToList();
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("MastersBindRepository - GetStoreMasters - " + DateTime.Now + " - " + ex.Message.ToString()); 
+            }
+            return storeMasters;
+        }
+
+        public List<DiscountTypeMaster> GetDiscountTypeMaster()
+        {
+            List<DiscountTypeMaster> discountTypeMasters= new List<DiscountTypeMaster>();
+            try
+            {
+                discountTypeMasters=db.DiscountTypeMasters.ToList();
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("MastersBindRepository - GetDiscountTypeMaster - " + DateTime.Now + " - " + ex.Message.ToString()); 
+            }
+            return discountTypeMasters;
+        }
+
+        public List<InvoiceTypeMaster> GetInvoiceTypeMaster()
+        {
+            List<InvoiceTypeMaster> invoiceTypeMasters=new List<InvoiceTypeMaster>();
+            try
+            {
+                invoiceTypeMasters = db.InvoiceTypeMasters.ToList();
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("MastersBindRepository - GetInvoiceTypeMaster - " + DateTime.Now + " - " + ex.Message.ToString()); 
+            }
+            return invoiceTypeMasters;
+        }
+
+        public List<PaymentTypeMaster> GetPaymentTypeMaster()
+        {
+            List<PaymentTypeMaster> paymentTypeMasters = new List<PaymentTypeMaster>();
+            try
+            {
+                paymentTypeMasters = db.PaymentTypeMasters.ToList();
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("MastersBindRepository - GetPaymentTypeMaster - " + DateTime.Now + " - " + ex.Message.ToString()); 
+            }
+            return paymentTypeMasters;
+        }
+
+        public string GetVendorName(int VendorId)
+        {
+            string Vendorname = "";
+            try
+            {
+                Vendorname = db.VendorMasters.Find(VendorId).VendorName;
+                Vendorname = AdminSiteConfiguration.RemoveSpecialCharacterInvoice(Vendorname);
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("MastersBindRepository - GetVendorName - " + DateTime.Now + " - " + ex.Message.ToString()); 
+            }
+            return Vendorname;
+        }
+
+        public string GetVendorRemoveSpecialCarecters(int VendorId)
+        {
+            string Vendorname = "";
+            Vendorname = db.VendorMasters.Find(VendorId).VendorName;
+            Vendorname = AdminSiteConfiguration.RemoveSpecialCharacterInvoice(Vendorname);
+            return Vendorname;
+        }
+
+        public bool? IsHRAdmin(string UserName)
+        {
+            bool? IsHRAdmin = false;
+            try
+            {
+                IsHRAdmin = db.UserMasters.Where(s => s.UserName == UserName).FirstOrDefault().IsHRAdmin;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return IsHRAdmin;
+        }
+
+        public bool? IsHRSuperAdmin(string UserName)
+        {
+            bool? IsHRSuperAdmin = false;
+            try
+            {
+                IsHRSuperAdmin = db.UserMasters.Where(s => s.UserName == UserName).FirstOrDefault().IsHRSuperAdmin;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return IsHRSuperAdmin;
+        }
+
+        //Himanshu 11-02-2025
+        public List<EmployeeMaster> GetEmployeeMaster(int StoreId)
+        {
+            List<EmployeeMaster> employeeMaster = new List<EmployeeMaster>();
+            try
+            {
+                employeeMaster = db.EmployeeMaster.Where(a => a.StoreId == StoreId && a.IsActive == true).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("MastersBindRepository - GetEmployeeMaster - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return employeeMaster;
+        }
+    }
+}

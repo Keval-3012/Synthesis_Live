@@ -1,0 +1,269 @@
+﻿@model EntityModels.Models.DashboardDaily
+@{ Layout = "~/Views/Shared/AdminMaster.cshtml";
+                var StoreId = ViewBag.Storeidvalue; }
+@using Utility
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+@*<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />*@
+<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />
+<script src="~/Content/Admin/js/DashboardChart/bar-multicolor.js"></script>
+<script src="~/Content/Admin/js/DashboardChart/Chart.min.js"></script>
+
+<body>
+   
+    <div class="synthesisdashboardcontainer">
+        <form id="form" class="per-form">
+            <div class="per-dasb-top">
+                <div class="per-dasb-top-inr">
+                    <div class="st-date">
+                        <input name="StartDate" type="text" maxlength="100" id="StartDate" detail="Periodic StartDate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                        <label class="SearchFromError" style="color:red"></label>
+                    </div>
+
+                    <div class="end-date">
+                        <input name="EndDate" type="text" maxlength="100" id="EndDate" detail="Periodic EndDate" placeholder="To" class="datepicker form-control" onkeydown="return false">
+                        <label class="SearchToError" style="color:red"></label>
+                    </div>
+
+                    @if (Convert.ToString(StoreId) == "0")
+                    {
+                        <div class="statedrp">
+                            @Html.DropDownList("StateId", null, "ALL", new { id = "StateId", @class = "form-control myval drpcls" })
+                        </div>
+                    }
+
+                    <div class="pd-btn-apy">
+                        <button type="button" class="btn btn-danger" onclick="Setdata();">Apply</button>
+                    </div>
+                </div>
+
+
+                        <div class="input-group">
+                            <a class="lnkA" onclick="Javascript:ManageQuarterlyData(1);">Q1</a>&nbsp;
+                            <a class="lnkA" onclick="Javascript:ManageQuarterlyData(2);">Q2</a>&nbsp;
+                            <a class="lnkA" onclick="Javascript:ManageQuarterlyData(3);">Q3</a>&nbsp;
+                            <a class="lnkA" onclick="Javascript:ManageQuarterlyData(4);">Q4</a>&nbsp;
+                            <a class="lnkA" onclick="Javascript:ManageQuarterlyData('YTD');">YTD</a>&nbsp;
+                            <a class="lnkA" onclick="Javascript:ManageQuarterlyData('LFY');">Last year</a>
+                        </div>
+                  
+
+                </div>
+        </form>
+   
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span id="graphtitle">Daily Sales Graph</span>
+                <div class="totals">
+                    <span id="graphTotal"></span>
+                    <div class="total-values" data-toolTip="totalsData">
+                        <div class="StoreValues" id="dvTotalStore">
+                          
+                        </div>
+                        <div class="DepartmentValues" id="dvTotalDepartment">
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="graphOptions">
+                    <input type="radio" id="sales" name='radio' detail="Daily Sales Graph" value="1" class="clsRadio" checked="checked">
+                    <label for="sales">Sales</label><br>
+                    <input type="radio" id="customers" name="radio" detail="Daily Customer Count Graph" value="2" class="clsRadio">
+                    <label for="customers">Customer Count</label><br>
+                    <input type="radio" id="averageSales" name="radio" detail="Daily Average Sales Graph" value="3" class="clsRadio">
+                    <label for="averageSales">Average Sale</label>
+                </div>
+
+            </div>
+            <div class="graphPlaceHolder">
+                <div id="loading1" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <canvas id="bar-chartcanvas"></canvas>
+
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+                <h2>Stores</h2>
+                <div class="storeList">
+
+                    @foreach (var item in Model.StoreList)
+                    {
+
+                      
+                        <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" detail="Daily Sales Graph - Stores" class="clsdailychartstores"><label for="@item.Id">@item.Text</label></li>
+                      
+                    }
+
+
+                </div>
+                <h2>Departments</h2>
+                <div class="departmentList">
+
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" detail="Daily Sales Graph - Departments" class="clsdailychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+
+                <span>Key Ratios Charts</span>
+                <div class="totals">
+                    <span id="graphTotal2"></span>
+                    <div class="total-values" data-toolTip="totalsData">
+                        <div class="DepartmentValues" id="dvTotalStore2">
+                          
+
+                        </div>
+                        <div class="DepartmentValues" id="dvTotalDepartment2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graphPlaceHolder small">
+                <div id="loading2" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <div class="pie-chart-holder">
+
+                    <div class="pie-chart">
+                        <span class="pieChartTitle">COGS Ratio %</span>
+
+                        <div>
+                            <div>
+                                <span id="PurchaseToSales"></span>
+                                <span id="PurchaseToSales2" style="display:none"></span>
+                            </div>
+                            <span id="Doughnut">
+                                <canvas id="bar-chartcanvasDoughnut"></canvas>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="pie-chart">
+                        <span class="pieChartTitle">Payroll Ratio %</span>
+
+                        <div>
+                            <div>
+                                <span id="PayrollToToSales"></span>
+                                <span id="PayrollToToSales2" style="display:none"></span>
+                            </div>
+                            <span id="Doughnut2">
+                                <canvas id="bar-chartcanvasDoughnut2"></canvas>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="expenses-list">
+                        <div class="expensesTitle">Expenses</div>
+                        <ul>
+                            <li><span id="spExterminator">Exterminator</span><span id="spvExterminator">$ 0.00 <b>0.00%</b></span></li>
+                            <li><span id="spManagement">Management fees</span><span id="spvManagement">$ 0.00 <b>0.00%</b></span></li>
+                            <li><span id="spOffice">Office Expenses</span><span id="spvOffice">$ 0.00 <b>0.00%</b></span></li>
+                            <li><span id="spProduce">Produce Buyer</span><span id="spvProduce">$ 0.00 <b>0.00%</b></span></li>
+                            <li><span id="spDelivery">Delivery Expense</span><span id="spvDelivery">$ 0.00 <b>0.00%</b></span></li>
+                            <li><span id="spRepairs">Repairs and Maintenance</span><span id="spvRepairs">$ 0.00 <b>0.00%</b></span></li>
+                            <li><span id="spSupplies">Supplies</span><span id="spvSupplies">$ 0.00 <b>0.00%</b></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grossPayrollContainer">
+                <div class="grossPayroll">
+                    <span class="grossPayrollTitle"> % of Gross Payroll </span>
+                    <div class="grossPayrollWidgetContainer">
+                        <div><span>Regular Pay</span><span id="PayrollRegularPay">@Model.PayrollRegularPay%</span></div>
+                        <div><span>Overtime</span><span id="PayrollOverTime">@Model.PayrollOverTime%</span></div>
+                        <div><span>Sick Pay</span><span id="PayrollSickPay">@Model.PayrollSickPay%</span></div>
+                        <div><span>Vacation</span><span id="PayrollVacation">@Model.PayrollVacation%</span></div>
+                        <div><span>Salary</span><span id="PayrollSalary">@Model.PayrollSalary%</span></div>
+                        <div><span>Holidays</span><span id="PayrollHolidays">@Model.PayrollHolidays%</span></div>
+                        <div><span>Bonus</span><span id="PayrollBonus">@Model.PayrollBonus%</span></div>
+                    </div>
+                </div>
+
+
+                <div class="grossPayroll">
+                    <span class="grossPayrollTitle"> % of Sales </span>
+                    <div class="grossPayrollWidgetContainer">
+                        <div><span>Regular Pay</span><span id="SalesRegularPay">@Model.SalesRegularPay%</span></div>
+                        <div><span>Overtime</span><span id="SalesOverTime">@Model.SalesOverTime%</span></div>
+                        <div><span>Salary</span><span id="SalesSalary">@Model.SalesSalary%</span></div>
+                        <div><span>Other Pay</span><span id="SalesOtherpay">@Model.SalesOtherpay%</span></div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+             
+
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" detail="Key Rations Charts - Departments" class="clsdailychartdepartments1"><label for="@item.Id">@item.Text</label></li>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span>Sales and Hours worked</span>
+            
+            </div>
+            <div class="graphPlaceHolder small">
+                <div id="loading3" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <canvas id="bar-chartcanvas2"></canvas>
+            </div>
+
+            <div class="departmentWiseSales">
+                <span>Sales per 1 Hour worked</span>
+                <div class="departmentWiseSalesWidgets">
+                 
+                </div>
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+              
+                <h2>Departments</h2>
+                <div class="departmentList">
+
+                    @foreach (var item in Model.PayrollDepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="hourlychartdepartments" value="@item.Text" detail="Sales and Hours Worked - Departments" class="clshourlychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</body>
+<script src="~/Scripts/en-US.js"></script>
+<script src="~/Scripts/core.js"></script>
+<script src="~/Scripts/parser.js"></script>
+
+<script>
+    var Startdate = '@ViewBag.Startdate';
+    var Enddate = '@ViewBag.Enddate';
+</script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+<script src="~/Form_JS/Periodic_Dashboard.js"></script>

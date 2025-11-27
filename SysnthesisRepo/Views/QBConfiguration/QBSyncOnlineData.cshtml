@@ -1,0 +1,159 @@
+﻿@model  List<EntityModels.Models.StoreQBSyncModel>
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+@using Utility
+<style>
+    .Chiledred_cor {
+        background: url(../../../../Content/Admin/images/no_stopping.png) no-repeat 5px 5px #DF4848;
+        color: #fff !important;
+        background-size: 15px;
+    }
+</style>
+<link href="~/Content/Admin/QBSynctheme/Admin/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/Admin/QBSynctheme/Admin/assets/css/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/Admin/QBSynctheme/Admin/assets/css/beyond.min.css" rel="stylesheet">
+<link href="~/Content/Admin/QBSynctheme/Admin/assets/css/style.css" rel="stylesheet">
+<div class="header-small special_bg h3_left">
+    <h3 id="rd">Quickbooks Integration System<a href="#" class="red_cor" id="mainQB">Stop QBIS</a></h3>
+    <h3 id="gn">Quickbooks Integration System<a href="#" class="red_cor green_cor" id="mainQB">Start QBIS</a></h3>
+</div>
+<div class="page-body config_box_new_area">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 pad_10 boxx">
+                <div class="config_box" id="box">
+                    <div class="top_content">
+                        <p>@item.StoreName</p>
+                        @if (item.QBtype == "Online")
+                        {
+                            <a href="#" class="btn_small btn_gray_light online">Online QB</a>
+                        }
+                        else if (item.QBtype == "Desktop")
+                        {
+                            <a href="#" class="btn_small btn_gray_light desktop">Desktop</a>
+                        }
+                    </div>
+                    <div class="top_content h3_left">
+                        <p>QBIS</p>
+                        @if (item.QBtype == "Online")
+                        {
+                            if (item.QBOnlineFlag == 1)
+                            {
+                                <h3><a href="#" onclick="QBSynca(@item.StoreId,0,'Online')" style="margin:0px;" class="Chiledred_cor">Pause QBIS</a></h3>
+                            }
+                            else if (item.QBOnlineFlag == 0)
+                            {
+                                <h3><a href="#" onclick="QBSynca(@item.StoreId,1,'Online')" style="margin:0px;" class="Chiledred_cor green_cor">Resume QBIS</a></h3>
+                            }
+                            else
+                            {
+                                <h3><a href="#" onclick="QBSynca(@item.StoreId,1,'Online')" style="margin:0px;" class="Chiledred_cor green_cor">Resume QBIS</a></h3>
+                            }
+                        }
+                        else if (item.QBtype == "Desktop")
+                        {
+                            if (item.QBWebFlag == 1)
+                            {
+                                <h3><a href="#" onclick="QBSynca(@item.StoreId,0,'Desktop')" style="margin:0px;" class="Chiledred_cor ">Pause  QBIS</a></h3>
+                            }
+                            else if (item.QBWebFlag == 0)
+                            {
+                                <h3><a href="#" onclick="QBSynca(@item.StoreId,1,'Desktop')" style="margin:0px;" class="Chiledred_cor green_cor">Resume QBIS</a></h3>
+                            }
+                            else
+                            {
+                                <h3><a href="#" onclick="QBSynca(@item.StoreId,1,'Desktop')" style="margin:0px;" class="Chiledred_cor green_cor">Resume QBIS</a></h3>
+                            }
+                        }
+                    </div>
+                    <div id="div_@item.StoreId" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                        <div class="modal-content ">
+                            <div class="modal-header text-center">
+                                <i class="glyphicon glyphicon-pause"></i>
+                            </div>
+                            <div class="modal-title">Message</div>
+                            <div class="modal-body ">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="hidden" id="flg_@item.StoreId" />
+                                        <input type="hidden" id="Type_@item.StoreId" />
+                                        Are you sure you want to pause Quickbook sync for the Store? <br />
+                                        <br />
+                                        <h3 style="text-align:center;display:contents;"><p> @item.StoreName</p></h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label>Enter Your Password</label>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input id="txtpwd_@item.StoreId" type="password" class="form-control" maxlength="50" style="padding-right:45px;" autocomplete="off" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="text-align:center">
+                                <a class="btn btn-danger" onclick="VerifyPassword(@item.StoreId);">Ok </a>
+                                <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar_area">
+                        <p>Sync Completed</p>
+                        <div class="progress active">
+                            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="bottom_content two_bttons">
+                        @if (item.Successfull > 0)
+                        {
+                            <a href="#" class="btn_small btn_green">Today’s Successful  @item.Successfull</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn_small btn_green">Today’s Successful  0</a>
+                        }
+                        @if (item.UnSuccessfull > 0)
+                        {
+                            <a href="#" onclick="QBUnsuccessfull(@item.StoreId)" class="btn_small btn_red">Today’s Unsuccessful @item.UnSuccessfull</a>
+                        }
+                        else
+                        {
+                            <a class="btn_small btn_gray">Today’s Unsuccessful 0</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    function VerifyPassword(StoreID)
+     {
+        var Flg = $("#flg_" + StoreID).val();
+        var Type = $("#Type_" + StoreID).val();
+        var Pwd = $("#txtpwd_" + StoreID).val();
+        if (Pwd == '') {
+            MyCustomAlert('Password Blank Not Allowed.');
+            return false;
+        }
+        var MainPwd =@System.Configuration.ConfigurationManager.AppSettings["PauseQBPwd"];
+        if (Pwd != MainPwd) {
+            MyCustomAlert('Password is not correct.');
+            return false;
+        }
+         window.location.href = '@AdminSiteConfiguration.GetURL()/QBConfiguration/QBSyncStoreIdwise/?StoreID=' + StoreID + '&Flag=' + Flg + '&Type=' + Type;
+    }
+</script>
+<script src="~/Form_JS/QBConfiguration.js"></script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

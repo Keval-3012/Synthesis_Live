@@ -1,0 +1,334 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@{
+    Layout = null;
+}
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+<style>
+    .e-grid .e-gridheader .e-headercell.e-lastcell .e-headercelldiv, .e-grid .e-gridheader th:nth-child(2).e-headercell .e-headercelldiv,
+    .e-grid .e-gridheader th:nth-child(3).e-headercell .e-headercelldiv {
+        margin: -17px 20px -5px -5px;
+    }
+
+    .e-grid .e-gridheader th:nth-child(2).e-firstcell.e-headercell .e-headercelldiv, .e-grid .e-gridheader th:nth-child(3).e-firstcell.e-headercell .e-headercelldiv {
+        margin: -5px 20px -5px -5px;
+    }
+
+
+
+    .e-headercell.e-stackedheadercell {
+        text-align: center;
+    }
+
+    .scan-box-main {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+        .scan-box-main .border {
+            display: flex;
+            flex-direction: column;
+            width: 24%;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 0px 10px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+    .viewBtnUnclearCheck {
+        width: 70px;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(83, 115, 244);
+        box-shadow: 0px 0px 20px rgba(83, 115, 244,0.3);
+        border-radius: 6px;
+        border: 0px;
+        transition: all 0.2s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .viewBtnUnclearCheck:hover, .resetBtnUnclearCheck:hover {
+            text-decoration: none;
+            color: white;
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+    .resetBtnUnclearCheck {
+        width: auto;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(244, 161, 83);
+        box-shadow: 0px 0px 20px rgb(244, 161, 83,0.3);
+        border-radius: 6px;
+        border: 0px;
+        margin: 0px 10px;
+        height: 35px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .date-filter-log {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+        .date-filter-log div:nth-child(1) {
+            width: 33%;
+        }
+
+        .date-filter-log div:nth-child(2) {
+            width: 33%;
+        }
+
+        .date-filter-log div:nth-child(3) {
+            width: 33%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+</style>
+<div>
+    @if (ViewBag.Storeidvalue == 0 && ViewBag.UserTypeId != 1)
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;padding:0px;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <h3>Item Product Scan Log</h3>
+        </div>
+        <div class="col-md-4 date-filter-log">
+            <div>
+                <label>StartDate</label>
+                @Html.EJS().DatePicker("StartDate").Format("MM-dd-yyyy").Max(DateTime.Now).Render()
+            </div>
+            <div>
+                <label>EndDate</label>
+                @Html.EJS().DatePicker("EndDate").Format("MM-dd-yyyy").Max(DateTime.Now).Render()
+            </div>
+            <div>
+                <a class="viewBtnUnclearCheck" data-toggle="tooltip" data-placement="top" data-original-title="" title="" onclick="FilterItemProduct()">Filter</a>
+                <button type="button" class="resetBtnUnclearCheck" onclick="reset();">Reset</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="scan-box-main">
+                <div class="p-3 border rounded">
+                    <h5 style="color:black">Total Users</h5>
+                    <p id="total-users" class="h4 mb-0" style="color:black">@ViewBag.TotalUsersCnt</p>
+                </div>
+
+                <div class="p-3 text-white border rounded">
+                    <h5 style="color:black">Actively Used</h5>
+                    <p id="active-users" class="h4 mb-0" style="color:black">@ViewBag.ActivelyUsersCnt</p>
+                </div>
+
+                <div class="p-3 text-white border rounded" style="background: #ebebeb;">
+                    <h5 style="color:black">Partially Used</h5>
+                    <p id="partially-users" class="h4 mb-0" style="color:black">@ViewBag.PartiallyUsedUserCnt</p>
+                </div>
+
+                <div class="p-3 text-dark border rounded" style="background: #f0faff;">
+                    <h5 style="color:black">Not Used</h5>
+                    <p id="inactive-users" class="h4 mb-0" style="color:black">@ViewBag.NotUsedUserCnt</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("ItemcodeCountGrid").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("ItemCodeLogId").IsPrimaryKey(true).Visible(false).Add();
+           col.Field("AppUserName").HeaderText("Mobile App User").Width("100").HeaderTextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+           col.Field("RoleName").HeaderText("User Type").Width("100").HeaderTextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+           if ((int)ViewBag.Storeidvalue == 0)
+           {
+               col.Field("StoreName").HeaderText("Store Name").Width("100").HeaderTextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+           }
+           col.HeaderText("No. of Items Scanned").Columns(new List<Syncfusion.EJ2.Grids.GridColumn>()
+           {
+               new Syncfusion.EJ2.Grids.GridColumn { Field = "ItemsScannedToday", Width = "100", HeaderText = "Today", HeaderTextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, TextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, AllowFiltering = false },
+               new Syncfusion.EJ2.Grids.GridColumn { Field = "ItemsScannedYesterday", Width = "100", HeaderText = "Yesterday", HeaderTextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, TextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, AllowFiltering = false },
+               new Syncfusion.EJ2.Grids.GridColumn { Field = "ItemsScannedThisWeek", Width = "100", HeaderText = "This Week", HeaderTextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, TextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, AllowFiltering = false },
+               new Syncfusion.EJ2.Grids.GridColumn { Field = "ItemsScannedThisMonth", Width = "100", HeaderText = "This Month", HeaderTextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, TextAlign = Syncfusion.EJ2.Grids.TextAlign.Center, AllowFiltering = false }
+           }).Add();
+           col.Field("TotalItemsScanned").HeaderText("Total No. Of Item Scanned").AllowFiltering(false).Width("100").HeaderTextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+       }).DataBound("dataBound").RowDataBound("onRowDataBound").EnableHover(false).AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(false).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Search", "PdfExport", "ExcelExport" }).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+<script>
+    var scrollVal = 0;
+    document.title = '@ViewBag.Title';
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+</script>
+<script>
+    function dataBound(e) {
+
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+    function refreshGrid() {
+        var grid = document.getElementById("ItemcodeCountGrid").ej2_instances[0];
+        if (grid) {
+            grid.refresh();
+        }
+    }
+    function created(args) {
+        // extending the default UrlAdaptor
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.data))
+                    return data.data;
+                else
+                    return data;
+            }
+        }
+        var grid = document.querySelector('#ItemcodeCountGrid').ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ItemProductScanLog/UrlDatasource",
+            //insertUrl: "/ExpenseAccounts/InsertExpenseCheck",
+            //updateUrl: "/ExpenseAccounts/UpdateExpenseCheck",
+            //removeUrl: "/ExpenseAccounts/RemoveDepartment",
+            adaptor: new CustomAdaptor()
+        });
+    };
+
+    function onRowDataBound(args) {
+        if (args.data.UserStatus === "Partially Used") {
+            args.row.style.backgroundColor = "#ebebeb";
+        } else if (args.data.UserStatus === "Not Used") {
+            args.row.style.backgroundColor = "#f0faff";
+        }
+    }
+
+    function reset() {
+        window.location.reload();
+    }
+
+    function FilterItemProduct() {
+        var startdate = $("#StartDate").val();
+        var endate = $("#EndDate").val();
+        if (startdate != "" || endate != "") {
+            var grid = document.getElementById("ItemcodeCountGrid").ej2_instances[0];
+            grid.showHider.hide("Today", 'headerText');
+            grid.showHider.hide("Yesterday", 'headerText');
+            grid.showHider.hide("This Week", 'headerText');
+            grid.showHider.hide("This Month", 'headerText');
+
+            // Hide the summary boxes
+            $(".scan-box-main").hide();
+
+            // Apply filtering to the grid
+            grid.dataSource = new ej.data.DataManager({
+                url: "/ItemProductScanLog/UrlDatasource?startdate=" + $("#StartDate").val() + "&enddate=" + $("#EndDate").val(),
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+        else {
+            var grid = document.getElementById("ItemcodeCountGrid").ej2_instances[0];
+            grid.showHider.show("Today", 'headerText');
+            grid.showHider.show("Yesterday", 'headerText');
+            grid.showHider.show("This Week", 'headerText');
+            grid.showHider.show("This Month", 'headerText');
+
+            // Show the summary boxes
+            $(".scan-box-main").show();
+
+            // Apply filtering to the grid
+            grid.dataSource = new ej.data.DataManager({
+                url: "/ItemProductScanLog/UrlDatasource?startdate=" + $("#StartDate").val() + "&enddate=" + $("#EndDate").val(),
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function toolbarClick(args) {
+        var gridObj = document.getElementById("ItemcodeCountGrid").ej2_instances[0];
+        if (args.item.id === 'ItemcodeCountGrid_pdfexport') {
+
+            gridObj.serverPdfExport("/ItemProductScanLog/PdfExport?startdate=" + $("#StartDate").val() + "&enddate=" + $("#EndDate").val());
+        }
+        if (args.item.id === 'ItemcodeCountGrid_excelexport') {
+            gridObj.serverPdfExport("/ItemProductScanLog/ExcelExport?startdate=" + $("#StartDate").val() + "&enddate=" + $("#EndDate").val());
+        }
+    }
+
+</script>
+@Html.EJS().ScriptManager()

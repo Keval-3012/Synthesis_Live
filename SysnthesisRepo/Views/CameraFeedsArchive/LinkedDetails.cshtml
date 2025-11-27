@@ -1,0 +1,58 @@
+﻿@using Syncfusion.EJ2
+@{
+
+    var ChildGrid = new Syncfusion.EJ2.Grids.Grid()
+    {
+        DataSource = new DataManager() { Url = "/CameraFeedsArchive/UrlDatasourceChild", Adaptor = "UrlAdaptor" },
+        QueryString = "WebCamCameraListId",
+        AllowFiltering = true,
+        AllowSorting = true,
+        AllowPaging = true,
+        PageSettings = new Syncfusion.EJ2.Grids.GridPageSettings() { PageSize = 25 },
+        FilterSettings = new Syncfusion.EJ2.Grids.GridFilterSettings() { Type = Syncfusion.EJ2.Grids.FilterType.CheckBox },
+        Columns = new List<Syncfusion.EJ2.Grids.GridColumn> {
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="StoreName", HeaderText="Store Name",Width="200" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="Time", HeaderText="Time" ,Width="200"},
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="ArchiveStartedOn", HeaderText="Archive Started On",Width="200"},
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="SaveToS3",HeaderText="Save To S3", Width="200"  },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="FileUrl",HeaderText="Video URL", Template="#FileURL",Width="200" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="IsUploaded",HeaderText="IsUploaded",Visible=false,Width="200" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="CameraName",HeaderText="CameraName",Visible=false,Width="200" },
+            },
+
+    };
+}
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/CameraFeedsArchive/UrlDatasource").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).AllowTextWrap().Columns(col =>
+{
+    col.Field("WebCamCameraListId").IsPrimaryKey(true).HeaderText("WebCamCameraListId").Visible(false).Add();
+    col.Field("CameraName").HeaderText("Camera Name").Add();
+}).AllowPaging().PageSettings(page => { page.PageSize(30); }).ChildGrid(ChildGrid).Render()
+</div>
+@Html.EJS().ScriptManager()
+
+@*<script type="text/x-jsrender" id="UploadTemplate">
+    <a href="/UserFiles/Done/${FileName}" target="_blank" style="color: #3c7be5;font-weight:bold">
+        ${FileName}
+    </a>
+</script>*@
+<script type="text/x-jsrender" id="FileURL">
+
+    ${if(IsUploaded != "0")}
+    <a onclick="updatestatus(this)" id="${FileUrl}" class="${CameraName}" ><img src="/Content/Admin/images/show-stream-button.png" alt="" class="imgSize" /></a>
+    ${else}
+    <label class="labelStyle">Video is not available yet.</label>
+    ${/if}
+</script>
+<script>
+    
+    function updatestatus(obj) {
+        
+        var List = obj.className.split('`');
+        $("#CameraName").text("Camera Name: " + List[0]);
+        $("#StoreName").text("Store Name: " + List[1]);
+        $("#TimeDuretion").text("Time: " + List[2]);
+        $('#UrlVideo').prop('src', obj.id);
+        $('#divCash').show();
+    }
+</script>

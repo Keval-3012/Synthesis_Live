@@ -1,0 +1,170 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.Models.ExpenseCheck
+
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+
+
+<div class="cc-main cc-modal">
+    <div class="container">
+        <div class="cc-main-sec">
+
+
+            <div class="row">
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.StoreId)
+                    @Html.HiddenFor(model => model.CreatedBy)
+                    <div class="payee-sec">
+                        <div class="payment-type">
+                            <label>Payment Type<span style="color:red">*</span></label>
+                            @Html.EJS().DropDownList("PaymentTypeId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.PaymentName).Value(Model.PaymentTypeId).Change("OnPaymentType").Enabled(false).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Render()
+                        </div>
+                        <div class="payee">
+                            <label>Payee<span style="color:red">*</span></label>
+                            @Html.EJS().DropDownList("VendorIdstr").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.PayeeName).Value(Model.VendorIdstr).Change("OnPayeeChange").AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Render()
+                        </div>
+                        <div class="payment-ac">
+                            <label><span class="payacctlbl">Payment Account</span><span style="color:red">*</span></label>
+                            @Html.EJS().DropDownList("BankAccountId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.AccountName).Value(Model.BankAccountId).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Render()
+                        </div>
+                    </div>
+
+                    <div class="date-check-sec">
+                        <div class="mailing-address" style="display:none;">
+                            <label>Mailing Address</label>
+                            @Html.TextAreaFor(model => model.MailingAddress, new { maxlength = 500, @class = "form-control", @style = "width:250px;height:75px;" })
+                        </div>
+                        <div class="payment-date">
+                            <label for="" class="form-label">Payment Date<span style="color:red">*</span></label>
+                            @Html.EJS().DatePickerFor(model => model.TxnDate).Format("MM-dd-yyyy").Render()
+                        </div>
+                        <div class="payment-method">
+                            <label>Payment Method</label>
+                            @Html.EJS().DropDownList("PaymentMethodId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.PaymentMethodName).Value(Model.PaymentMethodId).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Render()
+                        </div>
+                        <div class="check-print">
+                            <div class="checkno">
+                                <label for="" class="form-label refcheckno">Ref No.</label>
+                                @Html.TextBoxFor(model => model.DocNumber, new { maxlength = 500, @class = "form-control", @autocomplete = "off" })
+                            </div>
+                            <div class="form-check" style="display:none;">
+                                @Html.EJS().CheckBoxFor(model => model.PrintLater).EnableRtl(false).CssClass("form-check-input").Render()
+                                <label>Print Later</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="amount-sec">
+                        <label>Amount</label>
+                        @*<input type="hidden" id="totalamtrt" name="TotalAmt" />*@
+                        @Html.HiddenFor(x => x.TotalAmt)
+                        <div class="amount">
+                            $@Model.TotalAmt
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="department-main">
+            <div class="department">
+                <h3>Department Breakdown</h3>
+            </div>
+            <div id="trrow_1" class="department-row-heading">
+                <div class="heading-col-1">Department<span style="color:red">*</span></div>
+                <div class="heading-col-1">Description</div>
+                <div class="heading-col-1">Amount<span style="color:red">*</span></div>
+                <div class="heading-col-btn"></div>
+            </div>
+            <div id="department-rows">
+                @if (Model.ExpenseCheckDetails != null && Model.ExpenseCheckDetails.Any())
+                {
+                    int index = 0;
+                    foreach (var detail in Model.ExpenseCheckDetails)
+                    {
+                        <div class="department-row" id="row-template">
+                            <input type="hidden" class="id-input" name="ExpenseCheckDetails[@index].ExpenseCheckDetailId" value="@detail.ExpenseCheckDetailId" />
+                            <div class="dr-col-1">
+                                <select class="form-select department-select myval" name="ExpenseCheckDetails[@index].DepartmentId">
+                                    <option value="">-Select Department-</option>
+                                    @foreach (var item in (IEnumerable<EntityModels.Models.DropdownViewModel>)ViewBag.DepartmentName)
+                                    {
+                                        <option value="@item.Value" @(item.Value == detail.DepartmentId ? "selected" : "")>@item.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="dr-col-1">
+                                <input class="form-control description-input"
+                                       name="ExpenseCheckDetails[@index].Description"
+                                       value="@detail.Description"
+                                       maxlength="100" type="text" autocomplete="off" />
+                            </div>
+                            <div class="dr-col-2">
+                                <input class="form-control amount-input"
+                                       name="ExpenseCheckDetails[@index].Amount"
+                                       value="@detail.Amount"
+                                       maxlength="18" type="number" step="0.01" />
+                            </div>
+                            <div class="dr-col-btn">
+                                <a class="btn-addbox add-row"><i class="fa fa-plus"></i></a>
+                                <a class="btn-remove remove-row"><i class="fa fa-minus"></i></a>
+                            </div>
+                        </div>
+                        index++;
+                    }
+                }
+                else
+                {
+                    <div class="department-row" id="row-template">
+                        <div class="dr-col-1">
+                            <select class="form-select department-select" name="ExpenseCheckDetails[0].DepartmentId">
+                                <option value="">-Select Department-</option>
+                                @foreach (var item in (IEnumerable<EntityModels.Models.DropdownViewModel>)ViewBag.DepartmentName)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="dr-col-1">
+                            <input class="form-control description-input" name="ExpenseCheckDetails[0].Description" maxlength="100" type="text" autocomplete="off" />
+                        </div>
+                        <div class="dr-col-1">
+                            <input class="form-control amount-input" name="ExpenseCheckDetails[0].Amount" maxlength="18" type="number" step="0.01" />
+                        </div>
+                        <div class="dr-col-btn">
+                            <a class="btn-addbox add-row"><i class="fa fa-plus"></i></a>
+                            <a class="btn-remove remove-row"><i class="fa fa-minus"></i></a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+        <div class="note-sec">
+            <div class="note">
+                <label>Memo</label>
+                @Html.TextAreaFor(model => model.Memo, new { maxlength = 500, @class = "form-control" })
+            </div>
+            <div class="attachment control-fluid">
+                <label>Attachments</label>
+                @Html.HiddenFor(m => m.FileName)
+                @Html.EJS().Uploader("UploadFiles").MaxFileSize(20000000).DropArea(".control-fluid").AutoUpload(true).Multiple(true).SequentialUpload(true).AsyncSettings(new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("~/ExpenseAccounts/Save"), RemoveUrl = @Url.Content("~/ExpenseAccounts/Remove") }).Success("onImageUploadSuccess").Render()
+                <div class="ur-label">Max File Size: 20 MB</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+        var datePicker = new ej.calendars.DatePicker({
+            placeholder: 'Select a date',
+            format: 'dd-MM-yyyy',
+            max: new Date()
+        });
+        datePicker.appendTo('#CreatedDate');
+    </script>*@
+@Html.EJS().ScriptManager()

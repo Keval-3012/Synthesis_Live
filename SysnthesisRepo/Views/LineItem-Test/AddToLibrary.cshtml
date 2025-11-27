@@ -1,0 +1,129 @@
+﻿@using Syncfusion.EJ2
+@model EntityModels.Models.ProductsList
+
+<li class="fullWidthItemRow">
+    <span class="feildLabel">Item</span>
+    @Html.TextBoxFor(model => model.Description, new { @id = "AddDescription", maxlength = 100, @class = "form-control" })
+    @Html.HiddenFor(model => model.InvoiceProductId, new { @id = "AddInvoiceProductId" })
+</li>
+<li>
+    <span class="feildLabel">UPC</span>
+    @Html.TextBoxFor(model => model.UPCCode, new { @id = "AddUPCCode", maxlength = 100, @class = "form-control" })
+</li>
+<li>
+    <span class="feildLabel">Item No</span>
+    @Html.TextBoxFor(model => model.ItemNo, new { @id = "AddItemNo", maxlength = 100, @class = "form-control" })
+</li>
+<li>
+    <span class="feildLabel">Brand</span>
+    @Html.TextBoxFor(model => model.Brand, new { @id = "AddBrand", maxlength = 100, @class = "form-control" })
+</li>
+
+<li>
+    <span class="feildLabel">Size</span>
+    @Html.TextBoxFor(model => model.Size, new { @id = "AddSize", maxlength = 100, @class = "form-control" })
+</li>
+
+<li class="directionRow">
+    <label for="addtoVendorLibrary"><input type="checkbox" id="addtoVendorLibrary" />Also add to Vendor Item Library</label>
+</li>
+
+<li class="directionRow">
+    <button type="button" onclick="AddAndMapBtn()" class="addAndMapBtn">Add and Map</button>
+    <button onclick="changethetab()" class="cancelMapBtn">Cancel</button>
+</li>
+
+
+
+
+<div class="itemsGridPlaceHolder" style="display: none;">
+    <div class="gridHeader">
+        <span>Items - [Master Items Library]</span>
+        <input type="search" placeholder="search" />
+    </div>
+    <ul class="recommendedItemsGridHeader">
+        <li>UPC Code</li>
+        <li>Item No</li>
+        <li>Generic No</li>
+        <li>Description</li>
+        <li>Brand</li>
+        <li>Size</li>
+    </ul>
+    <div class="lineItemsgridData">
+        <ul class="recommendedItemsGrid">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+        <ul class="recommendedItemsGrid">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+        <ul class="recommendedItemsGrid" selectedRow="yes">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+        <ul class="recommendedItemsGrid">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+
+        <ul class="recommendedItemsGrid" selectedRow="yes">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+
+        <ul class="recommendedItemsGrid">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+
+        <ul class="recommendedItemsGrid">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+
+        <ul class="recommendedItemsGrid">
+            <li>775896897412</li>
+            <li>1680</li>
+            <li>1680</li>
+            <li>Destihl WIld Sour Series: Pina Colada 6/4 12oz Cans</li>
+            <li>Brand</li>
+            <li>Size</li>
+        </ul>
+    </div>
+
+    <div class="directionRow">
+        <button class="addAndMapBtn">Add and Map</button>
+        <button class="cancelMapBtn">Cancel</button>
+    </div>
+</div>
+
+@Html.EJS().ScriptManager()

@@ -1,0 +1,291 @@
+﻿@model EntityModels.Models.UserRoles
+<style>
+    #btnAddNRol {
+        background: #e53939 !important;
+        border-color: #bc2e2d !important;
+    }
+
+    ul {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    li {
+        cursor: pointer;
+    }
+
+    .leftpanel {
+        background-color: white;
+        /*border: 1px solid black;*/
+        left: 1px !important;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .modal-header {
+        border-bottom: 3px solid #a52f2f;
+    }
+
+    .header-small {
+        margin-top: 0px !important;
+    }
+
+    .selected {
+        color: red;
+    }
+
+    #IModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+    .dvRoleList {
+        overflow-x:auto !important;
+    }
+</style>
+<div id="globalTabContent">
+    @*<div class="animate-panelmessesgarea padbtmzero">
+        @if (ViewBag.StatusMessageString != null)
+        {
+            if (ViewBag.StatusMessageString != "")
+            {
+                <script>
+                MyCustomToster('@ViewBag.StatusMessageString');
+                </script>
+            }
+        }
+    </div>*@
+ 
+        <div id="PanAddUpdate" style="background:white !important">
+            <div class="header-small special_bg" style="height:60px;">
+                <div class="col-md-7">
+                    <h3>User Role Manager </h3>
+                </div>
+                <div class="col-md-5">
+                    <input type="submit" value="Save Role Setting" form="frmMain" class="buttonbox btnsubmit" />
+                    <button id="btnAddNRol" type="button" data-toggle="modal" data-target="#IModal" class="buttonbox btn-danger">Add New Role</button>
+                    @Html.ActionLink("Role List","Index", "UserTypeMasters", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                </div>
+            </div>
+            @using (Html.BeginForm("Create", "UserRoles", FormMethod.Post, new { id = "frmMain" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(s => s.UserTypeId)
+
+                <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                    <div class="datagrid martop15">
+                        <div class="formmain leftpanel col-md-2">
+                            <div class="row" style="text-align:center;background:#555555;color:#fff;padding-top:5px;">
+                                <label style="font-weight:bold">Role List</label>
+                            </div>
+                            <div class="row" style="padding:3px">
+                                @Html.DropDownList("GroupId", null, htmlAttributes: new { @class = "myval", onchange = "GetRoleList();" })@*GetGroupWiseStore();*@
+                            </div>
+                            <div id="dvUserRoles">
+                                @{ Html.RenderPartial("_UserRolesList");}
+                            </div>
+                        </div>
+                        <div class="formmain col-md-10 dvRoleList">
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div id="dvRoles">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+<div class="modal fade" id="IModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add User Role</h4>
+            </div>
+            <div class="modal-body">
+                <div id="frmUserType" class="form-horizontal">
+                    @{ Html.RenderAction("AddUserType", new EntityModels.Models.UserTypeMaster()); }
+                </div>
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Add" onclick="AddUserType();" />
+                <button type="button" class="buttonbox btncancel" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*</div>*@
+<script>
+    $(".btncancel").click(function () {
+        $("#UserType").val("");
+    })
+    $(function () {
+        $('.Itemselect2').select2({
+            allowClear: false,
+            language: {
+                noResults: function () {
+                    return ' <button type="button" data-toggle="modal" data-target="#IModal" class="btn btn-success" onclick="frmFormLoadComplete();">Add New Role</button>';
+                }
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function setSelect2() {
+        $(".myval").select2({ closeOnSelect: true });
+        $('.Itemselect2').select2({
+            allowClear: false,
+            language: {
+                noResults: function () {
+                    return ' <button type="button" data-toggle="modal" data-target="#IModal" class="btn btn-success" onclick="frmFormLoadComplete();">Add New Role</button>';
+                }
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }
+        });
+    }
+    function check_uncheck_checkbox(isChecked) {
+        if (isChecked) {
+            $('input[name="SelectedRoles"]').each(function () {
+                this.checked = true;
+            });
+        } else {
+            $('input[name="SelectedRoles"]').each(function () {
+                this.checked = false;
+            });
+        }
+    }
+    function PassUserTypeId(utid) {
+        $('#UserTypeId').val(utid);
+    }
+    //GetStoreWiseRoles();
+    function GetStoreWiseRoles(utypeid) {
+        var UserTypeId = 0;
+        if (utypeid == "") {
+            UserTypeId = parseFloat($('#UserTypeLatestId').val());
+            $('#UserTypeId').val(UserTypeId)
+        }
+        else {
+            UserTypeId = parseFloat(utypeid);
+            $('#UserTypeId').val(UserTypeId)
+        }
+        var GroupId = parseFloat($('#GroupId').val());;
+        //if (UserTypeId > 0) {
+        $.ajax({
+            type: "GET",
+            url: '/UserRoles/GetStoreWiseRoles',
+            data: { UserTypeId: UserTypeId, GroupId: GroupId },
+            async: false,
+            success: function (data) {
+                $('#dvRoles').html(data);
+                $("#" + UserTypeId).addClass("selected");
+                setSelect2();
+            }
+        });
+        //}
+    };
+    function GetRoleList() {
+        var GroupId = parseFloat($('#GroupId').val());
+        if (GroupId > 0) {
+            $.ajax({
+                type: "GET",
+                url: '/UserRoles/GetRoleList',
+                data: { GroupId: GroupId },
+                async: false,
+                success: function (data) {
+                    $("#dvUserRoles").html(data);
+                    GetStoreWiseRoles("0");
+                }
+            });
+        }
+    };
+
+    function GetGroupWiseStore() {
+        var UserTypeId = parseFloat($('#UserTypeId').val());
+        var GroupId = parseFloat($('#GroupId').val());
+        if (UserTypeId > 0 && GroupId > 0) {
+            $.ajax({
+                type: "GET",
+                url: '/UserRoles/GetGroupWiseStore',
+                data: { UserTypeId: UserTypeId, GroupId: GroupId },
+                async: false,
+                success: function (data) {
+                    $('#dvRoles').html(data);
+                    setSelect2();
+                }
+            });
+        }
+    };
+
+    function sitmclose() {
+        $("#UserTypeId").select2('close');
+    }
+
+    function frmFormLoadComplete() {
+
+        var text = $('.select2-search__field').val();
+        $('#frmUserType').find("#UserType").val(text);
+        sitmclose();
+        $('#frmUserType').find(".select2").select2({ closeOnSelect: true });
+        $("#UserTypeId").select2("close");
+    }
+
+    function AddUserType() {
+        
+        $("#requ").text("");
+        var UserType = $('#UserType').val();
+        var GroupId = $('#GroupId').val();
+        var LevelsApproverId = $('#LevelsApproverId').val();
+        if ($('#UserType').val() == "") {
+            $("#requ").text("User Role Is Required");
+            return false;
+        }
+        if ($('#LevelsApproverId').val() == "" || $('#LevelsApproverId').val() == "0") {
+            $("#ReqLvl").text("Level Is Required");
+            return false;
+        }
+        $.ajax({
+            url: '/UserRoles/AddUserTypeData',
+            type: "post",
+            cache: false,
+            data: { UserType: UserType, GroupId: GroupId, LevelsApproverId: LevelsApproverId },
+            success: function (states) {
+                $("#dvUserRoles").html(states);
+                $('#UserType').val("");
+                $('#IModal').modal('hide');
+                GetStoreWiseRoles("");
+            }
+        });
+    }
+  
+    function switchChannel(el) {
+        // find all the elements in your channel list and loop over them
+        Array.prototype.slice.call(document.querySelectorAll('ul[data-tag="channelList"] li')).forEach(function (element) {
+            // remove the selected class
+            element.classList.remove('selected');
+        });
+        // add the selected class to the element that was clicked
+        el.classList.add('selected');
+    }
+</script>
+
+
+

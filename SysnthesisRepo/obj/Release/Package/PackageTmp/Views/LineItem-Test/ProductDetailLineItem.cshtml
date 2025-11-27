@@ -1,0 +1,1155 @@
+﻿@model EntityModels.Models.ProductPriceModel
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+
+@*<link href="~/productdetails/css/bootstrap.min.css" rel="stylesheet" />*@
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="~/Content/productdetails/css/style.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+<style>
+    .headermainbox span.applicationtext select, .headermainbox .select2-container--default .select2-selection--single {
+        background: #6d6d6d !important;
+    }
+
+    #select2-storeid-container {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 30px;
+    }
+
+    .headermainbox span.applicationtext span.select2-selection__arrow {
+        height: 30px;
+        line-height: 17px !important;
+        position: absolute;
+        right: 2px;
+        top: 1px;
+        width: 20px;
+    }
+
+        .headermainbox span.applicationtext span.select2-selection__arrow b {
+            border-color: unset;
+            border-width: unset;
+            border-style: unset;
+            top: 0%;
+        }
+
+    .leftmenubox .topbarbox span.select2-selection__arrow b::before {
+        content: unset;
+        display: none;
+    }
+
+    .greadboxbar ul.greadbox span.select2-selection__arrow b::before {
+        content: unset;
+        display: none;
+    }
+
+    .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+        background: #333239 !important;
+    }
+
+    /*.select2-search--dropdown {
+            display: block !important;
+        }*/
+
+    ul#select2-storeid-results li.select2-results__option {
+        background-color: none;
+        padding: 6px;
+        font-size: 14px;
+        font-weight: unset;
+    }
+
+    ul#select2-storeid-results li.select2-results__option--highlighted {
+        background: #E53939 !important;
+    }
+
+    .pricedashboardright .pricedashboardbody .greadboxbar .greadbox li .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-weight: 500;
+    }
+
+    .hasDatepicker {
+        border-radius: 5px !important;
+        color: #fff !important;
+        font-weight: 500;
+    }
+
+    #vehicle1 {
+        display: block;
+        opacity: unset;
+        position: unset;
+    }
+
+    #vehicle2 {
+        display: block;
+        opacity: unset;
+        position: unset;
+    }
+
+    #price {
+        background: none;
+    }
+
+    #Qty {
+        background: none;
+    }
+
+    .sme {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    .select2-results {
+        padding: unset;
+    }
+
+    .pricedashboardright .pricedashboardbody .greadboxbar .greadbox li .select2-container {
+        width: 280px !important;
+    }
+
+    .greadbox .select2-container .select2-selection--single {
+        outline: -webkit-focus-ring-color auto 1px !important;
+    }
+
+    .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+        border-width: 0 7px 10px 7px !important;
+    }
+
+    .loading-containers {
+        z-index: 200000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.8)url(../img/white_trans.png) repeat left top !important;
+    }
+
+        .loading-containers .loaders {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            -webkit-animation: typing 1s linear infinite alternate;
+            -moz-animation: Typing 1s linear infinite alternate;
+            animation: typing 1s linear infinite alternate;
+            margin: 50vh auto;
+            position: relative;
+            left: -12px;
+        }
+
+    .leftmenubox {
+        max-width: 97vw;
+        margin: 0px !important;
+    }
+
+        .leftmenubox .topbarbox {
+            background: none !important;
+        }
+
+    .imgmainbox .img-image {
+        height: 260px !important;
+        width: 206px !important;
+    }
+
+    .imgmainbox {
+        position: relative;
+        top: -10px;
+        left: 0;
+    }
+
+    .image1 {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    .product-pic .image2 {
+        position: absolute;
+        top: 1px;
+        right: -13px;
+    }
+    .product-pic a {
+        display: none;
+    }
+</style>
+<script src="~/Content/JsBarcode-master/dist/JsBarcode.all.js"></script>
+
+<script>
+    Number.prototype.zeroPadding = function () {
+        var ret = "" + this.valueOf();
+        return ret.length == 1 ? "0" + ret : ret;
+    };
+</script>
+<style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+</style>
+<div class="loading-containers loading-inactives" style="display:block;">
+    <div class="loaders"></div>
+</div>
+<div class="pricedashboardarea">
+    <div class="pricedashboardright">
+        <div class="pricedashboardtopbar">
+            @*<div class="imgmainbox" style="margin-left:15px;">
+
+                    @Html.HiddenFor(model => model.ProductId, new { @name = "ProductId" })
+                    @if (Model.ProductImage == null)
+                    {
+                        <img src="~/Content/productdetails/images/box1.jpg" alt="" class="img-image" />
+                    }
+                    else
+                    {
+                        <img src='@(string.Format("data:image/jpeg;base64,{0}",Model.ProductImage))' height="180" width="200" class="image1" />
+                        <a class="image2" onclick="DeleteImage();" style="height:20px !important;width:20px !important;"><i class="fa fa-trash"></i></a>
+
+                    }
+
+                    <input type="file" name="postedFile" id="postedFile" style="margin-bottom:30px;" />
+
+
+                    <input type="submit" id="btnUpload" value="Upload" style="margin-bottom:30px; height:34px; width:47px; background-color:#FFFFFF;border:none;" />
+                    <div>
+                        <span id="ImgError" class="text-danger" style="font-size:16px;font-weight:bold;"></span>
+                    </div>
+
+                </div>*@
+            <div class="product-pic">
+                @Html.HiddenFor(model => model.ProductId, new { @name = "ProductId" })
+                <label class="-label" for="file">
+                    <img src="images/uploadimage.svg" />
+
+                </label>
+                <input id="file" type="file" onchange="loadFile(event)" />
+                @if (Model.ProductImage == null)
+                {
+                    <img src="~/Content/productdetails/images/box1.jpg" id="output" width="200" />
+                }
+                else
+                {
+                    <img src='@(string.Format("data:image/jpeg;base64,{0}",Model.ProductImage))' width="200" id="output" />
+                    <button type="button" class="image2 btn-primary" onclick="DeleteImage();" style="font-size:12px;"><i class="fa fa-trash"></i></button>
+
+                }
+
+            </div>
+            @*<div class="product-pic">
+                    <label class="-label" for="file">
+                        <img src="images/uploadimage.svg" />
+
+                    </label>
+                    <input id="file" type="file" onchange="loadFile(event)" />
+                    <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
+                </div>*@
+
+            <div class="datadetai">
+                <div>
+                    <h1 id="desc">@Html.DisplayFor(model => model.Name)</h1>
+                    <ul class="departmentbox">
+                        <li>
+                            <p>
+                                Item Id
+                                <strong>@Html.DisplayFor(model => model.ItemId)</strong>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Name
+                                <strong>@Html.DisplayFor(model => model.Name)</strong>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Size
+                                <strong>@Html.DisplayFor(model => model.Size)</strong>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Brand
+                                <strong>@Html.DisplayFor(model => model.Brand)</strong>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Department
+                                <strong>@Html.DisplayFor(model => model.Department)</strong>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Date Created
+                                <strong>@Html.DisplayFor(model => model.DateCreated)</strong>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Notes
+                                <strong>@Html.DisplayFor(model => model.Notes)</strong>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <img alt="" id="barcode3" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <ul class="pricedashboardnavbar">
+                <li id="1a">
+                    <a href="#" class="Dashbord">Dashboard</a>
+                </li>
+                <li id="2a">
+                    <a href="#" class="vendor">Line Items Lookup</a>
+                </li>
+                <li id="3a">
+                    <a href="#" class="Supplier">Supplier</a>
+                </li>
+                @*<li id="4a">
+                        <a href="#" class="Store">Store wise Lookup</a>
+                    </li>*@
+            </ul>
+        </div>
+        <div class="pricedashboardbody" id="Dashbord">
+            <div class="highlightfieldarea">
+                <ul class="highlightfields">
+                    <li>
+                        @Html.HiddenFor(model => model.ProductId)
+                        <div class="highlightfieldbox box01bg">
+                            <span>52 Week High</span>
+                            <p><sup>$</sup>@Html.DisplayFor(model => model.MaxPrice)</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="highlightfieldbox box02bg">
+                            <span>52 Week Low</span>
+                            <p><sup>$</sup>@Html.DisplayFor(model => model.MinPrice)</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="highlightfieldbox2 box03bg">
+                            <span>Last Purchased By</span>
+                            @*<p>Maywood Marketplace</p>*@
+                            <p>@Html.DisplayFor(model => model.FPStoreName)</p>
+                        </div>
+                    </li>
+                    <!--<li>
+                    <div class="highlightfieldbox2 box04bg">
+                        <span>Highest Quantity Purchased By</span>-->
+                    @*<p>Maywood Marketplace</p>*@
+                    <!--<p>@Html.DisplayFor(model => model.QPStoreName)</p>
+                        </div>
+                    </li>-->
+                    @*<li>
+                            <div class="highlightfieldbox2 box05bg">
+                                <span>Most Frequently Purchased By</span>
+                                <p>Maywood Marketplace</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="highlightfieldbox2 box06bg">
+                                <span>Most Frequently Purchased By</span>
+                                <p>UNFI Natural Food</p>
+                            </div>
+                        </li>*@
+                </ul>
+            </div>
+            <div class="greadboxbar">
+                <ul class="greadbox">
+                    <li>
+
+                        @Html.DropDownList("StoreIdT", null, "-- Select --", new { @class = "selectdropdownbox westside" })
+                        @*<select class="selectdropdownbox westside" name="state">
+                                <option value="72-84 Westside">72-84 Westside</option>
+                                <option value="72-84 Westside2">72-84 Westside2</option>
+                            </select>*@
+                    </li>
+                    <li>
+                        <div class="datepickerarea">
+                            <div class="datepickerag">
+                                <input type="text" id="datepicker1" class="datepickerbox" style="color:white !important;">
+                                <span>
+                                    <img src="~/Content/productdetails/images/calendar.svg" alt="" />
+                                </span>
+                            </div>
+                            <div class="datepickerag">
+                                <input type="text" id="datepicker2" class="datepickerbox" style="color:white !important;">
+                                <span>
+                                    <img src="~/Content/productdetails/images/calendar.svg" alt="" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="phowprice_qty">
+                            <div>
+                                <p class="sme">Show</p>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="vehicle1" class="Checkbox" value="Price" name="checkBox1" checked>
+                                <label for="vehicle1" id="price" class="sme">Price</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="vehicle2" class="Checkbox" name="checkBox2">
+                                <label for="vehicle2" id="Qty" class="sme">Qty</label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <canvas id="Mycht" width="400" height="200"></canvas>
+                </div>
+                @*<div class="col-md-6">
+                        <canvas id="myChart" width="400" height="200"></canvas>
+                    </div>*@
+            </div>
+            <div class="row">
+                <br />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="chart-area"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="chart-areas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="pricedashboardbody" id="LineItemsLookup">
+            <style>
+                .leftmenubox .topbarbox .select2-container .select2-selection--single {
+                    padding: 8px;
+                    border-radius: unset !important;
+                }
+
+                .select2-container--default .select2-selection--single .select2-selection__arrow {
+                    height: 34px;
+                    top: -1px;
+                    right: -15px;
+                }
+
+                .select2-results__option {
+                    padding: 0px;
+                    font-size: 20px;
+                }
+
+                .select2-container--default .select2-selection--single .select2-selection__rendered {
+                    font-size: 17px;
+                    font-weight: normal;
+                }
+            </style>
+            <div class="leftmenubox">
+                <div class="topbarbox">
+                    <div>
+                        <p>Line Items Lookup</p>
+                    </div>
+                    <div>
+                        <ul class="actionsdropdown">
+                            <li>
+                                @Html.DropDownList("StoreIds", null, "-- Select --", new { @class = "selectdropdownbox storeList", @style = "border-radius: 0px !important" })
+                                @*@Html.DropDownList("Vendor", null, "--select--", htmlAttributes: new { @class = "selectdropdownbox vendorsbox" })*@
+                            </li>
+                            <li>
+                                @Html.TextBox("InvoiceId", null, new { @class = "form-control", @style = "width: 230px;height: 39px;font-size: 15px;", @placeholder = "Invoice#" })
+                            </li>
+                            <li>
+                                <button class="btn btn-success" type="button" id="Refine">Refine</button>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+                <div id="LineItemsLookupList">
+
+                </div>
+            </div>
+        </div>
+        <div class="pricedashboardbody" id="Vendornames">
+
+            <div class="leftmenubox">
+                <div class="topbarbox">
+                    <div>
+                        <p>Vendor List</p>
+                    </div>
+
+
+                </div>
+                <div id="VendorList">
+
+                </div>
+            </div>
+        </div>
+        @*<div class="pricedashboardbody" id="InvoiceLookup"></div>
+            <div class="pricedashboardbody" id="StoreWiseLookup"></div>*@
+    </div>
+</div>
+
+
+@*<div>
+        <img id="barcode3" />
+
+    </div>
+    @if (ViewBag.BarcodeImage != null)
+    {
+        <img src="@ViewBag.BarcodeImage" alt="" />
+    }*@
+
+
+@*<script src="~/productdetails/js/jquery-1.12.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="~/productdetails/js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+<script>
+    var loadFile = function (event) {
+        
+        var image = document.getElementById("output");
+        image.src = URL.createObjectURL(event.target.files[0]);
+
+        var file_data = $("#file").prop("files")[0];
+        if (image.src == undefined) {
+            $("#ImgError").text("Please Select Image");
+            return;
+        }
+        $("#ImgError").text("");
+        var ProductId = $("#ProductId").val();
+        var form_data = new FormData();
+        form_data.append("ProductId", ProductId);
+        form_data.append("postedFile", file_data);              // Appending parameter named file with properties of file_field to form_data
+        $.ajax({
+            url: "/LineItem/UploadImage",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,       // Setting the data attribute of ajax with file_data
+            type: 'post',
+            success: function (result) {
+                window.location.href = '/LineItem/ProductDetailLineItem/?id=' + ProductId;
+
+
+            },
+        })
+    };
+    //$(document).on("click", "#btnUpload", function () {
+    //    
+    //    var file_data = $("#postedFile").prop("files")[0];
+    //    if (file_data == undefined) {
+    //        $("#ImgError").text("Please Select Image");
+    //        return;
+    //    }
+    //    $("#ImgError").text("");
+    //    var ProductId = $("#ProductId").val();
+    //    var form_data = new FormData();
+    //    form_data.append("ProductId", ProductId);
+    //    form_data.append("postedFile", file_data);              // Appending parameter named file with properties of file_field to form_data
+    //    $.ajax({
+    //        url: "/LineItem/UploadImage",
+    //        cache: false,
+    //        contentType: false,
+    //        processData: false,
+    //        data: form_data,       // Setting the data attribute of ajax with file_data
+    //        type: 'post',
+    //        success: function (result) {
+    //            window.location.href = '/LineItem/ProductDetailLineItem/?id=' + ProductId;
+
+
+    //        },
+    //    })
+    //})
+
+    function VendorList() {
+        
+        var ProductId = $("#ProductId").val();
+
+            $.ajax({
+                url: '@Url.Action("VendorList", "LineItem")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: { "ProductId": ProductId },
+                success: function (data) {
+                    
+                    $("#VendorList").html(data);
+                },
+                error: function (Result) {
+                }
+            });
+    }
+    function DeleteImage() {
+        
+        var ProductId = $("#ProductId").val();
+        $.ajax({
+                url: '@Url.Action("DeleteImage", "LineItem")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                    data: { "ProductId": ProductId},
+            success: function (result) {
+                window.location.href = '/LineItem/ProductDetailLineItem/?id=' + ProductId;
+
+
+            },
+        })
+    }
+    $(".Dashbord").click(function () {
+        $("#Dashbord").show();
+        $("#LineItemsLookup").hide();
+        $("#Vendornames").hide();
+        //$("#InvoiceLookup").hide();
+        //$("#StoreWiseLookup").hide();
+        $("#1a").addClass("active");
+        $("#2a").removeClass("active");
+        $("#3a").removeClass("active");
+        //$("#3a").removeClass("active");
+        //$("#4a").removeClass("active");
+
+    });
+    $(".vendor").click(function () {
+        $("#Dashbord").hide();
+        $("#LineItemsLookup").show();
+        $("#Vendornames").hide();
+        //$("#InvoiceLookup").hide();
+        //$("#StoreWiseLookup").hide();
+        $("#2a").addClass("active");
+        $("#1a").removeClass("active");
+        $("#3a").removeClass("active");
+        //$("#3a").removeClass("active");
+        //$("#4a").removeClass("active");
+    });
+    $(".Supplier").click(function () {
+        $("#Dashbord").hide();
+        $("#LineItemsLookup").hide();
+        $("#Vendornames").show();
+        VendorList();
+        //$("#InvoiceLookup").hide();
+        //$("#StoreWiseLookup").hide();
+        $("#3a").addClass("active");
+        $("#1a").removeClass("active");
+        $("#2a").removeClass("active");
+        //$("#4a").removeClass("active");
+    });
+    $(".Invoice").click(function () {
+        $("#Dashbord").hide();
+        $("#LineItemsLookup").hide();
+        //$("#InvoiceLookup").show();
+        //$("#StoreWiseLookup").hide();
+        $("#3a").addClass("active");
+        $("#1a").removeClass("active");
+        //$("#2a").removeClass("active");
+        //$("#4a").removeClass("active");
+    });
+    $(".Store").click(function () {
+        $("#Dashbord").hide();
+        $("#LineItemsLookup").hide();
+        //$("#InvoiceLookup").hide();
+        //$("#StoreWiseLookup").show();
+        $("#4a").addClass("active");
+        $("#1a").removeClass("active");
+        //$("#2a").removeClass("active");
+        //$("#3a").removeClass("active");
+    });
+</script>
+<script>
+            $(document).ready(function () {
+                $('.storeList').select2();
+            $("#Dashbord").show();
+                $("#LineItemsLookup").hide();
+                $("#Vendornames").hide();
+            //$("#InvoiceLookup").hide();
+            //$("#StoreWiseLookup").hide();
+            $("#1a").addClass("active");
+                LineItemsLookup()
+            @*$.ajax({
+                url: '@Url.Action("InvoiceLookup", "ProductPrice")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: { "Upccode": UPCCode },
+                success: function (data) {
+                    $("#InvoiceLookup").html(data);
+                },
+                error: function (Result) {
+                }
+            });
+            $.ajax({
+                url: '@Url.Action("StoreWiseLookup", "ProductPrice")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: { "Upccode": UPCCode },
+                success: function (data) {
+                    $("#StoreWiseLookup").html(data);
+                },
+                error: function (Result) {
+                }
+            });*@
+        });
+        //removejscssfile("jquery-ui-1.8.24.min.js", "js")
+        //removejscssfile("beyond.min.css", "css")
+        $("#vehicle1").click(function () {
+            getlinechart();
+        })
+
+        $("#vehicle2").click(function () {
+            getlinechart();
+        })
+            $(document).ready(function () {
+                
+            $(".page-sidebar.sidebar-fixed").attr("style", "z-index:0 !important;");
+            $(".headermainbox").attr("style", "z-index:0 !important;");
+            $('.westside').select2();
+            var Current = new Date();
+            var d = new Date();
+            d.setDate(d.getDate() + 15);
+            var Sdate = Current.getFullYear() + '-' + (Current.getMonth() + 1) + '-' + Current.getDate();
+            var Edate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+            $("#datepicker1").val(Sdate);
+            $("#datepicker2").val(Edate);
+            $('#datepicker1').datetimepicker({
+                format: 'YYYY-MM-DD',
+                useCurrent: false,
+            }).on('dp.change', function (e) {
+                getlinechart();
+            });
+            $('#datepicker2').datetimepicker({
+                format: 'YYYY-MM-DD',
+                useCurrent: false,
+            }).on('dp.change', function (e) {
+                getlinechart();
+            });
+            //$("#datepicker1").datepicker();
+            //$("#datepicker2").datepicker();
+
+        });
+        function removejscssfile(filename, filetype) {
+            var targetelement = (filetype == "js") ? "script" : (filetype == "css") ? "link" : "none" //determine element type to create nodelist from
+            var targetattr = (filetype == "js") ? "src" : (filetype == "css") ? "href" : "none" //determine corresponding attribute to test for
+            var allsuspects = document.getElementsByTagName(targetelement)
+            for (var i = allsuspects.length; i >= 0; i--) { //search backwards within nodelist for matching elements to remove
+                if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) != null && allsuspects[i].getAttribute(targetattr).indexOf(filename) != -1)
+                    allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
+            }
+        }
+
+        //removejscssfile("jquery-ui-1.8.24.min.js", "js")
+
+</script>
+
+<script>
+    var upc = "";
+    //const params = new URLSearchParams(window.location.search)
+    //upc = params.get('UPC');
+    //$("#desc").text(params.get('Desc'))
+    $(document).ready(function () {
+        $(".page-content").attr("style", "background: #D7D7D7;margin-left: 101px;")
+        $(".select2-selection--single").css("outline", "")
+    });
+
+    var upc = upc;
+    JsBarcode("#barcode3", upc, {
+        format: "EAN13",
+        displayValue: true,
+        fontSize: 20
+    });</script>
+
+
+<script src="~/Content/lineChart/Chart.min.js"></script>
+<script src="~/Content/lineChart/utils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+@*<script src="~/piChart/Chart.min.js"></script>
+    <script src="~/piChart/utils.js"></script>*@
+<script>
+    var ctx = document.getElementById("myChart");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["2020/02/17", "", "2020/02/23", "", "2020/02/29", ""],
+            datasets: [
+                {
+                    type: "bar",
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1,
+                    label: "標籤一",
+                    data: [60, 49, 72, 90, 100, 60]
+                },
+                {
+                    type: "line",
+                    label: "標籤二",
+                    data: [25, 13, 30, 35, 25, 40],
+                    lineTension: 0, // 曲線的彎度，設 0 表示直線
+                    fill: true // 是否填滿色彩
+                }
+            ]
+        }
+    });
+
+</script>
+<script>
+        function line(dte, getHotTs, getColdTe) {
+
+            var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var config1 = {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '',
+                        backgroundColor: 'rgba(0, 0, 0, 0.0)',
+                        borderColor: 'rgba(0, 0, 0, 0.0)',
+                        data: dte,
+                        pointRadius: 0,
+                        /*showLine: true,*/
+                        //fill: false
+
+                        },{
+                        label: 'Unit Price',
+                        backgroundColor: Samples.utils.transparentize(window.chartColors.red,0.5),
+                        borderColor: Samples.utils.transparentize(window.chartColors.red, 0.5),
+                        data: getHotTs,
+                        fill: false,
+                        order: 0,
+                        stepped: "middle"
+                    }, {
+                        label: 'Quantity',
+                        backgroundColor: Samples.utils.transparentize(window.chartColors.blue, 0.5),
+                        borderColor: Samples.utils.transparentize(window.chartColors.blue, 0.5),
+                        data: getColdTe,
+                        fill: false,
+                        type: 'line',
+                        order: 1,
+                        tension: 0.1,
+                        stepped: "middle"
+                    }]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            filter: function (legendItem, chartData) {
+                                if (legendItem.datasetIndex === 0) {
+                                    return false;
+                                }
+                                return true;
+                            }
+                        }
+                    },
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Chart.js Line Chart'
+                    },
+                    //tooltips: {
+                    //    mode: 'index',
+                    //    intersect: false,
+                    //},
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            time: {
+                                displayFormats: {
+                                    hour: 'DD-MM-YYYY'
+                                }
+                            },
+                            ticks: {
+                                maxRotation: 60,
+                                minRotation: 30
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Value'
+                            }
+                        }]
+                    }
+                }
+            };
+
+            //if (dser == "ffg") {
+            //    $('#Mycht').replaceWith('<canvas id="myChart"></canvas>');
+            //    var ctx1 = document.getElementById('myChart').getContext('2d');
+            //    window.myLine = new Chart(ctx1, config1);
+            //    window.myLine.update();
+            //}
+
+            var ctx1 = document.getElementById('Mycht').getContext('2d');
+            window.myLine = new Chart(ctx1, config1);
+            //window.myLine.update();
+        }
+
+
+
+
+    $("#StoreIdT").change(function () {
+        
+            getlinechart();
+        })
+
+        var arr = [];
+        function getlinechart() {
+
+            $(".loading-containers").attr("style", "display:block");
+            var ProductId = $("#ProductId").val();
+             var startDate = $("#datepicker1").val();
+            var endDate = $("#datepicker2").val();
+            if (window.myLine != undefined)
+                window.myLine.destroy();
+
+             var storeId = $("#StoreIdT").val();
+                $.ajax({
+                url: '@Url.Action("getlinechart", "LineItem")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                    data: { "ProductId": ProductId, "startDate": startDate, "endDate": endDate, "storeId": storeId},
+                    success: function (data) {
+                        
+                        var dse = [];
+                        var cour = 8;
+                        for (dt = new Date(startDate); dt <= new Date(endDate); dt.setDate(dt.getDate() + 1)) {
+                            //dse.push(new Date(dt));
+                            dse.push({ x: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()), y: cour++ });
+                        }
+                        if (data != "Notget") {
+                            var ds = [];
+                            var dss = [];
+                            var re = '';
+                            $.each(data, function (index, value) {
+                                var sp = value.Date;
+                                var get = sp.split("-");
+
+                                if ($("#vehicle1").prop('checked') == true && $("#vehicle2").prop('checked') == true) {
+                                    ds.push({ x: new Date(get[0], parseInt(get[1] - 1), get[2]), y: value.UnitPrice });
+                                    dss.push({ x: new Date(get[0], parseInt(get[1] - 1), get[2]), y: value.Qty });
+                                    re = 1;
+                                }
+                                else {
+                                    if ($("#vehicle1").prop('checked') == true) {
+                                        ds.push({ x: new Date(get[0], parseInt(get[1] - 1), get[2]), y: value.UnitPrice });
+                                        re = 1;
+                                    }
+                                    if ($("#vehicle2").prop('checked') == true) {
+                                        dss.push({ x: new Date(get[0], parseInt(get[1] - 1), get[2]), y: value.Qty });
+                                        re = 1;
+                                    }
+                                }
+
+
+                            })
+
+                            var dser = "";
+                            //if (re == 1) {
+                            //    window.myLine.destroy();
+                            //}
+                            //if (storeId !="")
+                            //{
+                            //    window.myLine.destroy();
+
+                            //}
+
+                            //var ds1 = [{ x: new Date(2019, 3, 5), y: 5 },
+                            //{ x: new Date(2019, 3, 4), y: 8 },
+                            //{ x: new Date(2019, 3, 3), y: 4 },
+                            //{ x: new Date(2019, 3, 2), y: 6 },
+                            //{ x: new Date(2019, 3, 1), y: 2 }];
+                            //var dss1 = [{ x: new Date(2019, 3, 5), y: 2 },
+                            //{ x: new Date(2019, 3, 4), y: 5 }];
+
+                            line(dse, ds, dss);
+                        }
+             },
+            error: function (Result) {
+             }
+            });
+             $(".loading-containers").attr("style", "display:none");
+        }
+
+
+        @*function getPieChart() {
+
+            $(".loading-containers").attr("style", "display:block");
+
+            var ProductId = $("#ProductId").val();
+
+                $.ajax({
+                url: '@Url.Action("VendorgetPiechart", "LineItem")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                    data: { "ProductId": ProductId},
+                    success: function (data)
+                    {
+
+                        if (data != "Notget") {
+                            var ds = [];
+                            var dss = [];
+                            $.each(data, function (index, value) {
+                                ds.push(value.VenName);
+                                dss.push(value.VenQty)
+                            })
+                            pichart(ds, dss);
+                        }
+             },
+            error: function (Result) {
+             }
+            });
+             $(".loading-containers").attr("style", "display:none");
+        }*@
+
+
+        //function pichart(ds, dss) {
+        //    var config = {
+        //        type: 'pie',
+        //        data: {
+        //            datasets: [{
+        //                data: dss,
+        //                backgroundColor: [
+        //                    window.chartColors.red,
+        //                    window.chartColors.orange,
+        //                    window.chartColors.yellow,
+        //                    window.chartColors.green,
+        //                    window.chartColors.blue,
+        //                ],
+        //                label: 'Dataset 1'
+        //            }],
+        //            labels: ds
+        //        },
+        //        options: {
+        //            responsive: true
+        //        }
+        //    };
+
+
+        //    var ctx = document.getElementById('chart-area').getContext('2d');
+        //    window.myPie = new Chart(ctx, config);
+        //}
+
+
+        @*function SecondgetPieChart() {
+
+            $(".loading-containers").attr("style", "display:block");
+
+            var ProductId = $("#ProductId").val();
+
+                $.ajax({
+                url: '@Url.Action("StoregetPiechart", "ProductPrice")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                    data: { "ProductId": ProductId},
+                    success: function (data)
+                    {
+
+                        if (data != "Notget") {
+                            var ds = [];
+                            var dss = [];
+                            $.each(data, function (index, value) {
+                                ds.push(value.StoreName);
+                                dss.push(value.StoreQty)
+                            })
+                            Secondpichart(ds, dss);
+                        }
+             },
+            error: function (Result) {
+             }
+            });
+             $(".loading-containers").attr("style", "display:none");
+        }*@
+
+
+        //function Secondpichart(ds, dss) {
+        //    var config3 = {
+        //        type: 'pie',
+        //        data: {
+        //            datasets: [{
+        //                data: dss,
+        //                backgroundColor: [
+        //                    window.chartColors.red,
+        //                    window.chartColors.orange,
+        //                    window.chartColors.yellow,
+        //                    window.chartColors.green,
+        //                    window.chartColors.blue,
+        //                ],
+        //                label: 'Dataset 1'
+        //            }],
+        //            labels: ds
+        //        },
+        //        options: {
+        //            responsive: true
+        //        }
+        //    };
+
+
+        //    var ctx3 = document.getElementById('chart-areas').getContext('2d');
+        //    window.myPie = new Chart(ctx3, config3);
+        //}
+
+
+        $(document).ready(function () {
+
+            getlinechart();
+            //getPieChart();
+            //SecondgetPieChart();
+            $(".page-sidebar.sidebar-fixed").attr("style", "z-index:996;");
+            $(".headermainbox").attr("style", "z-index:99999;");
+        })
+
+</script>
+<script>
+    $("#StoreIds").change(function () {
+        
+        LineItemsLookup();
+    });
+
+    $("#InvoiceId").change(function () {
+        LineItemsLookup();
+    });
+    $("#Refine").click(function () {
+        $("#InvoiceId").val("");
+        $("#StoreIds").val('').trigger('change')
+
+    });
+    function LineItemsLookup() {
+        
+        var ProductId = $("#ProductId").val();
+        var StoreIds = $("#StoreIds").val();
+        var InvoiceNumber = $("#InvoiceId").val();
+
+        if (StoreIds == "") {
+            StoreIds = 0;
+        }
+
+            $.ajax({
+                url: '@Url.Action("LineItemsLookup", "LineItem")',
+                type: "GET",
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: { "ProductId": ProductId, "StoreIds": StoreIds, "InvoiceNumber": InvoiceNumber },
+                success: function (data) {
+                    $("#LineItemsLookupList").html(data);
+                },
+                error: function (Result) {
+                }
+            });
+    }
+
+</script>

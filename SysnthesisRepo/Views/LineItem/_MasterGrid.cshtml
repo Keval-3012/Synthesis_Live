@@ -1,0 +1,157 @@
+﻿@using Syncfusion.EJ2
+@model IEnumerable<EntityModels.Models.ProductsList>
+@{
+    List<EntityModels.Models.productVendorAllList> lstProductVendor = new List<EntityModels.Models.productVendorAllList>();
+    lstProductVendor = ViewBag.lstProductVendor;
+    //EntityModels.Models.ViewBag ViewBag = new EntityModels.Models.ViewBag();
+    //ViewBag = ViewBag.ViewBag;
+}
+@using Utility
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        int VendListcont = 0;
+        int VendListID = 0;
+        if (lstProductVendor.Count() > 0)
+        {
+            if (!string.IsNullOrEmpty(ViewBag.search))
+            {
+                if (item.UPCCode == ViewBag.search || item.ItemNo == ViewBag.search || item.Description == ViewBag.search)
+                {
+                    VendListID = item.ProductId;
+                    VendListcont++;
+                }
+            }
+            if (VendListcont == 0 && !string.IsNullOrEmpty(item.UPCCode))
+            {
+                //VendListcont = lstProductVendor.Where(p => p.UPCCode == item.UPCCode).Count();
+                //var VendList = lstProductVendor.Where(p => p.UPCCode == item.UPCCode).ToList();
+                //VendListcont = VendList.Count();
+                //if (VendListcont > 0)
+                //{
+                //    VendListID = VendList.FirstOrDefault().ProductVendorId;
+                //}
+                if (item.UPCCode == ViewBag.upccode)
+                {
+                    VendListID = item.ProductId;
+                    VendListcont++;
+                }
+            }
+
+            if (VendListcont == 0 && !string.IsNullOrEmpty(item.ItemNo))
+            {
+                //VendListcont = lstProductVendor.Where(p => p.ItemNo == item.ItemNo).Count();
+                //var VendList = lstProductVendor.Where(p => p.ItemNo == item.ItemNo).ToList();
+                //VendListcont = VendList.Count();
+                //if (VendListcont > 0)
+                //{
+                //    VendListID = VendList.FirstOrDefault().ProductVendorId;
+                //}
+                if (item.ItemNo == ViewBag.itemno)
+                {
+                    VendListID = item.ProductId;
+                    VendListcont++;
+                }
+            }
+        }
+        if ((lstProductVendor.Count() > 0 && VendListcont > 0))
+        {
+
+            <ul @((Model.Count() > 0 && VendListcont > 0) ? "onclick=FNselectProduct('" + item.ProductId + "','" + VendListID + "',0)" : "") id="recommendedItemlst_@item.ProductId" @((lstProductVendor.Count() > 0 && VendListcont > 0) ? "exactMatch=yes" : "recommended=yes") class="recommendedItemsGrid TempProduct">
+                <li>@((!string.IsNullOrEmpty(item.UPCCode))? item.UPCCode  : "" )</li>
+                <li>@((!string.IsNullOrEmpty(item.ItemNo))? item.ItemNo : "" )</li>
+                <li>@((!string.IsNullOrEmpty(item.GenericID))? item.GenericID : "" )</li>
+                <li>@item.Description</li>
+                <li>@item.Brand</li>
+                <li>@item.Size</li>
+                <li>
+                    <a onclick="SelectMasterRow('@item.ProductId','@((!string.IsNullOrEmpty(item.UPCCode))? item.UPCCode  : "" )','@((!string.IsNullOrEmpty(item.ItemNo))? item.ItemNo : "" )','@item.Description','@item.Brand')" href="#">Confirm</a>
+                    @*@if (Model.Count() > 0 && VendListcont > 0)
+                        {
+                            <a href="#">Map</a>
+                        }
+                        else
+                        {
+                            <a onclick="MapandsyncItem('@item.ProductId',0)" href="#">Link</a>
+                        }*@
+                </li>
+            </ul>
+        }
+    }
+}
+
+
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        int VendListcont = 0;
+        int VendListID = 0;
+        if (lstProductVendor.Count() > 0)
+        {
+            if (!string.IsNullOrEmpty(ViewBag.search))
+            {
+                if (item.UPCCode == ViewBag.search || item.ItemNo == ViewBag.search || item.Description == ViewBag.search)
+                {
+                    VendListID = item.ProductId;
+                    VendListcont++;
+                }
+            }
+            if (VendListcont == 0 && !string.IsNullOrEmpty(item.UPCCode))
+            {
+                //VendListcont = lstProductVendor.Where(p => p.UPCCode == item.UPCCode).Count();
+                //var VendList = lstProductVendor.Where(p => p.UPCCode == item.UPCCode).ToList();
+                //VendListcont = VendList.Count();
+                //if (VendListcont > 0)
+                //{
+                //    VendListID = VendList.FirstOrDefault().ProductVendorId;
+                //}
+                if (item.UPCCode == ViewBag.upccode)
+                {
+                    VendListID = item.ProductId;
+                    VendListcont++;
+                }
+            }
+
+            if (VendListcont == 0 && !string.IsNullOrEmpty(item.ItemNo))
+            {
+                //VendListcont = lstProductVendor.Where(p => p.ItemNo == item.ItemNo).Count();
+                //var VendList = lstProductVendor.Where(p => p.ItemNo == item.ItemNo).ToList();
+                //VendListcont = VendList.Count();
+                //if (VendListcont > 0)
+                //{
+                //    VendListID = VendList.FirstOrDefault().ProductVendorId;
+                //}
+                if (item.ItemNo == ViewBag.itemno)
+                {
+                    VendListID = item.ProductId;
+                    VendListcont++;
+                }
+            }
+        }
+        if (!(lstProductVendor.Count() > 0 && VendListcont > 0))
+        {
+
+            <ul @((Model.Count() > 0 && VendListcont > 0) ? "onclick=FNselectProduct('" + item.ProductId + "','" + VendListID + "',0)" : "") id="recommendedItemlst_@item.ProductId" @((lstProductVendor.Count() > 0 && VendListcont > 0) ? "exactMatch=yes" : "recommended=yes") class="recommendedItemsGrid TempProduct">
+                <li>@((!string.IsNullOrEmpty(item.UPCCode))? item.UPCCode  : "" )</li>
+                <li>@((!string.IsNullOrEmpty(item.ItemNo))? item.ItemNo : "" )</li>
+                <li>@((!string.IsNullOrEmpty(item.GenericID))? item.GenericID : "" )</li>
+                <li>@item.Description</li>
+                <li>@item.Brand</li>
+                <li>@item.Size</li>
+                <li>
+                    <a onclick="SelectMasterRow('@item.ProductId','@((!string.IsNullOrEmpty(item.UPCCode))? item.UPCCode  : "" )','@((!string.IsNullOrEmpty(item.ItemNo))? item.ItemNo : "" )','@item.Description','@item.Brand')" href="#">Confirm</a>
+                    @*@if (Model.Count() > 0 && VendListcont > 0)
+                        {
+                            <a href="#">Map</a>
+                        }
+                        else
+                        {
+                            <a onclick="MapandsyncItem('@item.ProductId',0)" href="#">Link</a>
+                        }*@
+                </li>
+            </ul>
+        }
+    }
+}

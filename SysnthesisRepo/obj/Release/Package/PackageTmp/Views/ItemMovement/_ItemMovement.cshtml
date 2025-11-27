@@ -1,0 +1,72 @@
+﻿@using Syncfusion.EJ2
+@{
+
+    var ChildGrid = new Syncfusion.EJ2.Grids.Grid()
+    {
+        DataSource = new DataManager() { Url = "/ItemMovement/UrlDatasourceChild", Adaptor = "UrlAdaptor" },
+        QueryString = "ItemMovementdatehistoryID",
+        AllowFiltering = true,
+        AllowSorting = true,
+        AllowPaging = true,
+        AllowExcelExport = true,
+        AllowPdfExport = true,
+        PageSettings = new Syncfusion.EJ2.Grids.GridPageSettings() { PageSize = 25 },
+        FilterSettings = new Syncfusion.EJ2.Grids.GridFilterSettings() { Type = Syncfusion.EJ2.Grids.FilterType.CheckBox },
+        Toolbar = new List<string>() { "ExcelExport", "PdfExport" },
+        ToolbarClick = "toolbarClick2",
+        Columns = new List<Syncfusion.EJ2.Grids.GridColumn> {
+                    //new Syncfusion.EJ2.Grids.GridColumn(){ Type="checkbox" ,Width="50" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="ItemMovementId", HeaderText="ItemMovementId",Visible = false },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="SupplierName", HeaderText="Supplier Name" ,Width="300"},
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="Department", HeaderText="Department",Width="200"},
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="ItemCode",HeaderText="ItemCode", Width="200"  },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="ItemName",HeaderText="Item Name", Width="200" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){Field="QtySold",HeaderText="Qty Sold", Width="100"  },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="LastCOst",HeaderText="LastCOst", Width="100" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="QtyOnHand", HeaderText="Qty On Hand", Width="100" },
+                    new Syncfusion.EJ2.Grids.GridColumn(){ Field="BasePrice", HeaderText="Base Price", Width="100" },
+            },
+
+    };
+}
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/ItemMovement/UrlDatasource").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).AllowTextWrap().Columns(col =>
+{
+    col.Field("ItemMovementdatehistoryID").IsPrimaryKey(true).HeaderText("Item Movement DatehistoryID").Visible(false).Add();
+    col.Field("FileName").HeaderText("File Name").Template("#UploadTemplate").Width("300").Add();
+    col.Field("StoreName").HeaderText("Store Name").Width("300").Add();
+    col.Field("Startdate").HeaderText("Start Date").Format("MM/dd/yyyy hh:mm a").Width("200").Add();
+    col.Field("Enddate").HeaderText("End Date").Format("MM/dd/yyyy hh:mm a").Width("200").Add();
+    col.HeaderText("Action").Width("60").Template("#EditTemplate").Add();
+}).AllowPaging().PageSettings(page => { page.PageSize(30); }).ChildGrid(ChildGrid).Render()
+</div>
+@Html.EJS().ScriptManager()
+
+<script type="text/x-jsrender" id="UploadTemplate">
+    <a href="/UserFiles/Done/${FileName}" target="_blank" style="color: #3c7be5;font-weight:bold">
+        ${FileName}
+    </a>
+</script>
+<script type="text/x-jsrender" id="EditTemplate">
+
+    ${if(IsDelete != "0")}
+    @if (((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice"))))
+    {
+        <a href="javascript:ComfirmDelete(${ItemMovementdatehistoryID});" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+    }
+    ${/if}
+    <div id="${ItemMovementdatehistoryID}" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="modal-title">Message</div>
+            <div class="modal-body"><p id="deleModalbody"> Are you sure you want to delete this Item Movement History?</p></div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" href="javascript:Delete(${ItemMovementdatehistoryID});">Ok </a>
+                <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+            </div>
+        </div>
+    </div>
+</script>
+

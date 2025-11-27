@@ -1,0 +1,34 @@
+8/7/2025 2:45:57 PM: Malformed Authorization Response..
+8/7/2025 2:46:46 PM: Malformed Authorization Response..
+8/7/2025 4:05:03 PM: Fetching Discovery Data..
+8/7/2025 4:05:04 PM: Discovery Data obtained..
+8/7/2025 4:05:04 PM: Making Get JWKS Keys Call..
+8/7/2025 4:05:05 PM: JWKS Keys obtained..
+8/7/2025 4:05:05 PM: Intiating OAuth2 call to get code..
+8/7/2025 4:05:42 PM: Fetching Discovery Data..
+8/7/2025 4:05:45 PM: Discovery Data obtained..
+8/7/2025 4:05:45 PM: Making Get JWKS Keys Call..
+8/7/2025 4:05:46 PM: JWKS Keys obtained..
+8/7/2025 4:05:46 PM: Intiating OAuth2 call to get code..
+8/7/2025 4:34:31 PM: Fetching Discovery Data..
+8/7/2025 4:34:33 PM: Discovery Data obtained..
+8/7/2025 4:34:33 PM: Making Get JWKS Keys Call..
+8/7/2025 4:34:34 PM: JWKS Keys obtained..
+8/7/2025 4:34:34 PM: Intiating OAuth2 call to get code..
+9/23/2025 11:05:46 AM: QuickBooks Client ID/Secret not found in DB for StoreID: .
+9/23/2025 11:19:03 AM: Fetching Discovery Data..
+9/23/2025 11:19:21 AM: Discovery Data obtained..
+9/23/2025 11:19:25 AM: Making Get JWKS Keys Call..
+9/23/2025 11:20:09 AM: JWKS Keys obtained..
+9/23/2025 11:20:13 AM: Intiating OAuth2 call to get code..
+9/29/2025 11:29:42 AM: Fetching Discovery Data..
+9/29/2025 11:29:44 AM: Discovery Data obtained..
+9/29/2025 11:29:44 AM: Making Get JWKS Keys Call..
+9/29/2025 11:29:45 AM: JWKS Keys obtained..
+9/29/2025 11:29:45 AM: Intiating OAuth2 call to get code..
+9/29/2025 11:45:26 AM: Fetching Discovery Data..
+9/29/2025 11:45:27 AM: Discovery Data obtained..
+9/29/2025 11:45:28 AM: Making Get JWKS Keys Call..
+9/29/2025 11:45:29 AM: JWKS Keys obtained..
+9/29/2025 11:45:30 AM: Intiating OAuth2 call to get code..
+9/30/2025 10:41:17 AM: QuickBooks Client ID/Secret not found in DB for StoreID: .

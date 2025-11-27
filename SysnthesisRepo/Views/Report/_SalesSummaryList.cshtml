@@ -1,0 +1,697 @@
+﻿@model EntityModels.Models.ShiftWiseTenderReport_Select
+@using Utility
+@using System.Configuration;
+@using EntityModels.Models;
+@{
+    Layout = null;
+    DBContext db = new DBContext();
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        .Width {
+            width: 150px !important;
+        }
+
+        .lightBlueBlock {
+            background: #FE2B2B;
+            color: #fff;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .headerTop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding:15px;
+        }
+
+
+        .darkBlueBlock {
+            background: #919191;
+        }
+
+        .BlackBlock {
+            font-size: 17px;
+            color: #000;
+            background: #E4E4E4;
+            font-weight: 700;
+            padding: 15px !important;
+            text-align: center;
+        }
+
+        .summary {
+            padding: 15px 20px;
+            background: #4E4E4E;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            display: none;
+        }
+
+        .otherDeposite {
+            width: 70%;
+            margin: 60px auto;
+            background: #5CD4AA;
+            color: white;
+            padding: 1px 0px 0px 0px;
+        }
+
+        .otherDepositeTitle {
+            color: #ffffff;
+            font-weight: 600 !important;
+            margin: 18px 0px 20px 0px;
+        }
+
+        .otherDepositeTable thead tr th {
+            background: #B2FDE3 !important;
+            color: black !important;
+        }
+
+        .tax {
+            font-weight: 200;
+        }
+    </style>
+</head>
+<body>
+    <div class="animate-panelmessesgarea padbtmzero">
+        @if (Convert.ToString(ViewBag.ErrorMessage) == "NoItemFound")
+        {
+            <script>
+                MyfunNoItem();
+            </script>
+        }
+    </div>
+    @{
+        if (ViewBag.TitleCount > 0)
+        {
+            <div id="getdata">
+                <div class="report table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <tbody>
+                            @{
+                                int StoreID = 0;
+                                string Date = "";
+                                string Edate = "";
+                                int ShiftID = 0;
+                                string Shift = "";
+                            }
+                            <tr>
+                                <td rowspan="2" class="tender">TENDERS IN DRAWERS</td>
+                                @{
+                                    for (int i = 0; i < Model.shiftnamelist.Count; i++)
+                                    {
+                                        if (@Model.shiftnamelist[i].IsVisible == true)
+                                        {
+                                            <td class="shift">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                <span>@Model.shiftnamelist[i].Name</span>
+                                            </td>
+                                        }
+                                    }
+                                }
+                                <td class="lightBlueBlock">Grand Total</td>
+                            </tr>
+                            <tr>
+                                @{
+                                    decimal Total = 0;
+                                    decimal Tax = 0;
+                                    for (int i = 0; i < Model.shiftnamelist.Count; i++)
+                                    {
+                                        if (Model.shiftnamelist[i].IsVisible == true)
+                                        {
+                                            StoreID = ViewBag.storeid;
+                                            Date = ViewBag.StartDate;
+                                            Edate = ViewBag.EndDate;
+                                            ShiftID = Model.shiftnamelist[i].Id;
+                                            Shift = Model.shiftnamelist[i].Name;
+                                            <td class="yellowBlock">
+                                                <span class="netSales"><b>Net Sales With Taxes</b></span>
+                                                @{
+                                                    var NetPrices = db.Database.SqlQuery<GetShiftWiseTotal_Result>("GetShiftWiseTotal @StoreId = {0},@ShiftId = {1},@TransactionStartTime={2},@TransactionEndTime={3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                    Total += Convert.ToDecimal(NetPrices.TotleByShift);
+                                                    var NetPrice = Convert.ToDecimal(NetPrices.TotleByShift);
+                                                    var NetTax = Convert.ToDecimal(NetPrices.TotalTax);
+                                                    Tax += Convert.ToDecimal(NetTax);
+                                                    if (NetPrice != null)
+                                                    {
+                                                        <span class="netPrice">$ @AdminSiteConfiguration.PriceWithComma(NetPrice.ToString())</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="netPrice"> $ 0.00</span>
+                                                    }
+                                                    if (NetTax != null)
+                                                    {
+                                                        <span class="tax">Tax Collected - $ @AdminSiteConfiguration.PriceWithComma(NetTax.ToString())</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="tax">Tax Collected - $ 0.00</span>
+                                                    }
+                                                }
+                                            </td>
+                                        }
+                                    }
+                                }
+                                <td class="darkBlueBlock">
+                                    <span class="netSales"><b>Net Sales With Taxes</b></span>
+                                    <span class="netPrice">$ @AdminSiteConfiguration.PriceWithComma(Total.ToString())</span>
+                                    <span class="tax">Tax Collected - $ @AdminSiteConfiguration.PriceWithComma(Tax.ToString())</span>
+                                </td>
+                            </tr>
+
+                            @{
+                                for (int i = 0; i < Model.TitleWiseTotal.Count; i++)
+                                {
+                                    <tr>
+                                        @{ decimal TitleTotal = 0;
+                                            <td class="whiteBlock">@Model.TitleWiseTotal[i].Title</td>
+
+                                            for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                            {
+                                                if (Model.shiftnamelist[j].IsVisible == true)
+                                                {
+                                                    Shift = Model.shiftnamelist[j].Name== "MBO" ? "MOB" : Model.shiftnamelist[j].Name;
+                                                    string Title = Model.TitleWiseTotal[i].Title;
+                                                    StoreID = ViewBag.storeid;
+                                                    Date = ViewBag.StartDate;
+                                                    Edate = ViewBag.EndDate;
+
+                                                    <td class="whiteBoldBlock">
+                                                        <span>
+                                                            @{
+                                                                var Totalval = db.Database.SqlQuery<decimal>("GetTitleWiseTotal @StoreId={0},@ShiftName={1},@Title ={2},@TransactionStartTime = {3},@TransactionEndTime={4}", StoreID, Shift, Title, Date, Edate).FirstOrDefault();
+                                                                TitleTotal += Convert.ToDecimal(Totalval);
+                                                                <span>$ @AdminSiteConfiguration.PriceWithComma(Totalval.ToString())</span>
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                }
+                                            }
+                                            <td class="BlackBlock">$ @AdminSiteConfiguration.PriceWithComma(TitleTotal.ToString())</td>
+                                        }
+                                    </tr>
+                                    if (Model.TitleWiseTotal[i].Title.ToLower().Contains("credit card"))
+                                    {
+                                        <tr>
+                                            @{
+                                                decimal AMEXTotal = 0;
+                                                <td class="greyBlock">- AMEX</td>
+                                                for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                                {
+                                                    if (Model.shiftnamelist[j].IsVisible == true)
+                                                    {
+                                                        Shift = Model.shiftnamelist[j].Name;
+                                                        StoreID = ViewBag.storeid;
+                                                        Date = ViewBag.StartDate;
+                                                        Edate = ViewBag.EndDate;
+                                                        ShiftID = Model.shiftnamelist[j].Id;
+                                                        decimal AMEX = 0;
+                                                        <td class="greySmallBlock">
+                                                            <span>
+                                                                @{
+                                                                    AMEX = db.Database.SqlQuery<decimal>("GetCreditcard_details_AMEX @StoreId={0},@ShiftId={1},@StartTime ={2},@EndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                                    <span>$ @AdminSiteConfiguration.PriceWithComma(AMEX.ToString())</span>
+                                                                }
+                                                            </span>
+
+                                                        </td>
+                                                        AMEXTotal += Convert.ToDecimal(AMEX);
+                                                    }
+                                                }
+                                                <td class="greydarkBlock">$ @AdminSiteConfiguration.PriceWithComma(AMEXTotal.ToString())</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            @{
+                                                decimal DiscoverTotal = 0;
+                                                <td class="greyBlock">- Discover</td>
+                                                for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                                {
+                                                    if (Model.shiftnamelist[j].IsVisible == true)
+                                                    {
+                                                        Shift = Model.shiftnamelist[j].Name;
+                                                        StoreID = ViewBag.storeid;
+                                                        Date = ViewBag.StartDate;
+                                                        Edate = ViewBag.EndDate;
+                                                        decimal Discover = 0;
+                                                        ShiftID = Model.shiftnamelist[j].Id;
+                                                        <td class="greySmallBlock">
+                                                            <span>
+                                                                @{
+                                                                    Discover = db.Database.SqlQuery<decimal>("GetCreditcard_details_Discover @StoreId={0},@ShiftId={1},@StartTime ={2},@EndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                                    <span>$ @AdminSiteConfiguration.PriceWithComma(Discover.ToString())</span>
+                                                                }
+                                                            </span>
+                                                        </td>
+                                                        DiscoverTotal += Convert.ToDecimal(Discover);
+                                                    }
+                                                }
+                                                <td class="greydarkBlock">$ @AdminSiteConfiguration.PriceWithComma(DiscoverTotal.ToString())</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            @{
+                                                decimal MasterTotal = 0;
+                                                <td class="greyBlock">- Master</td>
+                                                for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                                {
+                                                    if (Model.shiftnamelist[j].IsVisible == true)
+                                                    {
+                                                        Shift = Model.shiftnamelist[j].Name;
+                                                        StoreID = ViewBag.storeid;
+                                                        Date = ViewBag.StartDate;
+                                                        Edate = ViewBag.EndDate;
+                                                        ShiftID = Model.shiftnamelist[j].Id;
+                                                        decimal Master = 0;
+                                                        <td class="greySmallBlock">
+                                                            <span>
+                                                                @{
+                                                                    Master = db.Database.SqlQuery<decimal>("GetCreditcard_details_Master @StoreId={0},@ShiftId={1},@StartTime ={2},@EndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                                    <span>$ @AdminSiteConfiguration.PriceWithComma(Master.ToString())</span>
+                                                                }
+                                                            </span>
+                                                        </td>
+                                                        MasterTotal += Convert.ToDecimal(Master);
+                                                    }
+                                                }
+                                                <td class="greydarkBlock">$ @AdminSiteConfiguration.PriceWithComma(MasterTotal.ToString())</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            @{
+                                                decimal VisaTotal = 0;
+                                                <td class="greyBlock">- Visa</td>
+                                                for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                                {
+                                                    if (Model.shiftnamelist[j].IsVisible == true)
+                                                    {
+                                                        Shift = Model.shiftnamelist[j].Name;
+                                                        StoreID = ViewBag.storeid;
+                                                        Date = ViewBag.StartDate;
+                                                        Edate = ViewBag.EndDate;
+                                                        ShiftID = Model.shiftnamelist[j].Id;
+                                                        decimal Visa = 0;
+                                                        <td class="greySmallBlock">
+                                                            <span>
+                                                                @{
+                                                                    Visa = db.Database.SqlQuery<decimal>("GetCreditcard_details_Visa @StoreId={0},@ShiftId={1},@StartTime ={2},@EndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                                    <span>$ @AdminSiteConfiguration.PriceWithComma(Visa.ToString())</span>
+                                                                }
+                                                            </span>
+                                                        </td>
+                                                        VisaTotal += Convert.ToDecimal(Visa);
+                                                    }
+                                                }
+                                                <td class="greydarkBlock">$ @AdminSiteConfiguration.PriceWithComma(VisaTotal.ToString())</td>
+                                            }
+                                        </tr>
+                                        <tr>
+                                            @{
+                                                decimal CCOfflineTotal = 0;
+                                                <td class="greyBlock">- Offline</td>
+                                                for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                                {
+                                                    if (Model.shiftnamelist[j].IsVisible == true)
+                                                    {
+                                                        Shift = Model.shiftnamelist[j].Name;
+                                                        StoreID = ViewBag.storeid;
+                                                        Date = ViewBag.StartDate;
+                                                        Edate = ViewBag.EndDate;
+                                                        ShiftID = Model.shiftnamelist[j].Id;
+                                                        decimal CCOffline = 0;
+                                                        <td class="greySmallBlock">
+                                                            <span>
+                                                                @{
+                                                                    CCOffline = db.Database.SqlQuery<decimal>("GetCreditcard_details_CCOffline @StoreId={0},@ShiftId={1},@StartTime ={2},@EndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                                    <span>$ @AdminSiteConfiguration.PriceWithComma(CCOffline.ToString())</span>
+                                                                }
+                                                            </span>
+                                                        </td>
+                                                        CCOfflineTotal += Convert.ToDecimal(CCOffline);
+                                                    }
+                                                }
+                                                <td class="greydarkBlock">$ @AdminSiteConfiguration.PriceWithComma(CCOfflineTotal.ToString())</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            }
+                            @{
+                                decimal PaidTotal1 = 0;
+                                for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                {
+                                    if (Model.shiftnamelist[j].IsVisible == true)
+                                    {
+                                        Shift = Model.shiftnamelist[j].Name;
+                                        StoreID = ViewBag.storeid;
+                                        Date = ViewBag.StartDate;
+                                        Edate = ViewBag.EndDate;
+                                        ShiftID = Model.shiftnamelist[j].Id;
+                                        <span>
+                                            @{
+                                                decimal Paidout1 = db.Database.SqlQuery<decimal>("GetPaidOut_Count_ShiftWise @StoreId={0},@ShiftId={1},@StartDate ={2},@EndDate = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                            }
+                                        </span>
+                                        PaidTotal1 += Convert.ToDecimal(Paidout1);
+                                    }
+                                }
+                            }
+                            @{
+                                if (PaidTotal1 > 0)
+                                {
+                                    <tr>
+                                        <td class="whiteBlock">Paid Out</td>
+                                        @{
+                                            decimal PaidTotal = 0;
+                                            for (int j = 0; j < Model.shiftnamelist.Count; j++)
+                                            {
+                                                if (Model.shiftnamelist[j].IsVisible == true)
+                                                {
+                                                    Shift = Model.shiftnamelist[j].Name;
+                                                    StoreID = ViewBag.storeid;
+                                                    Date = ViewBag.StartDate;
+                                                    Edate = ViewBag.EndDate;
+                                                    ShiftID = Model.shiftnamelist[j].Id;
+                                                    decimal Paidout = 0;
+                                                    <span>
+                                                        @{
+                                                            Paidout = db.Database.SqlQuery<decimal>("GetPaidOut_Count_ShiftWise @StoreId={0},@ShiftId={1},@StartDate ={2},@EndDate = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                        }
+                                                    </span>
+                                                    <td class="whiteBoldBlock">
+                                                        @if (Paidout == null)
+                                                        {
+                                                            <span>$ 0.00</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Paidout))</span>
+                                                        }
+                                                    </td>
+                                                    PaidTotal += Convert.ToDecimal(Paidout);
+                                                }
+                                            }
+                                            if (PaidTotal == null)
+                                            {
+                                                <td class="BlackBlock">0.00</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="BlackBlock">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(PaidTotal))</td>
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            }
+                            @{
+                            }
+
+                            <tr>
+                                <td class="whiteBlock" rowspan="4"></td>
+                                @{
+                                    decimal TotalReturn = 0;
+                                    for (int i = 0; i < Model.shiftnamelist.Count; i++)
+                                    {
+                                        if (Model.shiftnamelist[i].IsVisible == true)
+                                        {
+                                            StoreID = ViewBag.storeid;
+                                            Date = ViewBag.StartDate;
+                                            Edate = ViewBag.EndDate;
+                                            Shift = Model.shiftnamelist[i].Name;
+                                            ShiftID = Model.shiftnamelist[i].Id;
+                                            <td class="yellowBlock">
+                                                <span class="customerCount">Returns</span>
+                                                @{
+                                                    var aa = db.Database.SqlQuery<GetShiftWiseTotal_Result>("GetShiftWiseTotal @StoreId={0},@ShiftId={1},@TransactionStartTime ={2},@TransactionEndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                    var ReturnTotal = aa.TotalReturn;
+                                                    <span class="customerPrice">$ @AdminSiteConfiguration.PriceWithComma(ReturnTotal.ToString())</span>
+                                                    if (ReturnTotal != null)
+                                                    {
+                                                        TotalReturn += Convert.ToDecimal(ReturnTotal);
+                                                    }
+                                                }
+                                            </td>
+                                        }
+                                    }
+                                }
+                                <td class="darkBlueBlock">
+                                    <span class="customerCount">Total Return</span>
+                                    <span class="customerPrice">@AdminSiteConfiguration.PriceWithComma(TotalReturn.ToString())</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                @{
+                                    int TotalCust = 0;
+                                    for (int i = 0; i < Model.shiftnamelist.Count; i++)
+                                    {
+                                        if (Model.shiftnamelist[i].IsVisible == true)
+                                        {
+                                            StoreID = ViewBag.storeid;
+                                            Date = ViewBag.StartDate;
+                                            Edate = ViewBag.EndDate;
+                                            Shift = Model.shiftnamelist[i].Name;
+                                            ShiftID = Model.shiftnamelist[i].Id;
+                                            <td class="yellowBlock">
+                                                <span class="customerCount">Customer Count</span>
+                                                @{
+                                                    var aa = db.Database.SqlQuery<GetShiftWiseTotal_Result>("GetShiftWiseTotal @StoreId={0},@ShiftId={1},@TransactionStartTime ={2},@TransactionEndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                    var CustCount = aa.TotalCustomer;
+                                                    TotalCust += Convert.ToInt32(CustCount);
+                                                    CustCount = Convert.ToInt32(CustCount);
+                                                    if (CustCount != null)
+                                                    {
+                                                        if (CustCount == 0)
+                                                        {
+                                                            <span class="customerPrice"> 0</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="customerPrice">@AdminSiteConfiguration.RoundPriceWithComma(Convert.ToString(CustCount))</span>
+                                                        }
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <span class="customerPrice"> 0</span>
+                                                    }
+                                                }
+                                            </td>
+                                        }
+                                    }
+                                }
+                                <td class="darkBlueBlock">
+                                    <span class="customerCount">Customer Count</span>
+                                    <span class="customerPrice">@AdminSiteConfiguration.RoundPriceWithComma(Convert.ToString(TotalCust))</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                @{
+                                    decimal SalesTotal = 0;
+                                    for (int i = 0; i < Model.shiftnamelist.Count; i++)
+                                    {
+                                        if (Model.shiftnamelist[i].IsVisible == true)
+                                        {
+                                            StoreID = ViewBag.storeid;
+                                            Date = ViewBag.StartDate;
+                                            Edate = ViewBag.EndDate;
+                                            Shift = Model.shiftnamelist[i].Name;
+                                            ShiftID = Model.shiftnamelist[i].Id;
+                                            <td class="yellowBlock">
+                                                <span class="customerCount">Average Sale</span>
+                                                @{
+                                                    var aa = db.Database.SqlQuery<GetShiftWiseTotal_Result>("GetShiftWiseTotal @StoreId={0},@ShiftId={1},@TransactionStartTime ={2},@TransactionEndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                    var AverageTotal = aa.TotalAverage;
+                                                    <span class="customerPrice">$ @AdminSiteConfiguration.PriceWithComma(AverageTotal.ToString())</span>
+                                                    if (AverageTotal != null)
+                                                    {
+                                                        SalesTotal += Convert.ToDecimal(AverageTotal);
+                                                    }
+                                                }
+                                            </td>
+                                        }
+                                    }
+                                }
+                                            <td class="darkBlueBlock">
+                                                <span class="customerCount">Average Sales</span>
+                                                @*<span class="customerPrice">@AdminSiteConfiguration.PriceWithComma(SalesTotal.ToString())</span>*@
+                                                <span class="customerPrice">@AdminSiteConfiguration.PriceWithComma((Total/ TotalCust).ToString())</span>
+                                            </td>
+                            </tr>
+                            <tr>
+                                @{
+                                    decimal GrandTotal = 0;
+                                    decimal Difference = 0;
+                                    decimal FinalDiff = 0;
+                                    for (int i = 0; i < Model.shiftnamelist.Count; i++)
+                                    {
+                                        if (Model.shiftnamelist[i].IsVisible == true)
+                                        {
+                                            StoreID = ViewBag.storeid;
+                                            Date = ViewBag.StartDate;
+                                            Edate = ViewBag.EndDate;
+                                            Shift = Model.shiftnamelist[i].Name;
+                                            ShiftID = Model.shiftnamelist[i].Id;
+                                            <td class="offWhiteBlock">
+                                                <span class="netSales">Actual Grand Total</span>
+                                                @{
+                                                    var GTotal = db.Database.SqlQuery<decimal>("GetShiftWiseGrandTotal @StoreId={0},@ShiftId={1},@TransactionStartTime ={2},@TransactionEndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault(); ;
+                                                    var aa = db.Database.SqlQuery<GetShiftWiseTotal_Result>("GetShiftWiseTotal @StoreId={0},@ShiftId={1},@TransactionStartTime ={2},@TransactionEndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault();
+                                                    var STotal = aa.TotleByShift;
+                                                    var Paidout = db.Database.SqlQuery<decimal>("GetPaidOutCountShiftWise @StoreId={0},@ShiftId={1},@TransactionStartTime ={2},@TransactionEndTime = {3}", StoreID, ShiftID, Date, Edate).FirstOrDefault(); ;
+                                                    var OtherTotal = 0;
+                                                    GTotal += Paidout;
+                                                    GTotal = GTotal - OtherTotal;
+                                                    Difference = Convert.ToDecimal(GTotal) - Convert.ToDecimal(STotal);  //Convert.ToDecimal(STotal) - Convert.ToDecimal(GTotal);
+                                                    GrandTotal += Convert.ToDecimal(GTotal);
+                                                    FinalDiff += Difference;
+                                                    if (GTotal != null)
+                                                    {
+                                                        <span class="netPrice">$ @AdminSiteConfiguration.PriceWithComma(GTotal.ToString())</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="netPrice">$ 0.00</span>
+                                                    }
+                                                    if (Difference == 0)
+                                                    {
+                                                        <span class="tax " style="color:grey">Over/Short $ @AdminSiteConfiguration.PriceWithComma(Difference.ToString())</span>
+                                                    }
+                                                    else if (Convert.ToDecimal(GTotal) > Convert.ToDecimal(STotal))
+                                                    {
+                                                        <span class="tax " style="color:green">Over $ @AdminSiteConfiguration.PriceWithComma(Difference.ToString())</span>
+                                                    }
+                                                    else if (Convert.ToDecimal(GTotal) < Convert.ToDecimal(STotal))
+                                                    {
+                                                        <span class="tax colorRed">Short $ @AdminSiteConfiguration.PriceWithComma(Difference.ToString())</span>
+                                                    }
+
+                                                }
+                                            </td>
+                                        }
+                                    }
+                                }
+                                <td class="BlackBlock" style="background: #BCEDFF;">
+                                    <span class="netSales">Actual Grand Total</span>
+                                    <span class="netPrice">$ @AdminSiteConfiguration.PriceWithComma(GrandTotal.ToString())</span>
+                                    @if (FinalDiff == 0)
+                                    {
+                                        <span class="tax " style="color:grey">Over/Short $ @AdminSiteConfiguration.PriceWithComma(Difference.ToString())</span>
+                                    }
+                                    else if (GrandTotal > Total)
+                                    {
+                                        <span class="tax" style="color:green">Over $ @AdminSiteConfiguration.PriceWithComma(FinalDiff.ToString())</span>
+                                    }
+                                    else if (GrandTotal < Total)
+                                    {
+                                        <span class="tax colorRed">Short $ @AdminSiteConfiguration.PriceWithComma(FinalDiff.ToString())</span>
+                                    }
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="summary">
+                    <div class="summaryLeft">Summary</div>
+                    <div class="summaryRight">
+                        <div class="summaryPrice">
+                            <span class="summaryPriceTop">Cash Deposits</span>
+                            <span class="summaryPriceBottom">$ @AdminSiteConfiguration.PriceWithComma(Model.CashTotal.ToString())</span>
+                        </div>
+                        <div class="summaryIcon">+</div>
+                        <div class="summaryPrice">
+                            <span class="summaryPriceTop">Operating Deposits</span>
+                            <span class="summaryPriceBottom">$ @AdminSiteConfiguration.PriceWithComma(Model.OtherTotal.ToString())</span>
+                        </div>
+                        <div class="summaryIcon">=</div>
+                        <div class="summaryPrice">
+                            <span class="summaryPriceTop">Bank Deposits</span>
+                            @{
+                                decimal BankDeposit;
+                                BankDeposit = Convert.ToDecimal(Model.CashTotal) + Convert.ToDecimal(Model.OtherTotal);
+                                <span class="summaryPriceBottom">$ @AdminSiteConfiguration.PriceWithComma(BankDeposit.ToString())</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.DepositeCount > 0)
+                {
+                    <div class="otherDeposite" style="color:black;">
+                        <h2 class="otherDepositeTitle text-center">Other Deposits</h2>
+                        <div class="otherDepositeTable  table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Option</th>
+                                        <th>Details</th>
+                                        <th>Payment Method</th>
+                                        <th>Vendor</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        for (int i = 0; i < Model.OtherDepositeList.Count; i++)
+                                        {
+                                            <tr>
+                                                <td> @Model.OtherDepositeList[i].Date</td>
+                                                <td>@Model.OtherDepositeList[i].options</td>
+                                                <td> @Model.OtherDepositeList[i].Description</td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(@Model.OtherDepositeList[i].PaymentMethod))
+                                                    {@Model.OtherDepositeList[i].PaymentMethod}
+                                                else
+                                                {
+                                                    <span>NA</span>
+                                                }
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(@Model.OtherDepositeList[i].Vendor))
+                                                    {@Model.OtherDepositeList[i].Vendor}
+                                                else
+                                                {
+                                                    <span>NA</span>
+                                                }
+                                                </td>
+                                                <td class="text-right">$ @AdminSiteConfiguration.PriceWithComma(Model.OtherDepositeList[i].Amount.ToString())</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div id="getdata">
+            </div>
+        }
+    }
+    <script>
+        $('.stop-propagation').on('click', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+    <script>
+        $('.burgermenu').click(function () {
+            $('#sidebar').toggleClass('showmenu');
+            $('.page-content').toggleClass('marleft110');
+        })
+    </script>
+</body>
+</html>

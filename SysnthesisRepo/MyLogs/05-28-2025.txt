@@ -1,0 +1,7 @@
+2025-05-28 10:09:07.4335|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/28/2025 10:09:07 AM
+2025-05-28 10:09:21.8864|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 5/28/2025 10:09:21 AM - An error occurred while sending the request.
+2025-05-28 10:09:59.6931|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/28/2025 10:09:59 AM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-05-28 10:11:02.9429|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/28/2025 10:11:02 AM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-05-28 10:12:34.3673|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/28/2025 10:12:34 AM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-05-28 14:35:23.0792|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/28/2025 2:35:23 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-05-28 14:39:23.4468|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/28/2025 2:39:23 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").

@@ -1,0 +1,352 @@
+﻿@model IEnumerable<EntityModels.Models.ConfigurationGroup>
+@{
+    Layout = null;
+}
+@using Utility
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .Chiledred_cor {
+        /*background: url(../../images/no_stopping.png) no-repeat 5px 5px #DF4848;*/
+        background: url(../../../../Content/Admin/images/no_stopping.png) no-repeat 5px 5px #DF4848;
+        color: #fff !important;
+        background-size: 15px;
+        margin: 0px 15px;
+        font-size: 12px;
+        padding: 6px 10px 7px 26px;
+        border-radius: 40px;
+        text-decoration: none;
+        background-image: url(../../../../Content/Admin/images/icon_re_sync1.png);
+        background-color: #31B35D;
+        color: #fff !important;
+    }
+</style>
+
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (ViewBag.StatusMessage.ToString() == "Success")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('@ViewBag.CreateSuccess');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Delete")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.DeleteSuccess');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Edit")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('@ViewBag.UpdateSuccess');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Exists")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.AlreadyExists');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Error")
+    {
+        <script>
+            MyfunError();
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "EmailExists")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.EmailExists');
+        </script>
+    }
+
+
+</div>
+<div id="grddata">
+    <div class="header-small special_bg special1" style="margin-top:0px;margin-left:0px;">
+        <h3>Group Accounts</h3><div class="hd_right">
+            <div style="display:none">
+                <div class="searchfinal margin0">
+                    <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="dataTables_filter">
+                            <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+                                <tr>
+                                    <td>
+                                        <div class="input-group postion_div">
+                                            <input name="txtSearchTitle" type="text" maxlength="100" id="txtSearchTitle" placeholder="Group Name" class="form-control m-b">
+                                            <a href="#" class="search_close" onclick="cleartextsearch();">x</a>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class=".searchfinal .btnsearchicon" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="addrowbox" @*style="display:none"*@>
+                <input type="button" class="add-row buttonbox btnsubmit btn_spcial btn_orange btn_padd1" value="Add Group Account">
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="page-body headertopbox addinvoice" style="padding-top:18px!important;">
+
+
+
+        <div class="datagrid">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover select_set1" id="data_table">
+                    <thead>
+                        <tr>
+                            <th>Group Account Name</th>
+                            <th style="width:15%!important">QB Account</th>
+                            <th style="width:10%!important">Typical Balance</th>
+                            <th style="width:13%!important">Memo</th>
+                            <th style="width:17%!important">Entity</th>
+                            <th style="width:15%!important" class="text-right">Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody id="data_body">
+                        @{if (Model.Count() > 0)
+                            {
+                                {
+                                    foreach (var item in Model)
+
+                                    {
+
+                                        var Divnamelbl = "Divnamelbl" + @item.ConfigurationGroupId;
+                                        var Divnametxt = "Divnametxt" + @item.ConfigurationGroupId;
+                                        var DivQbAccountlbl = "DivQbAccountlbl" + @item.ConfigurationGroupId;
+                                        var DivQbAccountddl = "DivQbAccountddl" + @item.ConfigurationGroupId;
+                                        var Divtypicalnamelbl = "Divtypicalnamelbl" + @item.ConfigurationGroupId;
+                                        var Divtypicalnameddl = "Divtypicalnameddl" + @item.ConfigurationGroupId;
+                                        var Divmemolbl = "Divmemolbl" + @item.ConfigurationGroupId;
+                                        var Divmemotxt = "Divmemotxt" + @item.ConfigurationGroupId;
+                                        var ENameIsReq = "ENameIsReq" + @item.ConfigurationGroupId;
+                                        var EQBAccountReq = "EQBAccountReq" + @item.ConfigurationGroupId;
+                                        var ETypicalBalReq = "ETypicalBalReq" + @item.ConfigurationGroupId;
+                                        var EmemoReq = "EmemoReq" + @item.ConfigurationGroupId;
+
+                                        var ECustomerReq = "ECustomerReq" + @item.ConfigurationGroupId;
+                                        var EDetailID = "EDetailId_" + @item.ConfigurationGroupId;
+                                        var btnSync = "btnSync_" + @item.ConfigurationGroupId;
+                                        var EntitySelec = "SelectedEntity_" + @item.ConfigurationGroupId;
+                                        var DivCustomernamelbl = "DivCustomernamelbl" + @item.ConfigurationGroupId;
+                                        var DivCustomernamedrp = "DivCustomernamedrp" + @item.ConfigurationGroupId;
+                                        <tr class="even">
+
+                                            <td style="vertical-align:middle;text-align:left;">
+                                                <div id="@Divnamelbl">@Html.Raw(item.GroupName)</div>
+                                                <div id="@Divnametxt" style="display:none">
+                                                    @Html.TextBox("Name", @item.GroupName, new { maxlength = 1000, @class = "form-control", @id = "EName_" + @item.ConfigurationGroupId })
+                                                    <span class="highlight" id="@ENameIsReq" style="display: none;">Name Is Required</span>
+                                                </div>
+                                            </td>
+
+
+                                            <td style="vertical-align:middle;text-align:left;">
+                                                <div id="@DivQbAccountlbl">@Html.Raw(item.DepartmentName)</div>
+                                                <div id="@DivQbAccountddl" style="display:none">
+                                                    @Html.DropDownList("QB".ToString(), new SelectList(ViewBag.QBAccount, "value", "text", item.DepartmentId), "Select QB Account", new { @class = "myval", @id = "EQBAccount_" + item.ConfigurationGroupId, @onchange = "GetCustomer_Vendor1(this.id,this.value);GetDetailAccountId1(this.id,this.value);" })
+                                                    <span class="highlight" id="@EQBAccountReq" style="display: none;">QB Account Is Required</span>
+                                                </div>
+                                            </td>
+
+                                            <td style="vertical-align:middle;text-align:left;">
+                                                <div id="@Divtypicalnamelbl">@Html.Raw(item.TypicalBalanceName)</div>
+                                                <div id="@Divtypicalnameddl" style="display:none">
+                                                    @Html.DropDownListFor(model => item.TypicalBalanceId, new SelectList(ViewBag.TypicalBalance, "value", "text", item.TypicalBalanceId), new { @class = "myval", @id = "Etypicalname_" + item.ConfigurationGroupId })
+                                                    <span class="highlight" id="@ETypicalBalReq" style="display: none;">Typical Balance Is Required</span>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align:middle;text-align:left;">
+                                                <div id="@Divmemolbl">@Html.Raw(item.Memo)</div>
+                                                <div id="@Divmemotxt" style="display:none">
+                                                    @Html.TextBox("Memo", @item.Memo, new { maxlength = 1000, @class = "form-control", @id = "Ememo_" + item.ConfigurationGroupId })
+                                                    <span class="highlight" id="@EmemoReq" style="display: none;">Memo Is Required</span>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align:middle;text-align:left;">
+                                                <input type='hidden' id="@EDetailID" name='Id' value=''>
+                                                <div id="@DivCustomernamelbl">@Html.Raw(item.Entity)</div>
+                                                @if (item.VendorId != null)
+                                                {
+                                                    <div id="@DivCustomernamedrp" style="display:none;">
+                                                        <input type="hidden" id="@EntitySelec" name="IID" value=@item.VendorId>
+                                                        @Html.DropDownList("Entitys", new SelectList(ViewBag.VendorList, "value", "text", item.VendorId), "Select Entity", new { @class = "myval", @id = "ECustomer_" + item.ConfigurationGroupId })
+                                                        <a href='#' id="@btnSync" onclick='QBSyncVendor_Dept()' style='margin:0px;' class='Chiledred_cor green_cor'>Refresh</a>
+                                                        <span class="highlight" id="@ECustomerReq" style="display: none;">Entity Is Required</span>
+                                                    </div>
+                                                }
+                                                else if (item.CustomerId != null)
+                                                {
+                                                    <div id="@DivCustomernamedrp" style="display:none">
+                                                        <input type="hidden" id="@EntitySelec" name="IID" value=@item.CustomerId>
+                                                        @Html.DropDownList("Entitys", new SelectList(ViewBag.CustomerList, "value", "text", item.CustomerId), "Select Entity", new { @class = "myval", @id = "ECustomer_" + item.ConfigurationGroupId })
+                                                        <a href='#' id="@btnSync" onclick='QBSyncVendor_Dept()' style='margin:0px;' class='Chiledred_cor green_cor'>Refresh</a>
+                                                        <span class="highlight" id="@ECustomerReq" style="display: none;">Entity Is Required</span>
+
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div id="@DivCustomernamedrp" style="display:none">
+                                                        <input type="hidden" id="@EntitySelec" name="IID" value="">
+                                                        @Html.DropDownList("Entitys", new SelectList(ViewBag.CustomerList, "value", "text", item.CustomerId), "Select Entity", new { @class = "myval", @id = "ECustomer_" + item.ConfigurationGroupId })
+                                                        <a href='#' id="@btnSync" onclick='QBSyncVendor_Dept()' style='margin:0px;' class='Chiledred_cor green_cor'>Refresh</a>
+                                                        <span class="highlight" id="@ECustomerReq" style="display: none;">Entity Is Required</span>
+
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td style="vertical-align:middle;text-align:right" class="img_with img_color">
+                                                <input type="hidden" id="ID" name="ID" value="@item.ConfigurationGroupId" />
+                                                <a href="#" id="edit_@item.ConfigurationGroupId" onclick="return Edit(@item.ConfigurationGroupId);"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                                                <input type="submit" id="update_@item.ConfigurationGroupId" value="Update" onclick="return Updatedata(@item.ConfigurationGroupId)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                                <input type="submit" id="cancel_@item.ConfigurationGroupId" value="Cancel" onclick="return Cancel(@item.ConfigurationGroupId)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                                @{
+                                                    var UserIdD = @item.ConfigurationGroupId + "D";
+                                                }
+                                                @if (item.Exist == 0)
+                                                {
+                                                    <a href="#" id="Delete_@item.ConfigurationGroupId" onclick="return ComfirmDelete(@item.ConfigurationGroupId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="../Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                                }
+                                                <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </div>
+                                                        <div class="modal-title"><b><label>Are you sure want to delete this <br />Group Account Name?</label></b></div>
+                                                        <div class="modal-body "></div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" onclick="Delete(@item.ConfigurationGroupId);">Yes </a>
+                                                            <a class="btn" data-dismiss="modal" onclick="closemodal()">No</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var OrderByVal = '@ViewBag.OrderByVal';
+    var IsAscVal = '@ViewBag.IsAscVal';
+    var PageSize = '@ViewBag.PageSize';
+    var AlreadyExists = '@ViewBag.AlreadyExists';
+    var EntUpdate = '@ViewBag.EntUpdate';
+    var Alpha = '@ViewBag.Alpha';
+    var SearchRecords = '@ViewBag.SearchRecords';
+    var SearchTitle = '@ViewBag.SearchTitle';
+    var CurrentPageIndex = '@ViewBag.CurrentPageIndex';
+</script>
+<script src="~/Form_JS/GroupAccountMaster.js"></script>

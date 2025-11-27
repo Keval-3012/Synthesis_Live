@@ -1,0 +1,35 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Admin List </h3>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("HRAdmins").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("UserId").IsPrimaryKey(true).HeaderText("UserId").Visible(false).Add();
+           col.Field("Name").HeaderText("Name").Width("250").Add();
+           col.Field("UserName").HeaderText("User Name").Width("250").Add();
+       }).AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Render()
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Content/HRJs/HRAdmins.js"></script>
+@Html.EJS().ScriptManager()

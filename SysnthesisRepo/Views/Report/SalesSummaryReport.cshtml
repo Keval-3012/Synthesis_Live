@@ -1,0 +1,154 @@
+﻿@model EntityModels.Models.SalesSummaryReport
+@using Utility
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+<link href="~/Content/Admin/assets/css/newpage.css" rel="stylesheet" />
+@*<link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.24/daterangepicker.min.css'>*@
+<style type="text/css">
+    .bootstrap-datetimepicker-widget table tr td.new {
+        display: none !important;
+    }
+
+    .bootstrap-datetimepicker-widget table tr td.old {
+        visibility: hidden !important;
+    }
+
+    .calendar-table table.table-condensed tr td.off.available {
+        visibility: hidden !important;
+    }
+
+    .LeftMargin {
+        margin-left: -6px !important;
+    }
+</style>
+<div>
+    @if (Convert.ToString(ViewBag.storeid) == "0")
+    {
+<script>
+    PopUpSelectStore()
+</script>}
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+@if (Convert.ToString(ViewBag.storeid) != "0")
+{
+    <div class="header-small header_invoicedetail leftmargin ssr-filter">
+        <div class="headerTop">
+            <form id="form">
+                <div class="headerTopLeft tenderreportrange">
+                    <label>Select Date(s)</label>
+                    <input type="hidden" id="LatestDate" name="LatestDate" value="@ViewBag.LatestDate" />
+                    <div>
+                        <input type="text" name="FromDate" detail="Sales Summary Report StartDate" data-val="true" id="FromDate" style="cursor: text;" data-datepicker="separateRange" placeholder="From" class="datepicker form-control sa" value="@ViewBag.startdate" />
+                    </div>
+                    <div>
+                        <input type="text" name="ToDate" detail="Sales Summary Report EndDate" data-val="true" id="ToDate" data-datepicker="separateRange" style="cursor: text;" placeholder="To" class="datepicker form-control sa" value="@ViewBag.enddate"/>
+                    </div>
+                    <span id="AlertMessage" style="color:red">Please Select Both Date</span>
+                    <div class="headerTopRight">
+                        <a class="btn btnRed" id="Submit" onclick="javascript:getSalesSummaryReportList();">Submit</a>
+                    </div>
+                </div>
+            </form>
+            <div class="headerTopRight" style="display:none;">
+                <a class="btn btnRed">Print</a>
+            </div>
+        </div>
+    </div>
+    <div id="dvBody"></div>
+}
+@*<link href="~/daterange/daterangepicker.min.css" rel="stylesheet" />
+<script src="~/daterange/moment.min.js"></script>
+<script src="~/daterange/daterangepicker.min.js"></script>
+<script src="~/Content/Admin/js/NewDatepicker.js"></script>*@
+<script>
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+    $('.stop-propagation').on('click', function (e) {
+        e.stopPropagation();
+    });
+
+    $(document).ready(function () {
+        $('#Enddate').datepicker().datepicker('disable');
+
+        $('#AlertMessage').hide();
+        $(".openotherbox").click(function () {
+            $(".other-deposite").slideToggle("slow");
+        });        
+        var currentDate = new Date();
+        var formattedDate = moment(currentDate).format('MMM DD, YYYY');
+        $('#FromDate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+        $('#ToDate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+        $('#FromDate').val(formattedDate);
+        $('#ToDate').val(formattedDate);
+        getSalesSummaryReportList();
+        
+    });
+
+</script>
+<script>
+    function getSalesSummaryReportList() {
+        var FromDate = $('#FromDate').val();
+        var ToDate = $('#ToDate').val();
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/Report/getSalesSummaryReportList',
+            type: "post",
+            cache: false,
+            data: { FromDate: FromDate, ToDate: ToDate },
+            beforeSend: function () { Loader(1); },
+            success: function (states) {
+                $("#dvBody").html(states);
+                Loader(0);
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    };
+
+
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        if (val == 1) {
+            $("#secloader").removeClass('pace-active1');
+            $("#secloader").addClass('pace-active');
+            $("#dvloader").removeClass('bak1');
+            $("#dvloader").addClass('bak');
+            $("#globalFooter").addClass('LoaderFooter');
+            top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        }
+        else {
+            $("#secloader").removeClass('pace-active');
+            $("#secloader").addClass('pace-active1');
+            $("#dvloader").removeClass('bak');
+            $("#dvloader").addClass('bak1');
+            $("#globalFooter").removeClass('LoaderFooter');
+            doc.scrollTop = top;
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

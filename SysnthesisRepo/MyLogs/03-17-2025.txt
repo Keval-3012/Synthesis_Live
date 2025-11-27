@@ -1,0 +1,11 @@
+2025-03-17 10:48:41.4477|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 3/17/2025 10:48:41 AM - Object reference not set to an instance of an object.
+2025-03-17 10:48:46.8535|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 3/17/2025 10:48:46 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-03-17 10:48:47.8294|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 3/17/2025 10:48:47 AM - Object reference not set to an instance of an object.
+2025-03-17 10:48:50.7690|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 3/17/2025 10:48:50 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-03-17 10:48:51.6728|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 3/17/2025 10:48:51 AM - Object reference not set to an instance of an object.
+2025-03-17 10:48:54.0744|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 3/17/2025 10:48:54 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-03-17 10:48:56.3637|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 3/17/2025 10:48:56 AM - Object reference not set to an instance of an object.
+2025-03-17 10:49:53.9375|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 3/17/2025 10:49:53 AM
+2025-03-17 10:50:02.2107|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 3/17/2025 10:50:02 AM - Object reference not set to an instance of an object.
+2025-03-17 10:50:08.0923|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 3/17/2025 10:50:08 AM - Object reference not set to an instance of an object.
+2025-03-17 10:50:13.5807|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 3/17/2025 10:50:13 AM - An error occurred while sending the request.

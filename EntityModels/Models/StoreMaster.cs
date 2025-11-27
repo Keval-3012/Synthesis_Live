@@ -1,0 +1,206 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.SqlServer.Server;
+
+namespace EntityModels.Models
+{
+    [Table("StoreMaster")]
+    public class StoreMaster
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Editable(false)]
+        public int StoreId { get; set; }
+
+        [Required(ErrorMessage = " ")]
+        public int GroupId { get; set; }
+        [ForeignKey("GroupId")]
+        public virtual GroupMaster GroupMasters { get; set; }
+
+        [RegularExpression(@"^([A-Za-z0-9-@#&+\w\s]{3,})+$", ErrorMessage = "Minimum 3 letters, Store Name can contain only this special characters like   @ # & _ - +  Space ")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = " ")]
+        public string Name { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = " ")]
+        public string Address1 { get; set; }
+
+        public string Address2 { get; set; }
+
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Mobile No")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = " ")]
+        public string StoreNo { get; set; }
+
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Fax No")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = " ")]
+        public string FaxNo { get; set; }
+
+        public Boolean IsActive { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = " ")]
+        [RegularExpression(@"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$", ErrorMessage = "Enter Valid E-Mail Address")]
+        public string EmailId { get; set; }
+
+        public string NickName { get; set; }
+
+        public int CreatedBy { get; set; }
+
+        public int ModifiedBy { get; set; }
+
+        public string Password { get; set; }
+
+        public int? StateID { get; set; }
+        [ForeignKey("StateID")]
+        public virtual StateMaster StateMasters { get; set; }
+        public DateTime? CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }        
+
+        [NotMapped]
+        public string Group { get; set; }
+        [NotMapped]
+        public string QBOnlineFlag { get; set; }
+        [NotMapped]
+        public string QBType { get; set; }
+
+        public string Location { get; set; }
+        public string CloudFrontDomain { get; set; }
+        public string BucketName { get; set; }
+        public int? StoreManageId { get; set; }
+        public double? Longitude { get; set; }
+        public double? Latitude { get; set; }    
+        public int? Radius { get; set; }
+        public string CompetitorsId { get; set; }
+	    public string ClientID { get; set; }
+	    public string ClientSecret { get; set; }
+        public virtual ICollection<StoreChild> StoreChilds { get; set; }
+
+        public virtual ICollection<VendorMaster> VendorMasters { get; set; }
+        public virtual ICollection<DepartmentMaster> DepartmentMasters { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<RightsStore> RightsStores { get; set; }
+        public virtual ICollection<QBOnlineConfiguration> QBOnlineConfigurations { get; set; }
+        public virtual ICollection<QBDesktopConfiguration> QBDesktopConfigurations { get; set; }
+        public virtual ICollection<Document> Documents { get; set; }
+        public virtual ICollection<QBHistory> QBHistorys { get; set; }
+        public virtual ICollection<ErrorLog> ErrorLogs { get; set; }
+        public virtual ICollection<PayrollReport> PayrollReports { get; set; }
+        public virtual ICollection<PayrollMaster> PayrollMasters { get; set; }
+        public virtual ICollection<PayrollDepartment> PayrollDepartments { get; set; }
+        public virtual ICollection<SalesActivitySummary> SalesActivitySummaries { get; set; }
+        public virtual ICollection<StoreTerminal> StoreTerminals { get; set; }
+        public virtual ICollection<Configuration> Configurations { get; set; }
+        public virtual ICollection<ConfigurationGroup> ConfigurationGroups { get; set; }
+        public virtual ICollection<Departmentconfiguration> Departmentconfigurations { get; set; }
+        public virtual ICollection<CreditcardDetails> creditcardDetails { get; set; }
+        public virtual ICollection<OtherDeposit> OtherDeposits { get; set; }
+        public virtual ICollection<CashPaidoutInvoice> CashPaidoutInvoices { get; set; }
+        public virtual ICollection<StorewisePDFUpload> StorewisePDFUploads { get; set; }
+        public virtual ICollection<SalesGeneralEntries> salesGeneralEntries { get; set; }
+        public virtual ICollection<SalesGeneralEntriesHistory> salesGeneralEntriesHistory { get; set; }
+        public virtual ICollection<DayCloseOutStatus> DayCloseOutStatuses { get; set; }
+        public virtual ICollection<UserRoles> userRoles { get; set; }
+        public virtual ICollection<SalesOtherDeposite> SalesOtherDeposites { get; set; }
+        public virtual ICollection<OtherDepositeSetting> OtherDepositeSettings { get; set; }
+        public virtual ICollection<QBPaymentType> QBPaymentTypes { get; set; }
+        public virtual ICollection<PayrollCashAnalysis> PayrollCashAnalysises { get; set; }
+        public virtual ICollection<PayrollBankAccount> PayrollBankAccounts { get; set; }
+        public virtual ICollection<UploadPdf> UploadPdfs { get; set; }
+        public virtual ICollection<SalesActivitySummaryDaily> salesActivitySummaryDaily { get; set; }
+        public virtual ICollection<StoreTerminalDaily> storeTerminalDaily { get; set; }
+        public virtual ICollection<CreditcardDetailsDaily> creditcardDetailsDaily { get; set; }
+        public virtual ICollection<ExpenseCheck_Setting> ExpenseCheck_Settings { get; set; }
+        public virtual ICollection<ExpenseCheck> ExpenseCheck { get; set; }
+        public virtual ICollection<PayrollHours> payrollHours { get; set; }
+
+      
+        public virtual ICollection<SalesActivitySummaryHourly> salesActivitySummaryHourly { get; set; }
+        public virtual ICollection<StoreTerminalHourly> storeTerminalHourly { get; set; }
+        public virtual ICollection<CreditcardDetailsHourly> creditcardDetailsHourly { get; set; }
+
+        public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
+
+        public virtual ICollection<VendorDepartmentRelationMaster> VendorDepartmentRelationMasters { get; set; }
+        public virtual ICollection<HomeExpenseWeeklySalesSetting> HomeExpenseStoreMasters { get; set; }
+        public virtual ICollection<HomeExpensesDetail> HomeExpenseDetailStoreMasters { get; set; }
+
+        public virtual ICollection<WebCamCameraList> WebCamCameraLists { get; set; }
+    }
+
+    [Table("StoreChild")]
+    public class StoreChild
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Editable(false)]
+        public int StoreChildId { get; set; }
+
+        public int StoreId { get; set; }
+        [ForeignKey("StoreId")]
+        public virtual StoreMaster StoreMasters { get; set; }
+
+        public UserTypeEnm UserType { get; set; }
+
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual UserMaster UserMasters { get; set; }
+    }
+
+    public enum UserTypeEnm
+    {
+        BackOfficeManager = 1,
+        StoreManager = 2,
+        DataApprover = 3,
+        Owner = 4,
+    }
+
+    public class StoreQBSyncModel
+    {
+        public int StoreId { get; set; }
+        public string StoreName { get; set; }
+        public string QBtype { get; set; }
+        public int Successfull { get; set; }
+        public int UnSuccessfull { get; set; }
+        public int QBOnlineFlag { get; set; }
+        public int QBWebFlag { get; set; }
+        public string OnlineStatus { get; set; }
+        public string OnlineCount { get; set; }
+    }
+
+
+    public class StoreQBTotalCount
+    {
+        public int TotalCount { get; set; }
+    }
+    public class CameraList
+    {
+        public int WebCamCameraListId { get; set; }
+        public string CameraName { get; set; }
+    }
+    public class StoreModel
+    {
+        public int StoreId { get; set; }
+        public string StoreName { get; set; }
+        public string QBtype { get; set; }
+        public int successful { get; set; }
+        public int unsuccessful { get; set; }
+        public string QBOnlineFlag { get; set; }
+        public string QBWebFlag { get; set; }
+        public string OnlineStatus { get; set; }
+        public string OnlineCount { get; set; }
+
+    }
+    public class StoreNickName
+    {
+        public string NickName { get; set; }
+    }
+
+    public class StoreDetail
+    {
+        public int StoreId { get; set; }
+        public string Name { get; set; }
+    }
+}

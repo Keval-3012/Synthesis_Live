@@ -1,0 +1,244 @@
+﻿@using Utility
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+@if (TempData["PDFFile"] != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert('@TempData["PDFFile"]');
+                    };
+    </script>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert('@TempData["ErrorMessage"]');
+                        window.location.href = '@AdminSiteConfiguration.GetURL()/PDFRead/Create';
+                    };
+    </script>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <script type="text/javascript">
+                    window.onload = function () {
+                        alert('@ViewBag.ErrorMessage');
+                        window.location.href = '@AdminSiteConfiguration.GetURL()/PDFRead/Create';
+                    };
+    </script>
+}
+<div>
+    @if (Convert.ToString(ViewBag.storeid) == "0")
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<div id="popupcheckExistsagain" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content duplicatedata">
+        <div class="modal-header text-center">
+            <button type="button" onclick="SubDuplicatepopupclose()" class="close">&times;</button>
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">Duplicate found</div>
+        <div class="modal-body ">
+            Selected file already Uploaded.Are you sure you want to upload again.
+
+        </div>
+        <div class="modal-footer " style="text-align:center">
+            <a dat-dismiss="modal" onclick="Save()" class="btn" data-dismiss="modal">Yes</a>
+            <a onclick="SubDuplicatepopupclose()" href="@Url.Action("Create", "PDFRead")" class="btn" data-dismiss="modal">No</a>
+        </div>
+    </div>
+</div>
+@if (ViewBag.DeleteMessage != null)
+{
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.success('Payroll data deleted Successfully');
+    </script>
+}
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .overlaytransparent {
+        display: none !important;
+    }
+
+    .headerss {
+        color: #fff;
+        padding: 15px 20px;
+        font-size: 17px;
+        font-weight: 800;
+        background: #56a15c;
+    }
+
+    .container {
+        display: table;
+        width: 100%;
+        height: 80px;
+        background-color: white;
+        padding-top: 22px;
+        padding-left: 10px;
+        border: 1px inset #e3e3e3;
+    }
+
+    .page-body {
+        padding: 18px 10px 0px 10px !important;
+    }
+
+    .inv-heading {
+        position: sticky;
+        top: 78px;
+        z-index: 99;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 173px !important;
+    }
+</style>
+<div class="inv-heading">
+    <h3>Upload Payroll PDF</h3>
+
+    @if (Convert.ToString(ViewBag.storeid) != "0")
+    {
+        using (Html.BeginForm("Create", "PDFRead", FormMethod.Post, new { enctype = "multipart/form-data", id = "FormData" }))
+        {
+            @Html.AntiForgeryToken()
+            if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UploadPayrollReports"))
+            {
+
+                <div class="upload-payroll-filter">
+                    <div class="form-group">
+                        <!--<label>File Format Type :</label>
+                        <div class="radio-g">-->
+                        @*<div class="radio-box">
+                                <label>Old </label>
+                                @Html.RadioButton("FileFormat", "Old", new { @Checked = "true" })
+                            </div>*@
+                        <!--<div class="radio-box">
+                                @Html.RadioButton("FileFormat", "New", new { @Checked = "true" })
+                                <label>New</label>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="form-group">
+                        <label>Select File :</label>
+                        <div class="btn-group-sf">
+                            <input type="file" name="postedFile" id="file-input" />
+                            <input type="button" id="UploadPDF" value="Upload PDF" class="btn btn-success" onclick="return CheckExistence(1)" />
+                        </div>
+                    </div>
+                </div>
+
+                <span style="color:green">@ViewBag.Message</span>
+            }
+        }
+    }
+</div>
+<div class="page-body headertopbox addinvoice up-pdf-head">
+    @{
+
+        @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+        <div id="grddata">
+            <div class="page-body headertopbox" style="padding-top:0px!important;">
+                <div class="control-section">
+                    <div id="customDialog"></div>
+                    @Html.EJS().Grid("PayrollFilesGrid").AllowSorting().AllowFiltering().AllowPdfExport().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("PayrollReportID").IsPrimaryKey(true).HeaderText("PayrollReportID").Visible(false).Add();
+                   col.HeaderText("Filename").Width("30%").Template("#PayrollFileTemplate").Add();                   
+                   col.Field("IsRead").HeaderText("Status").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("8%").Template("#FileStatusTemplate").Add();
+                   col.Field("UploadDate").HeaderText("Date Uploaded").Width("8%").Add();
+                   col.Field("StartDate").HeaderText("Payroll Period Start").Width("8%").Add();
+                   col.Field("EndDate").HeaderText("Payroll Period End").Width("8%").Add();
+                   col.Field("EndCheckDate").HeaderText("Pay Date").Width("8%").Add();
+                   col.HeaderText("Action").Width("10%").Template("#EditTemplate").Add();
+               }).DataBound("dataBound").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(new List<string>() { "Search" }).Render()
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/x-jsrender" id="PayrollFileTemplate">
+    <div id="statuss" class="statustemps">
+        <td>
+            <a href="/PDFRead/DownloadFile?filePath=${FileName}" data-toggle="tooltip" data-placement="top" data-original-title="PDF Download" target="_blank" style="color: #337ab7;">${FileName}</a>
+        </td>
+    </div>
+</script>
+<script type="text/x-jsrender" id="EditTemplate">
+
+    @*<a href="/PDFRead/GetDetail?FileName=${FileName}&PayrollReportId=${PayrollReportID}" style="margin-right:10px;" data-toggle="tooltip" data-placement="top" data-original-title="Details" target="_blank"><img src="/Content/Admin/images/file-text.svg" alt="" /></a>*@
+    <a href="/PDFRead/GetPayrollDetailView?PayrollReportId=${PayrollReportID}" style="margin-right:10px;" data-toggle="tooltip" data-placement="top" data-original-title="Details" target="_blank"><img src="/Content/Admin/images/file-text.svg" alt="" /></a>
+    <a href="javascript:ComfirmDeleteej2(${PayrollReportID});" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="/Content/Admin/images/trash-2.svg" alt="" /> </a>
+
+    <div id="${PayrollReportID}" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="modal-title">Message</div>
+            <div class="modal-body"><p id="deleModalbody"> Are you sure you want to delete this PayrollFile?</p></div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" detail="Recent Entry Delete Confirm -" href="javascript:Deleteej2(${PayrollReportID});">Ok </a>
+                <a class="btn" data-dismiss="modal" detail="Recent Entry Delete Confirm -" onclick="closemodal()">Cancel</a>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="FileStatusTemplate" type="text/x-jsrender">
+    <td>
+        ${if(IsRead)}        
+        ${else}
+        <span title="" class="btn btn-warning btn-xs btnpending clsstatus"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>
+        ${/if}
+    </td>
+</script>
+<script>
+    var scrollVal = 0;
+</script>
+<script src="~/Form_JS/PDFRead.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+@Html.EJS().ScriptManager()
+
+
+

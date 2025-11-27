@@ -1,0 +1,884 @@
+@model IEnumerable<EntityModels.Models.InvoiceSelect>
+@using Utility;
+@using EntityModels.Models;
+@using System.Configuration;
+@{
+
+    Layout = null;
+}
+
+<div id="loadbox"></div>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+
+        @if (ViewBag.StatusMessage.ToString() == "SuccessEdit")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateUpdate');
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateInApprove');
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Success1")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateIn');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Delete")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success('@ViewBag.CreateDelete');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Edit")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateUpdate');
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Error")
+        {
+            <script>
+                MyfunError();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "NoItem")
+        {
+            <script>
+                MyfunNoItem();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Exists")
+        {
+            <script>
+                showpopupEdit();
+            </script>
+        }
+
+
+    </div>
+    <div class="addinvoice">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body invoice-body">
+            <div class="page-header-main position-relative ">
+                <div class="ib-left-sec">
+                    <h2>Recent Invoices</h2>
+                    <div class="searchinvoice-box ">
+                        <a href="#" class="searchbtn" id="searchicon"></a>
+                        <input id="search-box" type="text" class="form-control inputvendorname" placeholder="Search by Vendor, Invoice #, Amount" />
+                        <a href="#" class="search_close" onclick="cleartextsearch();"></a>
+
+                    </div>
+                </div>
+                <div class="ib-right-sec">
+
+                    <div class="btn-hamb-menu dropdown">
+
+                        <a herf="#" detail="Recent Invoices Filter Menu" class="dropdown-toggle align_left_svg hamburger" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="line"></span>
+                            <span class="line"></span>
+                            <span class="line"></span>
+                        </a>
+                        <div class="dropdown-menu form-login stop-propagation" role="menu">
+                            @using (Html.BeginForm("Grid", "Invoices", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmid" }))
+                            {
+                                <h3>Filter by Payment Method</h3>
+                                <div class="formgroup">
+                                    <table>
+                                        <td class="pad10">
+                                            <input class="chk" id="radio1" type="checkbox" name="radio" value="Cash">
+                                            <label for="radio1">Cash</label>
+                                        </td>
+                                        <td>
+                                            <input class="chk" id="radio2" type="checkbox" name="radio" value="Check/ACH">
+                                            <label for="radio2">Check/ACH</label>
+                                        </td>
+                                    </table>
+                                </div>
+                                <div class="formgroup">
+                                    <h3>Filter By Amount</h3>
+                                    <ul>
+                                        <li>
+                                            <input name="AmtMinimum" type="text" maxlength="18" id="AmtMinimum" @*onchange="Minimum()"*@ placeholder="Min" class="form-control decimalOnly">
+
+                                        </li>
+                                        <li>
+                                            <input name="AmtMaximum" type="text" maxlength="18" id="AmtMaximum" @*onchange="Maximum()"*@ placeholder="Max" class="form-control decimalOnly">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="formgroup">
+                                    <h3>Filter By Date</h3>
+                                    <ul>
+                                        <li>
+                                            <input name="txtstartdate" type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                                        </li>
+                                        <li>
+                                            <input name="txtenddate" type="text" maxlength="100" id="txtenddate" placeholder="To" class="datepicker form-control" onkeydown="return false">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="clear"></div>
+
+                                <div class="formgroup martop20">
+                                    <h3>Filter By Department</h3>
+                                    @Html.DropDownList("DrpLstdept", null, "Select Department", new { @class = "myval" })
+                                </div>
+                                <div class="clear martop20"></div>
+                                <input type="hidden" id="ClearFilter" />
+                                <button type="submit" class="btn btn-danger btn-block" onclick="setitems()"><strong> Filter</strong></button>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="btn-group-right-invoice">
+                        @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateInvoice"))
+                        {
+                            <a href="@Url.Action("Create", "Invoices")" class="btn-addinvoice"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon-plus.svg" /> Add Invoice</a>
+
+                            <a href="#" class="btn-reset" onclick="undofilters();"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon-reset.svg" /> Reset</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewInvoice"))
+            {
+                if (Model.Count() > 0)
+                {
+                    <div class="datagrid invoice-grid">
+                        <div class="table-responsive" id="test">
+
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><a class="textred" onclick="javascript:FunSortData('VendorName');" style="color:#fff; text-decoration:none; cursor:pointer;">Vendor Name</a></th>
+                                        <th class="text-align-left">Invoice Type</th>
+                                        <th><a class="textred" onclick="javascript:FunSortData('InvoiceNumber');" style="color:#fff; text-decoration:none; cursor:pointer;">Invoice #</a></th>
+                                        @{
+                                            string storeid = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+                                        }
+                                        @if (storeid == "0" || storeid == null)
+                                        {
+                                            <th class="text-align-center">Store Name</th>
+                                        }
+                                        <th class="text-align-center"><a class="textred" onclick="javascript:FunSortData('InvoiceDate');" style="color:#fff; text-decoration:none; cursor:pointer;">Invoice Date</a></th>
+                                        <th style="text-align:right">Amount</th>
+                                        <th class="text-align-center">Docs</th>
+                                        <th class="text-align-center">Status</th>
+                                        @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DispQBStatusInvoice"))
+                                        {
+                                            <th class="text-align-center">QB Status</th>
+                                        }
+                                        <th class="text-align-center">Notes</th>
+                                        <th class="text-align-center">Payment Method</th>
+
+
+                                        @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")) || (Roles.IsUserInRole("DeleteInvoice")))
+                                        {
+                                            <th>Action</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="even">
+                                            <td class="fntlight" style="width:23%"><a detail="Recent Invoices Vendor Name -" href="javascript:void(0)" class="clsvendorname text-align-center" id="Vendorid" onclick="GetVendorData(this);">@Html.Raw(item.VendorName)</a></td>
+                                            <td class="fntlight text-align-left" style="width:7%" id="Typeid">@Html.Raw(item.InvoiceType)</td>
+                                            <td class="fntlight" style="width:5%" id="invoicenumberid">
+                                                <a onclick="Setvalues();" detail="Recent Invoices InvoiceId - @Html.Raw(item.InvoiceNumber)" href="@Url.Action("Details", "Invoices", new { Id = item.InvoiceId })">@Html.Raw(item.InvoiceNumber)</a>
+                                            </td>
+                                            @{
+                                                string store_id = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+                                            }
+                                            @if (storeid == "0" || storeid == null)
+                                            {
+                                                <td class="fntlight text-align-center" id="tdstorename" style="width:7%" class="text-align-left">@item.StoreName</td>
+                                            }
+                                            <td style="width:10%" class="text-align-center" id="invoicedateid">
+                                                @item.InvoiceDate.ToString("MM-dd-yyyy")
+                                            </td>
+
+                                            <td style="width:10%;text-align:right" id="invoiceamt">
+                                                @if (item.InvoiceTypeId == 2)
+                                                {
+                                                    <span id="spnAmount" onclick="ShowDetailsInfo(@item.InvoiceId)" style="color:red"> - @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount))) </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="tooltipTD" id="spnAmount_@item.InvoiceId" onclick="ShowDetailsInfo(@item.InvoiceId)">
+                                                        @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount)))
+                                                    </span>
+                                                }
+
+                                            </td>
+                                            <td class="text-align-center" style="width:5%" id="scaninvoiceid">
+                                                <a href="~/UserFiles/Invoices/@item.UploadInvoice" detail="Recent Invoices Docs InvoiceId - @item.InvoiceId" target="_blank">
+                                                    <img src="~/QBImages/pdf.png" />
+                                                </a>
+                                            </td>
+
+                                            <td class="text-align-center clsstatus1">
+                                                @if (item.StatusValue == InvoiceStatusEnm.Approved)
+                                                {
+                                                    <img src="~/QBImages/Approved.png" class="statusBadge" />
+                                                }
+                                                else if (item.StatusValue == InvoiceStatusEnm.Rejected)
+                                                {
+                                                    <img src="~/QBImages/Rejected.png" class="statusBadge" />
+                                                }
+                                                else if (item.StatusValue == InvoiceStatusEnm.OnHold)
+                                                {
+                                                    <img src="~/QBImages/On-hold.png" class="statusBadge" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/QBImages/Pending.png" class="statusBadge" />
+                                                }
+                                            </td>
+                                            @if ((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DispQBStatusInvoice") || Roles.IsUserInRole("ForceQBSyncInvoice")))
+                                            {
+                                                <td class="qbsynctd">
+                                                    @if (item.IsQbStatus > 0)
+                                                    {
+                                                        if (item.IsSync == 1)
+                                                        {
+                                                            <img src="~/QBImages/syncedqbsync.png" class="statusBadge" />
+                                                            if ((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ForceQBSyncInvoice")) && item.IsQbFStatus > 0)
+                                                            {
+                                                                <a href="#" detail="Recent Invoices QB Status Forcefully sync InvoiceId - @item.InvoiceId" onclick="return forceInvoiceSync(@item.InvoiceId);">
+                                                                    <img src="~/QBImages/manaul-sync.png" class="manaulSyncBtn" />
+                                                                </a>
+                                                            }
+                                                        }
+                                                        if (item.QBTransfer == false && item.StatusValue == InvoiceStatusEnm.Rejected && item.IsSync == -1 || item.IsSync == 0)
+                                                        {
+                                                            <img src="~/QBImages/pendingqbsync.png" class="statusBadge" />
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.QBTransfer == false)
+                                                            {
+                                                                <img src="~/QBImages/pendingqbsync.png" class="statusBadge" />
+                                                                if ((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ForceQBSyncInvoice")) && item.IsQbFStatus > 0)
+                                                                {
+                                                                    <a href="#" detail="Recent Invoices QB Status Forcefully sync - @item.InvoiceId" onclick="return forceInvoiceSync(@item.InvoiceId);">
+                                                                        <img src="~/QBImages/manaul-sync.png" class="manaulSyncBtn" />
+                                                                    </a>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="~/QBImages/NoQBSync.png" class="statusBadge" />
+                                                            }
+                                                        }
+                                                    }
+                                                </td>
+                                            }
+                                            <td class="text-align-center clsNote" style="width:5%" id="">
+                                                @if (item.Note != null && item.Note != "")
+                                                {
+                                                    <img id="ok" src="~/Content/Admin/images/icon-note.svg" title="@Html.Raw(item.Note)" />
+                                                }
+                                            </td>
+                                            <td style="width:10%;text-align:center;" id="paymanettypeid"> @Html.Raw(item.PaymentType) </td>
+
+                                            @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")) || (Roles.IsUserInRole("DeleteInvoice")))
+                                            {
+                                                <td style="vertical-align:middle;text-align:center;width:5%" class="printarea img_with img_color" id="editdeleteid">
+
+                                                    @{
+                                                        var UserIdD = item.InvoiceId + "D";
+                                                    }
+                                                    @if (((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice"))) && item.IsDelete > 0)
+                                                    {
+                                                        <a href="#" detail="Recent Invoices Delete InvoiceId - @item.InvoiceId" onclick="return ComfirmDelete(@item.InvoiceId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/icon-trash.svg" alt="" /> </a>
+                                                    }
+                                                    @if (((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice"))) && item.IsEdit > 0)
+                                                    {
+                                                        <a detail="Recent Invoices Edit InvoiceId - @item.InvoiceId" href="@Url.Action("Edit", "Invoices", new { Id = item.InvoiceId })" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/icon-edit.svg" alt="" /></a>
+                                                    }
+                                                    <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                                        <div class="modal-content ">
+                                                            <div class="modal-header text-center">
+                                                                <i class="glyphicon glyphicon-trash"></i>
+                                                            </div>
+                                                            <div class="modal-title">Message</div>
+                                                            <div class="modal-body"><p id="deleModalbody"> Are you sure you want to delete this Invoice?</p></div>
+                                                            <div class="modal-footer" style="text-align:center">
+                                                                <a class="btn btn-danger" detail="Recent Invoices delete confirm -" onclick="Delete(@item.InvoiceId);">Ok </a>
+                                                                <a class="btn" data-dismiss="modal" detail="Recent Invoices delete confirm -" onclick="closemodal()">Cancel</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<script src="~/Form_JS/InvoiceGrid.js"></script>
+<script>
+function forceInvoiceSync(iii) {
+
+         var result = confirm('@ViewBag.SyncForce');
+         if (result) {
+             $.ajax({
+                 url: '@Url.Action("ForceInvoiceSync", "Invoices")',
+                 type: "POST",
+                 data: JSON.stringify({ id: iii }),
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (response) {
+                    GetData(1,@ViewBag.CurrentPageIndex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize, '@ViewBag.Alpha',@ViewBag.SearchRecords, '@Session["deptname"]', '@Session["startdate"]', '@Session["enddate"]', '@Session["payment"]', '@ViewBag.Store_val', '@Session["AmtMaximum"]', '@Session["AmtMinimum"]','@ViewBag.SearchFlg');
+                return true;
+
+                 },
+                 error: function (response) {
+                     toastr.error(response);
+                 }
+             });
+         }
+    }
+
+var Payment = '@ViewBag.payment';
+var OrderByVal = '@ViewBag.OrderByVal';
+var IsAscVal = '@ViewBag.IsAscVal';
+var SearchRecords = '@ViewBag.SearchRecords';
+var Alpha = '@ViewBag.Alpha';
+var IsFilter = '@ViewBag.IsFilter';
+
+function FunPageIndex(pageindex)//grid pagination
+    {
+
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@Session["deptname"]','@Session["startdate"]','@Session["enddate"]','@Session["payment"]','@ViewBag.Store_val','@Session["AmtMaximum"]','@Session["AmtMinimum"]','@ViewBag.SearchFlg');
+    }
+
+function FunSortData(SortData)//Grid header sorting
+    {
+
+        GetData(1,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@Session["deptname"]','@Session["startdate"]','@Session["enddate"]','@Session["payment"]','@ViewBag.Store_val','@Session["AmtMaximum"]','@Session["AmtMinimum"]','@ViewBag.SearchFlg');
+    }
+
+function FunPageRecord(PageRecord)//Grid Page per record
+    {
+
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@Session["deptname"]','@Session["startdate"]','@Session["enddate"]','@Session["payment"]','@ViewBag.Store_val','@Session["AmtMaximum"]','@Session["AmtMinimum"]','@ViewBag.SearchFlg');
+    }
+
+function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'@Session["deptname"]','@Session["startdate"]','@Session["enddate"]','@Session["payment"]','@ViewBag.Store_val','@Session["AmtMaximum"]','@Session["AmtMinimum"]','@ViewBag.SearchFlg');
+    }
+
+function ComfirmDelete(ID) {
+    var Data = '@Session["searchdashbord"]';
+    $.ajax({
+        url: '/Invoices/CheckInvoiceUSedAnywhere',
+
+        data: { InvoiceID: ID },
+        beforeSend: function () { Loader(1); },
+        success: function (response) {
+
+            if (response != null) {
+                $("p#deleModalbody").html(response);
+            }
+            Loader(0);
+        },
+        error: function () {
+            Loader(0);
+        }
+    });
+
+    var DivId = "#" + ID + "D";
+    $(DivId).show();
+}
+
+function Delete(ID) {
+    var aa = "";
+    if ($("#deleModalbody").html().toString().includes("CashPaid Out")) {
+        aa = "CashPaidOut";
+    }
+    $.ajax({
+        url: '/Invoices/Delete',
+        data: { Id: ID, From: aa },
+        async: false,
+        success: function (response) {
+            $('.divIDClass').css('display', 'none');
+            GetData(1,@ViewBag.CurrentPageIndex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal, @ViewBag.PageSize, '@ViewBag.Alpha',@ViewBag.SearchRecords, '@Session["deptname"]', '@Session["startdate"]', '@Session["enddate"]', '@Session["payment"]', '@ViewBag.Store_val', '@Session["AmtMaximum"]', '@Session["AmtMinimum"]', '@ViewBag.SearchFlg');
+    return true;
+},
+error: function() {
+    Loader(0);
+}
+        });
+    }
+
+function GetData(IsBindData_val, PageIndex, orderby_val, isAsc_val, PageSize_val, alpha_val, SearchRecords_val, dept_val, startdate_val, enddate_val, payment_val, Store_val, Maximum_val, Minimum_val, SearchFlg)
+    {
+        var AmtMinimum = localStorage.getItem("DashboardFilter_AmtMinimum");
+        var AmtMaximum = localStorage.getItem("DashboardFilter_AmtMaximum");
+        var StartDate = localStorage.getItem("DashboardFilter_StartDate");
+        var EndDate = localStorage.getItem("DashboardFilter_EndDate");
+        var Payment = localStorage.getItem("DashboardFilter_Payment1");
+        var Payment1 = localStorage.getItem("DashboardFilter_Payment2");
+        var Department = localStorage.getItem("DashboardFilter_Department");
+        var Vendor = localStorage.getItem("DashboardFilter_SearchVendor");
+        var SrchTypeFlg = localStorage.getItem("Dashboard_SearchFlg");
+
+        if (AmtMinimum != null) {
+            Minimum_val = AmtMinimum;
+        }
+        if (AmtMaximum != null) {
+            Maximum_val = AmtMaximum;
+        }
+        if (StartDate != null) {
+            startdate_val = StartDate;
+        }
+        if (EndDate != null) {
+            enddate_val = EndDate;
+        }
+        if (Payment != null) {
+            payment_val = Payment;
+        }
+        if (Payment1 != null) {
+            payment_val = Payment1;
+        }
+        if (Payment != null && Payment1 != null) {
+            payment_val = null;
+        }
+        if (Department != null) {
+            dept_val = Department;
+        }
+        if (SrchTypeFlg != null) {
+            SearchFlg = SrchTypeFlg;
+        }
+
+        var Data = '@Session["searchdashbord"]'; @*'@ViewBag.searchdashbord';*@
+        if (Vendor != null) {
+            Data = Vendor;
+        }
+        $.ajax({
+            url: '/Invoices/Grid',
+            data: { IsBindData: IsBindData_val, currentPageIndex: PageIndex, orderby: orderby_val.trim(), IsAsc: isAsc_val, PageSize: 50, SearchRecords: SearchRecords_val, Alpha: alpha_val, deptname: dept_val, startdate: startdate_val, enddate: enddate_val, payment: payment_val, Store_val: Store_val, searchdashbord: Data, AmtMaximum: Maximum_val, AmtMinimum: Minimum_val, SearchFlg: SearchFlg},
+            beforeSend: function () { Loader(1); },
+            success: function (response) {
+
+                if (response != null) {
+                    $('#grddata').empty();
+                    Loader(0);
+                    $('#grddata').append(response);
+                }
+                if (Data != null && Data != "" & Data != undefined) {
+                    $(".inputvendorname").val(Data);
+                }
+                Loader(0);
+                if(payment_val=="Cash")
+                {
+                    $( "#radio1").prop('checked', true);
+                }
+                else if(payment_val=="Check/ACH")
+                {
+                    $( "#radio2").prop('checked', true);
+                }
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    }
+</script>
+<script>
+    var pageSize = 50;
+    var pageIndex = 1;
+    var pageCount =@ViewBag.TotalDataCount!= null ?@ViewBag.TotalDataCount: 0;
+
+    $(function () {
+
+        var $win = $(window);
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 200)) {
+
+                myCustomFn();
+            }
+        });
+    });
+
+    function getDocHeight() {
+
+            var D = document;
+            return Math.max(
+                D.body.scrollHeight, D.documentElement.scrollHeight,
+                D.body.offsetHeight, D.documentElement.offsetHeight,
+                D.body.clientHeight, D.documentElement.clientHeight
+            );
+    }
+
+    function myCustomFn() {
+
+        var page_loadsize = parseInt(@ViewBag.PageSize) + parseInt(50);
+        document.getElementById('hdnpagevalue').value = page_loadsize;
+
+        GetData12(pageSize, pageIndex);
+        $("#hdnpagevalue").val(page_loadsize);
+    }
+
+    function GetData12(PageSize, CurrentPageIndex) {
+
+        var rdcash="";
+        var rdcheck="";
+        if($("#radio1").is(':checked')){
+            rdcash=$("#radio1").val();
+        }
+        if($("#radio2").is(':checked')){
+            rdcheck=$("#radio2").val();
+        }
+        var datval=$("#txtstartdate").val();
+        var datendval=$("#txtenddate").val();
+        var deptnm=0;
+        if($("#DrpLstdept").val()!="undefined"&&$("#DrpLstdept").val()!=""){
+
+            deptnm=$("#DrpLstdept").val();
+         }
+         if (deptnm == null) {
+             deptnm = 0;
+         }
+        var Maximum_val = $("#AmtMaximum").val();
+        var Minimum_val = $("#AmtMinimum").val();
+
+        var searchdashbord_val =$("#search-box").val() //document.getElementById('search-box').value;
+        var Orderby = '@ViewBag.OrderByVal';
+        var IsAsc = '@ViewBag.IsAscVal';
+        var SearchFlg = '@ViewBag.SearchFlg';
+
+        pageIndex++;
+        if (pageIndex == 2 || pageIndex <= pageCount) {
+            $.ajax({
+                type: 'GET',
+                async: true,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: '/Invoices/GetDatapagescroll',
+                data: { PageSize: PageSize, currentPageIndex: CurrentPageIndex, rdcash: rdcash, rdcheck: rdcheck, datval: datval, datendval: datendval, deptnm: deptnm, searchdashbord: searchdashbord_val, AmtMaximum: Maximum_val, AmtMinimum: Minimum_val, Orderby: Orderby, IsAsc: IsAsc, SearchFlg: SearchFlg},
+
+                beforeSend: function () {
+                    Loader(1);
+                },
+                timeout: 300000,
+                success: function (data) {
+                    Loader(0);
+
+                    if (data != null) {
+
+                        for (var i = 0; i < data.length; i++) {
+
+                            var table = $("#test table tbody tr").eq(0).clone(true);
+                            $("#Vendorid", table).html(data[i].VendorName);
+                            $("#Typeid", table).html(data[i].InvoiceType);
+                            $("#tdstorename", table).html(data[i].StoreName);
+
+                            var invoicenumber = data[i].InvoiceNumber;
+                            $("#invoicenumberid", table).html("<a href='/Invoices/Details?Id=" + data[i].InvoiceId + "'>" + invoicenumber + "</a>");
+
+                            $("#invoicedateid", table).html((data[i].strInvoiceDate));
+                            if (data[i].InvoiceTypeId == "2") {
+                                const formatter = new Intl.NumberFormat('en-US', {
+
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2
+                                })
+                                if (data[i].deptid == "0") {
+                                    $("#invoiceamt", table).html('<span style="color:red">' + "$ " + formatter.format(data[i].TotalAmount) + '</span>');
+                                }
+                                else {
+                                    $("#invoiceamt", table).html('<span style="color:red">' + "$ " + formatter.format(data[i].TotalAmount) + '</span>');
+                                }
+                            }
+                            else if (data[i].InvoiceTypeId == "1") {
+                                const formatter = new Intl.NumberFormat('en-US', {
+
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2
+                                })
+                                if (data[i].deptid == "0") {
+                                    $("#invoiceamt", table).html("$ " + formatter.format(data[i].TotalAmount));
+                                }
+                                else {
+                                    $("#invoiceamt", table).html("$ " + formatter.format(data[i].TotalAmount));
+
+                                }
+                            }
+                            var str = '';
+                            if (data[i].InvoiceDepartmentDetail != null)
+                            {
+                                if (data[i].InvoiceDepartmentDetail != "") {
+                                    for (var j = 0; j < data[i].InvoiceDepartmentDetail.toString().split('^').length; i++) {
+                                        if (data[i].InvoiceDepartmentDetail.toString().split('^')[j] != null) {
+                                            str += '<li><span>' + data[i].InvoiceDepartmentDetail.toString().split('-')[0] + '</span><span>$ ' + data[i].InvoiceDepartmentDetail.toString().split('-')[1] + '</span></li>';
+                                        }
+                                    }
+                                }
+                            }
+                            $("#invoiceamt", table).append('<span class="tooltipTD"><div class="depTooltip">' + str +'</div></span>');
+
+                            if (data[i].UploadInvoice != null) {
+
+                                var pdf = "<a href='@AdminSiteConfiguration.GetURL()userfiles/Invoices/" + data[i].UploadInvoice + "' target='_blank'>" + "<img src='@AdminSiteConfiguration.GetURL()QBImages/pdf.png'/>" + "</a>";
+                            }
+                            $("#scaninvoiceid", table).html(pdf);
+                            $("#paymanettypeid", table).html(data[i].Payment_type);
+
+                            if (data[i].StatusValue == "2") {
+
+                                $(".clsstatus1", table).html('<img src="@AdminSiteConfiguration.GetURL()QBImages/Approved.png"  class="statusBadge"  />');
+                            }
+                            else if (data[i].StatusValue == "3") {
+
+                                $(".clsstatus1", table).html('<img src="@AdminSiteConfiguration.GetURL()QBImages/Rejected.png"  class="statusBadge" />');
+                            }
+                            else if (data[i].StatusValue == "4") {
+
+                                $(".clsstatus1", table).html('<img src="@AdminSiteConfiguration.GetURL()QBImages/On-hold.png"  class="statusBadge"  />');
+
+                            }
+                            else if (data[i].StatusValue == "1") {
+                                var ToolTip1 = "";
+                                $(".clsstatus1", table).html('<img src="@AdminSiteConfiguration.GetURL()QBImages/Pending.png"  class="statusBadge"  />');
+
+                            }
+
+                            var adminRoles = '@(Roles.IsUserInRole("Administrator") ? "true" : "false")'
+                            var qbstatusRole = '@(Roles.IsUserInRole("DispQBStatusInvoice") ? "true" : "false")';
+                            var qbForcestatusRole = '@(Roles.IsUserInRole("ForceQBSyncInvoice") ? "true" : "false")';
+
+                            if (adminRoles == 'true' || qbstatusRole == 'true' || qbForcestatusRole=='true') {
+                                if (data[i].IsQbStatus > 0) {
+
+                                    if (data[i].IsSync == 1) {
+                                        if ((adminRoles == 'true' || qbForcestatusRole == 'true') && data[i].IsQbFStatus > 0) {
+                                            $(".qbsynctd", table).html('<img id="ok" src="@AdminSiteConfiguration.GetURL()QBImages/syncedqbsync.png" class="statusBadge"/><a href="#" onclick="return forceInvoiceSync(' + data[i].InvoiceId + ');"><img src="@AdminSiteConfiguration.GetURL()QBImages/manaul-sync.png" class="manaulSyncBtn"/></a>');
+                                        }
+                                        else {
+                                            $(".qbsynctd", table).html('<img id="ok" src="@AdminSiteConfiguration.GetURL()QBImages/syncedqbsync.png" class="statusBadge"  />');
+                                        }
+                                    }
+                                    else {
+                                        if (data[i].QBTransfer == true ) {
+                                            $(".qbsynctd", table).html('<img id="ok" src="@AdminSiteConfiguration.GetURL()QBImages/NoQBSync.png"  class="statusBadge" />');
+                                        }
+                                        else {
+                                            if ((adminRoles == 'true' || qbForcestatusRole == 'true') && data[i].IsQbFStatus > 0) {
+                                                $(".qbsynctd", table).html('<img id="ok" src="@AdminSiteConfiguration.GetURL()QBImages/pendingqbsync.png"  class="statusBadge"/> <a href="#" onclick="return forceInvoiceSync(' + data[i].InvoiceId + ');"><img src="@AdminSiteConfiguration.GetURL()QBImages/manaul-sync.png" class="manaulSyncBtn"/></a>');
+                                            }
+                                            else {
+                                                $(".qbsynctd", table).html('<img id="ok" src="@AdminSiteConfiguration.GetURL()QBImages/pendingqbsync.png"  class="statusBadge"/>');
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    $(".qbsynctd", table).html('');
+                                }
+                            }
+                            if (data[i].Note != null && data[i].Note != "") {
+                                $(".clsNote", table).html(' <img id="ok" src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icons/icon_notes.png" title="' + data[i].Note + '"/>');
+                            }
+                            var stredit = '';
+                            var adminRole = '@(Roles.IsUserInRole("Administrator") ? "true" : "false")'
+                            var updateRole = '@(Roles.IsUserInRole("UpdateInvoice") ? "true" : "false")';
+                            var deleteRole = '@(Roles.IsUserInRole("DeleteInvoice") ? "true" : "false")';
+
+                            if ((adminRole == 'true') || (updateRole == 'true') || (deleteRole == 'true')) {
+
+                                if (((adminRole == 'true') || (deleteRole == 'true')) && data[i].IsDelete > 0 ) {
+                                    stredit = "<a href='#' onclick='return ComfirmDelete(" + data[i].InvoiceId + ");' data-toggle='tooltip' data-placement='top' data-original-title='Delete'><img src='@AdminSiteConfiguration.GetURL()Content/Admin/images/trash-2.svg'/></a>";
+                                    var UserIdD = data[i].InvoiceId + "D";
+                                    stredit += "<div id=" + UserIdD + " class='divIDClass modal-popup modal-danger modal-message ' style='position: fixed;  left:45%; width:300px; top: 10px; display:none'> <div class='modal-content'><div class='modal-header text-center'><i class='glyphicon glyphicon-trash'></i></div><div class='modal-title'>Message</div><div class='modal-body'>Are you sure you want to delete this Invoice?</div><div class='modal-footer' style='text-align:center'><a class='btn btn-danger' onclick=Delete(" + data[i].InvoiceId + ");>Ok </a><a class='btn' data-dismiss='modal' onclick='closemodal()'>Cancel</a> </div></div></div>";
+
+                                    $("#editdeleteid", table).html(stredit);
+                                }
+                                if (((adminRole == 'true') || (updateRole == 'true') && data[i].IsEdit > 0)) {
+                                    stredit += " <a href='/Invoices/Edit/" + data[i].InvoiceId + "?deptname=" + '@Session["deptname"]' + " & startdate=" + '@Session["startdate"]' + " & enddate=" + '@Session["enddate"]' + " & payment=" + '@Session["payment"]' + " & Store_val=" + '@ViewBag.Store_val' + "&searchdashbord=" + '@Session["searchdashbord"]' + "&RedairectFrom=" + 'Dashboard' + "&AmtMaximum" + '@Session["AmtMaximum"]' + " & AmtMinimum" + '@Session["AmtMinimum"]' + "'><img src='@AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg'/></a>";
+                                }
+
+                                $("#editdeleteid", table).html(stredit);
+
+                            }
+                            $("#test  table tbody").append("<tr class='even'> " + table.html() + "</tr>")
+                        }
+                    }
+                },
+                complete: function () {
+                      Loader(0);
+                                    },
+                error: function (xhr, ajaxOptions, thrownError) {
+                      Loader(0);
+                }
+            });
+        }
+    }
+
+    $(window).scroll(function () {
+
+        var scroll = $(window).scrollTop();
+
+        //>=, not <=
+        if (scroll >= 50) {
+
+            $(".page-header-main").addClass("stikyheader");
+        } else {
+            $(".page-header-main").removeClass("stikyheader");
+        }
+    });
+
+    $(document).ready(function () {
+
+        (function ($) {
+
+            $.fn.fixMe = function () {
+                return this.each(function () {
+
+                    var $this = $(this),
+                        $t_fixed;
+                    function init() {
+
+                        $this.wrap('<div class="" />');
+                        $t_fixed = $this.clone();
+                        $t_fixed.find("tbody").remove().end().addClass("fixed").insertBefore($this);
+                        resizeFixed();
+                    }
+                    function resizeFixed() {
+                        $t_fixed.find("th").each(function (index) {
+                            $(this).css("width", $this.find("th").eq(index).outerWidth() + "px");
+                        });
+                    }
+                    function scrollFixed() {
+                        var offset = $(this).scrollTop(),
+                            tableOffsetTop = $this.offset().top,
+                            tableOffsetBottom = tableOffsetTop + $this.height() - $this.find("thead").height();
+                        if (offset < tableOffsetTop || offset > tableOffsetBottom)
+                            $t_fixed.hide();
+                        else if (offset >= tableOffsetTop && offset <= tableOffsetBottom && $t_fixed.is(":hidden"))
+                            $t_fixed.show();
+                    }
+                    $(window).resize(resizeFixed);
+                    $(window).scroll(scrollFixed);
+                    init();
+                });
+            };
+        })(jQuery);
+
+        $(document).ready(function () {
+            $("table").fixMe();
+
+        });
+    });
+</script>

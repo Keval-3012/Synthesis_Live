@@ -1,0 +1,269 @@
+﻿@{
+    ViewBag.Title = "Edit Document";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+@using Syncfusion.EJ2
+@using EntityModels.Models;
+<style>
+    #container {
+        display: block;
+        height: 900px !important;
+    }
+
+    .toast-top-right {
+        top: 80px;
+        right: 40% !important;
+    }
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+</style>
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/DocumentBar.css" rel="stylesheet" />
+<div id="grddata">
+    <div class="newdocumentuploadpage">
+        <div class="control-section">
+            <div class="docXBar">
+                <img src="~/Content/image/word.svg" />
+                <span class="documentName" id="DocumentName">DocumentName.DOCX</span>
+                <div class="buttonsContainer">
+                    <a data-toggle="modal" data-target="#EditModel" style="text-decoration: none;"><img src="~/Content/image/edit.svg" />Edit</a>
+                    <a class="saveButton" id="savebtn"><img src="~/Content/image/save.svg" />Save</a>
+                    <a style="text-decoration: none;" onclick="onPrintFile();"><img src="~/Content/image/print.svg" />Print</a>
+                    <a class="downloadButton" onclick="saveFile();"><img src="~/Content/image/download.svg" />Download</a>
+                </div>
+            </div>
+            @Html.EJS().DocumentEditorContainer("container").ServiceUrl("/api/DocumentEditor/Import").EnableToolbar(true).Created("onCreatedFile").Render()
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Document</h4>
+            </div>
+            <div class="modal-body">
+                <div id="frmUserType" class="form-horizontal">
+                    @{ Html.RenderAction("EditDocumentsDetali", new { ids = ViewBag.Ids }); }
+                </div>
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Add" onclick="EditDocument();" />
+                <button type="button" class="buttonbox btncancel" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        var container = document.getElementById("container").ej2_instances[0];
+        if (container.documentEditor.documentName === '') {
+            container.documentEditor.documentName = 'Untitled';
+        }
+        var documentTitleContentEditor = document.getElementById('DocumentName');
+        documentTitleContentEditor.textContent = container.documentEditor.documentName;
+        container.documentChange = function () {
+            documentTitleContentEditor.textContent = container.documentEditor.documentName;
+        };
+    })
+
+    function onPrintFile() {
+        
+        document.getElementById("container").ej2_instances[0].documentEditor.print();
+        //    container.documentEditor.print();
+    }
+
+    function saveFile() {
+        
+        var container = document.getElementById("container").ej2_instances[0];
+        container.documentEditor.save(container.documentEditor.documentName === '' ? 'sample' : container.documentEditor.documentName, 'Docx');
+    }
+    function EditDocument() {
+        
+        var DocumentId = $('#DocumentId').val();
+        var DocumentCategoryId = $('#DocumentCategoryId').val();
+        var KeyWords = $('#KeyWords').val();
+        var Notes = $('#Notes').val();
+        var chkFav = $('#chkFav').val();
+        var Title = $('#Title').val();
+        $.ajax({
+            url: '/Documents/EditDocumentsDetaliValue',
+            type: "post",
+            cache: false,
+            data: { DocumentId: DocumentId, DocumentCategoryId: DocumentCategoryId, KeyWords: KeyWords, Notes: Notes, chkFav: chkFav, Title: Title},
+            success: function (states) {
+                //$('#DocumentId').val("");
+                //$('#KeyWords').val("");
+                //$('#Notes').val("");
+                //$('select#DocumentCategoryId').val("");
+                //$('#chkFav').attr('checked', false); // Unchecks it
+
+                if (states == "Completed") {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.success('Successfully Edit Document Data.');
+                    $('#EditModel').modal('hide');
+                }
+                else {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.error('Something went to wrong');
+                }
+            }
+        });
+    }
+</script>
+<script>
+
+    var fileName = "@ViewBag.filePath";
+
+    function openDocument(obj) {
+
+        openFile(obj.dataset.link);
+    }
+
+    document.getElementById("savebtn").addEventListener('click', function () {
+
+        saveDocument()
+    });
+
+    var documenteditor;
+
+    function onCreatedFile() {
+
+        $('#HeaderStoreId').prop('disabled', true);
+        var items = ["Undo", "Redo", "Comments", "Image", "Table", "Hyperlink", "Bookmark", "TableOfContents", "Header", "Footer", "PageSetup", "PageNumber", "Break", "Find", "LocalClipboard", "RestrictEditing"];
+        var container = document.getElementById("container").ej2_instances[0];
+        /* container.toolbarItems = items;*/
+        var i = 0;
+        $('.e-toolbar-items').find('div').each(function (i1, obj) {
+            var row = $(this);
+            if (i < 3) {
+                row.hide();
+            }
+            i++;
+        });
+        var documentTitleContentEditor = document.getElementById('DocumentName');
+        documentTitleContentEditor.textContent = container.documentEditor.documentName;
+        documenteditor = container.documentEditor;
+        documenteditor.resize();
+        openFile(fileName);
+    }
+
+    function openFile(fileName) {
+
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.open('Post', '/api/DocumentEditor/Import?fileName=' + fileName, true);
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200 || httpRequest.status === 304) {
+                    console.log(httpRequest.responseText);
+                    documenteditor.open(httpRequest.responseText);
+                } else {
+                    alert('@ViewBag.FailLoad');
+                }
+            }
+        };
+        documenteditor.documentName = fileName.substr(0, fileName.lastIndexOf('.'));
+        httpRequest.send();
+    }
+
+    function saveDocument() {
+        documenteditor.saveAsBlob("Docx").then(function (blob) {
+            var fileReader = new FileReader();
+
+            fileReader.onload = function () {
+                var fileName =documenteditor.documentName ? documenteditor.documentName : 'Untitled';
+                var documentData = {
+                    fileName: fileName + '.docx',
+                    documentData: fileReader.result
+                }
+                var httpRequest = new XMLHttpRequest();
+                httpRequest.open('Post', '/api/DocumentEditor/Save', true);
+                httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200 || httpRequest.status === 304) {
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "3000",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "10000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+                            toastr.success('@ViewBag.SavedWord');
+                        } else {
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "3000",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "10000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+
+                            toastr.error('@ViewBag.FailTosave');
+                        }
+                    }
+                };
+                httpRequest.send(JSON.stringify(documentData));
+            };
+
+            fileReader.readAsDataURL(blob);
+        });
+    }
+</script>
+@Html.EJS().ScriptManager()

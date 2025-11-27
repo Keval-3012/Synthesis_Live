@@ -1,0 +1,430 @@
+﻿@model IEnumerable<EntityModels.Models.HomeExpenseWeeklySalesSetting>
+@{
+    Layout = null;
+}
+@using Utility;
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .selectmaxwidth {
+        max-width:260px;
+    }
+</style>
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (ViewBag.StatusMessage.ToString() == "Success")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('Setting Created Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Delete")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Setting Deleted Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Edit")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('Setting Updated Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Exists")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Setting Is Already Exists.');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Error")
+    {
+        <script>
+            MyfunError();
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+</div>
+
+<div id="grddata1">
+    <div class="page-body headertopbox addinvoice" style="padding-top:18px!important;">
+        <div class="datagrid">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover select_set1" id="data_table1">
+                    <thead>
+                        <tr>
+                            <th>Delivery Cost</th>
+                            <th>Payment Fees</th>
+                            <th>Tips Paid</th>
+                            <th style="width:15%!important">Bank Account</th>
+                            <th style="width:15%!important">Vendor</th>
+                            <th style="width:15%!important" class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data_body1">
+                        @{if (Model != null)
+                            {
+                                if (Model.Count() > 0)
+                                {
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            var DivDCAccountlbl = "1DivDCAccountlbl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivDCAccountddl = "1DivDCAccountddl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivPFAccountlbl = "1DivPFAccountlbl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivPFAccountddl = "1DivPFAccountddl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivTPAccountlbl = "1DivTPAccountlbl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivTPAccountddl = "1DivTPAccountddl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivBankAccountlbl = "1DivBankAccountlbl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivBankAccountddl = "1DivBankAccountddl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivVendorlbl = "1DivVendorlbl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var DivVendorddl = "1DivVendorddl" + item.HomeExpenseWeeklySalesSettingId;
+                                            var EDCAccountReq = "1EDCAccountReq" + item.HomeExpenseWeeklySalesSettingId;
+                                            var EBankAccountReq = "1EBankAccountReq" + item.HomeExpenseWeeklySalesSettingId;
+                                            var EPFAccountReq = "1EPFAccountReq" + item.HomeExpenseWeeklySalesSettingId;
+                                            var ETPAccountReq = "1ETPAccountReq" + item.HomeExpenseWeeklySalesSettingId;
+                                                <tr class="even">
+                                                    <td style="vertical-align:middle;text-align:left;">
+                                                        <div id="@DivDCAccountlbl">@Html.Raw(item.DepartmentMasterDC?.DepartmentName)</div>
+                                                        <div id="@DivDCAccountddl" style="display:none">
+                                                            @if (ViewBag.DepartmentList != null)
+                                                            {
+                                                                @Html.DropDownList("DC".ToString(), new SelectList(ViewBag.DepartmentList, "value", "text", item.DeliveryCostId), "Select Delivery Cost Account", new { @class = "myval selectmaxwidth", @id = "1EDCAccount_" + item.HomeExpenseWeeklySalesSettingId })
+                                                                <span class="highlight" id="@EDCAccountReq" style="display: none;">Delivery Cost Account Is Required</span>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:left;">
+                                                        <div id="@DivPFAccountlbl">@Html.Raw(item.DepartmentMasterPF?.DepartmentName)</div>
+                                                        <div id="@DivPFAccountddl" style="display:none">
+                                                            @if (ViewBag.DepartmentList != null)
+                                                            {
+                                                                @Html.DropDownList("PF".ToString(), new SelectList(ViewBag.DepartmentList, "value", "text", item.PaymentFeesId), "Select Payment Fees Account", new { @class = "myval selectmaxwidth", @id = "1EPFAccount_" + item.HomeExpenseWeeklySalesSettingId })
+                                                                <span class="highlight" id="@EPFAccountReq" style="display: none;">Payment Fees Account Is Required</span>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:left;">
+                                                        <div id="@DivTPAccountlbl">@Html.Raw(item.DepartmentMasterTP?.DepartmentName)</div>
+                                                        <div id="@DivTPAccountddl" style="display:none">
+                                                            @if (ViewBag.DepartmentList != null)
+                                                            {
+                                                                @Html.DropDownList("TP".ToString(), new SelectList(ViewBag.DepartmentList, "value", "text", item.TipsPaidId), "Select Tips Paid Account", new { @class = "myval selectmaxwidth", @id = "1ETPAccount_" + item.HomeExpenseWeeklySalesSettingId })
+                                                                <span class="highlight" id="@ETPAccountReq" style="display: none;">Tips Paid Account Is Required</span>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:left;">
+                                                        <div id="@DivBankAccountlbl">@Html.Raw(item.DepartmentMaster1?.DepartmentName)</div>
+                                                        <div id="@DivBankAccountddl" style="display:none">
+                                                            @if (ViewBag.DepartmentBankList != null)
+                                                            {
+                                                                @Html.DropDownList("Bank".ToString(), new SelectList(ViewBag.DepartmentBankList, "value", "text", item.BankAccountId), "Select Bank Account", new { @class = "myval selectmaxwidth", @id = "1EBAnkAccount_" + item.HomeExpenseWeeklySalesSettingId })
+                                                                <span class="highlight" id="@EBankAccountReq" style="display: none;">Bank Account Is Required</span>
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:left;">
+                                                        <div id="@DivVendorlbl">@Html.Raw(item.VendorMaster?.VendorName)</div>
+                                                        <div id="@DivVendorddl" style="display:none">
+                                                            @if (ViewBag.VendorList != null)
+                                                            {
+                                                                @Html.DropDownList("QB1".ToString(), new SelectList(ViewBag.VendorList, "value", "text", item.VendorId), "Select Vendor", new { @class = "myval selectmaxwidth", @id = "1EVendor_" + item.HomeExpenseWeeklySalesSettingId })
+                                                            }
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:right" class="img_with img_color">
+                                                        <input type="hidden" id="ID" name="ID" value="@item.HomeExpenseWeeklySalesSettingId" />
+                                                        <a href="#" id="edit1_@item.HomeExpenseWeeklySalesSettingId" onclick="return Edit1(@item.HomeExpenseWeeklySalesSettingId);"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                                                        <input type="submit" id="update1_@item.HomeExpenseWeeklySalesSettingId" value="Update" onclick="return Updatedata1(@item.HomeExpenseWeeklySalesSettingId)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                                        <input type="submit" id="cancel1_@item.HomeExpenseWeeklySalesSettingId" value="Cancel" onclick="return Cancel1(@item.HomeExpenseWeeklySalesSettingId)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                                    </td>
+                                                </tr>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3" style="text-align:center;">
+                                            No Data Available
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" style="text-align:center;">
+                                        No Data Available
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function Edit1(ID) {
+        var DivDCAccountlbl = "#" + "1DivDCAccountlbl" + ID;
+        var DivDCAccountddl = "#" + "1DivDCAccountddl" + ID;
+        var DivPFAccountlbl = "#" + "1DivPFAccountlbl" + ID;
+        var DivPFAccountddl = "#" + "1DivPFAccountddl" + ID;
+        var DivTPAccountlbl = "#" + "1DivTPAccountlbl" + ID;
+        var DivTPAccountddl = "#" + "1DivTPAccountddl" + ID;
+
+        var DivBankAccountlbl = "#" + "1DivBankAccountlbl" + ID;
+        var DivBankAccountddl = "#" + "1DivBankAccountddl" + ID;
+
+        var DivVendorlbl = "#" + "1DivVendorlbl" + ID;
+        var DiVendorddl = "#" + "1DivVendorddl" + ID;
+
+        var editid = "#" + "edit1_" + ID;
+        var update = "#" + "update1_" + ID;
+        var cancel = "#" + "cancel1_" + ID;
+
+        //$(Divnamelbl).hide();
+        $(DivDCAccountlbl).hide();
+        $(DivDCAccountddl).show();
+
+        $(DivPFAccountlbl).hide();
+        $(DivPFAccountddl).show();
+
+        $(DivTPAccountlbl).hide();
+        $(DivTPAccountddl).show();
+
+        $(DivBankAccountlbl).hide();
+        $(DivBankAccountddl).show();
+
+        $(DivVendorlbl).hide();
+        $(DiVendorddl).show();
+
+        $(editid).hide();
+        $(update).show();
+        $(cancel).show();
+     }
+
+    function Updatedata1(ID) {
+        
+          var editid = "#" + "edit1_" + ID;
+          var update = "#" + "update1_" + ID;
+          var cancel = "#" + "cancel1_" + ID;
+
+         var DCval = document.getElementById("1EDCAccount_" + ID).value;
+         var PFval = document.getElementById("1EPFAccount_" + ID).value;
+         var TPval = document.getElementById("1ETPAccount_" + ID).value;
+         if (DCval == "" || PFval == "" || TPval == "") {
+             if (DCval == "") {
+                 $("#1EDCAccountReq" + ID).show();
+             }
+             else {
+                 $("#1EDCAccountReq" + ID).hide();
+             }
+             if (PFval == "") {
+                 $("#1EPFAccountReq" + ID).show();
+             }
+             else {
+                 $("#1EPFAccountReq" + ID).hide();
+             }
+             if (TPval == "") {
+                 $("#1ETPAccountReq" + ID).show();
+             }
+             else {
+                 $("#1ETPAccountReq" + ID).hide();
+             }
+             return false;
+         }
+         else
+         {
+             $("#1EDCAccountReq" + ID).hide();
+             $("#1EPFAccountReq" + ID).hide();
+             $("#1ETPAccountReq" + ID).hide();
+         }
+
+        var Bankval = document.getElementById("1EBAnkAccount_" + ID).value;
+         if (Bankval == "") {
+             $("#1EBankAccountReq" + ID).show();
+             return false;
+         }
+         else {
+             $("#1EBankAccountReq" + ID).hide();
+         }
+
+         var Vendorval = document.getElementById("1EVendor_" + ID).value;
+          $.ajax({
+              url: '@AdminSiteConfiguration.GetURL()/ExpenseWeeklySetting/UpdateExpenseWeekly_Setting',
+              data: { ID: ID, DeliveryCostId: DCval, PaymentFeesId: PFval, TipsPaidId: TPval,  VendorId: Vendorval, BankAccountID: Bankval},
+             type: 'POST',
+             cache: false,
+             dataType: 'json',
+             beforeSend: function () { Loader(1); },
+             success: function (response) {
+             if (response === "Edit") {
+                    GetData1();
+                    MyCustomToster('Setting Updated Successfully.');
+                    Loader(0);
+
+                    var DivDCAccountlbl = "#" + "1DivDCAccountlbl" + ID;
+                 var DivDCAccountddl = "#" + "1DivDCAccountddl" + ID;
+                 var DivPFAccountlbl = "#" + "1DivPFAccountlbl" + ID;
+                 var DivPFAccountddl = "#" + "1DivPFAccountddl" + ID;
+                 var DivTPAccountlbl = "#" + "1DivTPAccountlbl" + ID;
+                 var DivTPAccountddl = "#" + "1DivTPAccountddl" + ID;
+
+                    var DivBankAccountlbl = "#" + "1DivBankAccountlbl" + ID;
+                    var DivBankAccountddl = "#" + "1DivBankAccountddl" + ID;
+
+                     var DivVendorlbl = "#" + "1DivVendorlbl" + ID;
+                     var DivVendorddl = "#" + "1DivVendorddl" + ID;
+
+                 $(DivDCAccountlbl).show();
+                 $(DivDCAccountddl).hide();
+                 $(DivPFAccountlbl).show();
+                 $(DivPFAccountddl).hide();
+                 $(DivTPAccountlbl).show();
+                 $(DivTPAccountddl).hide();
+
+                 $(DivBankAccountlbl).show();
+                 $(DivBankAccountddl).hide();
+
+                 $(DivVendorlbl).show();
+                 $(DivVendorddl).hide();
+
+                    $(editid).show();
+                    $(update).hide();
+                    $(cancel).hide();
+             }
+            }
+         });
+     }
+
+        function Cancel1(ID) {
+            var DivDCAccountlbl = "#" + "1DivDCAccountlbl" + ID;
+            var DivDCAccountddl = "#" + "1DivDCAccountddl" + ID;
+            var DivPFAccountlbl = "#" + "1DivPFAccountlbl" + ID;
+            var DivPFAccountddl = "#" + "1DivPFAccountddl" + ID;
+            var DivTPAccountlbl = "#" + "1DivTPAccountlbl" + ID;
+            var DivTPAccountddl = "#" + "1DivTPAccountddl" + ID;
+
+            var DivBankAccountlbl = "#" + "1DivBankAccountlbl" + ID;
+            var DivBankAccountddl = "#" + "1DivBankAccountddl" + ID;
+
+            var DivVendorlbl = "#" + "1DivVendorlbl" + ID;
+            var DivVendorddl = "#" + "1DivVendorddl" + ID;
+
+             var editid = "#" + "edit1_" + ID;
+             var update = "#" + "update1_" + ID;
+             var cancel = "#" + "cancel1_" + ID;
+
+            $(cancel).hide();
+            $(DivDCAccountlbl).show();
+            $(DivDCAccountddl).hide();
+            $(DivPFAccountlbl).show();
+            $(DivPFAccountddl).hide();
+            $(DivTPAccountlbl).show();
+            $(DivTPAccountddl).hide();
+
+            $(DivBankAccountlbl).show();
+            $(DivBankAccountddl).hide();
+            $(DivVendorlbl).show();
+            $(DivVendorddl).hide();
+            $(editid).show();
+            $(update).hide();
+        }
+
+    function GetData1()
+    {
+        $.ajax({
+            type: "GET",
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseWeeklySetting/HomeExpenseWeeklySalesSetting',
+            success: function (response) {
+            $('#grddata1').empty();
+                $('#grddata1').append(response);
+                $(".myval").select2({
+                    //placeholder: "select",
+                    allowclear: true,
+                    //minimumResultsForSearch: -1
+                });
+            }
+        });
+    }
+</script>
+

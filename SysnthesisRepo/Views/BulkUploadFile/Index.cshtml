@@ -1,0 +1,18 @@
+﻿@{
+
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+@{
+
+    Html.RenderAction("BulkInvoiceList", new { ShowMyInvoice = ViewBag.ShowMyInvoice });
+}
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+
+
+
+

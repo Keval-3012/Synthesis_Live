@@ -1,0 +1,151 @@
+﻿@model EntityModels.Models.DailyPosFeeds
+@using Utility
+@{ ViewBag.Title = "Detail";
+                Layout = "~/Areas/Admin/Views/Shared/AdminMaster.cshtml"; }
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+</style>
+
+<div id="grddata">
+    <div class="header-small special_bg icon_12">
+        <h3>Detail <a href="@Url.Action("Index", "SalesActivitySummaryReport")" style="display:none;" class="pull-right addstore" data-toggle="tooltip" data-placement="bottom" title="Back"><img src="~/Content/Admin/images/chevron-left.svg" alt="" /></a></h3>
+    </div>
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+
+
+        @*@{if (Model.Count() > 0)
+            {*@
+
+        <div class="datagrid martop15">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover normal_fnt marginbtm20 buletable">
+                    <thead>
+                        <tr>
+                            <th width="250">Basic Detail</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        @{ var datestart =AdminSiteConfiguration.GetDatetimeformatwithAMPM(Convert.ToString(Model.StartDate));
+                                        var dateEnd = AdminSiteConfiguration.GetDatetimeformatwithAMPM(Convert.ToString(Model.TransactionEndTime)); }
+
+                        <td width="250">Transaction Time:</td>
+                        <td>@datestart - @dateEnd</td>
+                    </tr>
+                    <tr>
+                        <td>Terminal:</td>
+                        <td>@Model.Terminal</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Count:</td>
+                        <td> @Model.CustomerCount </td>
+                    </tr>
+                    <tr>
+                        <td> Net Sales With Tax:</td>
+                        <td>$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(@Model.NetSalesWithTax)) </td>
+                    </tr>
+                    <tr>
+                        <td> Total Tax Collected:</td>
+                        <td>$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(@Model.TotalTaxCollected)) </td>
+                    </tr>
+                    <tr>
+                        <td> Average Sale:</td>
+                        <td>$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(@Model.AverageSale)) </td>
+                    </tr>
+
+                </table>
+                @{
+
+                    if (Model.TenderList.Count > 0)
+                    {
+                        <table class="table table-striped table-hover normal_fnt marginbtm20 buletable">
+                            <thead>
+                                <tr>
+                                    <th width="250"> Tenders In Drawer Report</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            @{
+                                for (var j = 0; j < Model.TenderList.Count; j++)
+                                {
+                    <table class="table table-striped table-hover normal_fnt buletable">
+                        <thead>
+                            <tr>
+                                <th width="250">Paid Out Report</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @{ for (var l = 0; l < Model.Paidoutlist.Count; l++)
+                                            {
+                            <tr>
+                                <td>@Model.Paidoutlist[l].PaidOutTitle</td>
+                                <td>$ @Model.Paidoutlist[l].PaidOutAmount</td>
+                            </tr> } }
+                        @*<tr>
+                                <td>Paid Out - Coupons</td>
+                                <td>$ 31.07</td>
+                            </tr>
+                        }
+                    }
+                    @*<tr>
+                            <td>1CANDY_TAX</td>
+                            <td>$ 5,221.48</td>
+                        </tr>
+                        <tr>
+                            <td>1GRANOLA</td>
+                            <td>$ 59.40</td>
+                        </tr>
+                        <tr>
+                            <td>1GROCERY</td>
+                            <td>$ 51,606.83</td>
+                        </tr>
+                        <tr>
+                            <td>1HBA_TAX</td>
+                            <td>$ 842.16</td>
+                        </tr>*@
+
+
+                </table> }
+                }
+                @{
+                    if (Model.Paidoutlist.Count > 0)
+                    {
+                        <table class="table table-striped table-hover normal_fnt buletable">
+                            <thead>
+                                <tr>
+                                    <th width="250">Paid Out Report</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            @{
+                                for (var l = 0; l < Model.Paidoutlist.Count; l++)
+                                {
+                                    <tr>
+                                        <td>@Model.Paidoutlist[l].PaidOutTitle</td>
+                                        <td>$ @Model.Paidoutlist[l].PaidOutAmount</td>
+                                    </tr>
+                                }
+                            }
+                            @*<tr>
+                                    <td>Paid Out - Coupons</td>
+                                    <td>$ 31.07</td>
+                                </tr>
+                                <tr>
+                                    <td>Paid Out - Vendors</td>
+                                    <td>$ 4,072.33</td>
+                                </tr>*@
+
+
+                        </table>
+                                }
+                }
+                
+            </div>
+        </div>
+        @*}
+            }*@
+    </div>
+</div>

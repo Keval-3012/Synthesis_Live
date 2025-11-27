@@ -1,0 +1,657 @@
+﻿@model IEnumerable<EntityModels.Models.UserRoles>
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+</style>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+
+
+        @*@if (ViewBag.StatusMessage.ToString() == "Success")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.success('User created Successfully');
+                </script>
+            }
+            @if (ViewBag.StatusMessage.ToString() == "Lock")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.success('User Locked Successfully');
+                </script>
+            }
+            @if (ViewBag.StatusMessage.ToString() == "UnLock")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.success('User Unlocked Successfully');
+                </script>
+            }
+            @if (ViewBag.StatusMessage.ToString() == "Edit")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.success('User updated Successfully.');
+                </script>
+            }
+            @if (ViewBag.StatusMessage.ToString() == "Delete")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.success('User deleted Successfully');
+                </script>
+            }
+            @if (ViewBag.StatusMessage.ToString() == "Exists")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.success('User already exists.');
+                </script>
+            }*@
+        @*@if (ViewBag.StatusMessage.ToString() == "Error")
+            {
+                <script>
+                    MyfunError();
+                </script>
+            }
+            @if (ViewBag.StatusMessage.ToString() == "NoItem")
+            {
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.success('No user found.');
+                </script>
+            }*@
+
+
+    </div>
+    <div class="header-small special_bg">
+        <h3>User Role List</h3>
+    </div>
+
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="searchfinal">
+            <div class="widget-body shadownone brdrgray">
+
+                <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="dataTables_filter">
+                        <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+                            <tr>
+                                <td width="265">
+                                    <div class="input-group postion_div">
+                                        <input name="txtSearchTitle" type="text" maxlength="100" id="txtSearchTitle" placeholder="UserName" class="form-control m-b">
+                                        <a href="#" class="search_close" onclick="cleartextsearch();">x</a>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class=".searchfinal .btnsearchicon" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{if (Model.Count() > 0)
+            {
+                <div class="datagrid martop15">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead style="width:100%">
+                                <tr>
+                                    @*<th>&nbsp;</th>*@
+                                    <th width="80%"><a class="textred" onclick="javascript:FunSortData('UserName');" style="color:#fff; text-decoration:none; cursor:pointer;">User Role</a></th>
+                                    @*<th><a class="textred" onclick="javascript:FunSortData('GroupName');" style="color:#fff; text-decoration:none; cursor:pointer;">GroupName</a></th>*@
+                                    <th class="text-align-center" width="20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr class="even">
+                                            <td style="vertical-align:middle;text-align:left;">@Html.Raw(item.UserType)</td>
+                                            @*<td style="vertical-align:middle;text-align:left;">@Html.Raw(item.GroupName)</td>*@
+                                            <td style="vertical-align:middle;text-align:right" class="img_with img_color">
+                                                <input type="hidden" id="ID" name="ID" value="@item.UserTypeId" />
+                                                @Html.ActionLink("Rights", "Create", new { UTId = item.UserTypeId }, new { @class = "buttonbox btnsubmit" })
+                                                @{
+                                                    var UserIdD = @item.UserTypeId + "D";
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                                <tr class="paginationGrid">
+                                    <td class="left-text dataTables_length showdata" colspan="2" style="padding-top: 0px!important;">
+
+                                        <div class="recordbox">
+
+                                            <span class="selectbox">
+                                                @{
+                                                    List<SelectListItem> listItem_Records = new List<SelectListItem>();
+                                                    string[] Records = AdminSiteConfiguration.GetArrayForRecord().ToString().Split(',');
+                                                    foreach (string word in Records)
+                                                    {
+                                                        listItem_Records.Add(new SelectListItem
+                                                        {
+                                                            Text = word.Split(':')[0],
+                                                            Value = word.Split(':')[1]
+                                                        });
+                                                    }
+
+                                                    @Html.DropDownList("SelectRecords", listItem_Records, new { @class = "myval", @onchange = "javascript:FunPageRecord(this.value);" })
+                                                }
+                                            </span><span class="text_record">Records</span>
+                                        </div>
+                                        <div class="showdatabox">
+                                            <span style="float:left">Showing @ViewBag.startIndex to @ViewBag.endIndex of @ViewBag.TotalDataCount entries</span>
+                                        </div>
+
+                                    </td>
+                                    <td colspan="8">
+
+                                        <div class="pagination">
+                                            @if (ViewBag.LastPageIndex > 1)
+                                            {
+                                                if (ViewBag.CurrentPageIndex != 1)
+                                                {
+                                                    <a id="btnPageFirst" style="cursor:pointer" onclick="javascript:FunPageIndex(1);" class=" Linkbutton firstpage nextbtn">First</a>
+                                                    <a id="btnPagePrevious" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    -1);" class=" Linkbutton Linkbutton prebtn">Previous</a>
+                                                }
+                                                int PageIndex = 3;
+                                                int StartPageIndex = ViewBag.CurrentPageIndex - PageIndex;//10-3=7
+                                                int EndPageIndex = ViewBag.CurrentPageIndex + PageIndex;//10+3=13
+
+                                                if (StartPageIndex < 1)
+                                                {
+                                                    EndPageIndex = EndPageIndex - StartPageIndex;
+                                                }
+
+                                                if (EndPageIndex > ViewBag.LastPageIndex)
+                                                {
+                                                    StartPageIndex = (StartPageIndex - (EndPageIndex - ViewBag.LastPageIndex)) + 1;
+                                                }
+
+                                                for (int i = 1; i <= @ViewBag.LastPageIndex; i++)
+                                                {
+
+                                                    if ((StartPageIndex < i && EndPageIndex > i))
+                                                    {
+                                                        if (ViewBag.CurrentPageIndex == i)
+                                                        {
+                                                            <span Style="min-width: 25px; display: inline-block;">@i          </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="btnnum" style="cursor:pointer" onclick="javascript:FunPageIndex(@i);">@i</a>
+                                                        }
+                                                    }
+                                                }
+                                                if (ViewBag.CurrentPageIndex != @ViewBag.LastPageIndex)
+                                                {
+                                                    <a id="btnPageNext" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    +1);" class=" Linkbutton nextbtn">Next</a>
+                                                    <a id="btnPageLast" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.LastPageIndex);" class=" Linkbutton lastpage nextbtn">Last</a>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+</div>
+
+
+
+
+<div id="displayAddPanelPopup">
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#txtSearchTitle").focus();
+
+    });
+
+</script>
+
+<script>
+
+    function cleartextsearch()
+    {
+        document.getElementById('txtSearchTitle').value='';
+        FunSearchRecord();
+    }
+
+    var top=0;
+    function Loader(val)
+    {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if(val==1){
+            $("#secloader").removeClass('pace-active1');
+            $("#secloader").addClass('pace-active');
+            $("#dvloader").removeClass('bak1');
+            $("#dvloader").addClass('bak');
+            $("#globalFooter").addClass('LoaderFooter');
+            top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+        }
+        else{
+            $("#secloader").removeClass('pace-active');
+            $("#secloader").addClass('pace-active1');
+            $("#dvloader").removeClass('bak');
+            $("#dvloader").addClass('bak1');
+            $("#globalFooter").removeClass('LoaderFooter');
+            doc.scrollTop=top;
+        }
+        bind();
+    }
+    $('.burgermenu').click(function () {
+        $('#sidebar').toggleClass('showmenu');
+        $('.page-content').toggleClass('marleft110');
+    })
+    function divexpandcollapse(divname, trname) {
+
+        var div = document.getElementById(divname);
+        var img = document.getElementById('img' + divname);
+        var tr = document.getElementById(trname);
+
+        if (div.style.display == "none") {
+            div.style.display = "inline";
+            tr.style.display = "";
+            img.src = "../Content/Admin/images/btn_rowminus.png";
+
+        } else {
+            div.style.display = "none";
+            tr.style.display = "none";
+            img.src = "../Content/Admin/images/btn_rowplus.png";
+            //  divexpandcollapse("", "");
+        }
+    }
+
+
+    function FunSearchRecord()//Search
+    {
+        window.FunSearchRecord=FunSearchRecord
+        var element_txtSearchTitle = document.getElementById('txtSearchTitle').value;
+        // var element_Department = document.getElementById('DrpLstDepartment').value;
+        //alert(element_Department);
+        //var element_Designation = document.getElementById('DrpLstDesignation').value;
+        //alert(element_Designation);
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'','',element_txtSearchTitle);
+
+    }
+
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+
+        GetData(0,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'');
+    }
+    //For Search Button
+
+
+    function GetData(IsBindData_val,PageIndex,orderby_val,isAsc_val,PageSize_val,alpha_val,SearchRecords_val,SearchTitle_val)
+    {
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/grid',
+            data: {IsBindData: IsBindData_val, currentPageIndex: PageIndex,orderby:orderby_val.trim(),IsAsc:isAsc_val,PageSize:PageSize_val,SearchRecords:SearchRecords_val,Alpha:alpha_val,SearchTitle:SearchTitle_val},
+            beforeSend: function () { Loader(1);
+                $("#preloader").show();
+                $("#status").show();
+            },
+            // async: false,
+            success: function (response) {
+                //    $("body").html(response);
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                $("#preloader").hide();
+                $("#status").hide();
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    }
+
+
+    document.getElementById('txtSearchTitle').onkeypress=function(e){
+        if(e.keyCode==13){
+            document.getElementById('btnSearch').click();
+        }
+    }
+    function bind(){
+
+        $(".myval").select2({
+            //placeholder: "select",
+            allowclear: true,
+            //minimumResultsForSearch: -1
+        });
+        if(document.getElementById('SelectRecords')!=null)
+        {
+            document.getElementById('SelectRecords').value = @ViewBag.PageSize;
+        }
+        document.getElementById('txtSearchTitle').value = '@ViewBag.SearchTitle';
+
+        $(".select2-container").remove();
+        @*document.getElementById('DrpLstDepartment').value = '@ViewBag.Department';
+        document.getElementById('DrpLstDesignation').value = '@ViewBag.Designation';*@
+
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+
+    }
+    function ComfirmDelete(ID)
+    {
+        var check = confirm("Are you sure you want to Delete this record?");
+        if (check == true) {
+            Delete(ID);
+            GetData(1,@ViewBag.CurrentPageIndex,  '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+    function Delete(ID)
+    {
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/Delete',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+                GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+                return true;
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    function IsLock(ID) {
+
+        var lock=true;
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/ChangeStatusLock',
+            data: { id: ID, active:lock},
+            beforeSend: function () { Loader(1); },
+            success: function (response) {
+                //  alert('hii');
+                GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    }
+
+    function IsUnLock(ID) {
+        var lock=false;
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/changestatusunlock',
+            data: { id: ID, active:lock},
+            beforeSend: function () { Loader(1); },
+            success: function (response) {
+                GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    }
+    function ComfirmIsLock(ID) {
+
+        var DivId = "#"+ID+"L";
+
+        $(DivId).show();
+        @*var check = confirm("Are you sure you want to lock this User?");
+        if (check == true) {
+            IsLock(ID);
+            GetData(1,@ViewBag.CurrentPageIndex,  '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle','@ViewBag.Department','@ViewBag.Designation');
+            return true;
+        }
+        else {
+            return false;
+        }*@
+
+    }
+    function ComfirmIsUnLock(ID) {
+
+        var DivId="#"+ID+"U";
+        $(DivId).show();
+        @*var check = confirm("Are you sure you want to unlock this User?");
+        if (check == true) {
+            IsUnLock(ID);
+            GetData(1,@ViewBag.CurrentPageIndex,  '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle','@ViewBag.Department','@ViewBag.Designation');
+            return true;
+        }
+        else {
+            return false;
+        }*@
+
+    }
+    function closemodal(){
+
+        $(".divIDClass").hide();
+
+    }
+    function ComfirmReset(ID)
+    {
+        //var DivId="#"+ID+"R";
+        //$(DivId).show();
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/Resetpassword',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+                $("#displayAddPanelPopup").html(response);
+                $("#displayAddPanelPopup").show();
+                @*GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');*@
+                //return true;
+            },
+            error:function()
+            {
+                //return false;
+            }
+        });
+    }
+    function Reset(ID)
+    {
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/UserMasters/Reset',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+
+                GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+                //return true;
+            },
+            error:function()
+            {
+                //return false;
+            }
+        });
+    }
+    function closeExcelmodal() {
+        $('.modal-backdrop').addClass('hidebox');
+        $('.modal-backdrop').removeClass('show');
+        $('#mymodal').removeAttr("style");}
+</script>
+
+

@@ -1,0 +1,35 @@
+.green02bg {
+  background: #4CC010;
+}
+
+.green01bg {
+  background: #AEEB8E;
+}
+
+.lightgrey01bg {
+  background: #D7D7D7;
+}
+
+.Red01bg {
+  background: #FF9999;
+}
+
+.Red02bg {
+  background: #CD2020;
+}
+
+::-webkit-input-placeholder {
+  color: #fff !important;
+}
+
+::-moz-placeholder {
+  color: #fff !important;
+}
+
+:-ms-input-placeholder {
+  color: #fff !important;
+}
+
+:-moz-placeholder {
+  color: #fff !important;
+}

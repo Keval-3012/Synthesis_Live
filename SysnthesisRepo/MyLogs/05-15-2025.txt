@@ -1,0 +1,44 @@
+2025-05-15 12:44:50.7503|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/15/2025 12:44:50 PM
+2025-05-15 12:45:17.2426|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 5/15/2025 12:45:17 PM - An error occurred while sending the request.
+2025-05-15 12:46:26.5453|ERROR|Repository.DashboardRepository|DashboardRepository - GetYearlySalesData - 5/15/2025 12:46:26 PM - Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+2025-05-15 12:48:53.7925|ERROR|Repository.DashboardRepository|DashboardRepository - GetYearlySalesData - 5/15/2025 12:48:53 PM - Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+2025-05-15 12:58:33.0743|ERROR|Repository.DashboardRepository|DashboardRepository - GetYearlySalesData - 5/15/2025 12:58:33 PM - Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.

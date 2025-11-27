@@ -1,0 +1,146 @@
+﻿@model List<EntityModels.Models.OperatingRatioList>
+@using Utility
+@{ decimal Total = 0;
+    decimal TotalCogs = 0;
+    decimal TotalSalePer = 0;
+    decimal TotalSalePers = 0;
+    decimal aa = 0;
+    decimal TotalPDFAmount = 0;
+    decimal bb = 0;
+    int i = 1; }
+<style type="text/css">
+    .clsbutton2 {
+        font-weight: bold;
+        color: black;
+        font-size: 16px;
+        background: #eaeaea !important;
+        /* padding: 10px !important;*/
+        border-radius: 5px !important;
+        width: 24px !important;
+        height: 24px !important;
+        display: inline-block;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+
+    .childrow {
+        background: white !important;
+    }
+</style>
+@*<div style="font-size: 17px; font-weight: 600;">
+        <a title=Collapsed id="" onclick="getStoreWiseDataALL()" href=#><span class="clsbutton" id="allrow" title="collaped">+</span></a>&nbsp;Expand All
+    </div>*@
+<table class="table table-bordered table-condensed tablesorter" id="ratioTbl">
+    <thead>
+        <tr>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">Department</a> </th>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">Sales</a></th>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">% of Total Sales</a></th>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">COGS</a></th>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">COGS Ratio %</a></th>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">Payroll Amount</a></th>
+            <th><a style="color:#fff; text-decoration:none; cursor:pointer;">Payroll Ratio %</a></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+            var Class = "row" + i;
+            var ImgCls = "img" + i;
+            <tr class="@Class">
+                <td>
+                    <input type="checkbox" name="selectedRows" value="@item.Department" />&nbsp;
+                    <a title=Collapsed id="" onclick="getStoreWiseData('@item.Department',@i,this)" href=#><span class="clsbutton" id="@ImgCls" title="collaped">+</span></a> @Html.Raw(item.Department)
+                </td>
+                @*@if (Synthesis.Class.AdminSiteConfiguration.PriceWithComma(item.Sales.ToString()) == "0.00")
+                    {
+                        <td style="padding-left:40px;">--</td>
+                    }
+                    else
+                    {*@
+                <td>$@Html.Raw(AdminSiteConfiguration.PriceWithComma(item.Sales.ToString()))</td>
+                @*}*@
+
+                @if (AdminSiteConfiguration.PriceWithComma(item.TotalSalPercentage.ToString()) == "0.00")
+                {
+                    <td style="padding-left:40px;">--</td>
+                }
+                else
+                {
+                    <td>@Html.Raw(item.TotalSalPercentage.ToString()) %</td>
+                }
+                @*@if (Synthesis.Class.AdminSiteConfiguration.PriceWithComma(item.COgs.ToString()) == "0.00")
+                    {
+                        <td style="padding-left:40px;">--</td>
+                    }
+                    else
+                    {*@
+                <td>$@Html.Raw(AdminSiteConfiguration.PriceWithComma(item.COgs.ToString()))</td>
+                @*}*@
+                @if (item.SalPercentage.ToString() == "0.00")
+                {
+                    <td style="padding-left:40px;">--</td>
+                }
+                else
+                {
+                    <td>@Html.Raw(item.SalPercentage) %</td>
+                }
+                @*@if (Synthesis.Class.AdminSiteConfiguration.PriceWithComma(item.PDFAmount.ToString()) == "0.00")
+                    {
+                        <td style="padding-left:40px;">--</td>
+                    }
+                    else
+                    {*@
+                <td title="@Html.Encode(item.PayrollDescription.ToString().Replace("<br/>",Environment.NewLine))">$@Html.Raw(AdminSiteConfiguration.PriceWithComma(item.PDFAmount.ToString()))</td>
+                @*}*@
+                @if ((Convert.ToDecimal(item.PDFPercentage)).ToString() == "0.00")
+                {
+                    <td style="padding-left:40px;">--</td>
+                }
+                else
+                {
+                    <td>@Html.Raw(item.PDFPercentage) %</td>
+                }
+            </tr>
+            {
+                Total += Convert.ToDecimal(item.Sales);
+                if (item.Department != "SUPPLIES")
+                {
+                    TotalCogs += Convert.ToDecimal(item.COgs);
+                }
+                TotalSalePer += Convert.ToDecimal(item.TotalSalPercentage);
+                TotalSalePers += Convert.ToDecimal(item.SalPercentage);
+                TotalPDFAmount += Convert.ToDecimal(item.PDFAmount);
+            }
+            i = i + 1;
+        }
+    </tbody>
+    <tfoot>
+        <tr class="invoicetotalcountbox1">
+            <td style="padding:10px 20px !important;" class="invoiceamt"><a title=Collapsed id="FinalRow" onclick="getStoreWiseTotalData(@i,this,1)" href=#><span class="clsbutton2" title="collaped" id="FinalRows">+</span></a> Total</td>
+            <td style="padding:10px 20px !important;" class="invoiceamt"><span style="font-size:15px;">Total Sales <br /> </span>$ @AdminSiteConfiguration.PriceWithComma(Total.ToString()) <div id='tblSalesTotal'></div></td>
+            <td style="padding:10px 20px !important;" class="invoiceamt"><span style="font-size:15px;">% Of Total Sales <br /> </span>@AdminSiteConfiguration.PriceWithComma(TotalSalePer.ToString()) %</td>
+            <td style="padding:10px 20px !important;" class="invoiceamt"><span style="font-size:15px;">Total COGS <br /> </span>$ @AdminSiteConfiguration.PriceWithComma(TotalCogs.ToString()) <div id='tblCogsTotal'></div></td>
+            @{
+                if (Convert.ToDecimal(TotalCogs) != 0 && Convert.ToDecimal(Total) != 0)
+                {
+                    aa = (Convert.ToDecimal(TotalCogs) / Convert.ToDecimal(Total)) * 100;
+                }
+                if (Convert.ToDecimal(TotalPDFAmount) != 0 && Convert.ToDecimal(Total) != 0)
+                {
+                    bb = (Convert.ToDecimal(TotalPDFAmount) / Convert.ToDecimal(Total)) * 100;
+                }
+            }
+            <td style="padding:10px 20px !important;" class="invoiceamt"><span style="font-size:15px;">Avg COGS Ratio % <br /> </span>@AdminSiteConfiguration.PriceWithComma(aa.ToString()) %</td>
+            <td style="padding:10px 20px !important;" class="invoiceamt"><span style="font-size:15px;">Total Payroll Amount <br /> </span>$ @AdminSiteConfiguration.PriceWithComma(TotalPDFAmount.ToString()) <div id='tblPayrollTotal'></div><br /><div id='tblPayrollStoreTotal'></div></td>
+            <td style="padding:10px 20px !important;" class="invoiceamt"><span style="font-size:15px;">Avg Payroll Ratio % <br /> </span>@AdminSiteConfiguration.PriceWithComma(bb.ToString()) %</td>
+        </tr>
+    </tfoot>
+
+</table>
+
+<script src="~/Form_JS/OperatingRatioListAll.js"></script>

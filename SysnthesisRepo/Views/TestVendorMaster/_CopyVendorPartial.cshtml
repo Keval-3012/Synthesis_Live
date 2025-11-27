@@ -1,0 +1,38 @@
+﻿@using Syncfusion.EJ2
+
+
+<div>
+    <div class="form-row">
+
+        <div class="control-section">
+            @Html.EJS().Grid("InlineEditingCopy").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource((IEnumerable<object>)ViewBag.dataSource).AllowTextWrap().Columns(col =>
+       {
+
+           col.Field("StoreId").HeaderText("Store Id").Visible(false).Add();
+           col.Field("StoreName").HeaderText("Store Name").Width("150").Add();
+           col.Field("VendorName").HeaderText("Vendor").Width("250").Visible(false).Add();
+           col.Field("Statuss").HeaderText("Status").Width("100").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTemps" }).Template("#statusTemplates").Add();
+           col.HeaderText("Action").Width("100").Template("#copytemplate").Add();
+       }).QueryCellInfo("queryCellInfos").Toolbar(new List<string>() { "Search" }).Render()
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        
+        if ('@ViewBag.Message' == 'Copy Vendor Succefully') {
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+            toastObj.content = '@ViewBag.Message';
+            toastObj.target = document.body;
+            toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+        }
+        else if ('@ViewBag.Message' == 'Something went Wrong') {
+            toastObj.content = '@ViewBag.Message';
+            toastObj.target = document.body;
+            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+        }
+    });
+</script>
+@Html.EJS().ScriptManager()
+

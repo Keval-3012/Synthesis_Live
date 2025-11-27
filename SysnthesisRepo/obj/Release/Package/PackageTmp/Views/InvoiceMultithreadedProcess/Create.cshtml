@@ -1,0 +1,70 @@
+﻿@model EntityModels.Models.ApiKeyConfiguartion
+@{
+}
+<script src="~/Content/Scripts/jquery.validate.min.js"></script>
+
+<style>
+    .highlight1 {
+        color: red !important;
+    }
+
+    .toggle-password {
+        color: black !important;
+        float: right;
+        margin-left: -25px;
+        margin-top: -33px;
+        position: relative;
+        margin-right: 5px;
+        z-index: 9999 !important;
+        font-size: large;
+    }
+</style>
+
+<div id="globalTabContent">
+    <div id="PanAddUpdate">
+        <div class="header-small special_bg">
+            <h3>InvoiceMulti-threaded Process</h3>
+        </div>
+        @using (Html.BeginForm("Create", "InvoiceMultithreadedProcess", FormMethod.Post, new { id = "frmuser" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        API Key Name <span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.APIKeyName, new { maxlength = 200, @class = "form-control", @id = "Name" })
+                                    @Html.ValidationMessageFor(model => model.APIKeyName, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Bucket Size <span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.BucketSize, new { maxlength = 5, @class = "form-control", @id = "Name" })
+                                    @Html.ValidationMessageFor(model => model.BucketSize, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="from-group row">
+                            <div class="col-sm-8 ">
+                                <input id="btnSave" type="submit" value="Add"
+                                       class="buttonbox btnsubmit" />
+                                @Html.ActionLink("Cancel", "Index", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                            </div>
+                        </div>
+                    </div>
+                </div><br /><br />
+            </div>
+            <div class="clear">
+            </div>
+        }
+    </div>
+</div>
+

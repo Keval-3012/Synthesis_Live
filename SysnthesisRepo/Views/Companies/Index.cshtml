@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<style>
+    .addstore {
+        margin-top: 5px;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .select2-container{
+        width:150px!important;
+    }
+    .form-control {
+        width: 150px !important;
+    }
+</style>
+<div class="header-small special_bg">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Companies List</h3>
+        </div>
+        <div class="col-md-4">
+            @if (ViewBag.GroupList != null)
+            {
+                <div class="form-group" style="margin-bottom: 0px;">
+                    <label for="CompanyGroupFilter" style="display: inline-block; margin-right: 11px; width: 95px; "><b>Filter by Group:</b></label>
+                    @Html.DropDownList("CompanyGroupFilter",
+                        (IEnumerable<SelectListItem>)ViewBag.GroupList,
+                        new
+                             {
+                                 @class = "form-control",
+                              onchange = "onCompanyGroupFilterChange(this)",
+                              style = "display: inline-block; width: auto; padding: 5px 10px;"
+                             })
+                </div>
+            }
+        </div>
+        <div class="col-md-4"><a href="@Url.Action("Create", "Companies")" class="pull-right addstore" data-toggle="tooltip" data-placement="bottom" data-original-title="Add"><img src="~/Content/Admin/images/plus.svg" alt="" /></a></div>
+    </div>
+</div>
+@{
+    Html.RenderAction("Grid");
+}
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script type="text/javascript">
+    document.title = '@ViewBag.Title';
+</script>

@@ -1,0 +1,21 @@
+2025-11-10 14:23:46.5000|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/10/2025 2:23:46 PM
+2025-11-10 14:24:15.8353|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/10/2025 2:24:15 PM - An error occurred while sending the request.
+2025-11-10 14:25:14.6127|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 2:25:14 PM
+2025-11-10 14:25:18.4419|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 2:25:18 PM
+2025-11-10 14:25:20.5768|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 2:25:20 PM
+2025-11-10 14:26:49.4463|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 2:26:49 PM
+2025-11-10 15:44:33.1744|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/10/2025 3:44:33 PM
+2025-11-10 15:44:56.6172|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/10/2025 3:44:56 PM - An error occurred while sending the request.
+2025-11-10 15:45:08.1923|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:45:08 PM
+2025-11-10 15:45:10.8111|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:45:10 PM
+2025-11-10 15:45:13.9643|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:45:13 PM
+2025-11-10 15:46:54.9045|ERROR|Repository.JournalEntriesRepository|JournalEntriesRepository - GeneralEntryDetail - 11/10/2025 3:46:54 PM - Thread was being aborted.
+2025-11-10 15:46:54.9245|ERROR|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - MarkAsApprove - 11/10/2025 3:46:54 PM - Thread was being aborted.
+2025-11-10 15:47:57.6042|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/10/2025 3:47:57 PM
+2025-11-10 15:52:42.2880|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/10/2025 3:52:42 PM - An error occurred while sending the request.
+2025-11-10 15:53:36.4981|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:53:36 PM
+2025-11-10 15:53:49.3792|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:53:49 PM
+2025-11-10 15:53:53.9172|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:53:53 PM
+2025-11-10 15:53:57.1041|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:53:57 PM
+2025-11-10 15:58:37.6859|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:58:37 PM
+2025-11-10 15:58:42.2898|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 11/10/2025 3:58:42 PM

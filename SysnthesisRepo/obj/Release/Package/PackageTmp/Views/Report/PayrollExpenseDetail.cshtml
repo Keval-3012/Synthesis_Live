@@ -1,0 +1,230 @@
+﻿@model EntityModels.Models.PayrollExpenseDetailss
+@using Utility
+@{ Layout = "~/Views/Shared/AdminMaster.cshtml"; }
+<style type="text/css">
+    .warning {
+        margin: 10px 0px;
+        padding: 15px 10px 15px 45px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        font-family: 'Maven Pro', sans-serif !important;
+        color: black;
+        background-color: #FFF4E1;
+        background-image: url('/Content/Admin/images/warning-orange.svg');
+        background-size: 24px 24px;
+        margin-top: 10px;
+    }
+    .sticky-header {
+        position: sticky;
+        top: 79px;
+        z-index: 9999;
+    }
+    .warning1 {
+        /*margin: 10px 0px;*/
+        padding: 15px 10px 15px 45px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        font-family: 'Maven Pro', sans-serif !important;
+        color: #f4b400 !important;
+        background-color: #FFF4E1;
+        background-image: url('/Content/Admin/images/warning-orange.svg');
+        background-size: 24px 24px;
+        margin-left: 30px;
+    }
+    .lbldate {
+        font-size: 17px;
+        font-weight: bold;
+        padding-top: 2px;
+    }
+</style>
+@using (Html.BeginForm("PayrollExpenseDetail", "Report", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmuser" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="page-body headertopbox addinvoice">
+        <div class="header-small special_bg marginleft0 box_special1 marginnone  martop15 sticky-header">
+            <div class="hd_tital">
+                <div class="set_two" style="float:left">
+                    <span>Payroll Expense</span>
+                    <div class="paddleft10"> @*<input name="txtstartdate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">*@
+                    <label class="lbldate" Id="lblclosedate"></label></div>
+                </div>
+                @if (Model.PayrollExpenseDetail != null)
+                {
+                    if (Model.PayrollExpenseDetail.Count() > 0)
+                    {
+                        if (Model.PayrollExpenseDetail[0].IsSync != 1 && Model.PayrollExpenseDetail.FirstOrDefault().QBStatusField == true)
+                        {
+                            <div style="float:right;margin-bottom:5px;" class="warning1"><span data-toggle="tooltip" data-placement="bottom">Selected Store QB Token is Suspended</span></div>
+                        }
+                    }
+                }
+            </div>
+            <div class="hd_right">
+                <div class="addrowbox">
+                    @if (Model.PayrollExpenseDetail != null)
+                    {
+                        if (Model.PayrollExpenseDetail.Count() > 0)
+                        {
+                            if (Model.PayrollExpenseDetail[0].IsSync != 1)
+                            {
+                                <input type="button" class="add-row btn_orange clsbtnedit" value="Edit Values" id="btnEdit" onclick="Editfunction()">
+                                <input type="submit" value="Save Values"
+                                       class="add-row btn_orange clsbtnsubmit" style="display:none" />
+                            }
+                        }
+                    }
+                    <a href="/Report/PayrollExpensesIndex" class="pull-right btnbackbox" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Back"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+                </div>
+            </div>
+            <div class="form-group row col-md-12">
+                <div class="hd_tital">
+                    <div>
+                        @if (Model.PayrollExpenseDetail != null)
+                        {
+                            if (Model.PayrollExpenseDetail.Count() > 0)
+                            {
+                                if (Model.PayrollExpenseDetail[0].NotConfigureAccount.ToString() != "")
+                                {
+                                    <div class="warning">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="@Model.PayrollExpenseDetail[0].NotConfigureAccount.ToString()">One or more tender account(s) are not configured in settings. </span>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datagrid">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table_green_set">
+                    <thead>
+                        <tr class="bg_green">
+                            <th style="text-align:left;width:20%">Payroll Expenses</th>
+                            <th style="text-align:left;">Description</th>
+                            <th style="text-align:left; width:10%">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{if (Model.PayrollExpenseDetail != null)
+                            {
+                                if (Model.PayrollExpenseDetail.Count() > 0)
+                                {
+                                    decimal Total = 0;
+                                    for (var i = 0; i < Model.PayrollExpenseDetail.Count(); i++)
+                                    {
+                                        <tr>
+                                            <td style="text-align:left">@Model.PayrollExpenseDetail[i].Name</td>
+                                            <td style="text-align:left">@Model.PayrollExpenseDetail[i].Description</td>
+                                            <td style="text-align:right">
+                                                <span class="despan">
+                                                    @Html.Raw(AdminSiteConfiguration.PriceWithComma(Model.PayrollExpenseDetail[i].Amount.ToString()))
+                                                </span>
+                                                @Html.TextBoxFor(model => Model.PayrollExpenseDetail[i].Amount, new { maxlength = 500, @class = "form-control txtedit bold decimalOnly", style = "display: none;" })
+                                                <input id="PayrollCashAnalysisDetId" type="hidden" value="@Model.PayrollExpenseDetail[i].PayrollCashAnalysisDetailId" />
+                                                @Html.HiddenFor(model => Model.PayrollExpenseDetail[i].PayrollCashAnalysisDetailId)
+                                                @Html.HiddenFor(model => Model.PayrollExpenseDetail[i].PayrollCashAnalysisId)
+                                                @Html.HiddenFor(model => Model.PayrollExpenseDetail[i].Payrollid, new { id = "PayrollId" })
+                                                @Html.HiddenFor(model => Model.PayrollExpenseDetail[i].OldTotalAmount)
+                                                @Html.HiddenFor(model => Model.PayrollExpenseDetail[i].ValueIn)
+                                            </td>
+                                        </tr>
+                                        {
+                                            Total += Convert.ToDecimal(Model.PayrollExpenseDetail[i].Amount);
+                                        }
+                                    }
+                                    <tr class="invoicetotalcountbox1">
+                                        <td><h3 style="margin-left:20px;">&nbsp;</h3></td>
+                                        <td style="text-align:right"><h3 style="margin-left:20px;"><span style="font-size:15px;">Total Amount <br /> </span></h3></td>
+                                        <td style="padding:10px 20px !important;text-align:right;" class="invoiceamt">
+                                            <strong>$ @AdminSiteConfiguration.PriceWithComma(Total.ToString())</strong><br /><br />
+                                            @if (Model.PayrollExpenseDetail[0].IsSync != 1)
+                                            {
+                                                <a onclick="ConfirmApprove(@Model.PayrollExpenseDetail[0].Payrollid)" class="btn_comman buttonbox btnsubmit" title="Mark As Approve">Approve</a>
+                                            }
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="popupApproveAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+            <div class="modal-content ">
+                <div class="modal-header text-center">
+                    <i class="glyphicon glyphicon-fire"></i>
+                </div>
+                <div class="modal-title"><b><label id="DisplayStatus"></label></b><input type="hidden" id="DisplayIdNumber" /></div>
+                <div class="modal-body "></div>
+                <div class="modal-footer " style="text-align:center">
+                    <a class="btn btn-success" onclick="MarkAsApprove()">Yes </a>
+                    <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()">No </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        //var startDate = localStorage.getItem("PayrollExpense_Dates");
+        var startDate = '@ViewBag.PayrollDate';
+        document.getElementById("lblclosedate").textContent = startDate;
+    });
+</script>
+
+<script>
+    $(".decimalOnly").bind('keypress', function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        console.log(charCode);
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46 && charCode !== 45)
+            return false;
+
+        return true;
+    });
+    $(".decimalOnly").bind("paste", function (e) {
+        e.preventDefault();
+    });
+
+    function Editfunction() {
+        $(".txtedit").show();
+        $(".clsbtnsubmit").show();
+        $(".clsbtnedit").hide();
+        $(".despan").hide();
+    }
+
+    function ConfirmApprove(ID) {
+        $("#popupApproveAlert").show();
+        $("#DisplayIdNumber").val(ID);
+        $("#DisplayStatus").text('@ViewBag.SureApprove');
+    }
+
+    function closemodal() {
+        $(".divIDClass").hide();    
+    }
+
+    function MarkAsApprove() {
+        var ID = $("#DisplayIdNumber").val();
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/Report/ApprovePayrollExpense',
+            data: { Id: ID },
+            async: false,
+            beforeSend: function () { Loader(1); },
+            success: function (response) {
+                Loader(0);
+
+                    if (response === "sucess") {
+                        MyCustomToster('@ViewBag.Approve');
+                    }
+
+                window.location.href = '@AdminSiteConfiguration.GetURL()/Report/PayrollExpense';
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    }
+</script>

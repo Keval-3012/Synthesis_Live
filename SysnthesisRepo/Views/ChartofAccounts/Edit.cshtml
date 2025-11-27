@@ -1,0 +1,380 @@
+﻿@model EntityModels.Models.DepartmentMaster
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+</style>
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        $(".modal-title").append("@ViewBag.Message");
+        $("#popupid").modal("show");
+    };
+    </script>
+}
+
+
+@using (Html.BeginForm("Edit", "ChartofAccounts", FormMethod.Post, new { id = "frmMain" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.DepartmentId)
+    @Html.HiddenFor(model => model.StoreId)
+    <div id="globalTabContent">
+
+        <div id="progress" class="modal">
+            <div class="center">
+            </div>
+        </div>
+        <div id="PanAddUpdate">
+            <div class="header-small special_bg">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3>Update Department </h3>
+                    </div>
+                    <div class="col-md-9" style="text-align: end;">
+                        <h4><b>Store :  @Html.DisplayFor(m => m.StoreMasters.Name)</b></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-body headertopbox addDepartment" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row addDepartmenter">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Display Name <span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.DepartmentName, new { maxlength = 500, @class = "form-control", placeholder = "Name", @style = "text-transform: uppercase" })
+                                    <span class="highlight">     @Html.ValidationMessageFor(model => model.DepartmentName, "", new { @class = "form-error-msg show" })</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Account Number
+                                    </label>
+                                    @Html.TextBoxFor(model => model.AccountNumber, new { maxlength = 6, @class = "form-control", placeholder = "Account Number", @style = "text-transform: uppercase" })
+                                    <span class="highlight">     @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "form-error-msg show" })</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row addDepartmenter" style=" pointer-events: none;">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Account Type <span class="highlight">*</span>
+                                    </label>
+                                    @Html.DropDownList("AccountTypeId", null, "Select", new { @class = "form-control" })
+                                    @Html.HiddenFor(model => model.AccountTypeId)
+                                </div>
+                            </div>
+                            <div class="col-md-3 desktop">
+                                <div class="form-group">
+                                    <label>
+                                        Detail Type <span class="highlight">*</span>
+                                    </label>
+                                    @Html.DropDownList("AccountDetailTypeId", null, "Select", new { @class = "form-control" })
+                                    @Html.HiddenFor(model => model.AccountDetailTypeId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="pointer-events: none;">
+                                <div class="form-group">
+                                    <label>
+                                        IsSubAccounts
+                                    </label>
+                                    <div class="IsSubRemember">
+                                        @Html.DropDownList("IsSubAccounts", new SelectList(""), "Select", new { @class = "form-control" })
+                                        @Html.HiddenFor(model => model.IsSubAccount)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 addDepartmenter">
+                                <div class="form-group">
+                                    <label>
+                                        Description
+                                    </label>
+                                    @Html.TextAreaFor(model => model.Description, new { maxlength = 500, @class = "form-control", placeholder = "Description", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBoxFor(a => a.IsActive, new { @class = "chk", @style = "opacity:1;display:block;position:initial;" })
+                                        <label for="IsActive" style="padding-left:28px;margin-top:-30px;">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Update" id="btnSave" class="buttonbox btnsubmit" />
+                            @Html.ActionLink("Cancel", "Index", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p id="error" style="color:red;font-size:20px;"></p>
+
+
+}
+
+<script>
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+    $(document).ready(function () {
+
+        $("#DepartmentName").autocomplete(false);
+        $("#AccountNumber").autocomplete(false);
+    });
+    $(".Remember").click(function () {
+
+        if ($(this).prop('checked') == true) {
+            $('.IsSubRemember :input').attr("disabled", false);
+            $("#StoreId").val("");
+            $(".select2-selection__choice").remove();
+            $("#StoreId").show();
+            $(".mutili").hide();
+            $("#MultiStoreId").select2("val", "");
+        }
+        else {
+            $('.IsSubRemember :input').attr("disabled", true);
+            $("#StoreId").val("");
+            $(".select2-selection__choice").remove();
+            $("#StoreId").hide();
+            $(".mutili").show();
+            $("#MultiStoreId").select2("val", "");
+        }
+    })
+
+    function removelist() {
+         var x = document.getElementById("MultiStoreId");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    try {
+                        x.remove(i, null);
+                    } catch (error) {
+                        x.remove(i);
+                    }
+                }
+            }
+    }
+
+    $("#StoreId").change(function () {
+        var optionSelected = $(this).find("option:selected").val();
+        if (optionSelected == "") {
+            $('.addDepartmenter :input').attr('disabled', true);
+            $('#btnSave').attr("disabled", true);
+        }
+        else {
+            $('.addDepartmenter :input').attr('disabled', false);
+            $('#btnSave').attr("disabled", false);
+            $("#MultiStoreId option[value=" + optionSelected +"]").attr("selected", true);
+        }
+       $.ajax({
+            url: 'GetURL()/QBConfiguration/GetQBTypeAndFlag',
+             type: "POST",
+             data: { "StoreID": optionSelected },
+             success: function (response) {
+                 if (response.QBType == "Online") {
+                     if (response.DesktopTrue == "False") {
+                         $("#DepartmentName").attr('maxlength', 500);
+                         $("#StoreID").val(response.StoreID);
+                         $("#QBType").val(response.QBType);
+                         getAccountType(response.QBType);
+                         $('#AccountDetailTypeId option').map(function () {
+                             if ($(this).text() == "Select") return this;
+                         }).attr('selected', 'selected');
+                     }
+                     else {
+                         $("#DepartmentName").attr('maxlength', 41);
+                         $("#StoreID").val(response.StoreID);
+                         $("#QBType").val(response.QBType);
+                         getAccountType(response.QBType);
+                         $('#AccountDetailTypeId option').map(function () {
+                             if ($(this).text() == "Select") return this;
+                         }).attr('selected', 'selected');
+                     }
+                 }
+                 else if (response.QBType == "Desktop") {
+                     $("#DepartmentName").attr('maxlength', 41);
+                     $("#StoreID").val(response.StoreID);
+                     $("#QBType").val(response.QBType);
+                     getAccountType(response.QBType);
+                     $('#AccountDetailTypeId option').map(function () {
+                         if ($(this).text() == "Select") return this;
+                     }).attr('selected', 'selected');
+
+                 }
+                 else {
+                     $("#DepartmentName").attr('maxlength', 41);
+                     $("#StoreID").val(response.StoreID);
+                     $("#QBType").val(response.QBType);
+                     getAccountType(response.QBType);
+                     $('#AccountDetailTypeId option').map(function () {
+                         if ($(this).text() == "Select") return this;
+                     }).attr('selected', 'selected');
+
+                 }
+
+            },
+            error: function (Result) {
+            }
+        });
+
+    })
+
+    $("#MultiStoreId").change(function () {
+        var optionSelected = $(this).find("option:selected").val();
+        if (optionSelected == "") {
+            $('.addDepartmenter :input').attr('disabled', true);
+            $('#btnSave').attr("disabled", true);
+        }
+        else {
+            $('.addDepartmenter :input').attr('disabled', false);
+            $('#btnSave').attr("disabled", false);
+            var Store = [];
+            var x = document.getElementById("MultiStoreId");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    Store.push(x.options[i].value);
+                }
+            }
+        }
+    })
+
+      function getAccountType(iType) {
+            $.ajax({
+                  url: '@Url.Action("GetAccountType", "QBConfiguration")',
+                  type: "POST",
+                  data: { "Type": iType },
+                  success: function (response) {
+                      if (response.length > 0) {
+                          $('#AccountTypeId').html('');
+                          var options = '';
+                          options += '<option value="0">Select</option>';
+                          for (var i = 0; i < response.length; i++) {
+                              options += '<option value="' + response[i].AccountType + '">' + response[i].AccountType + '</option>';
+                          }
+                          $('#AccountTypeId').append(options);
+                      }
+                      else {
+
+                          $('#AccountTypeId').html('');
+                          var options = '';
+                          options += '<option value="0">Select</option>';
+                          $('#AccountTypeId').append(options);
+
+                      }
+                  },
+                  error: function (response) {
+                 }
+             });
+      }
+
+    $("#AccountTypeId").change(function () {
+        var GetTypeID = $('#AccountTypeId').find("option:selected").val();
+        var GetTypes = $('#AccountTypeId').find("option:selected").text();
+        $("#DeptType").val($('#AccountTypeId').find("option:selected").text());
+                $.ajax({
+                 url: '@Url.Action("GetDetailAccountType", "QBConfiguration")',
+                 type: "POST",
+                    data: { "GetAccountType": GetTypes },
+                  success: function (response) {
+                      if (response.length > 0) {
+                          $('#AccountDetailTypeId').html('');
+                          var options = '';
+                          options += '<option value="0">Select</option>';
+                          for (var i = 0; i < response.length; i++) {
+                              options += '<option value="' + response[i].DetailTypeID + '">' + response[i].DetailType + '</option>';
+                          }
+                          $('#AccountDetailTypeId').append(options);
+                      }
+                      else {
+
+                          $('#AccountDetailTypeId').html('');
+                          var options = '';
+                          options += '<option value="0">Select</option>';
+                          $('#AccountDetailTypeId').append(options);
+
+                      }
+                  },
+                  error: function (response) {
+                    }
+                });
+
+        var GetTypeIDtexr = $('#AccountTypeId').find("option:selected").text();
+        var stor = $("#StoreId").val();
+         $.ajax({
+                 url: '@Url.Action("IsSubAccounttype", "QBConfiguration")',
+                 type: "POST",
+             data: { "GetAccountType": GetTypeIDtexr, "StoreID": stor },
+                  success: function (response) {
+                      if (response.length > 0) {
+                          $('#IsSubAccounts').html('');
+                          var options = '';
+                          options += '<option value="0">Select</option>';
+                          for (var i = 0; i < response.length; i++) {
+                              options += '<option value="' + response[i].ListID + '">' + response[i].DepartmentName + '</option>';
+                          }
+                          $('#IsSubAccounts').append(options);
+                      }
+                      else {
+
+                          $('#IsSubAccounts').html('');
+                          var options = '';
+                          options += '<option value="0">Select</option>';
+                          $('#IsSubAccounts').append(options);
+
+                      }
+                  },
+                  error: function (response) {
+                    }
+                });
+    })
+    $("#IsSubAccounts").change(function () {
+        $("#IsSubAccount").val($('#IsSubAccounts').find("option:selected").val());
+    })
+    $("#AccountTypeId").change(function () {
+
+        var AccountDetailTypeId = $('#AccountTypeId').find("option:selected").val();
+        $("#AccountDetailTypeId").val($('#AccountTypeId').find("option:selected").text());
+
+    })
+</script>

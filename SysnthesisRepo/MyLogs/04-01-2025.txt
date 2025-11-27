@@ -1,0 +1,4 @@
+2025-04-01 17:28:58.0445|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/1/2025 5:28:58 PM
+2025-04-01 17:31:07.7999|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/1/2025 5:31:07 PM
+2025-04-01 17:31:22.8687|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/1/2025 5:31:22 PM - The provided anti-forgery token was meant for user "", but the current user is "Admin".
+2025-04-01 17:31:27.3859|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/1/2025 5:31:27 PM

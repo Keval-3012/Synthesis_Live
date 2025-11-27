@@ -1,0 +1,85 @@
+﻿@model List<EntityModels.Models.InvoiceSelect>
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+</style>
+<div class="header-small special_bg">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>UnSuccessfull Invoice </h3>
+        </div>
+        <div class="col-md-9" style="text-align:right;">
+            <input type="submit" value="Force Sync" id="btnForceSync"
+                   class="buttonbox btnsubmit" />
+            <input type="submit" value="Ignore" id="btnIgnore"
+                   class="buttonbox btn-danger" />
+        </div>
+    </div>
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="datagrid martop15">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover maintable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="SelChkbox" class="cssIsActive" /></th>
+                            <th style="display:none;"></th>
+                            <th>Invoice</th>
+                            <th>Type</th>
+                            <th>Payment Type</th>
+                            <th>Invoice Date</th>
+                            <th>Vendor Name</th>
+                            <th>Status</th>
+                            <th>TxnId</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adta">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                        <input id="trChkbox" class="trChkbox" style="left: 30%;top: 30%;height: 22px;display: inline;opacity: unset;" type="checkbox" value="true" />
+                                </td>
+                                <td style="display:none;">@item.InvoiceId</td>
+                                <td>@item.InvoiceNumber</td>
+                                <td>@item.InvoiceType</td>
+                                <td>@item.PaymentType</td>
+                                <td>@item.InvoiceDate</td>
+                                <td>@item.VendorName</td>
+                                <td>@item.StatusValue</td>
+                                <td>@item.TXNId</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+
+<script src="~/Form_JS/QBConfiguration.js"></script>

@@ -1,0 +1,223 @@
+﻿@model IEnumerable<EntityModels.Models.DailyPosFeeds>
+@using EntityModels.Models
+@using Utility
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+<div class="header-small special_bg reportlinehight">
+    <h3>
+        Daily POS Feeds
+        @*<a href="@Url.Action("Create", "Store")" class="pull-right addstore" class="pull-right addstore" data-toggle="tooltip" data-placement="bottom" title="Add"><img src="~/Content/Admin/images/plus.svg" alt="" /></a>*@
+
+    </h3>
+    <div class="clear">
+    </div>
+</div>
+@*<h2>Index</h2>*@
+<style type="text/css">
+    .Fileup {
+        background: #047DFF;
+        color: #ffffff !important;
+        padding: 8px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none !important;
+    }
+
+    .active1 {
+        display: block;
+    }
+
+    .active2 {
+        display: none;
+    }
+</style>
+<script>
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+</script>
+<div id="popupNoRecordAlert" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Records Found</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<div class="" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="searchfinal martopzero">
+        <div class="widget-body shadownone brdrgray">
+
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <div class="dataTables_filter">
+                    <form id="form">
+                        <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+                            <tr>
+                                <td width="157">
+                                    @*<input type="text" name="value_from_start_date" id="Startdate" style="cursor: text;" readonly="readonly" data-datepicker="separateRange" placeholder="From" class="datepicker form-control" />*@
+                                    <input name="txtstartdate" detail="DailyPosFeeds Startdate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" style="cursor: text;" data-datepicker="separateRange" id="txtstartdate" placeholder="From" class="datepicker form-control sa" value="@ViewBag.startdate">
+                                </td>
+                                <td width="10"></td>
+                                <td width="157">
+                                    @*<input type="text" name="value_from_end_date" id="Enddate" data-datepicker="" style="cursor: text;" placeholder="To" class="datepicker form-control" />*@
+                                    <input name="txtenddate" detail="DailyPosFeeds EndDate" data-val="true" data-val-date="The field Startdate must be a date." style="cursor: text;" data-datepicker="separateRange" type="text" maxlength="100" id="txtenddate" placeholder="To" class="datepicker form-control sa" value="@ViewBag.enddate">
+                                </td>
+                                <td width="10"></td>
+                                <td width="170" style="display:none">
+                                    @*@{
+                                            List<SelectListItem> Lststore = new List<SelectListItem>();
+                                            foreach (ddllist item in ViewBag.DataStore)
+                                            {
+                                                Lststore.Add(new SelectListItem
+                                                {
+                                                    Text = item.Text,
+                                                    Value = Convert.ToString(item.Value)
+                                                });
+                                            }
+                                        }*@
+                                    @Html.DropDownList("DrpLstStore", null, "All Stores", new { @class = "myval form-control", @style = "display:block" })
+                                    @*<select class="myval">
+                                            <option>All Stores</option>
+                                            <option>D-Mart</option>
+                                        </select>*@
+                                </td>
+                                <td width="10"></td>
+                                <!--<td width="170">-->
+                                    @*@{
+            List<SelectListItem> Lstterminal = new List<SelectListItem>();
+
+            var countval = ViewBag.TerminalListcount;
+            if (countval > 0)
+            {
+                foreach (ddllist item in ViewBag.TerminalList)
+                {
+                    Lstterminal.Add(new SelectListItem
+                    {
+                        Text = item.Text,
+                        Value = Convert.ToString(item.Value)
+                    });
+                }
+            }
+        }*@
+                                    @*@Html.DropDownList("DrpLstTerminal",null, "All Terminals", new { @class = "myval form-control", Style = "width: 150px;" })*@
+                                    @*<select class="myval">
+            <option>All Terminals</option>
+            <option>+ AEV10</option>
+        </select>*@
+                                    <!--@Html.DropDownList("DrpLstTerminal", null, "All Terminals", new { @class = "myval form-control", Style = "width: 150px;" })
+                                </td>-->
+                                <!--<td width="10"></td>
+                                <td width="170">-->
+                                    @*@{
+                                        List<ShiftNewList> LstShift = new List<ShiftNewList>();
+
+                                        var Shiftval = ViewBag.ShifListcount;
+                                        if (Shiftval > 0)
+                                        {
+                                            foreach (var item in ViewBag.ShiftNameList)
+                                            {
+                                                LstShift.Add(new ShiftNewList
+                                                {
+                                                    Name = item.Text,
+                                                    Id = item.Value
+                                                });
+                                            }
+                                        }
+                                    }*@
+                                    <!--@Html.DropDownList("DrpLstShift", null, "All Shift", new { @class = "myval form-control", Style = "width: 150px;" })
+                                </td>-->
+                                <td width="10"></td>
+                                <td width="75">
+                                    <div class="input-group">
+                                        <input type="button" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class="buttonbox btnsubmit btn_spcial" />
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td>
+                                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UploadDailyPOSFeeds"))
+                                    {
+                                        <a class="fileUploadBtn Fileup"> <i class="fa fa-cloud-upload" aria-hidden="true"></i>  Import</a>
+                                    }
+                                </td>
+                                <td width="10"></td>
+                                @*<td width="190">
+                                        <a class="buttonbox btnsubmit btn_spcial" href="@Url.Action("ExportExcelData", "SalesActivitySummaryReport")">Export To Excel</a>
+                                    </td>*@
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="fileUploadBox" style="display:none;">
+        <!-- <span class="closebtn"><a href="#" class="btn btn-success">Done</a></span> -->
+        <div class="dragdropdownBox">
+            <div class="uploadBox" style="height:36vh;">
+                <div class="dropBox">
+                    <img src="~/Content/Admin/images/icons/upload.svg" alt="" class="downloadIcon" />
+                    <!-- <i class="fa fa-download" aria-hidden="true"></i> -->
+                    <p>Upload Reports</p>
+                    <span>Drag and drop your PDFs here</span>
+                    <div class="buttonsBar">
+                        <input type="file" class="selectFiles" name="DocFiles" multiple="multiple" id="DocFiles" accept=".Pdf" data-val="true" data-val-required="File is required" required />
+                        @*<a href="#" class="selectFiles">Select All Files</a>*@
+                        <a href="#" class="closebtn btnCancel">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="gridtablebox">
+            <div class="flexRow">
+                <p>PDF Files</p>
+                <div class="buttonsBar">
+                    <a href="#" class="closebtn btnCancel">Cancel</a>
+                    <a href="#" class="closebtn greenBtn">Done</a>
+                </div>
+            </div>
+            <div class="gridtable mCustomScrollbar" style="overflow-y: scroll;max-height: 350px;">
+                <table id="daafile">
+                    <tbody id="getexcel">
+                        <tr>
+                            <td><img src="~/Content/Admin/images/icons/icon_pdf.png" alt="" /> [PDF file name of Invoice PDF].pdf</td>
+                            <td>
+                                <div class="box">
+                                    <div class="loader-05"></div>
+                                </div>
+                                <a href="#" class="trash"><img src="~/Content/Admin/images/icons/trash.svg" alt="" class="checkicon" /></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="grddata">
+    @{
+        Html.RenderAction("DailyPosFeedsGrid");
+    }
+</div>
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+@*<link href="~/daterange/daterangepicker.min.css" rel="stylesheet" />*@
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+@*<script src="~/daterange/moment.min.js"></script>
+<script src="~/daterange/daterangepicker.min.js"></script>
+<script src="~/Content/Admin/js/NewDatepicker.js"></script>*@
+
+
+<script>
+    var SearchTitle = '@ViewBag.SearchTitle'
+    var SearchTitle1 = '@ViewBag.SearchTitle1'
+    var storeid = '@ViewBag.storeid'
+</script>
+<script src="~/Form_JS/DailyPosFeeds.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

@@ -1,0 +1,200 @@
+﻿@model IEnumerable<EntityModels.Models.PayrollExpenseSelect>
+@using Utility
+@{ Layout = null; }
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice">
+        <div class="datagrid martop15">
+            <div class="table-responsive" style="position:relative; min-height: 300px;">
+                <table class="marginbtm15">
+                    <tr>
+                        <td>
+                            <div class="div_flex">
+                                <input name="txtstartdate" type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                                <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class=".searchfinal .btnsearchicon marginleft10" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-striped table-hover tablecolor">
+                    <thead>
+
+                        <tr>
+                            <th style="text-align:left;width:20%">Date</th>
+                            @{
+                                string storeid = Session["storeid"].ToString();
+                            }
+                            @if (storeid == "0" || storeid == null)
+                            {
+                                <th style="text-align:left;width:20%">Store</th>
+                            }
+                            <th style="text-align:right; width:15%">Total Amount</th>
+                            <th style="width:15%;text-align:center">Status</th>
+                            <th style="width:10%;text-align:center">Approved Date</th>
+                            <th style="width:15%;text-align:center">QB Status</th>
+                            <th style="text-align:center; width:15%">Action</th>
+                        </tr>
+                    </thead>
+                    @{
+                        if (Model != null)
+                        {
+                            if (Model.Count() > 0)
+                            {
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            <tr class="even">
+                                                <td style="vertical-align:middle;text-align:left;width:5%">
+                                                    <a onclick="setItems(this)" href="@Url.Action("PayrollExpenseDetail", "Report", new { Id = item.Payrollid })" class="" title="Detail">
+                                                        @AdminSiteConfiguration.GetDate(Convert.ToString(Html.Raw(item.EndCheckDate)))
+                                                    </a>
+                                                </td>
+                                                @if (storeid == "0" || storeid == null)
+                                                {
+                                                    <td style="vertical-align:middle;text-align:left">
+                                                        @Html.Raw(item.Storename)
+                                                    </td>
+                                                }
+                                                <td style="vertical-align:middle;text-align:right;width:10%">$ @Html.Raw(AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount)))</td>
+                                                @if (item.IsSync == 1)
+                                                {
+                                                    <td style="vertical-align:middle;text-align:center;width:10%">
+                                                        <span class="btn btn-success btn-xs clsstatus"><i class="fa fa-check"></i> Approved</span>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:left">
+                                                        @Html.Raw((item.ApproveDate.ToString() == "") ? "" : Convert.ToDateTime(item.ApproveDate).ToString("yyyy-MM-dd hh:mm:ss tt"))
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:center;width:10%"><img src="~/QBImages/synced.png" style="height: 100%;" /></td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="vertical-align:middle;text-align:center;width:10%">
+                                                        <span class="btn btn-warning btn-xs btnpending clsstatus"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:left">
+                                                        @Html.Raw((item.ApproveDate.ToString() == "") ? "" : Convert.ToDateTime(item.ApproveDate).ToString("yyyy-MM-dd hh:mm:ss tt"))
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:center;width:10%"><img src="~/QBImages/not-synced.png" style="height: 100%;" /></td>
+                                                }
+                                                <td style="text-align:center; width:10%">
+                                                    <a onclick="setItems(this)" detail="@AdminSiteConfiguration.GetDate(Convert.ToString(Html.Raw(item.EndCheckDate))) - Details" href="@Url.Action("PayrollExpenseDetail", "Report", new { Id = item.Payrollid })" class="" title="Edit"><img src="../../Content/Admin/images/edit-2.svg" alt="" /> </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tr class="paginationGrid">
+                                        <td class="left-text dataTables_length showdata" style="padding-top: 0px!important;">
+                                            <div class="recordbox showingrecords">
+                                                <span class="selectbox">
+                                                    @{
+                                                        List<SelectListItem> listItem_Records = new List<SelectListItem>();
+                                                        string[] Records = AdminSiteConfiguration.GetArrayForRecord().ToString().Split(',');
+                                                        foreach (string word in Records)
+                                                        {
+                                                            listItem_Records.Add(new SelectListItem
+                                                            {
+                                                                Text = word.Split(':')[0],
+                                                                Value = word.Split(':')[1]
+                                                            });
+                                                        }
+                                                        @Html.DropDownList("SelectRecords", listItem_Records, new { @class = "myval", @onchange = "javascript:FunPageRecord(this.value);" })
+                                                    }
+                                                </span><span class="text_record">Records</span>
+                                            </div>
+                                            <div class="showdatabox showdataboxrecord">
+                                                <span style="float:left">Showing @ViewBag.startIndex to @ViewBag.endIndex of @ViewBag.TotalDataCount entries</span>
+                                            </div>
+                                        </td>
+                                        <td colspan="6">
+                                            <div class="pagination">
+                                                @if (ViewBag.LastPageIndex > 1)
+                                                {
+                                                    if (ViewBag.CurrentPageIndex != 1)
+                                                    {
+                                                        <a id="btnPageFirst" style="cursor:pointer" onclick="javascript:FunPageIndex(1);" class=" Linkbutton firstpage nextbtn">First</a>
+                                                        <a id="btnPagePrevious" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    -1);" class=" Linkbutton Linkbutton prebtn">Previous</a>
+                                                    }
+                                                    int PageIndex = 3;
+                                                    int StartPageIndex = ViewBag.CurrentPageIndex - PageIndex;//10-3=7
+                                                    int EndPageIndex = ViewBag.CurrentPageIndex + PageIndex;//10+3=13
+
+                                                    if (StartPageIndex < 1)
+                                                    {
+                                                        EndPageIndex = EndPageIndex - StartPageIndex;
+                                                    }
+
+                                                    if (EndPageIndex > ViewBag.LastPageIndex)
+                                                    {
+                                                        StartPageIndex = (StartPageIndex - (EndPageIndex - ViewBag.LastPageIndex)) + 1;
+                                                    }
+
+                                                    for (int i = 1; i <= @ViewBag.LastPageIndex; i++)
+                                                    {
+
+                                                        if ((StartPageIndex < i && EndPageIndex > i))
+                                                        {
+                                                            if (ViewBag.CurrentPageIndex == i)
+                                                            {
+                                                                <span Style="min-width: 25px; display: inline-block;">@i          </span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a id="btnnum" style="cursor:pointer" onclick="javascript:FunPageIndex(@i);">@i</a>
+                                                            }
+                                                        }
+                                                    }
+                                                    if (ViewBag.CurrentPageIndex != @ViewBag.LastPageIndex)
+                                                    {
+                                                        <a id="btnPageNext" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    +1);" class=" Linkbutton nextbtn">Next</a>
+                                                        <a id="btnPageLast" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.LastPageIndex);" class=" Linkbutton lastpage nextbtn">Last</a>
+                                                    }
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var OrderByVal = '@ViewBag.OrderByVal'
+    var IsAscVal = '@ViewBag.IsAscVal'
+    var PageSize = '@ViewBag.PageSize'
+    var Alpha = '@ViewBag.Alpha'
+    var SearchRecords = '@ViewBag.SearchRecords'
+    var deptname = '@ViewBag.deptname'
+    var startdate = '@ViewBag.startdate'
+    var enddate = '@ViewBag.enddate'
+    var payment = '@ViewBag.payment'
+    var Store_val = '@ViewBag.Store_val'
+    var CurrentPageIndex = '@ViewBag.CurrentPageIndex'
+</script>
+<script>
+    function setItems(args) {
+        var date = args.innerText;
+        //localStorage.setItem("PayrollExpense_Dates", date);
+    var dateval = $("#txtstartdate").val();
+    localStorage.setItem("PayrollExpense_Date", dateval);
+}
+
+$(document).ready(function () {
+   /* $("#txtstartdate").autocomplete(false);*/
+    if('@ViewBag.SearchTitle'!="")
+    {
+        $("#txtstartdate").val('@ViewBag.SearchTitle');
+    }
+    $('#txtstartdate').datetimepicker({
+        format: 'MMM-YYYY',
+        useCurrent: false,
+        daysOfWeekDisabled: [0, 6]
+    });
+});
+
+</script>
+<script src="~/Form_JS/PayrollExpenseGrid.js"></script>

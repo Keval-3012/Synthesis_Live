@@ -1,0 +1,286 @@
+﻿@model IEnumerable<EntityModels.Models.Invoice_Dashbord_Select>
+@using EntityModels.Models
+@using System.Configuration;
+@using Utility
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<link href="~/Content/productprice/css/style.css" rel="stylesheet" type="text/css" />
+<style>
+    .headermainbox span.applicationtext select, .headermainbox .select2-container--default .select2-selection--single {
+        background: #6d6d6d !important;
+    }
+
+    #select2-storeid-container {
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 30px;
+    }
+
+    .headermainbox span.applicationtext span.select2-selection__arrow {
+        height: 30px;
+        line-height: 17px !important;
+        position: absolute;
+        right: 2px;
+        top: 1px;
+        width: 20px;
+    }
+
+        .headermainbox span.applicationtext span.select2-selection__arrow b {
+            border-color: unset;
+            border-width: unset;
+            border-style: unset;
+            top: 0%;
+        }
+
+    .leftmenubox .topbarbox span.select2-selection__arrow b::before {
+        content: unset;
+        display: none;
+    }
+
+    .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+        background: #333239 !important;
+    }
+
+    .select2-search--dropdown {
+        display: block !important;
+    }
+
+    ul#select2-storeid-results li.select2-results__option {
+        background-color: none;
+        padding: 6px;
+        font-size: 14px;
+        font-weight: unset;
+    }
+
+    ul#select2-storeid-results li.select2-results__option--highlighted {
+        background: #E53939 !important;
+    }
+</style>
+
+<style>
+
+    #header-fixed {
+        position: fixed;
+        top: 0px;
+        display: none;
+        background-color: white;
+    }
+
+    .page-sidebar.sidebar-fixed {
+        position: fixed;
+    }
+
+    body {
+        font-family: 'Muli', sans-serif !important;
+        color: #787878;
+    }
+
+    .page-header-main .searchinvoicebox input[type="text"] {
+        width: 85% !important;
+        border: 0px;
+        height: unset !important;
+        height: -1px !important;
+    }
+
+    .datagrid table tr td {
+        font-family: 'Muli', sans-serif !important;
+        color: #787878;
+    }
+
+    .datagrid a i {
+        color: unset;
+        font-size: 12px !important;
+    }
+
+    #sSearchUpc {
+        z-index: 0;
+        background-color: transparent;
+    }
+
+    .loading-containers {
+        z-index: 200000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.8)url(../img/white_trans.png) repeat left top !important;
+    }
+
+        .loading-containers .loaders {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            -webkit-animation: typing 1s linear infinite alternate;
+            -moz-animation: Typing 1s linear infinite alternate;
+            animation: typing 1s linear infinite alternate;
+            margin: 50vh auto;
+            position: relative;
+            left: -12px;
+        }
+
+    .page-content {
+        position: unset;
+        z-index: 1;
+    }
+
+    .change {
+        color: black !important;
+        text-decoration: unset;
+    }
+
+    .tooltipTop {
+        display: inline-block;
+        position: relative;
+        border-bottom: 1px dotted #666;
+        text-align: left;
+    }
+
+        .tooltipTop .top {
+            min-width: 100px;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            padding: 10px 20px;
+            color: #444444;
+            background-color: #EEEEEE;
+            font-weight: normal;
+            font-size: 13px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 99999;
+            box-sizing: border-box;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            display: none;
+            top: 0%;
+        }
+
+        .tooltipTop:hover .top {
+            display: block;
+        }
+
+        .tooltipTop .top i {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -12px;
+            width: 24px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+            .tooltipTop .top i::after {
+                content: '';
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                left: 50%;
+                transform: translate(-50%,-50%) rotate(45deg);
+                background-color: #EEEEEE;
+                box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            }
+</style>
+<div class="loading-containers loading-inactives" style="display:block;">
+    <div class="loaders"></div>
+</div>
+<body>
+    <div class="leftmenubox">
+        <div class="topbarbox">
+            <div>
+                <p>Price Comparison</p>
+            </div>
+            <div>
+                <ul class="actionsdropdown">
+                    <li>
+                        <div>
+                            <table>
+                                <tr>
+                                    <td class="padright10">
+                                        <input name="txtfromdate" type="text" value="11-26-2021" maxlength="100" id="txtfromdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+
+                                    </td>
+                                    <td class="padright10">
+                                        <input name="txttodate" type="text" value="11-26-2021" maxlength="100" id="txttodate" placeholder="To" class="datepicker form-control" onkeydown="return false">
+                                    </td>
+                                    <td>
+                                        <input type="button" value="Submit" class="btn btn-success" onclick="getProductPrice()" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><label style="color: red" id="errorfrom"></label><label style="color: red" id="errorto"></label></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                    <li>
+                        @Html.DropDownList("Vendor", null, "--select--", htmlAttributes: new { @class = "selectdropdownbox vendorsbox" })
+                    </li>
+                    <li>
+                        <select class="selectdropdownbox departments" name="state" id="dept">
+                            <option value="Departments">Departments</option>
+                            <option value="Departments2">Departments2</option>
+                        </select>
+                    </li>
+                    <li>
+                        <div class="exludefilters">
+                            <p>Exlude Filters</p>
+                            <div class="exludefilterbox">
+                                <span class="green02bg"></span>
+                                <span class="green01bg"></span>
+                                <span class="lightgrey01bg"></span>
+                                <span class="Red01bg"></span>
+                                <span class="Red02bg"></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="productinfoarea">
+            <table>
+                <thead id="theadj">
+
+                </thead>
+                <tbody id="tbodyj"></tbody>
+            </table>
+        </div>
+    </div>
+    <div style="display:none;"><span id="cnt" style="color:red;"></span></div>
+    <script src="~/Content/productprice/js/jquery-1.12.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="~/Content/productprice/js/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Content/productprice/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".page-sidebar.sidebar-fixed").attr("style", "z-index:0 !important;");
+            $(".headermainbox").attr("style", "z-index:0 !important;");
+            $('.vendorsbox').select2();
+            $('.departments').select2();
+            var txtfromdate = '@ViewBag.txtfromdate';
+            $('#txtfromdate').val(txtfromdate);
+            $('#txtfromdate').datetimepicker({
+                format: 'MM/DD/YYYY',
+                useCurrent: true
+            }).datepicker('setDate', (new Date()).getDate() - 15);
+
+            $('#txtfromdate').attr('autocomplete', 'off');
+            var txttodate = '@ViewBag.txttodate';
+            $('#txttodate').val(txttodate);
+            $('#txttodate').datetimepicker({
+                format: 'MM/DD/YYYY',
+                useCurrent: true
+            });
+            $('#txttodate').attr('autocomplete', 'off');
+        });
+    </script>
+    <script src="~/Form_JS/ProductPrice.js"></script>
+</body>

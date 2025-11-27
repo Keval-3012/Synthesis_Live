@@ -1,0 +1,507 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@using Utility;
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+<style>
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        background-color: white;
+        z-index: 1000;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content {
+        padding: 0px;
+    }
+
+    .modal-footer {
+        padding: 10px;
+        text-align: right;
+        border-top: 1px solid #ccc;
+    }
+
+    .modal-header .close {
+        margin-top: -30px;
+    }
+
+    #printPreviewModal {
+        height: fit-content;
+    }
+
+    #modalBackdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .buttonbox.btnprint {
+        padding: 6px 20px !important;
+    }
+
+    .check-right {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content:flex-end;
+    }
+
+    .addchecks {
+        color: #3f9d25;
+        border: 1px solid #3f9d25;
+        padding: 8px 15px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+        .addchecks:hover {
+            color: #3f9d25;
+            text-decoration: none;
+        }
+</style>
+
+@*<div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>*@
+@*<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer " style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>*@
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Print Checks</h3>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            <div class="check-right">
+                <div>
+                    @*<a href="~/ExpenseAccounts/CheckAddNew" class="addchecks">Create Check</a>*@
+                    <a href="@Url.Action("CheckAddNew", "ExpenseAccounts")" class="btn-addinvoice"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon-plus.svg" /> Add Check</a>
+                </div>
+                <span class="pull-right">
+                    <input type="button" class="buttonbox btn-addinvoice btnprint" value="Preview and print" />
+                    @*<input type="button" class="buttonbox btnsubmit btnprint" value="Preview and print" onclick="previewAndPrint()" />*@
+                </span>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            <div id="customDialog"></div>
+            @Html.EJS().Grid("InlinePrintCheck").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Type("checkbox").Width("10").Add();
+           col.Field("ExpenseCheckId").IsPrimaryKey(true).HeaderText("ExpenseCheckId").Visible(false).Add();
+           col.Field("InvoiceDate").HeaderText("Date").Format("MM-dd-yyyy").Width("60").Add();
+           col.Field("Type").HeaderText("Type").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("50").Add();
+           col.Field("VendorName").HeaderText("Payee").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("60").Add();
+           col.Field("Amount").HeaderText("Amount").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("60").Template("#amountTemplate").AllowSorting(false).Add();
+       }).DataBound("dataBound").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Search" }).Render()
+        </div>
+    </div>
+</div>
+
+<div id="printPreviewModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-header text-center">
+            <h4 class="modal-title">Print Previews</h4>
+            <button type="button" onclick="closeModal()" class="close" data-dismiss="modal">×</button>
+        </div>
+
+        <iframe id="printPreviewFrame" style="width: 100%; height: 650px; border: none;"></iframe>
+        <div class="modal-footer">
+            <button onclick="downloadPDF()" class="buttonbox btnsubmit">Download</button>
+            <button onclick="printPDF()" class="buttonbox btnsubmit">Print</button>
+            <button onclick="closeModal()" class="buttonbox btncancel">Close</button>
+        </div>
+    </div>
+
+</div>
+<div id="modalBackdrop" style="display:none;"></div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+<script>
+    var scrollVal = 0;
+    document.title = '@ViewBag.Title';
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+</script>
+<script type="text/x-jsrender" id="amountTemplate">
+    <span style="text-align:right">@Html.Raw("$ ")${AmountString}</span>
+</script>
+<script>
+
+    function dataBound(e) {
+        var selectedId = parseInt('@ViewBag.SelectedExpenseCheckId') || null;
+        var grid = document.getElementById("InlinePrintCheck").ej2_instances[0];
+        if (grid && selectedId) {
+            var dataSource = grid.currentViewData;
+
+            if (Array.isArray(dataSource)) {
+                var index = dataSource.findIndex(x => x.ExpenseCheckId === selectedId);
+                if (index >= 0) {
+                    grid.selectRow(index);
+                }
+            }
+        }
+
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+
+    function created(args) {
+        // extending the default UrlAdaptor
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+
+                if (!ej.base.isNullOrUndefined(data.data))
+                    return data.data;
+                else
+                    return data;
+            }
+        }
+        var grid = document.querySelector('#InlinePrintCheck').ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ExpenseAccounts/UrlDatasourcePrintCheck",
+            adaptor: new CustomAdaptor()
+        });
+    };
+
+    function refreshGrid() {
+        var grid = document.getElementById("InlinePrintCheck").ej2_instances[0];
+        if (grid) {
+            grid.refresh();
+        }
+    }
+
+    //function previewAndPrint() {
+    //    const { jsPDF } = window.jspdf;
+    //    // Get selected ExpenseCheckId values
+    //    var grid = document.getElementById("InlinePrintCheck").ej2_instances[0];
+    //    var selectedRecords = grid.getSelectedRecords();
+    //    var selectedExpenseCheckIds = selectedRecords.map(record => record.ExpenseCheckId);
+
+    //    if (selectedExpenseCheckIds.length === 0) {
+    //        alert("Please select at least one record to preview.");
+    //        return;
+    //    }
+
+    //    // Simulate fetching data for preview
+    //    fetchPreviewData(selectedExpenseCheckIds).then(data => {
+    //        // Generate PDF content
+    //        const doc = new jsPDF();
+    //        let yPosition = 10;
+
+    //        data.forEach((record, index) => {
+    //            doc.text(`Check #${index + 1}`, 10, yPosition);
+    //            doc.text(`Payee: ${record.Payee}`, 10, yPosition + 10);
+    //            doc.text(`Amount: $${record.Amount}`, 10, yPosition + 20);
+    //            doc.text(`Date: ${record.Date}`, 10, yPosition + 30);
+    //            yPosition += 40;
+
+    //            if (index < data.length - 1) {
+    //                doc.addPage();
+    //                yPosition = 10;
+    //            }
+    //        });
+
+    //        // Show PDF in iframe
+    //        const pdfDataUri = doc.output("datauristring");
+    //        document.getElementById("printPreviewFrame").src = pdfDataUri;
+
+    //        // Display the modal
+    //        document.getElementById("printPreviewModal").style.display = "block";
+    //        document.getElementById("modalBackdrop").style.display = "block";
+    //    });
+    //}
+
+    //function fetchPreviewData(expenseCheckIds) {
+    //    return new Promise(resolve => {
+    //        setTimeout(() => {
+    //            resolve(
+    //                expenseCheckIds.map(id => ({
+    //                    ExpenseCheckId: id,
+    //                    Payee: "Sample Payee",
+    //                    Amount: (Math.random() * 100).toFixed(2),
+    //                    Date: new Date().toLocaleDateString(),
+    //                }))
+    //            );
+    //        }, 1000);
+    //    });
+    //}
+
+    function previewAndPrint() {
+        const { jsPDF } = window.jspdf;
+
+        // Get selected ExpenseCheckId values
+        var grid = document.getElementById("InlinePrintCheck").ej2_instances[0];
+        var selectedRecords = grid.getSelectedRecords();
+        var selectedExpenseCheckIds = selectedRecords.map(record => record.ExpenseCheckId);
+
+        if (selectedExpenseCheckIds.length === 0) {
+            alert("Please select at least one record to preview.");
+            return;
+        }
+
+        // Fetch data for preview
+        fetchPreviewData(selectedExpenseCheckIds).then(data => {
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.width;
+            let yPosition = 20;
+
+            data.forEach((record, index) => {
+                if (index > 0) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+
+                const amountInWords = record.TotalAmountInWord + ` and 00/100 dollars****************************************************************************`;
+
+                // Top-right section: Date
+                doc.setFontSize(10);
+                doc.text(record.DateString, pageWidth - 20, yPosition, { align: 'right' });
+
+                // Payee and Total Amount in the same row
+                yPosition += 10; // Move down to the next line
+                doc.setFontSize(10);
+                doc.text(record.Payee, 20, yPosition); // Payee Name (left-aligned)
+                doc.text(`**${record.TotalAmount.toFixed(2)}`, pageWidth - 20, yPosition, { align: 'right' }); // Total Amount (right-aligned)
+
+                yPosition += 10; // Move down for the next line
+
+                // Amount in Words
+                doc.setFontSize(10);
+                doc.text(amountInWords, 20, yPosition);
+
+                // Address Block
+                const addressLines = record.Address.split("\n");
+                addressLines.forEach((line, i) => {
+                    doc.text(line, 20, yPosition + 10 + i * 10);
+                });
+
+                // Update yPosition to move below the Address block
+                yPosition += 10 + addressLines.length * 10;
+
+                // Memo (after Address)
+                if (record.Memo) {
+                    const memolines = record.Memo.split("\n");
+                    memolines.forEach((line, i) => {
+                        doc.text(line, 20, yPosition + i * 10);
+                    });
+                    yPosition += memolines.length * 10;
+                }
+
+                // New Row: Date and Payee (on the same line with some space)
+                yPosition += 10; // Move down a bit
+                const spaceForPayee = 40;  // Adjust the space before Payee
+                doc.setFontSize(10);
+                doc.text(record.DateString, 20, yPosition);  // Date on the left
+                doc.text(record.Payee, 20 + spaceForPayee, yPosition);  // Payee after some space
+
+                yPosition += 10; // Move down to the next line
+
+                // Add Description and Amount Details
+                record.CheckPdfPrintDetails.forEach(detail => {
+                    doc.text(detail.Description, 80, yPosition);
+                    doc.text(detail.Amount.toFixed(2), pageWidth - 20, yPosition, { align: 'right' });
+                    yPosition += 5;
+                });
+
+                // Account Name, Memo, and Total Amount on the same row
+                yPosition += 30;  // Move down a bit for the row with Account Name, Memo, and Total Amount
+                const spaceForMemo = 60;  // Space for Memo, adjust as needed
+                const spaceForTotalAmount = 20;  // Space for TotalAmount
+
+                doc.setFontSize(10);
+                doc.text(record.AccountName, 20, yPosition);  // Account Name on the left
+                doc.text(record.Memo || "", 20 + spaceForMemo, yPosition);  // Memo in the center
+                doc.text(record.TotalAmount.toFixed(2), pageWidth - spaceForTotalAmount, yPosition, { align: 'right' });  // Total Amount on the right
+
+                yPosition += 10;  // Move down to the next line after the row
+
+                // Repeat the same section again for the second time
+
+                // New Row: Date and Payee (on the same line with some space)
+                yPosition += 10; // Move down a bit
+                doc.setFontSize(10);
+                doc.text(record.DateString, 20, yPosition);  // Date on the left
+                doc.text(record.Payee, 20 + spaceForPayee, yPosition);  // Payee after some space
+
+                yPosition += 10; // Move down to the next line
+
+                // Add Description and Amount Details
+                record.CheckPdfPrintDetails.forEach(detail => {
+                    doc.text(detail.Description, 80, yPosition);
+                    doc.text(detail.Amount.toFixed(2), pageWidth - 20, yPosition, { align: 'right' });
+                    yPosition += 5;
+                });
+
+                // Account Name, Memo, and Total Amount on the same row
+                yPosition += 30;  // Move down a bit for the row with Account Name, Memo, and Total Amount
+                doc.setFontSize(10);
+                doc.text(record.AccountName, 20, yPosition);  // Account Name on the left
+                doc.text(record.Memo || "", 20 + spaceForMemo, yPosition);  // Memo in the center
+                doc.text(record.TotalAmount.toFixed(2), pageWidth - spaceForTotalAmount, yPosition, { align: 'right' });  // Total Amount on the right
+
+                yPosition += 10;  // Move down to the next line after the row
+            });
+
+            // Show PDF in iframe
+            const pdfDataUri = doc.output("datauristring");
+            document.getElementById("printPreviewFrame").src = pdfDataUri;
+
+            // Display the modal
+            document.getElementById("printPreviewModal").style.display = "block";
+            document.getElementById("modalBackdrop").style.display = "block";
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+    function fetchPreviewData(expenseCheckIds) {
+        return new Promise((resolve, reject) => {
+            if (!Array.isArray(expenseCheckIds) || expenseCheckIds.length === 0) {
+                return reject("No ExpenseCheckIds provided.");
+            }
+
+            // Make an AJAX call to the backend
+            fetch('/ExpenseAccounts/GetPrintCheckPayeeData', {
+                method: 'POST', // Use POST to send data
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ expenseCheckIds: expenseCheckIds.join(",") }) // Convert IDs to comma-separated string
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json(); // Parse JSON response
+                })
+                .then(data => {
+                    resolve(data); // Resolve with the backend data
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    reject(error); // Reject on error
+                });
+        });
+    }
+
+    function downloadPDF() {
+        const iframe = document.getElementById("printPreviewFrame");
+        const pdfDataUri = iframe.src;
+
+        const link = document.createElement("a");
+        link.href = pdfDataUri;
+        link.download = "checks_preview.pdf";
+        link.click();
+    }
+
+    //function printPDF() {
+    //    const iframe = document.getElementById("printPreviewFrame");
+    //    iframe.contentWindow.print();
+    //}
+
+    function printPDF() {
+        const iframe = document.getElementById("printPreviewFrame");
+        if (iframe && iframe.src) {
+            // Convert the base64 content to a Blob
+            const byteCharacters = atob(iframe.src.split(',')[1]);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+                const byteArray = new Uint8Array(Math.min(byteCharacters.length - offset, 1024));
+                for (let i = 0; i < byteArray.length; i++) {
+                    byteArray[i] = byteCharacters.charCodeAt(offset + i);
+                }
+                byteArrays.push(byteArray);
+            }
+
+            const blob = new Blob(byteArrays, { type: 'application/pdf' });
+            const blobUrl = URL.createObjectURL(blob);
+
+            // Open the Blob URL in a new tab
+            const newTab = window.open(blobUrl, "_blank");
+        }
+    }
+
+
+    function closeModal() {
+        document.getElementById("printPreviewModal").style.display = "none";
+        document.getElementById("modalBackdrop").style.display = "none";
+    }
+
+
+</script>
+@Html.EJS().ScriptManager()

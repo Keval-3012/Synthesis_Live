@@ -1,0 +1,255 @@
+﻿@model EntityModels.HRModels.HREmployeeMaster
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Popups
+@using Utility
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HREmployee.css" rel="stylesheet" />
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<style>
+    .input-error {
+        border-color: red !important;
+    }
+
+    .error-text {
+        color: red;
+    }
+</style>
+<div id="globalTabContent">
+    <div id="progress" class="modal">
+        <div class="center">
+        </div>
+    </div>
+    <div id="PanAddUpdate" style="background:white;">
+        @using (Html.BeginForm("Create", "HREmployee", FormMethod.Post, new { id = "FrmEmp" }))
+        {
+
+            <div class="header-small special_bg" style="margin-left: 0px !important;">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3>Add Employee</h3>
+                        <img class="emp-image-bg" src="/Content/image/avatar.png" />
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="padding:15px">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h4>Personal Information</h4>
+                </div>
+                <div class="clear"></div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label>Last Name <span class="redSpan">*</span> </label>
+                        @Html.TextBoxFor(a => a.LastName, new { @class = "form-control", placeholder = "Last Name", @maxlength = "50", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Add. Last Name</label>
+                        @Html.TextBoxFor(a => a.AdditionalLastName, new { @class = "form-control", placeholder = "Add. Last Name", @maxlength = "50", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.AdditionalLastName, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>First Name <span class="redSpan">*</span></label>
+                        @Html.TextBoxFor(a => a.FirstName, new { @class = "form-control", placeholder = "First Name", @maxlength = "50", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Second Name</label>
+                        @Html.TextBoxFor(a => a.MiddleName, new { @class = "form-control", placeholder = "Second Name", @maxlength = "50", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.MiddleName, "", new { @class = "form-error-msg show" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label>DOB <span class="redSpan">*</span></label>
+                        @Html.EJS().DatePickerFor(m => m.sDateofBirth).EnableMask(true).Max(ViewBag.CheckDobdate).Format("MM/dd/yyyy").Render()
+                        @*@Html.TextBoxFor(m => m.DateofBirth, new { @class = "form-control", placeholder = "DOB", @value = DateTime.Now.ToShortDateString(), autocomplete = "off" })*@
+                        @Html.ValidationMessageFor(m => m.sDateofBirth, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>SSN <span class="redSpan">*</span></label>
+                        @Html.EJS().MaskedTextBoxFor(m => m.SSN).Mask("[0-9][0-9][0-9] [0-9][0-9] [0-9][0-9][0-9][0-9]").Render()
+                        @*@Html.TextBoxFor(a => a.SSN, new { @class = "form-control ssn_mask", placeholder = "SSN", @maxlength = "50", autocomplete = "off" })*@
+                        @*@Html.ValidationMessageFor(m => m.SSN, "", new { @class = "form-error-msg show" })*@
+                        <span class="SSNerror" style="color:red;"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label>Gender <span class="redSpan">*</span></label>
+                        @Html.DropDownListFor(m => m.Gender, null, new { @class = "form-control select2" })
+                        @Html.HiddenFor(m => m.Gender)
+                        @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "form-error-msg show errorGender error-text" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Marital Status <span class="redSpan">*</span></label>
+                        @Html.DropDownListFor(m => m.MaritalStatus, null, new { @class = "form-control select2" })
+                        @Html.HiddenFor(m => m.MaritalStatus)
+                        @Html.ValidationMessageFor(m => m.MaritalStatus, "", new { @class = "form-error-msg show errorMaritalStatus error-text" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Language Preference <span class="redSpan">*</span></label>
+                        @Html.DropDownListFor(m => m.LanguageId, null, new { @class = "form-control select2" })
+                        @Html.HiddenFor(m => m.LanguageId)
+                        @Html.ValidationMessageFor(m => m.LanguageId, "", new { @class = "form-error-msg show errorLanguage error-text" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Ethnicity</label>
+                        @Html.DropDownListFor(m => m.EthnicityId, null, new { @class = "form-control select2" })
+                        @*@Html.HiddenFor(m => m.Ethnicity)*@
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h4>Contact Information</h4>
+                </div>
+                <div class="clear"></div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label>Email</label>
+                        @Html.TextBoxFor(a => a.Email, new { @class = "form-control", placeholder = "Email", @maxlength = "50", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Home Phone</label>
+                        @Html.EJS().MaskedTextBoxFor(a => a.Phone).Mask("(999) 999-9999").Render()
+                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Mobile</label>
+                        @Html.EJS().MaskedTextBoxFor(a => a.MobileNo).Mask("(999) 999-9999").Render()
+                        @Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "form-error-msg show" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label>Street <span class="redSpan">*</span></label>
+                        @Html.TextBoxFor(a => a.Street, new { @class = "form-control", placeholder = "Street", @maxlength = "100", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.Street, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Apt/Suite/Building No</label>
+                        @Html.TextBoxFor(a => a.BuildingNo, new { @class = "form-control", placeholder = "Apt/Suite/Building No", @maxlength = "100", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.BuildingNo, "", new { @class = "form-error-msg show" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label>City <span class="redSpan">*</span></label>
+                        @Html.TextBoxFor(a => a.City, new { @class = "form-control", placeholder = "City", @maxlength = "50", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.City, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>State <span class="redSpan">*</span></label>
+                        @Html.DropDownListFor(m => m.State, null, new { @class = "form-control select2" })
+                        @Html.HiddenFor(m => m.State)
+                        @Html.ValidationMessageFor(m => m.State, "", new { @class = "form-error-msg show" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Zip Code <span class="redSpan">*</span></label>
+                        @Html.TextBoxFor(a => a.ZipCode, new { @class = "form-control", placeholder = "Zip Code", @maxlength = "5", onkeypress = "return isNumber(event)", autocomplete = "off" })
+                        @Html.ValidationMessageFor(m => m.ZipCode, "", new { @class = "form-error-msg show" })
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h4>Generated Username <span class="redSpan">*</span></h4>
+                </div>
+                <div class="clear"></div>
+                <div class="form-group">
+                    <div class="user-name-show col-md-3 col-sm-4 col-xs-10">
+                        @Html.TextBoxFor(a => a.EmployeeUserName, new { @class = "form-control", @maxlength = "50", @readonly = "readonly" })
+                        <a href="#" class="view-username" onclick="GetEmployeeUSerName()"><span class="sr-only">create user name</span></a>
+                        @Html.ValidationMessageFor(m => m.EmployeeUserName, "", new { @class = "form-error-msg show" })
+                    </div>
+                </div>
+            </div>
+
+
+        }
+        <div style="overflow:hidden;" class="cssEmpdiv">
+            @Html.ValidationMessage("Message", "", new { @class = "text-danger" })
+            @using (Ajax.BeginForm("AddEmployeeChild", "HREmployee", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmPartyChild", OnComplete = "javascript:setSelect2();", OnSuccess = "javascript:setSelect2();" }, new { id = "frmID", name = "frmID" }))
+            {
+                @Html.HiddenFor(model => model.EmployeeId)
+                @Html.AntiForgeryToken()
+                <div id="frmPartyChild">
+                    @{Html.RenderAction("InitialChildFormValue");}
+                </div>
+            }
+
+            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 20px;text-align: center;">
+                <input id="btnSubmit" form="FrmEmp" type="submit" value="Save" class="btn btn-red" />
+                @Html.ActionLink("Cancel", "Index", "HREmployee", new { @class = "btn btn-red" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Content/HRJs/HREmployeeCreate.js"></script>
+<script>
+    function validateGenderDropdown() {
+        if ($('#Gender').val() == '0') {
+            $('.errorGender').text('Please select a Gender').show();
+        } else if ($('#Gender').val() == '1' || $('#Gender').val() == '2') {
+            $('span.errorGender').attr('style','display:none !important');
+        }
+    }
+    $('#Gender').change(function () {
+        validateGenderDropdown();
+    });
+    $('form').submit(function (event) {
+        validateGenderDropdown();
+        if ($('#Gender').val() == '0') {
+            event.preventDefault();
+        }
+    });
+    function validateMaritalStatusDropdown() {
+        if ($('#MaritalStatus').val() == '0') {
+            $('.errorMaritalStatus').text('Please select a Marital Status').show();
+        } else if ($('#MaritalStatus').val() == '1' || $('#MaritalStatus').val() == '2' || $('#MaritalStatus').val() == '3' || $('#MaritalStatus').val() == '4') {
+            $('span.errorMaritalStatus').attr('style', 'display:none !important');
+        }
+    }
+    $('#MaritalStatus').change(function () {
+        validateMaritalStatusDropdown();
+    });
+    $('form').submit(function (event) {
+        validateMaritalStatusDropdown(); 
+        if ($('#MaritalStatus').val() == '0') {
+            event.preventDefault();
+        }
+    });
+    function validateLanguageIdDropdown() {
+        if ($('#LanguageId').val() == '0') {
+            $('.errorLanguage').text('Please select a Language Preference').show();
+        } else if ($('#LanguageId').val() == '1' || $('#LanguageId').val() == '2') {
+            $('span.errorLanguage').attr('style', 'display:none !important');
+        }
+    }
+    $('#LanguageId').change(function () {
+        validateLanguageIdDropdown();
+    });
+    $('form').submit(function (event) {
+        validateLanguageIdDropdown(); 
+        if ($('#LanguageId').val() == '0') {
+            event.preventDefault();
+        }
+    });
+    $(document).ready(function () {
+        var HeaderStoreId = $("#HeaderStoreId option:selected").val();
+        if (HeaderStoreId == "" || HeaderStoreId != "") {
+            $(".storeheaderstatus").hide();
+        }
+    });
+</script>
+@Html.EJS().ScriptManager()
+

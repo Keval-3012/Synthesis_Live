@@ -1,0 +1,129 @@
+﻿
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.Models.IpAdressInfo
+@Html.HiddenFor(m => m.IpAdressInfoID)
+<div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                <span class="highlight">*</span><label>Location Type</label>
+                @Html.DropDownList("LocationType", ViewBag.EnumList as SelectList, "Select Location Type", new { @class = "myval", id = "Drpstatus" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+                @Html.EJS().TextBoxFor(model => model.Location).Placeholder("Location").CssClass("e-outline").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+            </div>
+        </div>
+
+        @if (Model.StaticIp != null)
+        {
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-2">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().RadioButton("radio1").Label("Static Ip Address").Name("IP").Value("Static").Change("onChange").Checked().Render()
+
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="e-float-input e-control-wrapper">
+
+                        @Html.EJS().RadioButton("radio2").Label("Ip Address Range").Name("IP").Value("Range").Change("onChange").Render()
+
+                    </div>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-2">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().RadioButton("radio1").Label("Static Ip Address").Name("IP").Value("Static").Change("onChange").Render()
+
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="e-float-input e-control-wrapper">
+
+                        @Html.EJS().RadioButton("radio2").Label("Ip Address Range").Name("IP").Value("Range").Change("onChange").Checked().Render()
+
+                    </div>
+                </div>
+
+            </div>
+        }
+        @if (Model.StaticIp != null)
+        {
+            <div class="form-row" id="Main1">
+                <div class="form-group col-md-12">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().TextBoxFor(model => model.StaticIp).Placeholder("Static Ip").CssClass("e-outline").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" id="Main2" hidden>
+                <div class="form-group col-md-6">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().TextBoxFor(model => model.StartIP).Placeholder("Start Ip").CssClass("e-outline").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().TextBoxFor(model => model.EndIP).Placeholder("End Ip").CssClass("e-outline").Change("ValidateRange").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-row" id="Main1" hidden>
+                <div class="form-group col-md-12">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().TextBoxFor(model => model.StaticIp).Placeholder("Static Ip").CssClass("e-outline").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" id="Main2">
+                <div class="form-group col-md-6">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().TextBoxFor(model => model.StartIP).Placeholder("Start Ip").CssClass("e-outline").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+                        @Html.ValidationMessageFor(m => m.StartIP, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.EJS().TextBoxFor(model => model.EndIP).Placeholder("End Ip").CssClass("e-outline").Change("ValidateRange").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+                @Html.EJS().MultiSelect("MultiUserId").Value(ViewBag.UserID).DataSource((IEnumerable<object>)ViewBag.Users).Placeholder("Select Users").Mode(VisualMode.CheckBox).ShowDropDownIcon(true).ShowSelectAll(true).FilterBarPlaceholder("Search " +
+                                "Users").PopupHeight("350px").Fields(new MultiSelectFieldSettings { Text = "UserName", Value = "UserId" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            @Html.EJS().CheckBoxFor(model => model.IsActive).Label("Active").Render()
+        </div>
+    </div>
+
+</div>
+
+@Html.EJS().ScriptManager()
+

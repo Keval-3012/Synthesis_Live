@@ -1,0 +1,8 @@
+2025-11-12 10:54:49.8450|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/12/2025 10:54:49 AM
+2025-11-12 11:26:16.2976|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/12/2025 11:26:16 AM
+2025-11-12 11:27:40.0362|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/12/2025 11:27:40 AM - An error occurred while sending the request.
+2025-11-12 11:32:20.4615|INFO|SysnthesisRepo.Controllers.InvoicesController|GOURMETGOODS.pdf File uploading processing..
+2025-11-12 11:32:20.7430|INFO|SysnthesisRepo.Controllers.InvoicesController|UploadPdfAutomationId :107264,UserId :1089,FileName :11122025_113220461_GOURMETGOODS.pdf,StoreID :7 Successfully Inserted.
+2025-11-12 11:56:09.6660|ERROR|SysnthesisRepo.Controllers.InvoicesController|InvoicesController - InvoiceAutomationEdit - 11/12/2025 11:56:09 AM - Could not find file 'D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SysnthesisRepo\UserFiles\Automatic-Invoice-File\2025\7\November\1089\11122025_002016011_GOURMETGOODS.pdf'.
+2025-11-12 15:17:12.9053|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/12/2025 3:17:12 PM
+2025-11-12 15:17:28.4025|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/12/2025 3:17:28 PM - An error occurred while sending the request.

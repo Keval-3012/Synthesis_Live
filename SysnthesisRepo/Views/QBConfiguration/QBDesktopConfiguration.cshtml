@@ -1,0 +1,170 @@
+﻿@model EntityModels.Models.QBDesktopConfiguration
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+@using Utility
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+<div id="globalTabContent">
+    <div id="progress" class="modal">
+        <div class="center">
+            <img src="/images/loading.gif" />
+        </div>
+    </div>
+    <div id="PanAddUpdate">
+        @Html.HiddenFor(a => a.IsActive)
+        @Html.HiddenFor(m => m.QBDesktopId)
+        @Html.HiddenFor(m => m.StoreId)
+
+        <div class="header-small special_bg">
+            <h3>Add QuickBookDesktop </h3>
+        </div>
+        @if (TempData["sMessage"] != null)
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    alert("Record Save Succesfully.");
+                };
+            </script>
+        }
+        <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+            <div class="datagrid martop15">
+                <div class="formmain">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Application Name <span class="highlight">*</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.AppName, new { maxlength = 500, @class = "form-control", placeholder = "Application Name" })
+                                <span class="highlight">     @Html.ValidationMessageFor(model => model.AppName, "", new { @class = "form-error-msg show" })</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Store Name <span class="highlight">*</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.StoreName, new { maxlength = 500, @class = "form-control", placeholder = "Store Name", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    User Name <span class="highlight">*</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.UserName, new { maxlength = 1000, @class = "form-control", autocomplete = "off", placeholder = "User Name" })
+                                <span class="highlight"> @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "form-error-msg show" })</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Password <span class="highlight">*</span>
+                                </label>
+                                @Html.PasswordFor(m => m.Password, new { autocomplete = "off", @autocapitalize = "off", @autocorrect = "off", @placeholder = "Password", Value = (string)ViewBag.Passwords, @class = "form-control" })
+
+                                <span class="highlight">     @Html.ValidationMessageFor(model => model.Password)</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    QuickBook Company File Location <span class="highlight">*</span>
+                                    <span style="color:red;font-size:smaller;">Exa.(C:\Users\Desktop\Grillnetics.qbw)</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.QBCompanyPath, new { maxlength = 1000, @class = "form-control", placeholder = "QB Company Path" })
+                                @Html.ValidationMessageFor(m => m.QBCompanyPath, "", new { @class = "form-error-msg show" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>
+                                    Description
+                                </label>
+                                @Html.TextBoxFor(model => model.Description, new { maxlength = 1000, @class = "form-control", placeholder = "Description" })
+                                <span class="highlight">     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "form-error-msg show" })</span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="form-group">
+                            <input type="submit" value="Add" id="btnSave"
+                                   class="buttonbox btnsubmit" />
+
+                            @Html.ActionLink("Cancel", "Index", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                            <input type="submit" value="Generate File" id="btnDownLoadFile" class="buttonbox btn-primary" />
+                        </div>
+                    </div>
+                    @if (ViewData["ManagDepartment"] != null)
+                    {
+                        <div class="row bank">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Select Bank <span class="highlight">*</span>
+                                    </label>
+                                    @Html.DropDownListFor(m => m.BankAccID, new SelectList((IEnumerable<EntityModels.Models.DepartmentMaster>)ViewData["ManagDepartment"], "ListID", "DepartmentName"), "-- All Store --", new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group" style="display:grid;">
+                                    <label>
+                                        <span class="highlight">*</span>
+                                    </label>
+                                    <a href="#" onclick="updateBank()" class="buttonbox btnsubmit">Add Bank</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", "#btnDownLoadFile", function (event) {
+    window.location = '@Url.Action("GenerateXML", "QBConfiguration", new { ID = "ID"})'.replace("ID", $("#QBDesktopId").val());
+    });
+
+    $(document).ready(function () {
+    var _myNames = JSON.parse('@Html.Raw(Json.Encode(ViewData["ManagDepartment"]))');
+
+    if ($("#QBCompanyPath").val() != "") {
+        $('#btnDownLoadFile').attr("disabled", false);
+        $(".bank").show();
+    }
+    else {
+        $('#btnDownLoadFile').attr("disabled", true);
+        $(".bank").hide();
+    }
+
+    if (_myNames == null) {
+        $(".bank").hide();
+    }
+    var name = GetParameterValues('StoreName');
+    var id = GetParameterValues('StoreID');
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+    $("#StoreName").val(name.replace(/%20/g, " "));
+    $("#StoreId").val(id);
+});
+</script>
+<script src="~/Form_JS/QBConfiguration.js"></script>

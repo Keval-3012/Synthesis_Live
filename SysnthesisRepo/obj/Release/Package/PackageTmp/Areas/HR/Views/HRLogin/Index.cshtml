@@ -1,0 +1,80 @@
+﻿@model EntityModels.HRModels.HREmployeeMaster
+@{
+    Layout = "~/Views/Shared/AdminLogin.cshtml";
+}
+<style>
+    .loginboxoage .field-validation-error span, .field-validation-error {
+        color: #FFFFFF !important
+    }
+</style>
+@using (Html.BeginForm("Index", "HRLogin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "loginvalidation" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="animated fadeInDown">
+        <div>
+            <div class="loginboxoage">
+                <div class="logobox">
+                    <img src="~/Content/Admin/images/logo.png" alt="" />
+                </div>
+                <h1>Welcome</h1>
+                <div class="loginblock">
+
+                    <div class="formbox">
+                        @*<div>
+                            @if (ViewBag.statusmessage == "t")
+                            {
+                                <span class="ValidationMsg">@ViewBag.ErrorMessage</span>
+                            }
+                            @if (ViewBag.statusmessage == "t1")
+                            {
+                                <span class="ValidationMsg">@ViewBag.ErrorMessage</span>
+                            }
+                        </div>*@
+                        <div>
+                            @Html.ValidationMessageFor(m => m.Message, "", new { @class = "ValidationMsg" })
+                        </div>
+                        <div> @ViewBag.Easterntime</div>
+                        <div class="textboxarea">
+                            @Html.TextBoxFor(m => m.EmployeeUserName, new { autocomplete = "off", @placeholder = "User Name", @autofocus = "autofocus", @autocapitalize = "off", @autocorrect = "off", @class = "form-control", onchange = "ClearText();" })
+                            @Html.ValidationMessageFor(m => m.EmployeeUserName, "", new { @class = "ValidationMsg" })
+                        </div>
+                        <div class="textboxarea">
+                            @Html.PasswordFor(m => m.Password, new { autocomplete = "off", @autocapitalize = "off", @autocorrect = "off", @placeholder = "Password", Value = (string)ViewBag.AdminPassword, @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "ValidationMsg" })
+                        </div>
+                        <div class="form-group loginbox-forgot">
+
+                            @*@Html.CheckBoxFor(m => m.RememberMe)*@
+
+                        </div>
+                        <div class="textboxarea">
+                            <input type="submit" class="btn btn-primary btn-block" value="Login">
+                        </div>
+                    </div>
+
+                    <!--###################### -->
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+        @*@Html.CheckBoxFor(m => m.RememberMe)*@
+
+    </div>
+    @section FooterScript{
+        <script type="text/javascript">
+
+            function registerpublish() {
+                localStorage.clear();
+                if ($('#loginvalidation').valid()) {
+
+                }
+            }
+            function ClearText() {
+                $(".field-validation-error ValidationMsg").hide();
+            }
+
+        </script>
+    }
+}

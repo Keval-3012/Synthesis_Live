@@ -1,0 +1,156 @@
+﻿@model EntityModels.Models.ExpenseCheck_Setting
+@using Utility
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+@*<link href="../Contents/Admin/assets/css/style.css" rel="stylesheet" />*@
+
+<style>
+    .table-responsive {
+        overflow-x: scroll !important;
+        overflow-y: scroll !important;
+        max-height: calc(105vh - 350px) !important;
+    }
+
+    .a {
+        font-family: 'Maven Pro';
+        font-size: 15px;
+        font-weight: bold;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .b {
+        opacity: 1 !important;
+        left: 0 !important;
+        width: 17 px !important;
+        height: 17 px !important;
+        display: block !important;
+        margin-left: -1 px !important;
+        top: 2 px;
+    }
+</style>
+@*<link type="text/css" href="~/Content/Admin/vendor/multiselect/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+<link type="text/css" href="~/Content/Admin/vendor/multiselect/select2/css/select2.css" />
+<link type="text/css" href="~/Content/Admin/vendor/multiselect/select2-bootstrap-theme/select2-bootstrap.min.css" />
+<script type="text/javascript" src="~/Content/Admin/vendor/multiselect/examples.advanced.form.js"></script>
+<script type="text/javascript" src="~/Content/Admin/vendor/multiselect/bootstrap-multiselect.js"></script>
+<script type="text/javascript" src="~/Content/Admin/vendor/multiselect/select2/js/select2.js"></script>*@
+
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+    {
+        <script>
+            MyCustomAlert("Setting Saved Successfully", 1);
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "NoStoreSelected")
+    {
+        <script>
+            PopUpSelectStore();
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+@if (Convert.ToString(ViewBag.StatusMessage) != "NoStoreSelected")
+{
+    using (Html.BeginForm("Index", "ExpenseAccounts", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm1" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="header-small special_bg">
+            <h3>Expense Accounts </h3>
+        </div>
+        <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+            <div class="searchfinal">
+                <div class="widget-body shadownone brdrgray">
+                    <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="dataTables_filter">
+                            <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+                                <tr>
+                                    <td style="text-align:left !important;width:40% !important">
+                                        <div class="col-md-6">
+                                            <label class="radio-inline a"><input type="radio" name="setting" class="b" onclick="GetData(1)" value="1" checked="checked">Expense</label>
+                                            <label class="radio-inline a"><input type="radio" name="setting" class="b" onclick="GetData(2)" value="2">Check</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span><input type="submit" value="Save" id="btnInvoiceSubmit" name="btnsubmit" class="btn_comman buttonbox btnsubmit" /></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="grddata">
+                <div class="datagrid martop15">
+                    <div id="dvBody" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Hidden("sType", (object)ViewBag.sType)
+    }
+}
+<script>
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    $(document).ready(function () {
+        Loader(0);
+        if ($("sType").val() == "2") {
+            GetData(2);
+            $("input[name=setting][value=2]").prop('checked', true);
+        }
+        else {
+            GetData(1);
+        }
+    });
+
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $(".loading-container").attr("style", "display:block;")
+        }
+        else {
+            $(".loading-container").attr("style", "display:none;")
+        }
+
+    }
+
+    function GetData(Type) {
+        $.ajax({
+            url: '/ExpenseAccounts/GetData',
+            type: "post",
+            cache: false,
+            data: { Type: Type },
+            beforeSend: function () {
+                Loader(1);
+            },
+            success: function (states) {
+                $("#dvBody").html(states);
+                Loader(0);
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

@@ -1,0 +1,2 @@
+2025-09-04 12:55:37.1388|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/4/2025 12:55:37 PM
+2025-09-04 12:57:54.7426|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 9/4/2025 12:57:54 PM - An error occurred while sending the request.

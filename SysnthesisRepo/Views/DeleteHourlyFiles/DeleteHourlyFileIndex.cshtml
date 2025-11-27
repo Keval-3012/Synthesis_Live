@@ -1,0 +1,118 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+
+<link href="~/Content/Admin/assets/css/printstyle.css" rel="stylesheet" media="print" />
+<style>
+    .je-date {
+        display: flex;
+        width: 160px;
+        margin: 0 0 0 auto;
+    }
+
+    #txtstartdate {
+        width: 165px;
+    }
+</style>
+<div>
+    <div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer " style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Hourly POS feeds</h3>
+            </div>
+            @*        <div class="col-md-3">
+                </div>*@
+            <div class="col-md-6">
+                <div class="je-date">
+                    <input name="txtstartdate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" id="txtstartdate" placeholder="Date" class="datepicker form-control" onkeydown="return false">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="datagrid" id="grddata">
+        <div class="page-body headertopbox" style="padding-top:0px!important;">
+            <div class="control-section">
+                <div id="customDialog"></div>
+                @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+                @Html.EJS().Grid("HourlyPOSFeedsGrid").AllowSorting().AllowFiltering().AllowPdfExport().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+           {
+               col.Field("Id").IsPrimaryKey(true).HeaderText("Id").Visible(false).Add();
+               col.Field("FileName").HeaderText("File Name").Width("10%").Template("#FileNameTemplate").Add();
+               col.HeaderText("Start Date").Width("10%").Template("#StartDateTemplate").Add();
+               col.Field("HSequence").HeaderText("Hour Sequence").Width("10%").Add();
+               col.HeaderText("Action").Width("10%").Template("#EditTemplate").Add();
+           }).DataBound("dataBound").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(new List<string>() { "Search" }).Render()
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-jsrender" id="EditTemplate">
+    <a detail="Recent Entry Delete Id - ${Id}" href="javascript:ComfirmDeleteej2(${Id});" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="/Content/Admin/images/icon-trash.svg" alt="" /> </a>
+
+    <div id="${Id}" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="modal-title">Message</div>
+            <div class="modal-body"><p id="deleModalbody"> Are you sure you want to delete this Hourly File?</p></div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" detail="Recent Entry Delete Confirm -" href="javascript:Deleteej2(${Id});">Ok </a>
+                <a class="btn" data-dismiss="modal" detail="Recent Entry Delete Confirm -" onclick="closemodal()">Cancel</a>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-jsrender" id="StartDateTemplate">
+    <div id="statuss" class="statustemps">
+        <td>
+            <span>${StartformatDate(StartDate)}</span>
+        </td>
+    </div>
+</script>
+<script>
+    function StartformatDate(dateString) {
+        const date = new Date(dateString);
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const year = date.getFullYear();
+
+        return `${month}/${day}/${year}`;
+    }
+</script>
+<script id="FileNameTemplate" type="text/x-template">
+    <a href='@System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString()${FileName}' target="_blank" style="color: #385585;">
+        ${FileName}
+    </a>
+</script>
+<script>
+        var Startdate = '@ViewBag.Startdate';
+</script>
+<script src="~/Form_JS/DeleteHourlyFiles.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+@Html.EJS().ScriptManager()

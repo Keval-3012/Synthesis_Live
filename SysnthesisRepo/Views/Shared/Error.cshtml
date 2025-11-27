@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+    <style>
+        h2 {
+            color: red;
+            font-style: italic;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+        .page-content
+        {
+            background-color:white;
+        }
+    </style>
+</head>
+
+<body style="background-color:white">
+    <div >
+        <h4 style="text-align:center;color:red !important;font-size:45px;padding-top:200px !important;"><b>Access Denied</b></h4>
+        <h3 style="text-align:center;color:black;">You don't have access to this module for this store.</h3>
+        <img style="display:block;margin-left:auto;margin-right:auto;" src="~/Content/Admin/images/error.png" />
+        <br />
+        <span style="display:flex;justify-content:center;align-items:center;">
+            @*@Html.ActionLink("Back To Dashboard", "Index", "Invoices", new { @class = "buttonbox btn_spcial" })*@
+            <a href='/Invoices/IndexBeta' class='buttonbox btn_spcial' data-toggle='tooltip' data-placement='bottom' title=''>Back To Dashboard</a>
+        </span>
+    </div>
+</body>
+</html>

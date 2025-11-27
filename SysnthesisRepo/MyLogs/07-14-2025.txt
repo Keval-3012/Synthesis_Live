@@ -1,0 +1,199 @@
+2025-07-14 10:24:22.3476|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/14/2025 10:24:22 AM
+2025-07-14 10:25:25.0373|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/14/2025 10:25:25 AM - An error occurred while sending the request.
+2025-07-14 10:37:19.0393|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 10:37:19 AM
+2025-07-14 10:37:58.6181|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 10:37:58 AM
+2025-07-14 10:48:14.7056|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/14/2025 10:48:14 AM
+2025-07-14 10:48:39.7045|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/14/2025 10:48:39 AM - An error occurred while sending the request.
+2025-07-14 11:11:15.9032|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/14/2025 11:11:15 AM
+2025-07-14 11:11:45.5070|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/14/2025 11:11:45 AM - An error occurred while sending the request.
+2025-07-14 11:12:00.2456|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 11:12:00 AM
+2025-07-14 11:12:23.9966|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 11:12:23 AM
+2025-07-14 12:20:39.6473|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/14/2025 12:20:39 PM
+2025-07-14 12:20:54.1598|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/14/2025 12:20:54 PM - An error occurred while sending the request.
+2025-07-14 12:21:22.9155|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:21:22 PM
+2025-07-14 12:21:30.1110|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:21:30 PM
+2025-07-14 12:23:34.3209|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:23:34 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:24:08.2919|ERROR|Repository.UserMastersRepository|UserMastersRepository - GetFormattedCompaniesCompetitorsList - 7/14/2025 12:24:08 PM - The data reader is incompatible with the specified 'EntityModels.Models.CompaniesCompetitors'. A member of the type, 'CompetitorsNickName', does not have a corresponding column in the data reader with the same name.
+2025-07-14 12:24:32.5254|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:24:32 PM
+2025-07-14 12:24:36.3619|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:24:36 PM
+2025-07-14 12:28:01.0921|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/14/2025 12:28:01 PM
+2025-07-14 12:28:19.5179|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/14/2025 12:28:19 PM - An error occurred while sending the request.
+2025-07-14 12:28:51.3719|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:28:51 PM
+2025-07-14 12:29:01.5439|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:29:01 PM
+2025-07-14 12:29:17.3711|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:29:17 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:37:54.1150|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:37:54 PM
+2025-07-14 12:38:06.2983|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:38:06 PM
+2025-07-14 12:38:20.5440|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:38:20 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:38:32.5692|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:38:32 PM
+2025-07-14 12:38:51.2819|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:38:51 PM
+2025-07-14 12:39:05.5725|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:39:05 PM
+2025-07-14 12:39:07.7630|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:39:07 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:39:12.7601|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:39:12 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:43:36.3572|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:43:36 PM
+2025-07-14 12:43:46.4596|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:43:46 PM
+2025-07-14 12:44:08.4799|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:44:08 PM
+2025-07-14 12:44:12.0632|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:44:12 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:44:24.0238|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:44:24 PM
+2025-07-14 12:49:06.2393|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:49:06 PM
+2025-07-14 12:49:09.8292|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:49:09 PM
+2025-07-14 12:49:21.1311|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:49:21 PM - Unable to cast object of type '<>f__AnonymousType8`1[System.String]' to type 'System.Collections.Generic.IDictionary`2[System.String,System.Object]'.
+2025-07-14 12:49:21.6393|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:49:21 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:50:29.0544|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:50:29 PM
+2025-07-14 12:50:48.5812|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:50:48 PM
+2025-07-14 12:50:51.4742|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:50:51 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:51:26.2017|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:51:26 PM
+2025-07-14 12:51:30.4056|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:51:30 PM
+2025-07-14 12:51:32.1956|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:51:32 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:52:03.8352|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:52:03 PM
+2025-07-14 12:52:15.0053|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:52:15 PM
+2025-07-14 12:52:15.5422|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:52:15 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:52:54.2650|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:52:54 PM
+2025-07-14 12:52:57.1553|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:52:57 PM
+2025-07-14 12:52:58.1821|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:52:58 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:53:53.1347|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:53:53 PM
+2025-07-14 12:53:55.1209|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:53:55 PM
+2025-07-14 12:53:56.1545|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:53:56 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 12:59:48.9166|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 12:59:48 PM
+2025-07-14 12:59:51.4336|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 12:59:51 PM
+2025-07-14 12:59:52.4677|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 12:59:52 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 13:00:05.0624|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 1:00:05 PM
+2025-07-14 13:00:07.7636|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 1:00:07 PM
+2025-07-14 13:00:08.2799|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 1:00:08 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 13:00:48.0346|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 1:00:48 PM
+2025-07-14 13:01:13.5870|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 1:01:13 PM
+2025-07-14 13:01:19.2790|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 1:01:19 PM
+2025-07-14 13:01:19.7983|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 1:01:19 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 13:01:54.3871|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 1:01:54 PM
+2025-07-14 13:02:05.6223|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 1:02:05 PM
+2025-07-14 13:02:06.1382|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 1:02:06 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:02:47.2794|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:02:47 PM
+2025-07-14 14:03:00.0775|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:03:00 PM
+2025-07-14 14:03:09.8286|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:03:09 PM
+2025-07-14 14:03:28.3603|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:03:28 PM
+2025-07-14 14:03:28.8757|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:03:28 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:03:33.8443|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:03:33 PM
+2025-07-14 14:04:59.6049|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:04:59 PM
+2025-07-14 14:05:03.2067|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:05:03 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:09:25.1624|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:09:25 PM
+2025-07-14 14:09:26.4174|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:09:26 PM
+2025-07-14 14:09:27.4337|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:09:27 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:09:37.9840|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:09:37 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:14:13.5393|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:14:13 PM
+2025-07-14 14:14:14.0638|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:14:14 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:16:17.6001|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:16:17 PM
+2025-07-14 14:18:49.8736|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:18:49 PM
+2025-07-14 14:19:13.5369|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:19:13 PM
+2025-07-14 14:19:27.3953|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:19:27 PM
+2025-07-14 14:19:27.9284|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:19:27 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:24:14.9315|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:24:14 PM
+2025-07-14 14:24:32.8789|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:24:32 PM
+2025-07-14 14:24:35.4656|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:24:35 PM
+2025-07-14 14:24:35.9894|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:24:35 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:25:28.7497|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:25:28 PM
+2025-07-14 14:25:31.7687|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:25:31 PM
+2025-07-14 14:25:32.2832|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:25:32 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:26:44.7013|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:26:44 PM
+2025-07-14 14:26:46.6747|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:26:46 PM
+2025-07-14 14:26:47.1875|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:26:47 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:27:17.3175|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:27:17 PM
+2025-07-14 14:27:19.8046|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:27:19 PM
+2025-07-14 14:27:20.3148|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:27:20 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:36:39.1135|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:36:39 PM
+2025-07-14 14:36:43.5078|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:36:43 PM
+2025-07-14 14:36:47.6153|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:36:47 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:38:25.5374|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:38:25 PM
+2025-07-14 14:38:26.6964|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:38:26 PM
+2025-07-14 14:38:27.7265|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:38:27 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:38:45.8796|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:38:45 PM
+2025-07-14 14:38:46.9377|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:38:46 PM
+2025-07-14 14:38:47.9673|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:38:47 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:44:02.1569|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:44:02 PM
+2025-07-14 14:44:03.6025|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:44:03 PM
+2025-07-14 14:44:04.1279|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:44:04 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:46:50.7274|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:46:50 PM
+2025-07-14 14:46:51.9393|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:46:51 PM
+2025-07-14 14:46:52.4535|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:46:52 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:47:44.2957|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:47:44 PM
+2025-07-14 14:47:45.4741|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:47:45 PM
+2025-07-14 14:47:46.5074|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:47:46 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:49:52.5439|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:49:52 PM
+2025-07-14 14:49:55.8897|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:49:55 PM
+2025-07-14 14:49:56.4173|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:49:56 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:52:21.2404|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:52:21 PM
+2025-07-14 14:52:22.8332|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 2:52:22 PM
+2025-07-14 14:52:23.8729|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:52:23 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:53:20.0070|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:53:20 PM
+2025-07-14 14:53:25.5253|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 2:53:25 PM
+2025-07-14 14:53:26.5303|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:53:26 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 14:54:04.7465|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 2:54:04 PM
+2025-07-14 14:54:08.5534|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 2:54:08 PM
+2025-07-14 14:54:12.0543|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 2:54:12 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 15:44:50.4099|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 3:44:50 PM
+2025-07-14 15:44:53.3954|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 3:44:53 PM
+2025-07-14 15:44:53.9070|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 3:44:53 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 15:45:36.7901|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 3:45:36 PM
+2025-07-14 15:45:38.0602|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 3:45:38 PM
+2025-07-14 15:45:42.1521|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 3:45:42 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 15:45:52.8595|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 3:45:52 PM
+2025-07-14 15:46:10.2086|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 3:46:10 PM
+2025-07-14 15:46:10.7254|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 3:46:10 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 15:47:18.6595|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 3:47:18 PM
+2025-07-14 15:47:19.8945|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 3:47:19 PM
+2025-07-14 15:47:20.9042|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 3:47:20 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 15:49:31.1303|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 3:49:31 PM
+2025-07-14 15:49:38.5257|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 3:49:38 PM
+2025-07-14 15:51:50.5308|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 7/14/2025 3:51:50 PM
+2025-07-14 15:57:33.4423|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/14/2025 3:57:33 PM
+2025-07-14 15:57:49.1550|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/14/2025 3:57:49 PM - An error occurred while sending the request.
+2025-07-14 15:58:09.6902|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 3:58:09 PM
+2025-07-14 15:58:36.9001|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 3:58:36 PM
+2025-07-14 16:00:34.6923|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:00:34 PM
+2025-07-14 16:00:38.9778|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:00:38 PM
+2025-07-14 16:00:50.2940|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:00:50 PM
+2025-07-14 16:05:47.0474|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:05:47 PM
+2025-07-14 16:15:53.1158|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 7/14/2025 4:15:53 PM
+2025-07-14 16:15:58.9265|ERROR|Repository.UserMastersRepository|UserMastersRepository - UpdateUserDetails - 7/14/2025 4:15:58 PM - @IsCustomCompetitors is not a parameter for procedure SP_UserMaster.
+2025-07-14 16:16:45.7177|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:16:45 PM
+2025-07-14 16:16:49.4613|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:16:49 PM
+2025-07-14 16:17:59.5495|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 7/14/2025 4:17:59 PM
+2025-07-14 16:20:58.5960|ERROR|Repository.UserMastersRepository|UserMastersRepository - UpdateUserDetails - 7/14/2025 4:20:58 PM - @IsCustomCompetitors is not a parameter for procedure SP_UserMaster.
+2025-07-14 16:20:59.2258|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:20:59 PM
+2025-07-14 16:21:06.6890|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:21:06 PM
+2025-07-14 16:21:21.2673|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 7/14/2025 4:21:21 PM
+2025-07-14 16:21:29.3955|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:21:29 PM
+2025-07-14 16:21:33.9260|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:21:33 PM
+2025-07-14 16:23:27.8829|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:23:27 PM
+2025-07-14 16:23:30.7744|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:23:30 PM
+2025-07-14 16:24:09.4570|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:24:09 PM
+2025-07-14 16:24:11.7592|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:24:11 PM
+2025-07-14 16:31:30.9792|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:31:30 PM
+2025-07-14 16:31:37.5293|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:31:37 PM
+2025-07-14 16:31:47.8324|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 4:31:47 PM
+2025-07-14 16:31:53.8276|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 4:31:53 PM
+2025-07-14 17:06:00.4575|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:06:00 PM
+2025-07-14 17:06:01.7875|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 5:06:01 PM
+2025-07-14 17:06:05.3783|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 5:06:05 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 17:06:44.3485|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:06:44 PM
+2025-07-14 17:06:47.2182|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:06:47 PM
+2025-07-14 17:07:22.8234|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:07:22 PM
+2025-07-14 17:08:05.9213|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:08:05 PM
+2025-07-14 17:08:08.8177|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:08:08 PM
+2025-07-14 17:08:35.2635|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:08:35 PM
+2025-07-14 17:09:48.6522|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:09:48 PM
+2025-07-14 17:09:50.0202|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:09:50 PM
+2025-07-14 17:10:07.2716|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:10:07 PM
+2025-07-14 17:12:03.2636|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 5:12:03 PM
+2025-07-14 17:12:03.7884|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 5:12:03 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 17:12:09.1288|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:12:09 PM
+2025-07-14 17:12:22.7226|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:12:22 PM
+2025-07-14 17:12:23.9065|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 7/14/2025 5:12:23 PM
+2025-07-14 17:12:24.4296|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/14/2025 5:12:24 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-07-14 17:14:49.1738|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - InsertUserManager - 7/14/2025 5:14:49 PM
+2025-07-14 17:14:49.7325|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:14:49 PM
+2025-07-14 17:14:50.0439|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:14:50 PM
+2025-07-14 17:14:56.0575|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:14:56 PM
+2025-07-14 17:15:18.9077|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 7/14/2025 5:15:18 PM
+2025-07-14 17:15:32.1659|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateStatusUserManager - 7/14/2025 5:15:32 PM
+2025-07-14 17:15:32.1659|INFO|Repository.UserMastersRepository|UserMastersRepository - UpdateUserManagerStatus - 7/14/2025 5:15:32 PM
+2025-07-14 17:15:32.1788|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:15:32 PM
+2025-07-14 17:15:40.4993|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 7/14/2025 5:15:40 PM

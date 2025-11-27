@@ -1,0 +1,17 @@
+﻿<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+    <div class="filter-title" style="font-size: 17px;padding-left: 21px;font-weight: bold;">Select Language</div>
+
+    <div class="select-wrapper">
+        @Html.DropDownList("LanguageId", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+</div>
+<script>
+    $("#LanguageId").change(function () {
+        
+        var Value = $('#LanguageId').val();
+        $("#pageloader").removeAttr("hidden");
+        $("#pageloader").fadeIn();
+        window.location.href = "@Url.RouteUrl(new{ Controller = "HREmployeeTraining", Action = "SaveLanguageSelection" })/?LanguageId=" + Value;
+        $("#pageloader").attr("hidden");
+    });
+</script>

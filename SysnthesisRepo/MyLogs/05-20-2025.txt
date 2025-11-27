@@ -1,0 +1,4 @@
+2025-05-20 11:15:37.7929|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/20/2025 11:15:37 AM
+2025-05-20 11:15:57.3566|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 5/20/2025 11:15:57 AM - An error occurred while sending the request.
+2025-05-20 11:24:55.8192|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/20/2025 11:24:55 AM - A public action method 'GetQBAccountId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-20 11:24:58.0690|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/20/2025 11:24:58 AM - A public action method 'GetTypicalBalanceId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.

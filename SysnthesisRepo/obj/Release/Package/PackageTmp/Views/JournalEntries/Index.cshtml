@@ -1,0 +1,22 @@
+﻿@model IEnumerable<EntityModels.Models.SalesGeneralEntries>
+@{
+}
+<div class="header-small special_bg marleftzero">
+    <h3>Journal Entries </h3>
+
+</div>
+
+@{
+    Html.RenderAction("Grid");
+}
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

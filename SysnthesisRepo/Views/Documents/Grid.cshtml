@@ -1,0 +1,1230 @@
+﻿@model List<EntityModels.Models.Document>
+@{
+
+    Layout = null;
+}
+@using Utility;
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .addinvoice .leftpart #popupid, .divIDClass.modal-popup {
+        z-index: 99999999999 !important;
+        top: 56% !important;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .modal-header {
+        border-bottom: 3px solid #a52f2f;
+    }
+
+
+    #DocumentModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    .modal-footer {
+        background-color: #fbfbfb;
+    }
+</style>
+<div id="loadbox"></div>
+
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+        @if (ViewBag.StatusMessage.ToString().Length > 25)
+        {
+            <script>
+                MyCustomToster('@ViewBag.StatusMessage.ToString()');
+                @*ViewBag.StatusMessage ="";*@
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "success")
+        {
+            <script>
+                MyfunSuccess();
+                @ViewBag.StatusMessage ="";
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Delete")
+        {
+            <script>
+                MyfunSuccess();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Error")
+        {
+            <script>
+                MyfunError();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "NoItem")
+        {
+            <script>
+                //MyfunNoItem();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "NoRights")
+        {
+            <script>
+                MyfunNoRights();
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Exists")
+        {
+            <script>
+                MyfunExistsEmpcode();
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "InvalidPDFSize")
+        {
+            <script>
+                InvalidPDFSize();
+            </script>
+        }
+
+    </div>
+
+    <div class="newdocumentuploadpage">
+        <div class="page-body headertopbox">
+            <div class="page-header-main position-relative document-header">
+                @{
+                    var activemenu = ViewBag.tabListing;
+                }
+                <a href="#" id="0" class="filtermenulink @(activemenu == 0 ? "activemenu" : "")">
+                    All Documents @if (@ViewBag.TotalDoc > 0)
+                    {<text>(@ViewBag.TotalDoc)</text>}
+                else
+                {<text>(0)</text>}
+                </a>
+                <a href="#" id="1" class="filtermenulink @(activemenu == 1 ? "activemenu" : "")">
+                    <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" style="width:16px" /> Favorites @if (@ViewBag.TotalFav > 0)
+                    {<text>(@ViewBag.TotalFav)</text>}
+                else
+                { <text>(0)</text>}
+                </a>
+                <a href="#" id="2" class="filtermenulink @(activemenu == 2 ? "activemenu" : "")">
+                    <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/lock-document.svg" style="width:16px" /> Private
+                    @if (@ViewBag.TotalPrivate > 0)
+                    {<text>(@ViewBag.TotalPrivate)</text>}
+                else
+                { <text>(0)</text>}
+                </a>
+
+
+                <div class="documentheaderright">
+
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateDocument"))
+                    {
+                        <a class="btnadddocument" href="#" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#DocumentModal"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/plus.svg" style="width:16px" /> Bulk Upload</a>
+                        <a href="@Url.Action("Create", "Documents")" class="btnadddocument"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/plus.svg" style="width:16px" /> Add Document</a>
+                    }
+                    <span class="searchinvoicebox" style="border:0px;">
+                        <input type="text" class="form-control" id="txtSearchTitle" value="@ViewBag.SearchTitle" placeholder="Search by Keyword, Document title" />
+                    </span>
+                </div>
+                <div class="clear"></div>
+                <div class="subsearchbox">
+                    <div class="reportsearch">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <label>Category</label>
+                                @Html.DropDownList("DrpCategory", null, "All Category", new { @class = "myval" })
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <label>Created Date</label>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="padright10">
+                                                <input name="txtstartdate" id="txtstartdate" detail="My Documents StartDate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" placeholder="From" class="datepicker form-control" onkeydown="return false" autocomplete="off">
+
+                                            </td>
+                                            <td>
+                                                <input name="txtenddate" id="txtenddate" detail="My Documents StartDate" data-val="true" data-val-date="The field Startdate must be a date." data-val-required=" " type="text" maxlength="100" onkeydown="return false" placeholder="To" class="datepicker form-control" autocomplete="off">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-9">
+                                <label>Document Type</label>
+                                <div class="checkboxfilter">
+                                    <ul>
+                                        <li>
+                                            <input id="chkImages" type="checkbox" name="radio" value="1">
+                                            <label for="chkImages">Images</label>
+                                        </li>
+                                        <li>
+                                            <input id="chkEmail" type="checkbox" name="radio" value="1">
+                                            <label for="chkEmail">Email</label>
+                                        </li>
+                                        <li>
+                                            <input id="chkDoc" type="checkbox" name="radio" value="1">
+                                            <label for="chkDoc">Documents</label>
+                                        </li>
+                                        <li>
+                                            <input id="chkSheet" type="checkbox" name="radio" value="1">
+                                            <label for="chkSheet">Sheets</label>
+                                        </li>
+                                        <li>
+                                            <input id="chkOther" type="checkbox" name="radio" value="1">
+                                            <label for="chkOther">Others</label>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-1 col-md-2 col-sm-2">
+                                <input type="button" name="btnSearch" value="Filter" id="btnSearch" onclick="FunSearchRecord();" class="btn btn-danger btn-sm pull-right martop25">
+                            </div>
+                            <div class="col-lg-1 col-md-2 col-sm-2">
+                                <button type="button" class="btnadddocument" onclick="undofilters();" style="width:100px; border:none;margin-top:18px;">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datagrid documentgridtable">
+            <div class="table-responsive" id="test">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:50px;cursor:pointer" onclick="javascript:FunSortData('AttachExtention');">Type</th>
+                            <th style="width:50px;cursor:pointer" onclick="javascript:FunSortData('isprivate');">Private</th>
+                            <th style="cursor:pointer" onclick="javascript:FunSortData('Title');">Document Title</th>
+                            <th style="cursor:pointer" onclick="javascript:FunSortData('StoreName');">Store Name</th>
+                            <th style="cursor:pointer" class="text-align-center" onclick="javascript:FunSortData('CategoryName');">Category</th>
+                            <th style="cursor:pointer" class="text-align-center" onclick="javascript:FunSortData('CreatedDateFormated');">Created On</th>
+                            <th style="cursor:pointer" class="text-align-center" onclick="javascript:FunSortData('Notes');">Note</th>
+                            <th style="cursor:pointer" class="text-align-center" onclick="javascript:FunSortData('isFavorite');">Favorites</th>
+                            <th class="text-align-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            var rowClass = "";
+                            if (@item.IsPrivate)
+                            { rowClass = "private"; }
+                            <tr class="@rowClass">
+
+                                @*<td id="ImageId" style="text-align:center;"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/@item.FileTypeImage" alt="" style="height:34px;" /></a></td>*@
+                                <td id="ImageId" style="text-align:center;"><a target="_blank" detail="@item.Title - PDF" href="@item.AttachLink"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/@item.FileTypeImage" alt="" style="height:34px;" /></a></td>
+                                <td class="text-align-center" id="isprivateId">
+                                    @{
+                                        if (item.IsPrivate)
+                                        {
+                                            <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/lock-document.svg" class="iconprivatelock" alt="" style="height:20px;" />
+                                        }
+                                        else
+                                        {
+                                            <text></text>
+                                        }
+                                    }
+                                </td>
+
+
+                                @if (item.AttachExtention == ".xls" || item.AttachExtention == ".xlsx" || item.AttachExtention == ".csv")
+                                {
+                                    <td id="DocTitleId">
+                                        <span class="documentttl">
+                                            <strong>
+                                                <a href="@Url.Action("SpreadSheet", "Spreadsheet", new { Ids = item.DocumentId })" target="_blank" style="text-transform: uppercase;">@item.Title</a>
+                                                @*<a href="@Url.Action("DetailDocument", "Documents", new { Id = item.DocumentId })" style="text-transform: uppercase;">@item.Title</a>*@
+                                            </strong>
+                                        </span>
+                                    </td>
+                                }
+                                else if (item.AttachExtention == ".docx" || item.AttachExtention == ".doc ")
+                                {
+                                    <td id="DocTitleId">
+                                        <span class="documentttl">
+                                            <strong>
+                                                <a href="@Url.Action("EditDocument", "Documents", new { Ids = item.DocumentId })" target="_blank" style="text-transform: uppercase;">@item.Title</a>
+                                                @*<a href="@Url.Action("DetailDocument", "Documents", new { Id = item.DocumentId })" style="text-transform: uppercase;">@item.Title</a>*@
+                                            </strong>
+                                        </span>
+                                    </td>
+                                }
+                                else if (item.AttachExtention == ".pdf")
+                                {
+                                    <td id="DocTitleId">
+                                        <span class="documentttl">
+                                            <strong>
+                                                <a href="@Url.Action("PdfViewerData", "Documents", new { Ids = item.DocumentId })" target="_blank" style="text-transform: uppercase;">@item.Title</a>
+                                                @*<a href="@Url.Action("DetailDocument", "Documents", new { Id = item.DocumentId })" style="text-transform: uppercase;">@item.Title</a>*@
+                                            </strong>
+                                        </span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td id="DocTitleId">
+                                        <span class="documentttl">
+                                            <strong>
+                                                <a href="@item.AttachLink" target="_blank" style="text-transform: uppercase;">@item.Title</a>
+                                                @*<a href="@Url.Action("DetailDocument", "Documents", new { Id = item.DocumentId })" style="text-transform: uppercase;">@item.Title</a>*@
+                                            </strong>
+                                        </span>
+                                    </td>
+
+                                }
+
+
+                                <td id="storeNameId">@item.StoreName</td>
+                                <td class="text-align-center" id="categoryNameId">@item.CategoryName</td>
+                                <td class="text-align-center" id="CreatedDateId">
+                                    @item.CreatedDateFormated
+                                </td>
+                                <td class="text-align-center" id="NotesId">
+                                    @if (item.Notes != "" && item.Notes != null)
+                                    {
+                                        <img id="ok" src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icons/icon_notes.png" style="height:30px;" title="@Html.Raw(item.Notes)">
+                                    }
+                                </td>
+
+                                <td class="text-align-center" id="isFavoriteId">
+                                    @if (item.FavId > 0)
+                                    {
+                                        <div class="Fav">
+                                            <input id="fav-checkboxsql2" detail="@item.Title -" class="Fav-checkbox" type="checkbox" checked>
+                                            @if (item.IsFavorite)
+                                            {
+                                                <label for="fav-checkbox" onclick="return ComfirmFav1(@item.DocumentId);" class="Fav-label"><span class="Fav-label-text">Favourite</span></label>
+                                                var UserIdF1 = item.DocumentId + "F1";
+
+                                                <div id="@UserIdF1" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" />
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure to Unfavorite this Document?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" detail="favorite - " onclick="AddToFavorite(@item.DocumentId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" detail="favorite - " onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <label for="fav-checkbox" onclick="return ComfirmFav(@item.DocumentId);" class="Fav-label"><span class="Fav-label-text">Favourite</span></label>
+                                                var UserIdF = item.DocumentId + "F";
+                                                <div id="@UserIdF" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" />
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure to add Document in favorite?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" detail="favorite - " onclick="AddToFavorite(@item.DocumentId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" detail="favorite - " onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="Fav-bloom"></div>
+                                            <div class="Fav-sparkle">
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                            </div>
+                                            <svg class="Fav-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                                                <title>Star Icon</title>
+                                                <path d="M36.14,3.09l5.42,17.78H59.66a4.39,4.39,0,0,1,2.62,7.87L47.48,40.14,53,58.3a4.34,4.34,0,0,1-6.77,4.78L32,52l-14.26,11A4.34,4.34,0,0,1,11,58.27l5.55-18.13L1.72,28.75a4.39,4.39,0,0,1,2.62-7.87h18.1L27.86,3.09A4.32,4.32,0,0,1,36.14,3.09Z" />
+                                            </svg>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="Fav">
+                                            <input id="fav-checkbox" detail="@item.Title -" class="Fav-checkbox" type="checkbox">
+                                            @if (item.IsFavorite)
+                                            {
+                                                <label for="fav-checkbox" onclick="return ComfirmFav1(@item.DocumentId);" class="Fav-label"><span class="Fav-label-text">Favourite</span></label>
+
+                                                var UserIdF1 = item.DocumentId + "F1";
+
+                                                <div id="@UserIdF1" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" />
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure to Unfavorite this Document?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" detail="favorite - " onclick="AddToFavorite(@item.DocumentId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" detail="favorite - " onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <label for="fav-checkbox" onclick="return ComfirmFav(@item.DocumentId);" class="Fav-label"><span class="Fav-label-text">Favourite</span></label>
+
+                                                var UserIdF = item.DocumentId + "F";
+                                                <div id="@UserIdF" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" />
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure to add Document in favorite?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" detail="favorite - " onclick="AddToFavorite(@item.DocumentId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" detail="favorite - " onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            <div class="Fav-bloom"></div>
+                                            <div class="Fav-sparkle">
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                                <div class="Fav-sparkle-line"></div>
+                                            </div>
+                                            <svg class="Fav-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                                                <title>Star Icon</title>
+                                                <path d="M36.14,3.09l5.42,17.78H59.66a4.39,4.39,0,0,1,2.62,7.87L47.48,40.14,53,58.3a4.34,4.34,0,0,1-6.77,4.78L32,52l-14.26,11A4.34,4.34,0,0,1,11,58.27l5.55-18.13L1.72,28.75a4.39,4.39,0,0,1,2.62-7.87h18.1L27.86,3.09A4.32,4.32,0,0,1,36.14,3.09Z" />
+                                            </svg>
+                                        </div>
+                                    }
+                                </td>
+                                <td style="vertical-align:middle;text-align:center;width:5%" class="printarea img_with img_color" id="editdeleteid">
+                                    @{
+                                        <input type="hidden" id="itemhiddenID" name="ID" value="@item.DocumentId" />
+                                        <input type="hidden" id="ID" name="ID" value="@item.StoreId" />
+                                        if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DeleteDocument"))
+                                        {
+                                            var UserIdD = @item.DocumentId + "D";
+
+                                            <a href="#" detail="@item.Title - Delete" onclick="return ComfirmDelete(@item.DocumentId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                            <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                                                <div class="modal-content ">
+                                                    <div class="modal-header text-center">
+                                                        <i class="glyphicon glyphicon-trash"></i>
+                                                    </div>
+                                                    <div class="modal-title">Message</div>
+                                                    <div class="modal-body ">Are you sure want to delete this Document?</div>
+                                                    <div class="modal-footer" style="text-align:center">
+                                                        <a class="btn btn-danger" detail="Delete -" onclick="Delete(@item.DocumentId);">Ok </a>
+                                                        <a class="btn" data-dismiss="modal" detail="Delete -" onclick="closemodal()">Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        @*if (item.IsStatus_id == WebSecurity.CurrentUserId || (Roles.IsUserInRole("Administrator")))
+                                            {
+                                                <a href="@Url.Action("EditDocument", "Document", new { Id = item.Id })" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="@wwwroot.Class.AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg" alt="" /></a>
+                                            }
+                                            else
+                                            {*@
+                                        if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UpdateDocument"))
+                                        {
+                                            <a href="@Url.Action("Edit", "Documents", new { Id = item.DocumentId })" detail="@item.Title - Edit" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg" alt="" /></a>
+                                        }
+
+                                        @*}*@
+
+                                        <a href="@Url.Action("Download", "Documents", new { Ids = item.DocumentId })" detail="@item.Title - Download"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon-download.svg" alt="" /></a>
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DocumentModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:40%;">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Bulk Documents</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="col-md-12">
+                        @*<input type="file" multiple="multiple" name="FileUpload1" id="UploadInvoice" />*@
+                        <label style="font-size:18px;">Upload Files :</label>
+                        <input style="font-size:16px;" type="file" placeholder="Upload PDF" id="DocumentFU" accept=".jpg, .png, .gif, .pdf, .doc, .dcox, .xls, .xlsx, .mp4, .avi, .wmv, .mov, .mkv" multiple="multiple" name="DocumentFU">
+                        <hr />
+                        <div id="previews" style="font-size:16px;"></div><br />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer modal-delete-footer" style="background-color:white;">
+                <a class="btn btn-primary" href="#" onclick="SaveDocumentModel()">Save<span></span></a>
+                <a class="btn btn-default" href="#" onclick="CloseDocumentModel()">Cancel<span></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ww" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+    <input type="hidden" id="hdnpagevalue" value="0" />
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-trash"></i>
+        </div>
+        <div class="modal-title">Message</div>
+        <div class="modal-body ">Are you sure want to delete this Document?</div>
+        <div class="modal-footer" style="text-align:center">
+            <a class="btn btn-danger" onclick="Delete();">Ok </a>
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".SaveDocumodel").click(function () {
+
+        for (var i = 0; i < $("#FileUpload1")[0].files.length; i++) {
+            alert($("#FileUpload1")[0].files[i].name);
+            //if ($("#FileUpload1")[0].files[i].name == filename)
+
+            //    fileData.append("DocFiles", $("#FileUpload1")[0].files[i]);
+        }
+        //if ($("#FileUpload1")[0].files.length > 5) {
+
+        //} else {
+        //    images(this, '#previews');
+        //}
+    })
+    $(document).ready(function () {
+        $(".filtermenulink").click(function () {
+            $(".filtermenulink").removeClass("activemenu");
+            $(this).addClass("activemenu");
+            FunSearchRecord();
+        });
+        $("#txtSearchTitle").autocomplete(false);
+        var currentDate = new Date();
+        $('#txtstartdate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+        $('#txtenddate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+    });
+    $(".filtermenulink").click(function () {
+        $(".filtermenulink").removeClass("activemenu");
+        $(this).addClass("activemenu");
+        FunSearchRecord();
+    });
+    function CloseDocumentModel() {
+        $("#previews").html('');
+
+       /* $("input[name=UploadInvoice]").val("");*/
+        $("#DocumentModal").modal('hide');
+    }
+    $('#DocumentFU').on('change', function () {
+
+        if ($("#DocumentFU")[0].files.length > 20) {
+            alert("You can select only 20 Files");
+            $("#DocumentFU")[0].val('');
+        } else {
+
+            images(this, '#previews');
+        }
+
+    });
+
+    var images = function (input, imgPreview) {
+        if (input.files) {
+
+            var filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+                var filename = input.files[i];
+                $("<li><strong>" + filename.name + "</strong>&nbsp;&nbsp;<a style=\"color: #428bca;\" class=\"remove\" href=\"#\">Remove</a>&nbsp;&nbsp;<input type='checkbox' id='chkFav' name='chkFav'><label for='chkFav' style='font-size:16px;'>&nbsp;Favourite</label>&nbsp;&nbsp;<input type='checkbox' id='chkPrivate' name='chkPrivate'><label for='chkPrivate' style='font-size:16px;'>&nbsp;Private</label></li>").appendTo(imgPreview);
+                $(".remove").click(function () {
+                    $(this).parent().remove();
+                });
+            }
+        }
+    };
+    
+    var top=0;
+    function Loader(val)
+    {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+
+            $(".loading-container").attr("style","display:block;")
+            //$('#loadbox').hide();
+
+            // $(".loading-container").show();
+            // $(".loading-inactive").show();
+        }
+        else {
+
+            //$('.loading-container').removeClass('showbox');
+            $(".loading-container").attr("style","display:none;")
+            //$(".loading-container").hide();
+            //$(".loading-inactive").hide();
+        }
+        bind();
+    }
+
+    function bind()
+    {
+
+        var dept='@ViewBag.CategoryId';
+        if(dept != '0'){
+            document.getElementById('DrpCategory').value = '@ViewBag.CategoryId';
+        }
+
+        document.getElementById('txtstartdate').value = '@ViewBag.startdate';
+
+        document.getElementById('txtenddate').value = '@ViewBag.enddate';
+        document.getElementById('txtSearchTitle').value ='@ViewBag.searchTitle';
+
+        document.getElementById('chkImages').checked = '@ViewBag.chkImages' == 'True'? true:false;
+        document.getElementById('chkEmail').checked = '@ViewBag.chkEmail' == 'True'? true:false;
+        document.getElementById('chkDoc').checked = '@ViewBag.chkDoc' == 'True'? true:false;
+        document.getElementById('chkSheet').checked = '@ViewBag.chkSheet' == 'True'? true:false;
+        document.getElementById('chkOther').checked ='@ViewBag.chkOther' == 'True'? true:false;
+
+
+        var currentDate = new Date();
+        $('#txtstartdate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false
+        });
+        $('#txtenddate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false
+        });
+
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+
+    }
+
+    function FunSearchRecord()//Search
+    {
+        var element_txtSearchTitle = document.getElementById('txtSearchTitle').value;
+        var element_categoryId = document.getElementById('DrpCategory').value;
+        var element_txtstartdate = document.getElementById('txtstartdate').value;
+        var element_txtenddate = document.getElementById('txtenddate').value;
+        var tabListing = $("a.activemenu").attr('id');
+
+
+        var element_chkImages  = document.getElementById('chkImages').checked;
+        var element_chkEmail  = document.getElementById('chkEmail').checked;
+        var element_chkDoc  = document.getElementById('chkDoc').checked;
+        var element_chkSheet  = document.getElementById('chkSheet').checked;
+        var element_chkOther = document.getElementById('chkOther').checked;
+
+        GetData(1, 1, '@ViewBag.OrderByVal',0,'@ViewBag.PageSize', '', '', element_txtSearchTitle, element_categoryId, element_txtstartdate, element_txtenddate,element_chkImages,element_chkEmail,element_chkDoc,element_chkSheet,element_chkOther,tabListing);
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+        var element_chkImages = document.getElementById('chkImages').checked;
+        var element_chkEmail = document.getElementById('chkEmail').checked;
+        var element_chkDoc = document.getElementById('chkDoc').checked;
+        var element_chkSheet = document.getElementById('chkSheet').checked;
+        var element_chkOther = document.getElementById('chkOther').checked;
+        if ('@ViewBag.OrderByVal' != SortData) {
+            GetData(0, '@ViewBag.CurrentPageIndex', SortData,1,'@ViewBag.PageSize', '', '', '@ViewBag.SearchTitle', '@ViewBag.categoryId', '@ViewBag.startdate', '@ViewBag.enddate', element_chkImages, element_chkEmail, element_chkDoc, element_chkSheet, element_chkOther, '@ViewBag.tabListing');
+        }
+        else {
+            GetData(0,'@ViewBag.CurrentPageIndex', SortData,'@ViewBag.IsAscVal','@ViewBag.PageSize','','','@ViewBag.SearchTitle','@ViewBag.categoryId','@ViewBag.startdate','@ViewBag.enddate',element_chkImages,element_chkEmail,element_chkDoc,element_chkSheet,element_chkOther,'@ViewBag.tabListing');
+        }
+    }
+
+    //For Search Button
+    function GetData(IsBindData_val, PageIndex, orderby_val, isAsc_val, PageSize_val, alpha_val, SearchRecords_val, SearchTitle_val, CategoryId_val, startdate_val, enddate_val, chkImages_val, chkEmail_val, chkDoc_val, chkSheet_val, chkOther_val, tabListing)
+    {
+        $.ajax({
+            url: '/Documents/Grid',
+            data: { IsBindData: IsBindData_val, currentPageIndex: PageIndex, orderby: orderby_val, IsAsc: isAsc_val, PageSize: PageSize_val, SearchRecords: SearchRecords_val, Alpha: alpha_val, SearchTitle: SearchTitle_val, CategoryId: CategoryId_val, startdate: startdate_val, enddate: enddate_val, chkImages: chkImages_val, chkEmail: chkEmail_val, chkImages: chkImages_val, chkDoc: chkDoc_val, chkSheet: chkSheet_val, chkOther: chkOther_val, tabListing},
+
+            beforeSend: function () { Loader(1); },
+            // async: false,
+            cache: false,
+            success: function (response) { Loader(0);
+
+                $('#grddata').html('');
+                $('#grddata').append(response);
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+
+        });
+    }
+
+    document.getElementById('txtSearchTitle').onkeypress=function(e){
+        if(e.keyCode==13){
+            document.getElementById('btnSearch').click();
+        }
+    }
+
+    function ComfirmDelete(ID)
+    {
+        var DivId="#"+ID+"D";
+        $(DivId).show();
+    }
+
+    function Delete(ID)
+    {
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/Documents/Delete',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+                if ('@ViewBag.IsAscVal' == 1) {
+                        GetData(1, 1, '@ViewBag.OrderByVal', 0,'@ViewBag.PageSize', '', '', '@ViewBag.SearchTitle'
+                            , '@ViewBag.CategoryId', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.chkImages', '@ViewBag.chkEmail'
+                            , '@ViewBag.chkDoc', '@ViewBag.chkSheet', '@ViewBag.chkOther');
+                    }
+                    else {
+                        GetData(1, 1, '@ViewBag.OrderByVal', 1,'@ViewBag.PageSize', '', '', '@ViewBag.SearchTitle'
+                            , '@ViewBag.CategoryId', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.chkImages', '@ViewBag.chkEmail'
+                            , '@ViewBag.chkDoc', '@ViewBag.chkSheet', '@ViewBag.chkOther');
+                    }
+                if(response.sucess==1)
+                    FunSearchRecord();
+                else{
+                    MyfunError();
+                }
+                return true;
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    function ComfirmFav1(ID)
+    {
+        var DivId="#"+ID+"F1";
+        $(DivId).show();
+    }
+
+    function ComfirmFav(ID)
+    {
+        var DivId="#"+ID+"F";
+        $(DivId).show();
+    }
+
+    function AddToFavorite(ID)
+    {
+        $.ajax({
+            url: 'Documents/AddToFavorite',
+            data: { DocId: ID},
+            async: false,
+            success: function (response) {
+                @*GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,@ViewBag.SearchRecords,'','@ViewBag.SearchTitle','@ViewBag.DocType','@ViewBag.CategoryId','@ViewBag.startdate','@ViewBag.enddate');*@
+                if (response.sucess == 1) {
+                    if ('@ViewBag.IsAscVal' == 1) {
+                        GetData(1, 1, '@ViewBag.OrderByVal', 0,@ViewBag.PageSize, '', '', '@ViewBag.SearchTitle'
+                            , '@ViewBag.CategoryId', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.chkImages', '@ViewBag.chkEmail'
+                            , '@ViewBag.chkDoc', '@ViewBag.chkSheet', '@ViewBag.chkOther');
+                    }
+                    else {
+                        GetData(1, 1, '@ViewBag.OrderByVal', 1,@ViewBag.PageSize, '', '', '@ViewBag.SearchTitle'
+                            , '@ViewBag.CategoryId', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.chkImages', '@ViewBag.chkEmail'
+                            , '@ViewBag.chkDoc', '@ViewBag.chkSheet', '@ViewBag.chkOther');
+                    }
+                    MyCustomToster(response.msg);
+                }
+                else{
+                    MyfunError();
+                }
+
+                return true;
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    function closemodal(){
+
+        $(".divIDClass").hide();
+
+    }
+</script>
+<script>
+
+    var pageSize = 20;
+    var pageIndex = 1;
+    var pageCount='@ViewBag.totalcount';
+    $(window).scroll(function () {
+        if (Math.round($(window).scrollTop(), 0) == Math.round(($(document).height() - $(window).height()), 0)) {
+
+            myCustomFn();
+
+        }
+    });
+    function myCustomFn() {
+
+        var page_loadsize = parseInt('@ViewBag.PageSize') + parseInt(20);
+        document.getElementById('hdnpagevalue').value = page_loadsize;
+        GetData12(pageSize, pageIndex);
+        $("#hdnpagevalue").val(page_loadsize);
+    }
+
+
+    function GetData12(PageSize, CurrentPageIndex) {
+        var element_txtSearchTitle= document.getElementById('txtSearchTitle').value;
+        var element_categoryId = document.getElementById('DrpCategory').value;
+        var element_txtstartdate = document.getElementById('txtstartdate').value;
+        var element_txtenddate = document.getElementById('txtenddate').value;
+        var tabListing = $("a.activemenu").attr('id');
+        var element_chkImages  = document.getElementById('chkImages').checked;
+        var element_chkEmail  = document.getElementById('chkEmail').checked;
+        var element_chkDoc  = document.getElementById('chkDoc').checked;
+        var element_chkSheet  = document.getElementById('chkSheet').checked;
+        var element_chkOther  = document.getElementById('chkOther').checked;
+        var IsBindData_val =1;
+        var orderby_val='@ViewBag.OrderByVal';
+        var isAsc_val ='@ViewBag.IsAscVal';
+        var PageSize_val = '@ViewBag.PageSize';
+        var alpha_val = '';
+        var SearchRecords_val = element_txtSearchTitle;
+        var CategoryId_val=element_categoryId;
+        var startdate_val=element_txtstartdate;
+        var enddate_val=element_txtenddate;
+        var chkImages_val=element_chkImages;
+        var chkEmail_val=element_chkEmail;
+        var chkDoc_val = element_chkDoc;
+        var chkSheet_val=element_chkSheet;
+        var chkOther_val=element_chkOther;
+        var SearchTitle_val = element_txtSearchTitle;
+
+        pageIndex++;
+        if (pageIndex == 2 || pageIndex <= pageCount) {
+            $.ajax({
+                url: 'Documents/GridScroll',
+                async: false,
+                data: { IsBindData: IsBindData_val, currentPageIndex: CurrentPageIndex, orderby: orderby_val.trim(), IsAsc: isAsc_val, PageSize: PageSize_val, SearchRecords: SearchRecords_val, Alpha: alpha_val, SearchTitle: SearchTitle_val, CategoryId: CategoryId_val, startdate: startdate_val, enddate: enddate_val, chkImages: chkImages_val, chkEmail: chkEmail_val, chkImages: chkImages_val, chkDoc: chkDoc_val, chkSheet: chkSheet_val, chkOther: chkOther_val, tabListing: tabListing },
+                beforeSend: function () {
+                    Loader(1);
+                },
+                timeout: 300000,
+                success: function (data) {
+                    //alert();
+
+                    Loader(0);
+                    var CurrentUserId = 10;
+                    if (data != null && data.length!=0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var table = $("#test table tbody tr").eq(0).clone(true);
+                            $("#RowId", table).html(data[i].Id);
+
+                            // Document Image Start
+                            var ImageIdhtml = "<a target='_blank' href=" + data[i].AttachLink + "><img src='Content/Admin/images/" + data[i].FileTypeImage + "' alt='' style='height:34px;' /></a>";
+                            $("#ImageId", table).html(ImageIdhtml);
+                            // Document Image End
+
+                            // Document Private Start
+                            var isPrivateHtml = "";
+                            if(data[i].isprivate)
+                            {
+                                isPrivateHtml = "<img src = 'Content/Admin/images/lock-document.svg' class='iconprivatelock' alt='' style='height:20px;' />";
+                            }
+                            else
+                            {
+                                isPrivateHtml ="";
+                            }
+                            $("#isprivateId", table).html(isPrivateHtml);
+                            // Document Private End
+
+                            // Document Title Start
+                            var DocTitleIdHtml = "";
+                            if (data[i].AttachExtention == ".xls" || data[i].AttachExtention == ".xlsx" || data[i].AttachExtention == ".csv") {
+                                DocTitleIdHtml = '<span class="documentttl"> <strong><a href="/SpreadSheet/Spreadsheet?Id=' + data[i].DocumentId + '" style="text-transform: uppercase;">' + data[i].Title + '</a> </strong></span>'
+                            }
+                            else if (data[i].AttachExtention == ".docx" || data[i].AttachExtention == ".doc ") {
+                                DocTitleIdHtml = '<span class="documentttl"> <strong><a href="/Documents/EditDocument?Id=' + data[i].DocumentId + '" style="text-transform: uppercase;">' + data[i].Title + '</a> </strong></span>'
+                            }
+                            else if (data[i].AttachExtention == ".pdf") {
+                                DocTitleIdHtml = '<span class="documentttl"> <strong><a href="/Documents/PdfViewerData?Id=' + data[i].DocumentId + '" style="text-transform: uppercase;">' + data[i].Title + '</a> </strong></span>'
+
+                            }
+                            else {
+                                DocTitleIdHtml = '<span class="documentttl"> <strong><a href=" + data[i].AttachLink + " style="text-transform: uppercase;">' + data[i].Title + '</a> </strong></span>'
+                            }
+                            $("#DocTitleId", table).html(DocTitleIdHtml);
+                            // Document Title End
+
+                            $("#storeNameId", table).html(data[i].StoreName);
+                            $("#categoryNameId", table).html(data[i].CategoryName);
+                            $("#CreatedDateId", table).html(data[i].CreatedDateFormated);
+
+                            if (data[i].Notes != "" && data[i].Notes != null)
+                            {
+                                var nnotes = '<img id="ok" src="Content/Admin/images/icons/icon_notes.png" style="height:30px;" title="' + (data[i].Notes) + '">';
+                                $("#NotesId", table).html(nnotes);
+                            }
+                            else
+                            {
+                                $("#NotesId", table).html("");
+                            }
+
+                            var isFavoriteIdHtml="";
+                            var adminRole = '@(Roles.IsUserInRole("Administrator") ? "true" : "false")';
+                            var backoRole = '@(Roles.IsUserInRole("Back Office Manager") ? "true" : "false")';
+                            var dataappRole = '@(Roles.IsUserInRole("Data Approver") ? "true" : "false")';
+                            var storeMgrRole = '@(Roles.IsUserInRole("Store Manager") ? "true" : "false")';
+                            var isFavHtml="";
+                            var sparkHtml =' <div class="Fav-bloom"></div>';
+                            sparkHtml += '<div class="Fav-sparkle">';
+                            sparkHtml += '<div class="Fav-sparkle-line"></div>';
+                            sparkHtml += '<div class="Fav-sparkle-line"></div>';
+                            sparkHtml += '<div class="Fav-sparkle-line"></div>';
+                            sparkHtml += '<div class="Fav-sparkle-line"></div>';
+                            sparkHtml += '<div class="Fav-sparkle-line"></div>';
+                            sparkHtml +=     ' </div>';
+                            sparkHtml += '<svg class="Fav-star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">';
+                            sparkHtml += '<title>Star Icon</title>';
+                            sparkHtml += '<path d="M36.14,3.09l5.42,17.78H59.66a4.39,4.39,0,0,1,2.62,7.87L47.48,40.14,53,58.3a4.34,4.34,0,0,1-6.77,4.78L32,52l-14.26,11A4.34,4.34,0,0,1,11,58.27l5.55-18.13L1.72,28.75a4.39,4.39,0,0,1,2.62-7.87h18.1L27.86,3.09A4.32,4.32,0,0,1,36.14,3.09Z" />'                  ;
+                            sparkHtml += ' </svg>';
+
+                            var unFavHtml = ' <label for="fav-checkbox" onclick="return ComfirmFav1(' + data[i].DocumentId + ');" class="Fav-label"><span class="Fav-label-text">Favourite</span></label>';
+                            var UserIdF1 = data[i].DocumentId + "F1";
+
+                            unFavHtml += '<div id="' + UserIdF1 + '" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">';
+                            unFavHtml += '<div class="modal-content ">';
+                            unFavHtml += '<div class="modal-header text-center">';
+                            unFavHtml += ' <img src="Content/Admin/images/star.svg"/>';
+                            unFavHtml += '</div>' ;
+                            unFavHtml += '<div class="modal-title">Message</div>';
+                            unFavHtml += '<div class="modal-body ">Are you sure to Unfavorite this Document?</div>';
+                            unFavHtml +=   '<div class="modal-footer" style="text-align:center">'     ;
+                            unFavHtml += '<a class="btn btn-danger" onclick="AddToFavorite(' + data[i].DocumentId + ');">Ok </a>' ;
+                            unFavHtml += '<a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>';
+                            unFavHtml += '</div></div></div>';
+
+
+                            var DoFavHtml = ' <label for="fav-checkbox" onclick="return ComfirmFav(' + data[i].DocumentId + ');" class="Fav-label"><span class="Fav-label-text">Favourite</span></label>';
+                            var UserIdF = data[i].DocumentId + "F";
+
+                            DoFavHtml += '<div id="' + UserIdF + '" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">';
+                            DoFavHtml += '<div class="modal-content ">';
+                            DoFavHtml += '<div class="modal-header text-center">';
+                            DoFavHtml += ' <img src="Content/Admin/images/star.svg"/>';
+                            DoFavHtml += '</div>' ;
+                            DoFavHtml += '<div class="modal-title">Message</div>';
+                            DoFavHtml += '<div class="modal-body ">Are you sure to Unfavorite this Document?</div>';
+                            DoFavHtml +=   '<div class="modal-footer" style="text-align:center">'     ;
+                            DoFavHtml += '<a class="btn btn-danger" onclick="AddToFavorite(' + data[i].DocumentId + ');">Ok </a>' ;
+                            DoFavHtml += '<a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>';
+                            DoFavHtml += '</div></div></div>';
+
+                            if ((storeMgrRole == 'true' && data[i].IsStatus_id == 3) || (dataappRole == 'true' && data[i].IsStatus_id == 2) || adminRole == 'true')
+                            {
+                                if (data[i].FavId > 0)
+                                {
+                                    isFavHtml += '<div class="Fav"><input id="fav-checkbox2" class="Fav-checkbox" type="checkbox" checked>';
+
+                                    if (data[i].isFavorite)
+                                    {
+                                        isFavHtml += unFavHtml;
+                                    }
+                                    else
+                                    {
+                                        isFavHtml += DoFavHtml;
+                                    }
+
+                                    isFavHtml += sparkHtml;
+                                    isFavHtml += '</div>';
+
+                                }
+                                else
+                                {
+                                    isFavHtml += '<div class="Fav"><input id="fav-checkbox" class="Fav-checkbox" type="checkbox">';
+
+                                    if (data[i].isFavorite)
+                                    {
+                                        isFavHtml += unFavHtml;
+                                    }
+                                    else
+                                    {
+                                        isFavHtml += DoFavHtml;
+                                    }
+
+                                    isFavHtml += sparkHtml;
+                                }
+                            }
+                            else
+                            {
+                                if (data[i].FavId > 0)
+                                {
+                                    isFavHtml += '<div class="Fav"> <input id="fav-checkbox2" class="Fav-checkbox" type="checkbox" checked>';
+
+                                    if (data[i].isFavorite)
+                                    {
+                                        isFavHtml += unFavHtml;
+                                    }
+                                    else
+                                    {
+                                        isFavHtml += DoFavHtml;
+                                    }
+                                    isFavHtml += sparkHtml;
+                                }
+                                else
+                                {
+                                    isFavHtml += '<div class="Fav"> <input id="fav-checkbox" class="Fav-checkbox" type="checkbox">';
+
+                                    if (data[i].isFavorite)
+                                    {
+                                        isFavHtml += unFavHtml;
+                                    }
+                                    else
+                                    {
+                                        isFavHtml += DoFavHtml;
+                                    }
+                                    isFavHtml += sparkHtml;
+                                    isFavHtml += '</div>';
+                                }
+                            }
+                            $("#isFavoriteId", table).html(isFavHtml);
+                            var editdeleteidHtml ="";
+                            if (data[i].IsStatus_id == CurrentUserId)
+                            {
+                                editdeleteidHtml = '<input type="hidden" id="itemhiddenID" name="ID" value="' + data[i].DocumentId + '" />';
+                                editdeleteidHtml += '<input type="hidden" id="ID" name="ID" value="' + data[i].StoreId + '" />'
+                                var UserIdD = data[i].Id + "D";
+                                editdeleteidHtml += '<a href="#" onclick="return ComfirmDelete(' + data[i].DocumentId + ');" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="/Content/Admin/images/trash-2.svg" alt="" /> </a>';
+                                editdeleteidHtml += '<div id="' + UserIdD + '" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">';
+                                editdeleteidHtml += '<div class="modal-content ">';
+                                editdeleteidHtml += '<div class="modal-header text-center">';
+                                editdeleteidHtml += '  <i class="glyphicon glyphicon-trash"></i>';
+                                editdeleteidHtml += '</div>'         ;
+                                editdeleteidHtml += '<div class="modal-title">Message</div>';
+                                editdeleteidHtml += '<div class="modal-body ">Are you sure want to delete this Document?</div>';
+                                editdeleteidHtml += '<div class="modal-footer" style="text-align:center">';
+                                editdeleteidHtml += ' <a class="btn btn-danger" onclick="Delete(' + data[i].DocumentId + ');">Ok </a>';
+                                editdeleteidHtml += '<a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>';
+                                editdeleteidHtml += '</div></div></div>'
+                            }
+                            else
+                            {
+                                editdeleteidHtml = ' <a class="disabled" href="#" onclick="return ComfirmDelete(' + data[i].DocumentId + ');" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="/Content/Admin/images/trash-2.svg" alt="" /> </a>';
+                            }
+                            if (data[i].IsStatus_id == CurrentUserId  || adminRole == true)
+                            {
+                                editdeleteidHtml += '<a href="Documents/Edit?Id=' + data[i].DocumentId + '" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="Content/Admin/images/edit-2.svg" alt="" /></a>';
+                            }
+                            else
+                            {
+                                editdeleteidHtml += '<a href="Edit?Id=' + data[i].DocumentId + '" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="Content/Admin/images/edit-2.svg" alt="" /></a>';
+                            }
+                            $("#editdeleteid", table).html(editdeleteidHtml);
+                            $("#test table tbody").append("<tr class='even'> " + table.html() + "</tr>")
+                        }
+                    }
+                    $(".loading-container").hide();
+                },
+                complete: function () {
+                    Loader(0);
+                },
+                error: function ()
+                {
+                    Loader(0);
+                }
+            });
+        }
+    }
+
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 20) {
+            $(".page-header-main").addClass("stikyheader");
+            $(".documentgridtable").addClass("topsearcharea");
+
+        } else{
+            $(".page-header-main").removeClass("stikyheader");
+            $(".documentgridtable").removeClass("topsearcharea");
+        }
+    });
+
+    $( document ).ready(function() {
+        ;(function($) {
+            $.fn.fixMe = function() {
+                return this.each(function() {
+                    var $this = $(this),
+                       $t_fixed;
+                    function init() {
+                        $this.wrap('<div class="" />');
+                        $t_fixed = $this.clone();
+                        $t_fixed.find("tbody").remove().end().addClass("fixed").insertBefore($this);
+                        resizeFixed();
+                    }
+                    function resizeFixed() {
+                        $t_fixed.find("th").each(function(index) {
+                            $(this).css("width",$this.find("th").eq(index).outerWidth()+"px");
+                        });
+                    }
+                    function scrollFixed() {
+                        var offset = $(this).scrollTop(),
+                        tableOffsetTop = $this.offset().top,
+                        tableOffsetBottom = tableOffsetTop + $this.height() - $this.find("thead").height();
+                        if(offset < tableOffsetTop || offset > tableOffsetBottom)
+                            $t_fixed.hide();
+                        else if(offset >= tableOffsetTop && offset <= tableOffsetBottom && $t_fixed.is(":hidden"))
+                            $t_fixed.show();
+                    }
+                    $(window).resize(resizeFixed);
+                    $(window).scroll(scrollFixed);
+                    init();
+                });
+            };
+        })(jQuery);
+
+        $(document).ready(function(){
+            $("table").fixMe();
+        });
+    });
+</script>
+<script>
+    function SaveDocumentModel() {
+
+        var model = new FormData();
+        var check = "jpg,jpeg,png,gif,pdf,doc,docx,xls,xlsx,mp4,avi,wmv,mov,mkv";
+        var mesg = "";
+        for (var i = 0; i < $("#DocumentFU")[0].files.length; i++) {
+            if (check.includes($("#DocumentFU")[0].files[i].name.split('.')[1])) {
+
+                model.append("File", $("#DocumentFU")[0].files[i]);
+
+                var preview = document.getElementById("previews");
+                for (var j = 0; j < preview.childNodes.length; j++) {
+
+                    if (preview.childNodes[j].childNodes[0].innerText === $("#DocumentFU")[0].files[i].name) {
+
+                        model.append("item", preview.childNodes[j].children[0].innerText + '^' + preview.childNodes[j].children[2].checked + '^' + preview.childNodes[j].children[4].checked);
+                    }
+                }
+            }
+            else {
+                if (mesg == "") {
+                    mesg = "Extension not supported : " + $("#DocumentFU")[0].files[i].name.split('.')[1];
+                }
+                else {
+                    mesg +="," + $("#DocumentFU")[0].files[i].name.split('.')[1];
+                }
+            }
+        }
+        if (mesg != "") {
+            alert(mesg);
+            return false;
+        }
+
+        $.ajax({
+             @*url: '@Url.Action("SaveDocumentModel", "Documents")',*@
+            url: '@AdminSiteConfiguration.GetURL()Documents/SaveDocumentsDetail',
+             beforeSend: function () {
+                 $('.ajax-loader').css("visibility", "visible");
+             },
+              type: "POST",
+              data: model,
+             contentType: false,
+             processData: false,
+             success: function (data) {
+                 if (data.Result == 'success') {
+                     $("input[name=DocumentFU]").val("");
+
+                        GetData(1, 1, '@ViewBag.OrderByVal', 0,'@ViewBag.PageSize', '', '', '@ViewBag.SearchTitle'
+                            , '@ViewBag.CategoryId', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.chkImages', '@ViewBag.chkEmail'
+                            , '@ViewBag.chkDoc', '@ViewBag.chkSheet', '@ViewBag.chkOther');
+
+                  return false;
+              }
+              else {
+                  showAlert(data.Result,"danger",5000);
+              }
+             },
+             complete: function () {
+                 $('.ajax-loader').css("visibility", "hidden");
+             },
+                 error: function (Result) {
+              }
+         });
+        $("#DocumentModal").modal('hide');
+    }
+
+    function undofilters()
+    {
+        GetData(1, 1, '@ViewBag.OrderByVal',0,'@ViewBag.PageSize', '', '', '', '', '','','','','','','','');
+    }
+</script>

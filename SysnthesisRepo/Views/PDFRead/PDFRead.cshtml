@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EntityModels.Models.PDFTable>
+@{
+}
+<br />
+<button class="btn btn-warning" type="button" onclick="@("window.location.href='" + @Url.Action("Create", "PDFRead") + "'");"><i class='icon_spac fa fa-navicon'></i>Back</button>
+<br />
+<table class="table">
+    <tr style="background-color:lightgray">
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Value)
+        </th>
+   
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (!item.Name.Contains("Summary"))
+        {
+            <tr>
+
+                <td>
+                    @Html.Raw(item.Name)
+                </td>
+                <td>
+                    @Html.Raw(item.Value2)
+                </td>
+             
+            </tr>
+        }
+        else
+        {
+            <tr style="font-weight:bold">
+
+                <td>
+                    @Html.Raw(item.Name)
+                </td>
+                <td>
+                    @Html.Raw(item.Value)
+                </td>
+              
+            </tr>
+        }
+    }
+
+</table>
+
+
+
+

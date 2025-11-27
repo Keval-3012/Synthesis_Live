@@ -1,0 +1,18 @@
+﻿namespace SynthesisCF.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ChangeColumnType : DbMigration
+    {
+        public override void Up()
+        {
+            AlterColumn("dbo.ProductVendors", "Price", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            AlterColumn("dbo.ProductVendors", "Price", c => c.Decimal(nullable: false, precision: 18, scale: 2));
+        }
+    }
+}

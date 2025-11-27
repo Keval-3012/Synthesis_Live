@@ -1,0 +1,1162 @@
+﻿@model EntityModels.Models.DashboardDaily
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+    var StoreId = ViewBag.Storeidvalue;
+}
+@using Utility
+<style>
+    .h1, .h2, .h3, h1, h2, h3 {
+         margin-top: 0px !important; 
+         margin-bottom: 0px !important; 
+    }
+    label {
+        margin-bottom: 0px !important;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />
+<script src="~/Content/Admin/js/DashboardChart/bar-multicolor.js"></script>
+<script src="~/Content/Admin/js/DashboardChart/Chart.min.js"></script>
+
+@*<style>
+    #bar-chartcanvas{
+        height:590px !important;
+    }
+</style>*@
+
+<body>
+    @*<div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>*@
+    <div class="synthesisdashboardcontainer">
+        @*<div class="datepicker-placeholder">
+            <div class="reportFileStatus">
+                <span>Status</span>
+                <div class="storeFilesStatus">
+                    <ul>
+                        <li class="store74-84">
+                            <i class="active" active-hour="01 am"></i>
+                            <i class="active" active-hour="02 am"></i>
+                            <i class="active" active-hour="03 am"></i>
+                            <i class="active" active-hour="04 am"></i>
+                            <i class="active" active-hour="05 am"></i>
+                            <i class="active" active-hour="06 am"></i>
+                            <i class="active" active-hour="07 am"></i>
+                            <i class="active" active-hour="08 am"></i>
+                            <i class="active" active-hour="09 am"></i>
+                            <i class="active" active-hour="10 am"></i>
+                            <i class="active" active-hour="11 am"></i>
+                            <i class="active" active-hour="12 pm"></i>
+                            <i class="active" active-hour="01 pm"></i>
+                            <i class="active" active-hour="02 pm"></i>
+                            <i class="disabled" active-hour="03 pm"></i>
+                            <i class="active" active-hour="04 pm"></i>
+                            <i class="disabled" active-hour="05 pm"></i>
+                            <i class="active" active-hour="06 pm"></i>
+                            <i class="active" active-hour="07 pm"></i>
+                            <i class="active" active-hour="08 pm"></i>
+                            <i class="active" active-hour="09 pm"></i>
+                            <i class="active" active-hour="1 pm"></i>
+                            <i class="active" active-hour="11 am"></i>
+                            <i class="active" active-hour="12 am"></i>
+                        </li>
+                    </ul>
+
+                    <ul>
+                        <li class="store2589">
+
+                            <i class="active" active-hour="01 am"></i>
+                            <i class="disabled" active-hour="02 am"></i>
+                            <i class="active" active-hour="03 am"></i>
+                            <i class="active" active-hour="04 am"></i>
+                            <i class="disabled" active-hour="05 am"></i>
+                            <i class="disabled" active-hour="06 am"></i>
+                            <i class="disabled" active-hour="07 am"></i>
+                            <i class="disabled" active-hour="08 am"></i>
+                            <i class="disabled" active-hour="09 am"></i>
+                            <i class="disabled" active-hour="10 am"></i>
+                            <i class="disabled" active-hour="11 am"></i>
+                            <i class="disabled" active-hour="12 pm"></i>
+                            <i class="disabled" active-hour="01 pm"></i>
+                            <i class="disabled" active-hour="02 pm"></i>
+                            <i class="disabled" active-hour="03 pm"></i>
+                            <i class="disabled" active-hour="04 pm"></i>
+                            <i class="disabled" active-hour="05 pm"></i>
+                            <i class="disabled" active-hour="06 pm"></i>
+                            <i class="disabled" active-hour="07 pm"></i>
+                            <i class="disabled" active-hour="08 pm"></i>
+                            <i class="disabled" active-hour="09 pm"></i>
+                            <i class="disabled" active-hour="1 pm"></i>
+                            <i class="disabled" active-hour="11 am"></i>
+                            <i class="disabled" active-hour="12 am"></i>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>*@
+        <div class="datepicker-placeholder" style="width: 13%;">
+            <input name="DailyChartDate" type="text" value="11-26-2021" maxlength="100" id="DailyChartDate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+        </div>
+        <div class="top-widget-row">
+            <div>
+                <span id="AllVoidsAmt">$ @Model.AllVoidsAmt</span>
+                <span>All Voids</span>
+                <div class="badge" id="AllVoids">@Model.AllVoids</div>
+
+            </div>
+
+            <div>
+                <span id="ItemCorrectsAmt">$ @Model.ItemCorrectsAmt</span>
+                <span>Item Corrects</span>
+                <div class="badge" id="ItemCorrects">@Model.ItemCorrects</div>
+            </div>
+
+            <div>
+                <span id="ItemReturnsAmt">$ @Model.ItemReturnsAmt</span>
+                <span>Returns</span>
+                <div class="badge" id="ItemReturns">@Model.ItemReturns</div>
+            </div>
+
+            <div>
+                <span id="CashPayout">$ @Model.CashPayout</span>
+                <span>Cash Payouts</span>
+            </div>
+            <div class="overShort">
+                <span id="Over">$ @Model.Over</span>
+                <span>Over / Short</span>
+            </div>
+
+        </div>
+        <div class="middle-widget-row">
+            <div class="middle-widget-oneB">
+
+                <div class="middle-widget-WeeklyDataTable">
+                    <div class="currentWeekGrowth">
+                        <div class="currentDayTime"><span id="currentday">Current @Model.DayName</span><span id="currenttime">@Model.HourTime</span></div>
+
+                        <div class="nutralBrighterCell"><div class="widgetTitle"><h2>Total Sales</h2></div><span id="TotalSalesCurrentDay" class="ValueDown">$@Model.TotalSalesCurrentDay</span><div id="clsvalup" class="valueUpCell"><span id="SalesGrowth">@Model.SalesGrowth%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" /></div></div>
+                        <div class="nutralBrighterCell"><div class="widgetTitle"><h2>Customer Count</h2></div><span id="CustomerCountCurrentDay" class="ValueDown">@Model.CustomerCountCurrentDay</span><div id="clsvalup1" class="valueUpCell"><span id="CustomerCountGrowth">@Model.CustomerCountGrowth%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" /></div></div>
+                        <div class="nutralBrighterCell"><div class="widgetTitle"><h2>Average Sale</h2></div><span id="AverageSaleCurrentDay" class="ValueDown">@Model.AverageSaleCurrentDay</span><div id="clsvalup2" class="valueUpCell"><span id="AveragesalesGrowth">@Model.AveragesalesGrowth%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" /></div></div>
+
+                        @*<div class="nutralBrighterCell"><div><h2>Average Sale</h2></div><span id="AverageSaleCurrentDay">$@Model.AverageSaleCurrentDay</span><div class="valueDownCell"><span>@Model.AveragesalesGrowth%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" /></div></div>*@
+                    </div>
+
+                    <div class="currentWeekGrowth">
+                        <div class="lastWeekDayTime"><span id="lastday">Last @Model.DayName</span><span id="lasttime">@Model.HourTime</span></div>
+                        <div class="nutralCell">
+                            <div class="widgetTitle">
+                                <h2>Total Sales</h2>
+                            </div><span class="ValueDown" id="TotalSalesLastWeek">$@Model.TotalSalesLastWeek</span>
+                        </div>
+                        <div class="nutralCell">
+                            <div class="widgetTitle">
+                                <h2>Customer Count</h2>
+                            </div><span id="CustomerCountLastWeek">@Model.CustomerCountLastWeek</span>
+                        </div>
+                        <div class="nutralCell">
+                            <div class="widgetTitle">
+                                <h2>Average Sale</h2>
+                            </div><span id="AverageSalesLastWeek">$@Model.AverageSalesLastWeek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="smallWidgetContainer">
+                <div class="middle-widget-two">
+
+
+                    <div class="middle-widget-two-Offline">
+
+                        <div class="offlineStoreDiv">
+
+                            <img src="/Content/Admin/images/Dashboard/offline-store.png">
+                            <span>In-Store</span>
+                            <span id="Offline">@Model.Offline%</span>
+                        </div>
+
+                    </div>
+                    <div class="vs"><span>Vs</span></div>
+                    <div class="middle-widget-two-online">
+                        <div class="offlineStoreDiv">
+
+                            <img src="/Content/Admin/images/Dashboard/online-store.png">
+                            <span>Online</span>
+                            <span id="Online">@Model.Online%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoices">
+
+                    <span>Invoices</span>
+                    <div class="added">
+                        <img src="/Content/Admin/images/Dashboard/added-invoices.png">
+                        <span>Added</span>
+                        <span id="InvoicesAdded">@Model.InvoicesAdded</span>
+                    </div>
+
+
+
+                    <div class="approved">
+                        <img src="/Content/Admin/images/Dashboard/approved-invoices.png">
+                        <span>Approved</span>
+                        <span id="InvoicesApproved">@Model.InvoicesApproved</span>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span id="graphtitle">Daily Sales Graph</span>
+                <div class="totals">
+                    <span id="graphTotal"></span>
+                    <div class="total-values" data-toolTip="totalsData">
+                        <div class="StoreValues" id="dvTotalStore">
+                            @*<h2>Stores</h2>*@
+                            @*<span class="store74-84">$ 0.00</span>
+                            <span class="store2589">$ 0.00</span>
+                            <span class="store14Street">$ 0.00</span>
+                            <span class="storeMayWood">$ 0.00</span>
+                            <span class="store2840">$ 35,000.00</span>
+                            <span class="store1407">$ 35,000.00</span>
+                            <span class="store180">$ 35,000.00</span>
+                            <span class="store170">$ 35,000.00</span>*@
+
+                        </div>
+                        <div class="DepartmentValues" id="dvTotalDepartment">
+                            @*<h2>Departments</h2>*@
+                            @*<span> <strong>Bakery</strong> : $ 135,000.00</span>
+                            <span> <strong>Dairy</strong> : $ 432,000.00</span>
+                            <span> <strong>Meat</strong> : $ 35,000.00</span>
+                            <span> <strong>Cheese</strong> : $ 35,000.00</span>*@
+
+                        </div>
+                    </div>
+                </div>
+                @*<span id="graphtitle">Daily Sales Graph</span>*@
+                <div class="graphOptions">
+                    @*<label><input type="radio" name="radio" style='margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;' />Sales</label>*@
+                    @*<label><input type='radio' value="1" name='radio' class="clsRadio" id='R1' style="position: initial;display: inline;opacity:unset" checked> Sales</label>
+                    <label><input type="radio" value="2" name="radio" class="clsRadio" id='R2' style="position: initial;display: inline;opacity:unset" /> Customer Count</label>
+                    <label><input type="radio" value="3" name="radio" class="clsRadio" style="position: initial;display: inline;opacity:unset" /> Average Sale</label>*@
+                    <input type="radio" id="sales" name='radio' value="1" class="clsRadio" checked="checked">
+                    <label for="sales">Sales</label><br>
+                    <input type="radio" id="customers" name="radio" value="2" class="clsRadio">
+                    <label for="customers">Customer Count</label><br>
+                    <input type="radio" id="averageSales" name="radio" value="3" class="clsRadio">
+                    <label for="averageSales">Average Sales</label>
+                </div>
+            </div>
+            <div class="graphPlaceHolder">
+                <canvas id="bar-chartcanvas"></canvas>
+            </div>
+            @*<br />*@
+            @*<div class="graphPlaceHolder" style="width:200px;height:200px;">
+                <canvas id="bar-chartcanvasDoughnut"></canvas>
+            </div>
+            <div class="graphPlaceHolder" style="width:500px;height:500px;">
+                <canvas id="bar-chartcanvasbar"></canvas>
+            </div>*@
+
+
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+                @*<span>Refine</span>*@
+                @*<div class="filterStore">*@
+                <h2>Stores</h2>
+                <div class="storeList">
+                    @foreach (var item in Model.StoreList)
+                    {
+                        @*if (StoreId == 0 && item.Id!=0)
+                        {
+                            <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores" disabled><label for="@item.Id">@item.Text</label></li>
+                        }
+                        else
+                        {*@
+                        <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores"><label for="@item.Id">@item.Text</label></li>
+                        @*}*@
+                    }
+                    @*<li><input type="checkbox" id="74-84" name="7484" value="Bike"><label for="7484">74-84</label></li>*@
+
+                </div>
+                @*</div>*@
+
+                @*<div class="filterDepartment">*@
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" class="clsdailychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+                </div>
+                @*</div>*@
+            </div>
+        </div>
+
+
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span>Sales and Hours Worked</span>
+                @*<div class="totals">
+
+                </div>*@
+
+            </div>
+            <div class="graphPlaceHolder small">
+                <canvas id="bar-chartcanvas2"></canvas>
+
+            </div>
+
+            <div class="departmentWiseSales">
+                <span>Sales per 1 Hour Worked</span>
+                <div class="departmentWiseSalesWidgets">
+                    @*<div><span>74-84</span><span>$ 2,324.00</span></div>
+                    <div><span>2840</span><span>$ 2,324.00</span></div>
+                    <div><span>180</span><span>$ 2,324.00</span></div>
+                    <div><span>170</span><span>$ 2,324.00</span></div>
+                    <div><span>14th Street</span><span>$ 2,324.00</span></div>
+                    <div><span>1407</span><span>$ 2,324.00</span></div>
+                    <div><span>2589</span><span>$ 2,324.00</span></div>
+                    <div><span>2840</span><span>$ 2,324.00</span></div>
+                    <div><span>2840</span><span>$ 2,324.00</span></div>
+                    <div><span>2840</span><span>$ 2,324.00</span></div>*@
+                </div>
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class="refineContainer">
+                @*<span>Refine</span>*@
+
+
+                @*<div class="filterDepartment">*@
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.PayrollDepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="hourlychartdepartments" value="@item.Text" class="clshourlychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+
+                </div>
+                @*</div>*@
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+
+
+    $(document).ready(function () {
+        var startdate = '@ViewBag.Startdate';
+        $('#DailyChartDate').val(startdate);
+
+        $('#DailyChartDate').datetimepicker({
+            format: 'MM-DD-YYYY',
+            useCurrent: true
+        });
+        GetData($('#DailyChartDate').val());
+        $('#DailyChartDate').attr('autocomplete', 'off');
+
+       
+    });
+
+    $(function () {
+        $('#DailyChartDate').datetimepicker({
+            format: 'MM-DD-YYYY',
+            useCurrent: true
+        });
+
+        $('#DailyChartDate').on('dp.change', function (e) {
+            var date = $(this).val();
+            GetData(date);
+            $(".other-deposite").hide();
+        });
+    });
+    //clsdailychartstores
+            
+
+    function GetData(Currentdate) {
+
+      $.ajax({
+          method:"GET",
+            url: '@AdminSiteConfiguration.GetURL()/dashboard/getDashboardDailyData',
+          data: { date: Currentdate },
+            beforeSend: function () {
+                //Loader(1);
+            },
+          success: function (response) {
+              checkAllStore();
+              //if ($("#HeaderStoreId option:selected").val() != "") {
+                  GetChartDetails();
+              //}
+                  GetHourlyChartDetails();
+                  GetSalesOneHourWorkedData(Currentdate);
+              if (response.AllVoidsAmt < 100000) {
+                  $("#AllVoidsAmt").text("$ " + response.AllVoidsAmt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              } else {
+                  $("#AllVoidsAmt").text("#####");
+              }
+             
+              if (response.ItemCorrectsAmt < 100000) {
+                  $("#ItemCorrectsAmt").text("$ " + response.ItemCorrectsAmt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              } else {
+                  $("#ItemCorrectsAmt").text("#####");
+              }
+
+              if (response.ItemReturnsAmt < 100000) {
+                  $("#ItemReturnsAmt").text("$ " + response.ItemReturnsAmt.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              } else {
+                  $("#ItemReturnsAmt").text("#####");
+              }
+
+              $("#AllVoids").text(response.AllVoids.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,").replace(".00", ""));
+              $("#ItemCorrects").text(response.ItemCorrects);
+              $("#ItemReturns").text(response.ItemReturns);
+              $("#CashPayout").text("$ " + response.CashPayout.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              if (response.Over < 0) {
+                  $("#Over").css('color', 'red');
+              } else if (response.Over > 0) {
+                  $("#Over").css('color', 'green');
+              }
+              else {
+                  $("#Over").css('color', 'gray');
+              }
+              $("#Over").text("$ " + response.Over.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              $("#TotalSalesCurrentDay").text("$ " + response.TotalSalesCurrentDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+
+              $("#SalesGrowth").text(response.SalesGrowth + "%");
+
+              $("#CustomerCountCurrentDay").text(response.CustomerCountCurrentDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,").replace(".00", ""));
+              $("#CustomerCountGrowth").text(response.CustomerCountGrowth+"%");
+              $("#AverageSaleCurrentDay").text("$ " + response.AverageSaleCurrentDay.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              $("#AveragesalesGrowth").text(response.AveragesalesGrowth+"%");
+              $("#TotalSalesLastWeek").text("$ " + response.TotalSalesLastWeek.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              $("#CustomerCountLastWeek").text(response.CustomerCountLastWeek.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,").replace(".00", ""));
+              $("#AverageSalesLastWeek").text("$ " + response.AverageSalesLastWeek.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+              $("#Offline").text(response.Offline.toFixed(2) + "%");
+              $("#Online").text(response.Online.toFixed(2) + "%");
+              $("#InvoicesAdded").text(response.InvoicesAdded);
+              $("#InvoicesApproved").text(response.InvoicesApproved);
+
+              $("#currentday").text("Current " + response.DayName);
+              $("#currenttime").text(response.HourTime);
+              $("#lastday").text("Last " + response.DayName);
+              $("#lasttime").text(response.HourTime);
+              
+
+
+              if (response.SalesGrowth < 0) {
+                  $("#clsvalup").removeClass('valueUpCell');
+                  $("#clsvalup").addClass('valueDownCell');
+                  //$("#clsvalup").attr('valueUpCell', 'valueDownCell');
+              } else {
+                  $("#clsvalup").removeClass('valueDownCell');
+                  $("#clsvalup").addClass('valueUpCell');
+              }
+              if (response.CustomerCountGrowth < 0) {
+                  $("#clsvalup1").removeClass('valueUpCell');
+                  $("#clsvalup1").addClass('valueDownCell');
+                  //$("#clsvalup").attr('valueUpCell', 'valueDownCell');
+              } else {
+                  $("#clsvalup1").removeClass('valueDownCell');
+                  $("#clsvalup1").addClass('valueUpCell');
+              }
+              if (response.AveragesalesGrowth < 0) {
+                  $("#clsvalup2").removeClass('valueUpCell');
+                  $("#clsvalup2").addClass('valueDownCell');
+                  //$("#clsvalup").attr('valueUpCell', 'valueDownCell');
+              } else {
+                  $("#clsvalup2").removeClass('valueDownCell');
+                  $("#clsvalup2").addClass('valueUpCell');
+              }
+                //Loader(0);
+            }
+        });
+    }
+
+    function GetSalesOneHourWorkedData(Currentdate) {
+       
+        var Departments = "";
+        $(".clshourlychartdepartments").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                Departments += $(obj).val() + ",";
+            }
+        });
+
+        //checkedId = checkedId.slice(0, -1);
+        if (Departments != "") {
+            Departments = Departments.slice(0, -1);
+        } else {
+            Departments = "ALL";
+        }
+        var div = document.getElementsByClassName("clsstr");
+        var Length = div.length;
+        for (var i = 0; i < Length; i++) {
+            div[0].remove();
+        }
+
+          $.ajax({
+          method:"GET",
+              url: '@AdminSiteConfiguration.GetURL()/dashboard/GetSalesOneHourWorkedData',
+              data: { date: Currentdate, department: Departments},
+            beforeSend: function () {
+                //Loader(1);
+            },
+          success: function (response) {
+              if (response.length > 0) {
+                  var htm = "";
+                  $.each(response, function (j, data) {
+                      htm += "<div class='clsstr'><span>" + data.StoreName + "</span><span>$ " + data.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span></div>";
+                  })
+                  $(htm).appendTo($('.departmentWiseSalesWidgets'));
+              }
+                //Loader(0);
+            }
+        });
+    }
+
+
+    function GetSalesTotalDetailsdata() {
+        var checkedId = "";
+        var radioId = "1";
+        var Departments = "";
+        $(".clsdailychartstores").each(function (index, obj) {
+            
+            if ($(obj).is(':checked') == true) {
+
+                checkedId += $(obj).val() + ",";
+            }
+        });
+
+        $(".clsRadio").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                radioId = $(obj).val();
+
+            }
+        });
+       
+        $(".clsdailychartdepartments").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                Departments += $(obj).val() + ",";
+            }
+        });
+
+        checkedId = checkedId.slice(0, -1);
+
+        if (Departments != "") {
+            Departments = Departments.slice(0, -1);
+        } else {
+            Departments = "ALL";
+        }
+
+        var div = document.getElementsByClassName("clsTotalDetail");
+        var Length = div.length;
+        for (var i = 0; i < Length; i++) {
+            div[0].remove();
+        }
+        var Date = $('#DailyChartDate').val();
+
+          $.ajax({
+          method:"GET",
+              url: '@AdminSiteConfiguration.GetURL()/dashboard/GetSalesTotalDetailsdata',
+              data: { StoreId: checkedId, Department: Departments, Type: radioId, Date: Date },
+            beforeSend: function () {
+                //Loader(1);
+            },
+          success: function (response) {
+              if (response.length > 0) {
+                  var htm = "";
+                  var htmDept = "";
+                  
+                  htm += "<h2 class='clsTotalDetail'>Stores</h2>";
+                  htmDept += "<h2 class='clsTotalDetail'>Departments</h2>";
+                  htmDept += "<ul class='clsTotalDetail'>";
+                  var CurSign = "";
+                  var Decimalval = 0;
+                  if (radioId != "2") {
+                      CurSign = "$";
+                      Decimalval = 2;
+                  }
+                  $.each(response, function (j, data) {
+                      if (data.Type == "S") {
+
+                          if (data.StoreId == '1') {
+                              htm += "<span class='store74-84 clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          } else if (data.StoreID == '5') {
+                              htm += "<span class='store2589 clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                          else if (data.StoreId == '6') {
+                              htm += "<span class='store14Street clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                          else if (data.StoreId == '2') {
+                              htm += "<span class='storeMayWood clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                          else if (data.StoreId == '7') {
+                              htm += "<span class='store2840 clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                          else if (data.StoreId == '3') {
+                              htm += "<span class='store1407 clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                          else if (data.StoreId == '4') {
+                              htm += "<span class='store180 clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                          else if (data.StoreId == '9') {
+                              htm += "<span class='store170 clsTotalDetail'>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "</span>";
+                          }
+                      } else if (data.Type == "D") {
+                          htmDept += "<li><span> " + data.StoreId + "</span> <span>" + CurSign + " " + data.Amount.toFixed(Decimalval).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +"</span></li>";
+                      }
+                  })
+                  htmDept += "</ul>";
+                  $(htm).appendTo($('#dvTotalStore'));
+                  $(htmDept).appendTo($('#dvTotalDepartment'));
+              }
+                //Loader(0);
+            }
+        });
+    }
+
+    $(".clsdailychartstores").change(function () {
+        
+        if ($(this).is(':checked') == true) {
+            if (this.value == "0") {
+
+                $(".clsdailychartstores").each(function (index, obj) {
+                    if (this.value != "0") {
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }
+                });
+            }
+            GetChartDetails();
+        }
+        else {
+
+            GetChartDetails();
+        }
+        //else {
+        //    if (this.value == "0") {
+        //        $(".clsdailychartstores").each(function (index, obj) {
+        //            if ($(obj).val != "0") {
+        //                $(this).prop('checked', false);
+        //            }
+        //        });
+        //    }
+        //  //  GetChartDetails();
+        //}
+    })
+    $(".clsRadio").change(function () {
+        GetChartDetails();
+    })
+    $(".clsdailychartdepartments").change(function () {
+        GetChartDetails();
+    })
+
+    $(".clshourlychartdepartments").change(function () {
+        
+        GetHourlyChartDetails();
+        GetSalesOneHourWorkedData($('#DailyChartDate').val());
+
+    })
+    
+    var chart2;
+    function GetChartDetails() {
+        //$("#bar-chartcanvas").load('~/Dashboard/GetChartData');
+        GetSalesTotalDetailsdata();
+        var checkedId = "";
+        var radioId = "1";
+        var Departments = "";
+        
+        $(".clsdailychartstores").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                checkedId += $(obj).val() + ",";
+            }
+        });
+
+        $(".clsRadio").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                radioId = $(obj).val();
+               
+            }
+        });
+        if (radioId == "1") {
+            $('#graphtitle').text("Daily Sales Graph");
+            $("input.clsdailychartdepartments").removeAttr("disabled");
+        } else if (radioId == "2") {
+            $('#graphtitle').text("Customer Count Graph");
+            $("input.clsdailychartdepartments").attr("disabled", true);
+        } else {
+            $('#graphtitle').text("Average Sale Graph", false);
+            $("input.clsdailychartdepartments").attr("disabled", true);
+        }
+        $(".clsdailychartdepartments").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                Departments += $(obj).val() + ",";
+            }
+        });
+        
+        checkedId = checkedId.slice(0, -1);
+
+        if (Departments != "") {
+            Departments = Departments.slice(0, -1);
+        } else {
+            Departments = "ALL";
+        }
+        var Date = $('#DailyChartDate').val();
+        var ctx = $("#bar-chartcanvas");
+       
+        var options = {
+            
+            tooltips: {
+                callbacks: {
+                    title: function (t,d) {
+                        return "Time : " + d.labels[t[0].index];
+                        //return ['Hours : ' + d.labels[t[0].index], 'another thing', 'and another one'];
+                    },
+                    label: function (context,lbldata) {
+                        var arr = [];
+                        var StoreCode = lbldata.datasets[context.datasetIndex].code;
+                        $.ajax({
+                            async:false,
+                            type: "POST",
+                            url: '/Dashboard/getToolTipData',
+                            data: { StoreId: StoreCode, Department: Departments, Type: radioId, Date: Date, Hours: context.xLabel,Mode:"D"},
+                            //contentType: "application/json",
+                            //dataType: "json",
+                            success: function (chData) {
+                                aa = chData;
+                                var strDept = "";
+                                $.each(aa, function (index, obje) {
+                                    strDept = "";
+                                    if (radioId != "2") {
+                                        strDept = obje.Department + " - [" + obje.Hour1 + "] - " + " $" + obje.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " ------ [" + obje.TillTime + "] $" + obje.TAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+                                    } else {
+                                        strDept = obje.Department + " - [" + obje.Hour1 + "] - " + obje.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " ------ [" + obje.TillTime + "] $" + obje.TAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        strDept = obje.Department + " : " + obje.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    }
+                                    arr.push(strDept);
+                                })
+                            }
+                        });
+
+                        //arr.push("----------------------");
+                        if (radioId != "2") {
+                            arr.push("Total : " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.yLabel));
+                        } else {
+                            arr.push("Total : " + context.yLabel.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(".00", ""));
+                        }
+                        return arr;
+                    }
+                }
+            },
+            maintainAspectRatio: false,
+            responsive: true,
+            title: {
+                display: true,
+                position: "top",
+                text: "",
+                fontSize: 18,
+                fontColor: "#000"
+            },
+            //interaction: {
+            //    intersect: false,
+            //},
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    
+                    ticks: {
+                        min: 0,
+                        callback: function (value, index, values) {
+                            if (parseInt(value) >= 1000) {
+                                if (radioId != "2") {
+                                    return '$' + value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                } else {
+                                    return value.toFixed(0).toString();
+                                }
+                            } else {
+                                if (radioId != "2") {
+                                    return '$' + value.toFixed(2);
+                                } else {
+                                    return value.toFixed(0);
+                                }
+                            }
+                        }
+                        //,
+                        //userCallback: function (label, index, labels) {
+                        //    // when the floored value is the same as the value we have a whole number
+                        //    if (Math.floor(label) === label) {
+                        //        return label;
+                        //    }
+
+                        //}
+                    },
+                }],
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
+                }]
+            }
+        };
+        
+      
+        if (chart2) {
+            chart2.destroy();
+        }
+        $.ajax({
+
+            type: "POST",
+            url: '/Dashboard/GetChartData',
+            data: { StoreId: checkedId, Department: Departments, Type: radioId, Date: Date },
+            //contentType: "application/json",
+            //dataType: "json",
+            success: function (chData) {
+                var aData = chData;
+                var aLabels = aData["Labels"];
+                var aDatasets1 = aData["DatsetLists"];
+                var Total = aData["Total"];
+                if (radioId == "3") {
+                    //Total = Total / 24;
+                    //$("#graphTotal").text("$" + Total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+                    $(".totals").hide();
+                }
+                else if (radioId == "1") {
+                    $(".totals").show();
+                    $("#graphTotal").text("$" + Total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,"));
+                }
+                else {
+                    $(".totals").show();
+                    $("#graphTotal").text(Total.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,").replace(".00", ""));
+                }
+                var data = {
+                    labels: aLabels,
+                    datasets: aDatasets1,
+                };
+
+                if (chart2 != undefined)
+                    chart2.destroy();
+
+                chart2 = new Chart(ctx, {
+                    type: "line",
+                    data: data,
+                    options: options,
+                });
+            }
+        });
+
+        var ctx1 = $("#bar-chartcanvasDoughnut");
+        $.ajax({
+
+            type: "POST",
+            url: '/Dashboard/GetChartDataDoughnut',
+            data: { StoreId: checkedId, Department: Departments, Type: radioId, Date: Date },
+            //contentType: "application/json",
+            //dataType: "json",
+            success: function (chData) {
+                var aData = chData;
+                var aLabels = aData["Labels"];
+                var aDatasets1 = aData["DatsetListDoughnutLists"];
+                var data = {
+                    labels: aLabels,
+                    datasets: aDatasets1,
+                };
+
+                var chart = new Chart(ctx1, {
+                    type: "doughnut",
+                    data: data,
+                    //options: options
+                });
+            }
+        });
+
+        var ctx3 = $("#bar-chartcanvasbar");
+        $.ajax({
+
+            type: "POST",
+            url: '/Dashboard/GetChartDataBar',
+            data: { StoreId: checkedId, Department: Departments, Type: radioId, Date: Date },
+            //contentType: "application/json",
+            //dataType: "json",
+            success: function (chData) {
+               
+                var aData = chData;
+                var aLabels = aData["Labels"];
+                var aDatasets1 = aData["DatsetLists"];
+                var data = {
+                    labels: aLabels,
+                    datasets: aDatasets1,
+                };
+
+                var chart = new Chart(ctx3, {
+                    type: "bar",
+                    data: data,
+                    //options: options
+                });
+            }
+        });
+    };
+   
+    var myChartHOur;
+    function GetHourlyChartDetails() {
+        var checkedId = "";
+        var radioId = "1";
+        var Departments = "";
+
+        $(".clshourlychartdepartments").each(function (index, obj) {
+            if ($(obj).is(':checked') == true) {
+
+                Departments += $(obj).val() + ",";
+            }
+        });
+
+        checkedId = checkedId.slice(0, -1);
+        if (Departments != "") {
+            Departments = Departments.slice(0, -1);
+        } else {
+            Departments = "ALL";
+        }
+       
+        //var ctx = $("#bar-chartcanvas2");
+
+        //var options = {
+            
+        //    responsive: true,
+        //    maintainAspectRatio: false,
+        //    pointStyle: 'circle',
+        //    radius: 7,
+        //    borderWidth: 1.2
+
+        ////    //title: {
+        ////    //    display: true,
+        ////    //    position: "top",
+        ////    //    text: "Multicolor Bubble Graph",
+        ////    //    fontSize: 18,
+        ////    //    fontColor: "#111"
+        ////    //},
+        ////    plugins: {
+        ////        legend: {
+        ////            position: 'top',
+        ////        },
+        ////        title: {
+        ////            display: true,
+        ////            text: 'Multicolor Bubble Graph'
+        ////        }
+        ////    },
+          
+        ////    //legend: {
+        ////    //    display: true
+        ////    //},
+        ////    scales: {
+        ////        yAxes: [{
+        ////            ticks: {
+        ////                min: 0,
+        ////                callback: function (value, index, values) {
+        ////                    if (parseInt(value) >= 1000) {
+        ////                        return '$' + value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        ////                    } else {
+        ////                        return '$' + value.toFixed(2);
+        ////                    }
+        ////                }
+        ////            }
+        ////        }],
+        ////        xAxes: [{
+        ////            type: 'linear',
+        ////            position: 'bottom'
+        ////        }]
+        ////    }
+        //};
+        var Date = $('#DailyChartDate').val();
+
+        if (myChartHOur != undefined)
+            myChartHOur.destroy();
+       
+        $.ajax({
+
+            type: "POST",
+            url: '/Dashboard/GetHourlyChartData',
+            data: { StoreId: checkedId, Department: Departments, Type: "4", Date: Date },
+            success: function (chData) {
+               
+                var aData = chData;
+                var aLabels = aData["Labels"];
+                var aDatasets1 = aData["HourlyDatsetList"];
+                var data = {
+                    labels: aLabels[0],
+                    datasets: aDatasets1,
+                };
+
+                var options = {
+                    tooltips: {
+                        callbacks: {
+                            title: function (t, d) {
+                                
+                                return "Payroll Hours : " + t[0].xLabel;
+                                //return ['Hours : ' + d.labels[t[0].index], 'another thing', 'and another one'];
+                            },
+                            label: function (context, lbldata) {
+                                var arr = [];
+                                var StoreCode = lbldata.datasets[context.datasetIndex].label;
+                                $.ajax({
+                                    async: false,
+                                    type: "POST",
+                                    url: '/Dashboard/getHourlyChartToolTipData',
+                                    data: { StoreId: StoreCode, Department: Departments, Type: "4", Date: Date},
+                                    //data: { StoreId: StoreCode, Department: Departments, Type: "4", Date: Date, Hours: context.xLabel },
+                                    //contentType: "application/json",
+                                    //dataType: "json",
+                                    success: function (chData) {
+                                        aa = chData;
+                                        var strDept = "";
+                                        $.each(aa, function (index, obje) {
+                                            strDept = "";
+                                            if (radioId != "2") {
+                                                strDept = obje.Department + " :  $" + obje.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+                                            } else {
+                                                //strDept = obje.Department + " - [" + obje.Hour1 + "] - " + obje.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " ------ [" + obje.TillTime + "] $" + obje.TAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                                strDept = obje.Department + " : " + obje.Amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                            }
+                                            arr.push(strDept);
+                                        })
+                                    }
+                                });
+
+                                //arr.push("----------------------");
+                                //if (radioId != "2") {
+                                //    arr.push("Total : " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.yLabel));
+                                //} else {
+                                //    arr.push("Total : " + context.yLabel.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(".00", ""));
+                                //}
+                                arr.push("Total : " + context.yLabel.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(".00", ""));
+                                return arr;
+                            }
+                        }
+                    },
+                    responsive: true, // Instruct chart js to respond nicely.
+                    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+                    showLines: false,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    if (parseInt(value) >= 1000) {
+                                        return '$' + value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        return '$' + value.toFixed(2);
+                                    }
+                                },
+                               
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0
+                            }
+                        }]
+                    },
+                };
+                var ctx1 = document.getElementById("bar-chartcanvas2").getContext('2d');
+                // End Defining data
+                
+
+                myChartHOur = new Chart(ctx1, {
+                    
+                    type: 'scatter',
+                    data: data,
+                    options: options
+                });
+            }
+        });
+    };
+
+    function closemodal() {
+        $(".divIDClass").hide();
+        //$(".overlaybox").hide();
+    }
+
+    var HeaderStoreId = $("#HeaderStoreId option:selected").val();
+    if (HeaderStoreId == "") {
+        HeaderStoreId = "0";
+    }
+    if (HeaderStoreId != "0") {
+        $(".clsdailychartstores").each(function (index, obj) {
+            var valu = $(obj).val();
+
+            if (HeaderStoreId == valu) {
+
+                $(obj).attr('checked', 'checked')
+            }
+            else {
+                $(obj).attr('checked', false)
+            }
+        });
+    }
+
+    function checkAllStore() {
+        var HeaderStoreId = $("#HeaderStoreId option:selected").val();
+        if (HeaderStoreId == "") {
+            HeaderStoreId = "0";
+        }
+        if (HeaderStoreId == "0") {
+            $(".clsdailychartstores").each(function (index, obj) {
+                if (this.value != "0") {
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
+            });
+        }
+    }
+    //} else {
+    //    $(".clsdailychartstores").each(function (index, obj) {
+    //        if (this.value != "0") {
+    //            $(this).prop('checked', true);
+    //        } else {
+    //            $(this).prop('checked', false);
+    //        }
+    //    });
+    //}
+    //var HeaderStoreId= $("#HeaderStoreId option:selected").val();
+</script>
+
+

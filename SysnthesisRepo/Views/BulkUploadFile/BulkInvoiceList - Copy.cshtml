@@ -1,0 +1,1466 @@
+﻿@model IEnumerable<EntityModels.Models.Invoice>
+@using EntityModels.Models;
+@using System.Configuration;
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+@*<link href="~/Areas/Content/Admin/assets/css/beyond.min.css" rel="stylesheet" />
+<link href="~/Areas/Content/Admin/assets/css/demo.min.css" rel="stylesheet" />
+<link href="~/Areas/Content/Admin/assets/css/style.css" rel="stylesheet" />
+<link href="~/Areas/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<link href="~/Areas/Content/Admin/assets/css/jquery.mCustomScrollbar.css" rel="stylesheet" />*@
+
+
+<style>
+    #header-fixed {
+        position: fixed;
+        top: 0px;
+        display: none;
+        background-color: white;
+    }
+
+    .page-sidebar.sidebar-fixed {
+        position: fixed;
+    }
+
+    body {
+        font-family: 'Muli', sans-serif !important;
+        color: #787878;
+    }
+
+    .page-header-main .searchinvoicebox input[type="text"] {
+        width: 85% !important;
+        border: 0px;
+        height: unset !important;
+        height: -1px !important;
+    }
+
+    .datagrid table tr td {
+        font-family: 'Muli', sans-serif !important;
+        color: #787878;
+    }
+
+    .datagrid a i {
+        color: unset;
+        font-size: 12px !important;
+    }
+</style>
+
+
+<div id="grddata">
+    <script src="~/Areas/Content/Admin/vendor/jquery/dist/jquery.min.js"></script>
+    <input type="hidden" id="hdnpagevalue" value="0" />
+    <div class="page-body headertopbox">
+        <div class="page-header-main position-relative topBar">
+            <ul class="tabBar">
+                <li class="tbs active " id="tab1"><a href="javascript:void(0);">Invoices for Review <span id="InvoicesRevi">@ViewBag.InvoicesRevi</span></a></li>
+                <li class="tbs" id="tab2"><a href="javascript:void(0);">Unprocessed Invoices<span id="PeAnalysis"></span></a></li>
+                <li class="tbs" id="tab3"><a href="javascript:void(0);">Failed Invoices<span id="PeAnalysis1"></span></a></li>
+            </ul>
+            <ul class="topRightBar">
+                <li>
+                    <input id="checkbox" type="checkbox" name="checkbox" value="1">
+                    <label for="checkbox">Show only my Invoices</label>
+                </li>
+                <li>
+                    <a class="fileUploadBtn"> <i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload Files</a>
+                </li>
+            </ul>
+        </div>
+       
+        <div class="datagrid tab2">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="table-1">
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Amount</th>
+                            <th>Invoice Date</th>
+                            <th>PDF Name</th>
+                            <th>Store</th>
+                            <th>Uploaded On</th>
+                            <th>Analysis Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="getfileuploaddata">
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="datagrid tab1">
+            <div class="table-responsive" id="test">
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th><a class="textred" onclick="javascript:FunSortData('Vendorname');" style="color:#fff; text-decoration:none; cursor:pointer;">Vendor</a></th>
+                            <th class="text-align-left">Type</th>
+                            <th><a class="textred" onclick="javascript:FunSortData('Invoice_Number');" style="color:#fff; text-decoration:none; cursor:pointer;">Invoice #</a></th>
+                            @{
+                                string storeid = @ViewBag.Storeidvalue;
+                            }
+                            @if (Roles.IsUserInRole("Administrator") && @storeid == "0")
+                            {
+                                <th class="text-align-center">Store Name</th>
+                            }
+
+                            <th class="text-align-center"><a class="textred" onclick="javascript:FunSortData('Invoice_Date');" style="color:#fff; text-decoration:none; cursor:pointer;">Invoice Date</a></th>
+                            <th style="text-align:right">Amount</th>
+                            <th class="text-align-center">Docs</th>
+                            <th class="text-align-center">Status</th>
+                            <th class="text-align-center">Notes</th>
+                            <th class="text-align-center">Payment Method</th>
+
+                            @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("Back Office Manager")) || (Roles.IsUserInRole("Data Approver")))
+                            {
+                                <th>Action</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+
+
+                        @foreach (var item in Model)
+                        {
+
+                        <tr class="even" style="font-family: 'Muli', sans-serif;">
+                            @*<td style="width:20%">@Html.Raw(item.Vendorname)</td>*@
+                            <td class="fntlight"><a href="javascript:void(0)" class="clsvendorname text-align-center" id="Vendorid">@Html.Raw(item.VendorName)</a></td>
+                            <td class="fntlight text-align-left" id="Typeid">@Html.Raw(item.InvoiceType)</td>
+                            <td class="fntlight" id="invoicenumberid">
+                                <a href="@Url.Action("Detail", "InvoiceReport" ,new { Id=item.InvoiceId ,deptname = @ViewBag.deptname, startdate = @ViewBag.startdate, enddate = @ViewBag.enddate, payment = @ViewBag.payment, Store_val = @ViewBag.Store_val, searchdashbord = @ViewBag.searchdashbord , RedairectFrom = "Dashboard", AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum} )">@Html.Raw(item.InvoiceNumber)</a>
+                            </td>
+                            @{
+                                string store_id = @ViewBag.Storeidvalue;
+                            }
+                            @if (Roles.IsUserInRole("Administrator") && @store_id == "0")
+                            {
+                                <td class="fntlight text-align-left" id="tdstorename">@item.StoreName</td>
+                            }
+                            @*@ViewBag.SearchRecords,'','','','',''*@
+                            <td class="text-align-center" id="invoicedateid">
+                                @Utility.AdminSiteConfiguration.GetDateformat(Convert.ToString(item.InvoiceDate))
+                            </td>
+
+                            <td style="text-align:right" id="invoiceamt">
+                                @if (item.InvoiceTypeId == 2)
+                                {
+                                    <span style="color:red"> - @Html.Raw("$ " + Utility.AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount))) </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        @Html.Raw("$ " + Utility.AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount)))
+                                    </span>
+                                }
+                                @*@if (item.InvoiceTypeId == 2)
+            {
+                if (item.deptid == 0)
+                {
+                    <span style="color:red"> - @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmtByDept))) </span>
+                }
+                else
+                {
+                    <span style="color:red"> - @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.Amt))) </span>
+                }
+            }
+            else
+            {
+                if (item.deptid == 0)
+                {
+                    <span>@Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmtByDept)))</span>
+                }
+                else
+                {<span>
+                        @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.Amt)))
+                    </span>
+                }
+            }*@
+
+                            </td>
+                            <td class="text-align-center" id="scaninvoiceid">
+
+
+                                @*<a href="@ConfigurationManager.AppSettings["cloudurl"]scanimage/@item.ScanInvoice" target="_blank">*@
+                                <a href="~/userfiles/scanimage/@item.UploadInvoice" target="_blank">
+                                    <!--<i class="fa fa-file-pdf-o" aria-hidden="true"></i>-->
+                                    <img src="/Content/Admin/images/pdf.png" />
+                                </a>
+                            </td>
+
+                            <td class="text-align-center clsstatus1">
+                                @if (item.StatusValue == InvoiceStatusEnm.Approved)
+                                {
+                                    <span class="btn btn-success btn-xs clsstatus"><i class="fa fa-check"></i> Approved</span>@*btndisable*@
+
+                                }
+                                else if (item.StatusValue == InvoiceStatusEnm.Rejected)
+                                { <span class="btn btn-danger btn-xs clsstatus"><i class="fa fa-times"></i> Rejected</span>}@*btndisable*@
+                                else if (item.StatusValue == InvoiceStatusEnm.OnHold)
+                                {
+                                    <span class="btn btn-warning btn-xs btndisable clsstatus"><i class="glyphicon glyphicon-pause" aria-hidden="true"></i> On Hold</span>
+                                }
+                                else
+                                {
+                                    var ToolTip = "";
+                                    <span title="@ToolTip" class="btn btn-warning btn-xs btnpending clsstatus"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>
+                                }
+                            </td>
+                            <td class="text-align-center clsNote" id="">
+                                @if (item.Note != null && item.Note != "")
+                                {
+                                    <img id="ok" src="@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/icons/icon_notes.png" title="@Html.Raw(item.Note)" />
+                                }
+                            </td>
+                            <td id="paymanettypeid"> @Html.Raw(item.PaymentType) </td>
+                            @*@if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("Back Office Manager")) || (Roles.IsUserInRole("Data Approver")))
+        {
+
+            <td style="vertical-align:middle;text-align:center;" class="printarea img_with img_color" id="editdeleteid">
+                <input type="hidden" id="itemhiddenID" name="ID" value="@item.id" />
+                <input type="hidden" id="ID" name="ID" value="@item.StoreId" />
+
+                @{
+                    var UserIdD = @item.id + "D";
+                }
+                @if ((Roles.IsUserInRole("Back Office Manager")) || (Roles.IsUserInRole("Data Approver")))
+                {
+                    if (item.IsStatus_id != 2 && item.IsStatus_id != 3)
+                    {
+                        <a href="#" onclick="return ComfirmDelete(@item.id);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                        <a href="@Url.Action("Edit","Dashboard" , new { Id=item.id , RedairectFrom = "Dashboard",deptname = @ViewBag.deptname, startdate = @ViewBag.startdate, enddate = @ViewBag.enddate, payment = @ViewBag.payment, Store_val = @ViewBag.Store_val, searchdashbord = @ViewBag.searchdashbord , AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum})" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                    }
+                    else
+                    {
+                        if ((Roles.IsUserInRole("Data Approver")))
+                        {
+                            <a href="#" onclick="return ComfirmDelete(@item.id);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                            <a href="@Url.Action("Edit","Dashboard" , new { Id=item.id , RedairectFrom = "Dashboard",deptname = @ViewBag.deptname, startdate = @ViewBag.startdate, enddate = @ViewBag.enddate, payment = @ViewBag.payment, Store_val = @ViewBag.Store_val, searchdashbord = @ViewBag.searchdashbord , AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum})" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                        }
+                    }
+
+                }
+                else if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="#" onclick="return ComfirmDelete(@item.id);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                    <a href="@Url.Action("Edit","Dashboard" , new { Id=item.id , RedairectFrom = "Dashboard",deptname = @ViewBag.deptname, startdate = @ViewBag.startdate, enddate = @ViewBag.enddate, payment = @ViewBag.payment, Store_val = @ViewBag.Store_val, searchdashbord = @ViewBag.searchdashbord , AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum})" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                }
+                <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </div>
+                        <div class="modal-title">Message</div>
+                        <div class="modal-body ">Are you sure you want to delete this Invoice?</div>
+                        <div class="modal-footer" style="text-align:center">
+                            <a class="btn btn-danger" onclick="Delete(@item.id);">Ok </a>
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+
+            </td>
+
+        }*@
+                            @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")) || (Roles.IsUserInRole("DeleteInvoice")))
+                            {
+                                <td style="vertical-align:middle;text-align:center;width:5%" class="printarea img_with img_color" id="editdeleteid">
+
+                                    @{
+                                        var UserIdD = item.InvoiceId + "D";
+                                    }
+                                    @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice")))
+                                    {
+                                        <a href="#" onclick="return ComfirmDelete(@item.InvoiceId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                    }
+                                    @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")))
+                                    {
+                                        @*<a href="@Url.Action("Edit","Invoices" , new { Id=item.InvoiceId , RedairectFrom = "Dashboard",deptname = @ViewBag.deptname, startdate = @ViewBag.startdate, enddate = @ViewBag.enddate, payment = @ViewBag.payment, Store_val = @ViewBag.Store_val, searchdashbord = @ViewBag.searchdashbord , AmtMaximum = @ViewBag.AmtMaximum, AmtMinimum = @ViewBag.AmtMinimum})" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>*@
+                                        <a href="@Url.Action("Edit", "Invoices", new { Id = item.InvoiceId })" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                                    }
+                                    <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                        <div class="modal-content ">
+                                            <div class="modal-header text-center">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </div>
+                                            <div class="modal-title">Message</div>
+                                            <div class="modal-body ">Are you sure you want to delete this Invoice?</div>
+                                            <div class="modal-footer" style="text-align:center">
+                                                <a class="btn btn-danger" onclick="Delete(@item.InvoiceId);">Ok </a>
+                                                <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            }
+                        </tr>
+                        }
+
+
+
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="datagrid tab3">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="table-2">
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Amount</th>
+                            <th>Invoice Date</th>
+                            <th>PDF Name</th>
+                            <th>Store</th>
+                            <th>Uploaded On</th>
+                            <th>Error</th>
+                        </tr>
+                    </thead>
+                    <tbody id="getErroruploaddata"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="fileUploadBox">
+            <!-- <span class="closebtn"><a href="#" class="btn btn-success">Done</a></span> -->
+            <div class="dragdropdownBox">
+                <div class="uploadBox">
+                    <div class="dropBox">
+                        <img src="~/Areas/Content/Admin/images/icons/upload.svg" alt="" class="downloadIcon" />
+                        <!-- <i class="fa fa-download" aria-hidden="true"></i> -->
+                        <p>Upload Invoices</p>
+                        <span>Drag and drop your invoices here</span>
+                        <div class="buttonsBar">
+                            <input type="file" class="selectFiles" name="DocFiles" multiple="multiple" id="DocFiles" accept=".xls,.xlsx,.Doc,Docx,.Pdf,.jpg,.png,.bmps" data-val="true" data-val-required="File is required" required />
+                            @*<a href="#" class="selectFiles">Select All Files</a>*@
+                            <a href="#" class="closebtn btnCancel">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gridtablebox">
+                <div class="flexRow">
+                    <p>PDF Files</p>
+                    <div class="buttonsBar">
+                        <a href="#" class="closebtn btnCancel">Cancel</a>
+                        <a href="#" class="closebtn greenBtn">Done</a>
+                    </div>
+                </div>
+                <div class="gridtable mCustomScrollbar">
+                    <table id="daafile">
+                        <tbody id="getexcel">
+                            <tr>
+                                <td><img src="~/Areas/Content/Admin/images/icons/icon_pdf.png" alt="" /> [PDF file name of Invoice PDF].pdf</td>
+
+                                <td>
+
+                                    <div class="box">
+                                        <div class="loader-05"></div>
+                                    </div>
+                                    <a href="#" class="trash"><img src="~/Areas/Content/Admin/images/icons/trash.svg" alt="" class="checkicon" /></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src='~/Areas/Content/Admin/js/sweet-alert.min.js'></script>
+<script type="text/javascript" src='~/Areas/Content/Admin/assets/js/slimscroll/jquery.slimscroll.min.js'></script>
+<script type="text/javascript" src='~/Areas/Content/Admin/assets/js/select2/select2.js'></script>
+<script type="text/javascript" src='~/Areas/Content/Admin/assets/js/select2/select2.full.js'></script>
+<script type="text/javascript" src='~/Areas/Content/Admin/assets/js/beyond.js'></script>
+<script src="~/Areas/Content/Admin/js/bootstrap-datetimepicker.js"></script>
+<script src="~/Areas/Content/Admin/assets/js/bootbox/bootbox.js"></script>
+<script type="text/javascript" src='~/Areas/Content/Admin/assets/js/jquery.mCustomScrollbar.js'></script>
+<script>
+
+    $(".tab1").show();
+    $(".tab2").hide();
+    $(".tab3").hide();
+    function cleartextsearch() {
+        $(".inputvendorname").val("");
+
+    }
+    $(".greenBtn").click(function () {
+        tab1s();
+        tab3s();
+        location.reload();
+    })
+
+
+    function tab1s() {
+        var inputvendorname = $(".inputvendorname").val();
+         $.ajax({
+            url: '@Url.Action("FileuploadList", "BulkUploadFile")',
+            type: "GET",
+            data: { "StoreID": $("#storeid").val(), "Search": inputvendorname },
+             success: function (response) {
+                
+                 var selector = $('#getfileuploaddata').html("");
+                 $("#PeAnalysis").text(response.length);
+                if (response.length > 0) {
+                    $.each(response, function (j, data) {
+                       var  htm = "<tr>";
+                         htm += "<td>N/R</td>";
+                         htm += "<td>N/R</td>";
+                         htm += "<td>N/R</td>";
+                        htm += "<td>" + data.FileName + "</td>";
+                         htm += "<td>" + data.StoreName + "</td>";
+                        htm += "<td>" + data.CreatedDate + "</td>";
+                        htm += "<td><a href='#'  class='btn btn-warning btn-sm'><i class='glyphicon glyphicon-pause'></i> Processing</a></td>";
+                         htm +="</tr>";
+                        selector.append(htm);
+                    })
+                }
+                else {
+                    var htm = "<tr><td colspan='3' style='text-align: center;'> Data Not Avalible..! </td></tr>";
+                    selector.append(htm);
+                }
+            },
+            error: function (Result) {
+            }
+        });
+    }
+   
+     function tab3s() {
+        var inputvendorname = $(".inputvendorname").val();
+         $.ajax({
+            url: '@Url.Action("FileErroruploadList", "BulkUploadFile")',
+            type: "GET",
+            data: { "StoreID": $("#storeid").val(), "Search": inputvendorname },
+             success: function (response) {
+                
+                 var selector = $('#getErroruploaddata').html("");
+                 $("#PeAnalysis1").text(response.length);
+                if (response.length > 0) {
+                    $.each(response, function (j, data) {
+                       var  htm = "<tr>";
+                         htm += "<td>N/R</td>";
+                         htm += "<td>N/R</td>";
+                         htm += "<td>N/R</td>";
+                        htm += "<td>" + data.FileName + "</td>";
+                         htm += "<td>" + data.StoreName + "</td>";
+                        htm += "<td>" + data.CreatedDate + "</td>";
+                        htm += "<td>" + data.Errors +"</td>";
+                         htm +="</tr>";
+                        selector.append(htm);
+                    })
+                }
+                else {
+                    var htm = "<tr><td colspan='3' style='text-align: center;'> Data Not Avalible..! </td></tr>";
+                    selector.append(htm);
+                }
+            },
+            error: function (Result) {
+            }
+        });
+    }
+    $(".searchbtn").click(function () {
+        var getid = "";
+        $(".tbs").each(function (index, obj) {
+            if ($(obj)[0].className == "tbs active") {
+                getid = $(obj)[0].id;
+            }
+        });
+        if (getid == "tab1") {
+            tab1s();
+        }
+        if (getid == "tab2") {
+            searchEvent();
+        }
+        if (getid == "tab3") {
+            tab3s();
+        }
+        
+    })
+
+    $(window).load(function () {
+        tab1s();
+        tab3s();
+    });
+    $(document).ready(function () {
+        tab1s();
+        tab3s();   
+    })
+    $(".tbs").click(function () {
+        //alert(this.id);
+        $(".tbs").removeClass("active");
+        $(this).addClass("active")
+        $(".tab1").hide();
+        $(".tab2").hide();
+        $(".tab3").hide();
+        $("." + this.id + "").show();
+    })
+    $(".fileUploadBtn").click(function () {
+        $('.fileUploadBox').addClass('active');
+        $('.dragdropdownBox').addClass('active');
+        $('body').addClass('overflowHidden');
+    });
+    $(".fileUploadBox .closebtn").click(function () {
+        $('.fileUploadBox').removeClass('active');
+        $('.gridtablebox').removeClass('active');
+        $('body').removeClass('overflowHidden');
+    });
+    $(".selectFiles").change(function () {
+        $('.greenBtn :input').attr("disabled", true);
+        $('.dragdropdownBox').removeClass('active');
+
+        if ($("#storeid").val() == "" || $("#storeid").val() == "0") {
+            alert("Select Store");
+            $('.dragdropdownBox').addClass('active');
+            return false;
+        }
+        else {
+
+        }
+
+
+        $('.gridtablebox').addClass('active');
+        $("#getexcel").html("");
+        for (var i = 0; i < this.files.length; i++) {
+            //alert(this.files[i].name);
+           /* alert(this.files.item(i).name);*/ // alternatively
+
+
+            var datae = "<tr>";
+            datae += "<td id='Filename'><img src='../../../Areas/Content/Admin/images/icons/icon_pdf.png' alt='' />" + this.files[i].name + "</td>";
+            datae += "<td id='GetFilename' style='display:none;'>" + this.files[i] +"</td>";
+            datae += "<td>";
+            datae += "<div class='box'>";
+            datae += "<div class='loader-05'></div>";
+            datae += "</div>";
+            datae += "<a href='#' class='trash'><img src='../../../Areas/Content/Admin/images/icons/trash.svg' alt='' class='checkicon' /></a>";
+            datae += "</td>";
+            datae += "</tr>";
+            $("#getexcel").append(datae);
+
+            @*debugger
+            var fileData = new FormData();
+            fileData.append(this.files[i].name, this.files[i]);
+            fileData.append('Storeid', "1");
+            // Looping over all files and add it to FormData object
+
+            $.ajax({
+                url: '@Url.Action("BulkInvoiceList", "BulkUploadFile")',
+                type: "POST",
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                data: fileData,
+                success: function (response) {
+                    if (response.checkAvail == "True") {
+
+                      }
+                    else {
+
+                      }
+                  },
+                  error: function (response) {
+                 }
+             });*@
+
+        }
+
+
+
+        $("#daafile tr").each(function (index, obj) {
+           
+
+            var filename = $(obj).find("#Filename").text();
+            var fileData = new FormData();
+
+            for (var i = 0; i < $(".selectFiles")[1].files.length; i++) {
+                if ($(".selectFiles")[1].files[i].name == filename)
+                    fileData.append("DocFiles", $(".selectFiles")[1].files[i]);
+            }
+            //$("#DocFiles").val(filename);
+
+            fileData.append('Storeid', $("#storeid").val());
+            // Looping over all files and add it to FormData object
+
+            $.ajax({
+                url: '@Url.Action("UploaF", "BulkUploadFile")',
+                type: "POST",
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                data: fileData,
+                success: function (response) {
+                    if (response == "True") {
+                        var rely = $(obj).context.innerHTML;
+                        $(obj).context.innerHTML = rely.replace('<div class="box"><div class="loader-05"></div></div>', '<img src="../../../Areas/Content/Admin/images/icons/check_icon.svg" alt="" class="checkicon" />');
+                      }
+                    else {
+
+                      }
+                  },
+                  error: function (response) {
+                 }
+             });
+
+            //$(this).context.innerHTML.replace('<div class="box"><div class="loader-05"></div></div>', '<img src="../../../Areas/Content/Admin/images/icons/check_icon.svg" alt="" class="checkicon" />');
+
+        })
+        $('.greenBtn').attr("disabled", false);
+    });
+
+    $(document).on('click', '.trash', function () {
+       
+        $(this).closest("tr").remove();
+    })
+
+
+
+</script>
+
+
+<script>
+    $('.burgermenu').click(function () {
+        $('#sidebar').toggleClass('showmenu');
+        $('.page-content').toggleClass('marleft110');
+    })
+</script>
+
+<script>
+    $('.stop-propagation').on('click', function (e) {
+        e.stopPropagation();
+    });
+
+</script>
+<script>
+    //('.date-picker').datetimepicker();
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+
+        //>=, not <=
+        if (scroll >= 20) {
+            //clearHeader, not clearheader - caps H
+
+            $(".page-header-main").addClass("stikyheader");
+        } else {
+            $(".page-header-main").removeClass("stikyheader");
+        }
+    }); //missing );
+
+    $(document).ready(function () {
+        ; (function ($) {
+            $.fn.fixMe = function () {
+                return this.each(function () {
+                    var $this = $(this),
+                        $t_fixed;
+                    function init() {
+                        $this.wrap('<div class="" />');
+                        $t_fixed = $this.clone();
+                        $t_fixed.find("tbody").remove().end().addClass("fixed").insertBefore($this);
+                        resizeFixed();
+                    }
+                    function resizeFixed() {
+                        $t_fixed.find("th").each(function (index) {
+                            $(this).css("width", $this.find("th").eq(index).outerWidth() + "px");
+                        });
+                    }
+                    function scrollFixed() {
+                        var offset = $(this).scrollTop(),
+                            tableOffsetTop = $this.offset().top,
+                            tableOffsetBottom = tableOffsetTop + $this.height() - $this.find("thead").height();
+                        if (offset < tableOffsetTop || offset > tableOffsetBottom)
+                            $t_fixed.hide();
+                        else if (offset >= tableOffsetTop && offset <= tableOffsetBottom && $t_fixed.is(":hidden"))
+                            $t_fixed.show();
+                    }
+                    $(window).resize(resizeFixed);
+                    $(window).scroll(scrollFixed);
+                    init();
+                });
+            };
+        })(jQuery);
+
+        $(document).ready(function () {
+            $("table").fixMe();
+
+        });
+    });
+
+</script>
+
+<script>
+
+    $(".decimalOnly").bind('keypress', function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46)
+            return false;
+
+        return true;
+    });
+    $(".decimalOnly").bind("paste", function (e) {
+        e.preventDefault();
+    });
+
+    $(document).ready(function () {
+      
+        $('#txtenddate').attr('autocomplete', 'off');
+        $("#search-box").attr('autocomplete', 'off');
+      
+        $( "#search-box" ).focus();
+        Loader(0);
+        @*alert(@GlobalStore.GlobalStore_id)
+        $("#drp").val('@GlobalStore.GlobalStore_name')*@
+        //Loader(0);
+
+
+
+       
+
+       
+
+
+        document.getElementsByName('radio').value  = '@ViewBag.payment';
+        var searchval='@ViewBag.searchdashbord';
+        if(searchval!=null)
+        {
+            document.getElementById('search-box').value = (searchval).replace(/&amp;/g, '&');
+            $("#search-box").val((searchval).replace(/&amp;/g, '&'));
+        }
+
+        bind()
+
+
+    });
+
+    function Minimum() {
+        var Min = document.getElementById('AmtMinimum').value;
+        var Max = document.getElementById('AmtMaximum').value;
+        if (Min > Max) {
+            //$('#Validation').show();
+            $('#AmtMaximum').val('');
+            //$("#btnSearch").attr("style", "display:none;")
+        }
+        //$('#Validation').hide();
+        //$("#btnSearch").removeAttr("style", "display:none;")
+    }
+
+    function Maximum() {
+        var Min = document.getElementById('AmtMinimum').value;
+        var Max = document.getElementById('AmtMaximum').value;
+        if (Min > Max) {
+            //$('#Validation').show();
+            $('#AmtMaximum').val('');
+            //$("#btnSearch").attr("style", "display:none;")
+        }
+        //$('#Validation').hide();
+        //$("#btnSearch").removeAttr("style", "display:none;")
+    }
+
+    function cleartextsearch()
+    {
+        var searchdashbord_val = '';
+
+        $.ajax({
+            url: '@Utility.AdminSiteConfiguration.GetURL()BulkUploadFile/Grid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: @ViewBag.IsAscVal, PageSize: 20, SearchRecords: @ViewBag.SearchRecords, Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', payment: '', Store_val: '', searchdashbord: '', AmtMaximum: '0', AmtMinimum:'0'},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                //$("body").html(response);
+
+                $('#grddata').empty();
+                $('#grddata').append(response);
+
+                Loader(0);
+
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    // vendor link functionality
+    $('.clsvendorname').on("click",function(){
+        var setvendorname =  $(this).text();
+        $(".inputvendorname").val(setvendorname);
+        //   document.getElementById('search-box').value = (searchval).replace(/&amp;/g, '&');
+        $.ajax({
+            url: '@Utility.AdminSiteConfiguration.GetURL()BulkUploadFile/Grid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: @ViewBag.IsAscVal, PageSize: 20, SearchRecords: @ViewBag.SearchRecords, Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', payment: '', Store_val: '', searchdashbord: setvendorname, AmtMaximum: '0', AmtMinimum: '0'},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                // $('#search-box').val('@ViewBag.searchdashbord')
+
+                document.getElementById('search-box').value = setvendorname;
+                $('#search-box').val(setvendorname);
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    });
+    //vendor link close
+    var top=0;
+    function Loader(val)
+    {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+
+            $(".loading-container").attr("style","display:block;")
+            //$('#loadbox').hide();
+
+           // $(".loading-container").show();
+           // $(".loading-inactive").show();
+        }
+        else {
+
+          //$('.loading-container').removeClass('showbox');
+            $(".loading-container").attr("style","display:none;")
+            //$(".loading-container").hide();
+            //$(".loading-inactive").hide();
+        }
+        bind();
+    }
+    $("#searchicon").change(function(){
+
+
+        var searchdashbord_val = document.getElementById('search-box').value;
+
+        $.ajax({
+            url: '@Utility.AdminSiteConfiguration.GetURL()BulkUploadFile/Grid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: @ViewBag.IsAscVal, PageSize: 20, SearchRecords: '@ViewBag.SearchRecords', Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', payment: '', Store_val: '', searchdashbord: $(this).val(), AmtMaximum: '0', AmtMinimum: '0'},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                //$("body").html(response);
+
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                @*$('#search-box').val('@ViewBag.searchdashbord')*@
+                Loader(0);
+
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    });
+    //$("#search-box").change(function () {
+     
+    //    searchEvent();
+    //});
+
+    function searchEvent()
+    {
+        var searchdashbord_val = document.getElementById('search-box').value;
+
+        $.ajax({
+            url: '@Utility.AdminSiteConfiguration.GetURL()BulkUploadFile/Grid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: '@ViewBag.IsAscVal', PageSize: 20, SearchRecords: '@ViewBag.SearchRecords', Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', payment: '', Store_val: '', searchdashbord: searchdashbord_val, AmtMaximum: '0', AmtMinimum: '0'},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                //$("body").html(response);
+
+                $("#InvoicesRevi").text(response.length);
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                $('#search-box').val(searchdashbord_val)
+
+                Loader(0);
+                $('#search-box').val(searchdashbord_val)
+
+
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    //var top=0;
+    //function Loader(val)
+    //{
+    //    var doc = document.documentElement;
+    //    $("[data-toggle=tooltip]").tooltip();
+    //    if(val==1){
+    //        $(".loading-container").attr("style","display:block;")
+    //    }
+    //    else{
+    //        $(".loading-container").attr("style","display:none;")
+    //    }
+    //    bind();
+    //}
+
+    function FunSearchRecord()//Search
+    {
+        //var chk;
+        //$('[name="radio"]:checked').each(function () {
+
+        //    chk=$(this).val();
+
+        //});
+
+        //alert()
+
+        window.FunSearchRecord=FunSearchRecord
+      
+        // var element_Status = document.getElementById('Drpstatus').value;
+        var element_chkpayment=chk;
+
+        @*var element_Store;
+
+        var role = '@Roles.IsUserInRole("Data Approver")';
+
+        if (role == 'True') {
+            var store = $("#drp").val();
+            element_Store=store;
+        }
+        else {
+            var storename = $('#spnStore').html();
+            element_Store=storename;
+        }*@
+        GetData(1, 1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize, '', '', element_dept, element_txtstartdate, element_txtenddate, element_chkpayment,@Session["storeid"], element_Minimum, element_Maximum);
+
+    }
+
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val','@ViewBag.AmtMaximum','@ViewBag.AmtMinimum');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+        GetData(0,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val','@ViewBag.AmtMaximum','@ViewBag.AmtMinimum');
+        myCustomFn();
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val','@ViewBag.AmtMaximum','@ViewBag.AmtMinimum');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val','@ViewBag.AmtMaximum','@ViewBag.AmtMinimum');
+    }
+
+    function ComfirmDelete(ID)
+    {
+        var DivId="#"+ID+"D";
+        $(DivId).show();
+        @*var check = confirm("Are you sure you want to Delete this record?");
+        if (check == true) {
+            Delete(ID);
+            GetData(1,@ViewBag.CurrentPageIndex,  '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+            return true;
+        }
+        else {
+            return false;
+        }*@
+    }
+      function Delete(ID)
+    {
+        $.ajax({
+            url: '/Invoices/Delete',
+            data: { Id: ID},
+            async: false,
+            success: function (response) {
+                $('.divIDClass').css('display', 'none');
+                GetData(1,@ViewBag.CurrentPageIndex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize, '@ViewBag.Alpha',@ViewBag.SearchRecords, '@ViewBag.deptname', '@ViewBag.startdate', '@ViewBag.enddate', '@ViewBag.payment', '@ViewBag.Store_val', '@ViewBag.AmtMaximum', '@ViewBag.AmtMinimum');
+             
+                return true;
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+    function closemodal(){
+        $(".divIDClass").hide();
+        //$(".overlaybox").hide();
+    }
+    //For Search Button
+
+    function GetData(IsBindData_val, PageIndex, orderby_val, isAsc_val, PageSize_val, alpha_val, SearchRecords_val, dept_val, startdate_val, enddate_val,payment_val,Store_val,Maximum_val,Minimum_val)
+    {
+        var Data = '@ViewBag.searchdashbord';
+        //alert(Data);
+        $.ajax({
+            url: '@Utility.AdminSiteConfiguration.GetURL()/BulkUploadFile/Grid',
+
+            data: { IsBindData: IsBindData_val, currentPageIndex: PageIndex, orderby: orderby_val.trim(), IsAsc: isAsc_val, PageSize: 20, SearchRecords: SearchRecords_val, Alpha: alpha_val, deptname: dept_val, startdate: startdate_val, enddate: enddate_val, payment: payment_val, Store_val: Store_val, searchdashbord: Data, AmtMaximum: Maximum_val,AmtMinimum: Minimum_val},
+            beforeSend: function () { Loader(1); },
+            // async: false,
+            success: function (response) {
+
+                if (response != null) {
+                    //$("#scrolldata").html("");
+                    //$("#scrolldata").append(data);
+                    $('#grddata').empty();
+                    $('#grddata').append(response);
+
+                }
+
+                //    $("body").html(response);
+                //$('#datagrid').empty();
+                //$('#datagrid').append(response);
+                Loader(0);
+
+
+                if(payment_val=="Cash")
+                {
+                    $( "#radio1").prop('checked', true);
+                }
+                else if(payment_val=="Check/ACH")
+                {
+                    $( "#radio2").prop('checked', true);
+                }
+
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    }
+
+
+    //document.getElementById('txtSearchTitle').onkeypress=function(e){
+    //    if(e.keyCode==13){
+    //        document.getElementById('btnSearch').click();
+    //    }
+    //}
+    function bind(){
+
+        $(".myval").select2({
+            //placeholder: "select",
+            allowclear: true,
+            //minimumResultsForSearch: -1
+        });
+        //document.getElementById('SelectRecords').value = "@ViewBag.PageSize";
+        // document.getElementById('txtSearchTitle').value = "@ViewBag.SearchTitle";
+        var pay='@ViewBag.payment';
+        var pay1='@ViewBag.IsFilter';
+
+        if(pay=="Cash")
+        {
+            $( "#radio1").prop('checked', true);
+        }
+        else if(pay=="Check/ACH")
+        {
+            $( "#radio2").prop('checked', true);
+        }
+        else if('@ViewBag.IsFilter'=="1"){
+
+            $( "#radio1").prop('checked', true);
+            $( "#radio2").prop('checked', true);
+        }
+       
+
+        var dept=@ViewBag.deptname;
+        if(dept!='0')
+        {
+            //document.getElementById('DrpLstdept').value = @ViewBag.deptname;
+        }
+      
+       
+        document.getElementsByName('radio').value = '@ViewBag.payment';
+
+        var AmtMinimum=@ViewBag.AmtMinimum;
+        if (AmtMinimum != '0')
+        {
+            document.getElementById('AmtMinimum').value = "@ViewBag.AmtMinimum";
+        }
+        var AmtMaximum=@ViewBag.AmtMaximum;
+        if (AmtMaximum != '0')
+        {
+            document.getElementById('AmtMaximum').value = "@ViewBag.AmtMaximum";
+        }
+
+        // $("#radio").val('@ViewBag.payment');
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+
+    }
+
+
+
+
+</script>
+
+<script>
+
+    var pageSize = 20;
+    var pageIndex = 1;
+    var pageCount=@ViewBag.totalcount;
+    $(window).scroll(function () {
+        if (Math.round($(window).scrollTop(), 0) == Math.round(($(document).height() - $(window).height()), 0)) {
+
+            myCustomFn();
+
+        }
+    });
+    function myCustomFn() {
+
+        var page_loadsize = parseInt(@ViewBag.PageSize) + parseInt(20);
+        document.getElementById('hdnpagevalue').value = page_loadsize;
+
+        GetData12(pageSize, pageIndex);
+        $("#hdnpagevalue").val(page_loadsize);
+    }
+
+    function GetData12(PageSize, CurrentPageIndex) {
+       // alert(pageIndex + "+,+" + CurrentPageIndex);
+        //alert();
+        var rdcash="";
+        var rdcheck="";
+        if($("#radio1").is(':checked')){
+            rdcash=$("#radio1").val();
+        }
+        if($("#radio2").is(':checked')){
+            rdcheck=$("#radio2").val();
+        }
+        var datval = '';
+            //$("#txtstartdate").val();
+        var datendval = '';
+        var deptnm=0;
+        //if($("#DrpLstdept").val()!="undefined"&&$("#DrpLstdept").val()!=""){
+
+        //    deptnm=$("#DrpLstdept").val();
+        //}
+        var Maximum_val = '';
+        var Minimum_val = '';
+
+        var searchdashbord_val =$("#search-box").val() //document.getElementById('search-box').value;
+
+        pageIndex++;
+        if (pageIndex == 2 || pageIndex <= pageCount) {
+            $.ajax({
+                type: 'GET',
+                async: true,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: '@Utility.AdminSiteConfiguration.GetURL()/BulkUploadFile/GetDatapagescroll',
+                data: { PageSize: PageSize, currentPageIndex: CurrentPageIndex, rdcash: rdcash, rdcheck: rdcheck, datval: datval, datendval: datendval, deptnm: deptnm, searchdashbord: searchdashbord_val, AmtMaximum: Maximum_val, AmtMinimum: Minimum_val},
+
+                beforeSend: function () {
+
+                      //document.getElementById('loadbox').style.display="block";
+                    Loader(1);
+                },
+                timeout: 300000,
+                success: function (data) {
+
+
+                    Loader(0);
+					//$('#loadbox').hide();
+                    if (data != null) {
+
+                        for (var i = 0; i < data.length; i++) {
+
+
+                            var table = $("#test table tbody tr").eq(0).clone(true);
+
+                            $("#Vendorid", table).html(data[i].Vendorname);
+                            $("#Typeid", table).html(data[i].Type);
+                            $("#tdstorename", table).html(data[i].Storename);
+
+
+                            var invoicenumber = "<a href='@Utility.AdminSiteConfiguration.GetURL()Admin/InvoiceReport/Detail/" + data[i].id + "?deptname=" + '@ViewBag.deptname' + "&startdate=" + '@ViewBag.startdate' + "&enddate=" + '@ViewBag.enddate' + "&payment=" + '@ViewBag.payment' + "&Store_val=" + '@ViewBag.Store_val' + "&searchdashbord=" + '@ViewBag.searchdashbord' + "&RedairectFrom=" + 'Dashboard' + "&AmtMaximum=" + @ViewBag.AmtMaximum + "&AmtMinimum="+@ViewBag.AmtMinimum+"'>"+data[i].Invoice_Number+"</a>";
+
+                            $("#invoicenumberid", table).html(invoicenumber);
+                            //var completedDateText =data[i].Invoice_Date;
+
+                            //var completedDate = new Date(parseInt(completedDateText.replace("/Date(", "").replace(")/")));
+
+                            //var date=("0" + (completedDate.getDate() + 1)).slice(-2);;
+                            //var month=("0" + (completedDate.getMonth() + 1)).slice(-2);
+                            //var yr=completedDate.getFullYear();
+                            //var fulldate=month+"/"+date+"/"+yr;
+
+                            $("#invoicedateid", table).html((data[i].StrInvoice_Date));
+                            if(data[i].Type_id=="2")
+                            {
+                                const formatter = new Intl.NumberFormat('en-US', {
+
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2})
+                                if(data[i].deptid=="0")
+                                {
+                                    $("#invoiceamt", table).html('<span style="color:red">'+"$ "+formatter.format(data[i].TotalAmtByDept)+'</span>');
+                                }
+                                else
+                                {
+                                    $("#invoiceamt", table).html('<span style="color:red">'+"$ "+formatter.format(data[i].Amt)+'</span>');
+                                }
+
+
+
+                            }
+                            else if(data[i].Type_id=="1")
+                            {
+                                const formatter = new Intl.NumberFormat('en-US', {
+
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2
+                                })
+                                if(data[i].deptid=="0")
+                                {
+                                    $("#invoiceamt", table).html("$ "+formatter.format(data[i].TotalAmtByDept));
+                                }
+                                else{
+                                    $("#invoiceamt", table).html("$ "+formatter.format(data[i].Amt));
+
+                                }
+                            }
+
+                            if (data[i].ScanInvoice != null) {
+                                @*var pdf = "<a href='@ConfigurationManager.AppSettings["cloudurl"]scanimage/" + data[i].ScanInvoice + "' target='_blank'>"+"<img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/pdf.png'/>"+"</a>";*@
+                                var pdf = "<a href='~/userfiles/scanimage/" + data[i].ScanInvoice + "' target='_blank'>"+"<img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/pdf.png'/>"+"</a>";
+                            }
+                            $("#scaninvoiceid", table).html(pdf);
+                            $("#paymanettypeid", table).html(data[i].Payment_type);
+                            if(data[i].Status=="Approved")
+                            {
+
+                                $(".clsstatus1", table).html('<span class="btn btn-success btn-xs clsstatus"><i class="fa fa-check"></i> Approved</span>');
+                            }
+                            else if(data[i].Status=="Rejected")
+                            {
+
+                                $(".clsstatus1", table).html('<span class="btn btn-danger btn-xs clsstatus"><i class="fa fa-times"></i> Rejected</span>');
+                            }
+                            else if(data[i].Status=="On Hold")
+                            {
+
+                                $(".clsstatus1", table).html('<span class="btn btn-warning btn-xs btndisable clsstatus"><i class="glyphicon glyphicon-pause" aria-hidden="true"></i> On Hold</span>');
+
+                            }
+                            else if(data[i].Status=="Pending")
+                            {
+                                var ToolTip1 = "";
+                                if (data[i].Tooltip == "Data Approver") {
+                                    ToolTip1 = "Store Manager";
+                                }
+                                else if (data[i].Tooltip == "Back Office Manager") {
+                                    ToolTip1 = "Data Approver";
+                                }
+                                else {
+
+                                }
+                                $(".clsstatus1", table).html(' <span title="' + ToolTip1 +'" class="btn btn-warning btn-xs btnpending clsstatus"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>');
+
+                            }
+                            if (data[i].Note != null && data[i].Note != "")
+                            { $(".clsNote", table).html(' <img id="ok" src="@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/icons/icon_notes.png" title="'+data[i].Note+'"/>');
+
+                            }
+                            var strdelete;
+                            var stredit;
+                            var adminRole = '@(Roles.IsUserInRole("Administrator") ? "true" : "false")';
+                            var backoRole = '@(Roles.IsUserInRole("Back Office Manager") ? "true" : "false")';
+                            var dataappRole = '@(Roles.IsUserInRole("Data Approver") ? "true" : "false")';
+                            if ((adminRole=='true') || (backoRole=='true') || (dataappRole=='true'))
+                            {
+
+                                if ((backoRole=='true') || (dataappRole=='true'))
+                                {
+
+
+                                    if (data[i].IsStatus_id != 2 && data[i].IsStatus_id != 3) {
+
+                                        stredit = "<a href='#' onclick='return ComfirmDelete(" + data[i].id + ");' data-toggle='tooltip' data-placement='top' data-original-title='Delete'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/trash-2.svg'/></a>";
+                                        //$("#editdeleteid", table).html(strdelete);,
+
+
+                                        stredit += " <a href='@Utility.AdminSiteConfiguration.GetURL()Admin/Dashboard/Edit/" + data[i].id + "?deptname="+ '@ViewBag.deptname' + "&startdate="+'@ViewBag.startdate'+ "&enddate="+ '@ViewBag.enddate'+"&payment="+ '@ViewBag.payment'+ "&Store_val="+ '@ViewBag.Store_val' +"&searchdashbord="+ '@ViewBag.searchdashbord'+ "&RedairectFrom="+'Dashboard' + "&AmtMaximum" + '@ViewBag.AmtMaximum' + "&AmtMinimum"+'@ViewBag.AmtMinimum'+"'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg'/></a>";
+
+                                        var UserIdD = data[i].id + "D";
+                                        stredit += "<div id=" + UserIdD + " class='divIDClass modal-popup modal-danger modal-message ' style='position: fixed;  left:45%; width:300px; top: 10px; display:none'> <div class='modal-content'><div class='modal-header text-center'><i class='glyphicon glyphicon-trash'></i></div><div class='modal-title'>Message</div><div class='modal-body'>Are you sure you want to delete this Invoice?</div><div class='modal-footer' style='text-align:center'><a class='btn btn-danger' onclick=Delete(" + data[i].id + ");>Ok </a><a class='btn' data-dismiss='modal' onclick='closemodal()'>Cancel</a> </div></div></div>";
+
+                                        $("#editdeleteid", table).html(stredit);
+                                    }
+                                    else {
+                                        if (data[i].IsStatus_id == 2 || data[i].IsStatus_id == 3) {
+                                            stredit = "<a href='#' onclick='return ComfirmDelete(" + data[i].id + ");' data-toggle='tooltip' data-placement='top' data-original-title='Delete'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/trash-2.svg'/></a>";
+                                            //$("#editdeleteid", table).html(strdelete);,
+
+
+                                            stredit += " <a href='@Utility.AdminSiteConfiguration.GetURL()Admin/Dashboard/Edit/" + data[i].id + "?deptname=" + '@ViewBag.deptname' + "&startdate=" + '@ViewBag.startdate' + "&enddate=" + '@ViewBag.enddate' + "&payment=" + '@ViewBag.payment' + "&Store_val=" + '@ViewBag.Store_val' + "&searchdashbord=" + '@ViewBag.searchdashbord' + "&RedairectFrom=" + 'Dashboard' + "&AmtMaximum" + '@ViewBag.AmtMaximum' + "&AmtMinimum" + '@ViewBag.AmtMinimum' + "'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg'/></a>";
+
+                                            var UserIdD = data[i].id + "D";
+                                            stredit += "<div id=" + UserIdD + " class='divIDClass modal-popup modal-danger modal-message ' style='position: fixed;  left:45%; width:300px; top: 10px; display:none'> <div class='modal-content'><div class='modal-header text-center'><i class='glyphicon glyphicon-trash'></i></div><div class='modal-title'>Message</div><div class='modal-body'>Are you sure you want to delete this Invoice?</div><div class='modal-footer' style='text-align:center'><a class='btn btn-danger' onclick=Delete(" + data[i].id + ");>Ok </a><a class='btn' data-dismiss='modal' onclick='closemodal()'>Cancel</a> </div></div></div>";
+
+                                            $("#editdeleteid", table).html(stredit);
+                                        }
+                                        else {
+                                             stredit = "<a href='#' style='Display:none;' onclick='return ComfirmDelete(" + data[i].id + ");' data-toggle='tooltip' data-placement='top' data-original-title='Delete'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/trash-2.svg'/></a>";
+                                        //$("#editdeleteid", table).html(strdelete);
+                                         stredit += " <a style='Display:none;'  href='@Utility.AdminSiteConfiguration.GetURL()Admin/Dashboard/Edit/" + data[i].id + "?deptname="+ '@ViewBag.deptname' + "&startdate="+'@ViewBag.startdate'+ "&enddate="+ '@ViewBag.enddate'+"&payment="+ '@ViewBag.payment'+ "&Store_val="+ '@ViewBag.Store_val' +"&searchdashbord="+ '@ViewBag.searchdashbord'+ "&RedairectFrom="+'Dashboard' + "&AmtMaximum" + '@ViewBag.AmtMaximum' + "&AmtMinimum"+'@ViewBag.AmtMinimum'+"'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg'/> " + data[i].Status + "</a>";
+                                        var UserIdD = data[i].id + "D";
+                                            stredit += "<div id=" + UserIdD + " class='divIDClass modal-popup modal-danger modal-message ' style='position: fixed;  left:45%; width:300px; top: 10px; display:none'> <div class='modal-content'><div class='modal-header text-center'><i class='glyphicon glyphicon-trash'></i></div><div class='modal-title'>Message</div><div class='modal-body'>Are you sure you want to delete this Invoice?</div><div class='modal-footer' style='text-align:center'><a class='btn btn-danger' onclick=Delete(" + data[i].id + ");>Ok </a><a class='btn' data-dismiss='modal' onclick='closemodal()'>Cancel</a> </div></div></div>";
+                                        $("#editdeleteid", table).html(stredit);
+                                        }
+
+                                    }
+                                }
+
+                                else if (adminRole)
+                                {
+
+
+                                    stredit="<a href='#' onclick='return ComfirmDelete("+data[i].id+");' data-toggle='tooltip' data-placement='top' data-original-title='Delete'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/trash-2.svg'/></a>";
+                                    //$("#editdeleteid", table).html(strdelete);
+
+
+                                    stredit += " <a href='@Utility.AdminSiteConfiguration.GetURL()Admin/Dashboard/Edit/" + data[i].id + "?deptname="+ '@ViewBag.deptname' + "&startdate="+'@ViewBag.startdate'+ "&enddate="+ '@ViewBag.enddate'+"&payment="+ '@ViewBag.payment'+ "&Store_val="+ '@ViewBag.Store_val' +"&searchdashbord="+ '@ViewBag.searchdashbord'+ "&RedairectFrom="+'Dashboard' +"&AmtMaximum" + '@ViewBag.AmtMaximum' + "&AmtMinimum"+'@ViewBag.AmtMinimum'+ "'><img src='@Utility.AdminSiteConfiguration.GetURL()Content/Admin/images/edit-2.svg'/></a>";
+
+
+                                    var UserIdD = data[i].id + "D";
+                                    stredit += "<div id=" + UserIdD +" class='divIDClass modal-popup modal-danger modal-message ' style='position: fixed;  left:45%; width:300px; top: 10px; display:none'> <div class='modal-content'><div class='modal-header text-center'><i class='glyphicon glyphicon-trash'></i></div><div class='modal-title'>Message</div><div class='modal-body'>Are you sure you want to delete this Invoice?</div><div class='modal-footer' style='text-align:center'><a class='btn btn-danger' onclick=Delete("+data[i].id+");>Ok </a><a class='btn' data-dismiss='modal' onclick='closemodal()'>Cancel</a> </div></div></div>";
+
+                                    $("#editdeleteid", table).html(stredit);
+
+
+                                }
+
+
+                            }
+
+                            $("#test  table tbody").append("<tr class='even'> "+table.html()+"</tr>")
+
+                        }
+
+                    }
+        $('.clsvendorname').on("click",function(){
+        var setvendorname =  $(this).text();
+        $(".inputvendorname").val(setvendorname);
+
+        //   document.getElementById('search-box').value = (searchval).replace(/&amp;/g, '&');
+        $.ajax({
+            url: '@Utility.AdminSiteConfiguration.GetURL()/BulkUploadFile/Grid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: @ViewBag.IsAscVal, PageSize: 20, SearchRecords: @ViewBag.SearchRecords, Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', payment: '', Store_val: '', searchdashbord: setvendorname, AmtMaximum: '', AmtMinimum: ''},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            beforeSend: function () {
+
+            },
+            success: function (response) {
+
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                // $('#search-box').val('@ViewBag.searchdashbord')
+
+                document.getElementById('search-box').value = setvendorname;
+                $('#search-box').val(setvendorname);
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    });
+        $(".loading-container").hide();
+                },
+
+                complete: function () {
+                    Loader(0);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    Loader(0);
+                }
+            });
+        }
+    }
+
+
+
+           $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+
+     //>=, not <=
+    if (scroll >= 20) {
+        //clearHeader, not clearheader - caps H
+
+        $(".page-header-main").addClass("stikyheader");
+    } else{
+      $(".page-header-main").removeClass("stikyheader");
+    }
+}); //missing );
+
+$( document ).ready(function() {
+   ;(function($) {
+   $.fn.fixMe = function() {
+      return this.each(function() {
+         var $this = $(this),
+            $t_fixed;
+         function init() {
+            $this.wrap('<div class="" />');
+            $t_fixed = $this.clone();
+            $t_fixed.find("tbody").remove().end().addClass("fixed").insertBefore($this);
+            resizeFixed();
+         }
+         function resizeFixed() {
+            $t_fixed.find("th").each(function(index) {
+               $(this).css("width",$this.find("th").eq(index).outerWidth()+"px");
+            });
+         }
+         function scrollFixed() {
+            var offset = $(this).scrollTop(),
+            tableOffsetTop = $this.offset().top,
+            tableOffsetBottom = tableOffsetTop + $this.height() - $this.find("thead").height();
+            if(offset < tableOffsetTop || offset > tableOffsetBottom)
+               $t_fixed.hide();
+            else if(offset >= tableOffsetTop && offset <= tableOffsetBottom && $t_fixed.is(":hidden"))
+               $t_fixed.show();
+         }
+         $(window).resize(resizeFixed);
+         $(window).scroll(scrollFixed);
+         init();
+      });
+   };
+})(jQuery);
+
+$(document).ready(function(){
+   $("table").fixMe();
+
+});
+});
+</script>

@@ -1,0 +1,227 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<style>
+    .je-date {
+        display: flex;
+        width: 252px;
+        margin: 0 0 0 auto;
+    }
+    .userdrp {
+        width: 300px;
+    }
+    .je-datepicker {
+        width:250px;
+    }
+</style>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Competition Module logs</h3>
+        </div>
+        <div class="col-md-6">
+            <div class="je-date">
+                @*<div class="userdrp">
+                    @Html.EJS().DropDownList("UserId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.UsersList).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Index(0).Render()
+                </div>*@
+                <input name="txtstartdate" type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="CompetirorSearchRecord();" class=".searchfinal .btnsearchicon marginleft10" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+
+<div id="grddata">
+    <div class="page-body headertopbox" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("CompetitorsScanLogGrid").AllowSorting().AllowFiltering().AllowPdfExport().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("CompetitorsLogId").IsPrimaryKey(true).HeaderText("CompetitorsLogId").Visible(false).Add();
+           col.Field("ItemNoItemName").HeaderText("ItemName").AllowFiltering(false).Width("35%").Add();
+           //col.Field("UserName").HeaderText("User Name").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("15%").Add();
+           col.Field("CompetitorsName").HeaderText("Competitors").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("15%").Add();
+           col.Field("LogDate").HeaderText("Date").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Format("MM-dd-yyyy").Width("10%").Add();
+           //col.Field("StoreName").HeaderText("Store Name").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("10%").Add();
+           col.HeaderText("Action").Template("#actionTemplate").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("15%").Add();
+       }).DataBound("dataBound").EnableInfiniteScrolling().InfiniteScrollSettings(infinite => infinite.EnableCache(false)).PageSettings(page => { page.PageSize(500); }).Toolbar(new List<string>() { "Search" }).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+
+<script id="actionTemplate" type="text/x-template">
+    ${getActionText(data)}
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#txtstartdate').datetimepicker({
+            format: 'MMM-YYYY',
+            useCurrent: false,
+            daysOfWeekDisabled: [0, 6]
+        });
+        var startDateInput = $("#txtstartdate").val().trim();
+        if (!startDateInput) {
+            var now = new Date();
+            var currentMonth = now.toLocaleString('en-US', { month: 'short' });
+            var currentYear = now.getFullYear();
+            var formattedDate = `${currentMonth}-${currentYear}`;
+            $("#txtstartdate").val(formattedDate);
+        }
+    });
+
+    function created(args) {
+        // extending the default UrlAdaptor
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.data))
+                    return data.data;
+                else
+                    return data;
+            }
+        }
+        var grid = document.querySelector('#CompetitorsScanLogGrid').ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ItemProductScanLog/UrlDatasourceCompetitorsLog",
+            adaptor: new CustomAdaptor()
+        });
+    };
+
+    function dataBound(e) {
+
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+
+    function refreshGrid() {
+        var grid = document.getElementById("CompetitorsScanLogGrid").ej2_instances[0];
+        if (grid) {
+            grid.refresh();
+        }
+    }
+
+    function CompetirorSearchRecord() {
+        //var dropdown = document.getElementById("UserId").ej2_instances[0];
+        //var UserId = dropdown.value;
+        //var selectedText = dropdown.text;
+        var paydate = $("#txtstartdate").val();
+        var grid = document.getElementById("CompetitorsScanLogGrid").ej2_instances[0];
+
+        //if (selectedText === "All User" || selectedText === "All Users") {
+        //    grid.getColumnByField('UserName').visible = true;
+        //} else {
+        //    grid.getColumnByField('UserName').visible = false;
+        //}
+
+        // Refresh columns
+        grid.refreshColumns();
+
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ItemProductScanLog/UrlDatasourceCompetitorsLog?UserId=" + encodeURIComponent(0) + "&searchdate=" + encodeURIComponent(paydate),
+            adaptor: new ej.data.UrlAdaptor()
+        });
+    }
+
+    function toolbarClick(args) {
+        var gridObj = document.getElementById("CompetitorsScanLogGrid").ej2_instances[0];
+        //var dropdown = document.getElementById("UserId").ej2_instances[0];
+        //var UserId = dropdown.value;
+        var paydate = $("#txtstartdate").val();
+        if (args.item.id === 'CompetitorsScanLogGrid_pdfexport') {
+            gridObj.serverPdfExport("/ItemProductScanLog/PdfExport?UserId=" + encodeURIComponent(0) + "&searchdate=" + encodeURIComponent(paydate));
+        }
+        else if (args.item.id === 'CompetitorsScanLogGrid_excelexport') {
+            gridObj.serverExcelExport("/ItemProductScanLog/ExcelExport?UserId=" + encodeURIComponent(0) + "&searchdate=" + encodeURIComponent(paydate));
+        }
+
+    }
+
+    function getActionText(data) {
+        var operationType = data.OperationType;
+        var searchKeyword = data.SearchKeyword;
+        var filterKeyword = data.FilterKeyword;
+        var result = '';
+
+        if (!operationType) {
+            return '';
+        }
+
+        // Check if operation type contains both search and filter
+        if (operationType.toLowerCase().includes('search') && operationType.toLowerCase().includes('filter')) {
+            var parts = [];
+
+            if (searchKeyword) {
+                parts.push('Keyword:"' + searchKeyword + '"');
+            }
+
+            if (filterKeyword) {
+                // Split filter keywords by comma and wrap each in quotes
+                var filters = filterKeyword.split(',').map(function (item) {
+                    return '"' + item.trim() + '"';
+                }).join(',');
+                parts.push('Filter:' + filters);
+            }
+
+            result = 'Search[' + parts.join(', ') + ']';
+        }
+        // Check if operation type is only search
+        else if (operationType.toLowerCase().includes('search')) {
+            if (searchKeyword) {
+                result = 'Search[Keyword:"' + searchKeyword + '"]';
+            } else {
+                result = 'Search';
+            }
+        }
+        // Check if operation type is only filter
+        else if (operationType.toLowerCase().includes('filter')) {
+            if (filterKeyword) {
+                // Split filter keywords by comma and wrap each in quotes
+                var filters = filterKeyword.split(',').map(function (item) {
+                    return '"' + item.trim() + '"';
+                }).join(',');
+                result = 'Filter[' + filters + ']';
+            } else {
+                result = 'Filter';
+            }
+        }
+        // For product details or any other operation type
+        else {
+            result = operationType;
+        }
+
+        return result;
+    }
+</script>
+
+<script>
+    document.title = '@ViewBag.Title';
+</script>
+@Html.EJS().ScriptManager()

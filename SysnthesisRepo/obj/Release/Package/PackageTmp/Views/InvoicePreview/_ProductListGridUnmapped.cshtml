@@ -1,0 +1,31 @@
+﻿@using Syncfusion.EJ2
+@{
+
+    List<object> commands = new List<object>();
+
+    commands.Add(new { type = "Link", buttonOption = new { content = "Link" } });
+    commands.Add(new { type = "Linked", buttonOption = new { content = "Linked" } });
+    commands.Add(new { type = "Add", buttonOption = new { iconCss = "e-icons e-expand", cssClass = "e-flat" } });
+    commands.Add(new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" } });
+
+}
+@*DataSource(dm => dm.Url("/InvoicePreview/UrlDatasourceUnmapped").Adaptor("UrlAdaptor"))*@
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditingU").AllowSorting().AllowFiltering().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/InvoicePreview/UrlDatasourceUnmapped").Adaptor("UrlAdaptor")).EnableStickyHeader(false).AllowTextWrap().Columns(col =>
+{
+    col.Field("ProductVendorId").IsPrimaryKey(true).HeaderText("Vendor ID").Visible(false).Add();
+    col.Field("ProductId").HeaderText("Product Id").Visible(false).Add();
+    col.HeaderText("Action").Width("160").Commands(commands).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+    col.HeaderText("Select").Width("50").Template("#toggleTemplate").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+    col.Field("Vendors").HeaderText("Vendor Name").Width("200").Add();
+    col.Field("ItemNo").HeaderText("Item No").Width("100").Add();
+    col.Field("Description").HeaderText("Description").Width("300").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+    col.Field("UPCCode").HeaderText("UPC Code").Width("150").Add();
+    col.Field("Brand").HeaderText("Brands").Width("100").Add();
+    col.Field("Size").HeaderText("Size").Width("80").Add();
+    col.Field("Price").HeaderText("Price").Width("80").Add();
+    col.Field("DateCreateds").HeaderText("Date Created/Updated").Width("150").Add();
+    col.Field("CreatedBys").HeaderText("Created By").Width("150").Add();
+}).DataBound("dataBound").ActionComplete("actionCompleteU").AllowPaging().Load("loads").RowDataBound("rowDataBound").PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowDeleting(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Toolbar(new List<string>() { "Search", "PdfExport", "ExcelExport" }).ToolbarClick("toolbarClick").Render()
+</div>
+@Html.EJS().ScriptManager()

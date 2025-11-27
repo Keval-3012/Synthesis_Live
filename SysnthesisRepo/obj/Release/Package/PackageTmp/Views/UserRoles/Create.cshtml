@@ -1,0 +1,164 @@
+﻿@model EntityModels.Models.UserRoles
+<style>
+    #btnAddNRol {
+        background: #e53939 !important;
+        border-color: #bc2e2d !important;
+    }
+
+    ul {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    li {
+        cursor: pointer;
+    }
+
+    .leftpanel {
+        background-color: white;
+        left: 1px !important;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .modal-header {
+        border-bottom: 3px solid #a52f2f;
+    }
+
+    .header-small {
+        margin-top: 0px !important;
+    }
+
+    #IModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    .dvRoleList {
+        overflow-x: auto !important;
+    }
+
+    div#dvUserRoles ul li {
+        list-style: none !important;
+        margin: 5px 0px 5px 0px;
+        font-size: 16px;
+    }
+
+    .btn-danger {
+        height: 30px;
+        font-weight: bold;
+    }
+    /*------for selected item use following CSS*/
+    div#dvUserRoles ul li {
+        background: #ebebeb;
+        padding: 5px 0px 5px 20px;
+        color: black !important;
+        font-weight: bold;
+        border-radius: 5px;
+        box-shadow: 0px 5px 5px rgb(0 0 0 / 10%);
+    }
+    #dvUserRoles{height:750px;overflow-y:scroll;}
+
+
+        #dvUserRoles::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        #dvUserRoles::-webkit-scrollbar {
+            width: 6px;
+            background-color: #F5F5F5;
+        }
+
+        #dvUserRoles::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #555;
+        }
+</style>
+<div id="globalTabContent">
+    <div id="PanAddUpdate" style="background:white !important">
+        <div class="header-small special_bg" style="height:60px;">
+            <div class="col-md-7">
+                <h3>User Role Manager </h3>
+            </div>
+            <div class="col-md-5" style="text-align:right">
+                <input type="submit" value="Save Role Setting" form="frmMain" class="buttonbox btnsubmit" />
+                @Html.ActionLink("Role List", "Index", "UserTypeMasters", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+            </div>
+        </div>
+        @using (Html.BeginForm("Create", "UserRoles", FormMethod.Post, new { id = "frmMain" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(s => s.UserTypeId)
+
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain leftpanel col-md-2">
+                        <div class="row" style="text-align:center;background:#555555;color:#fff;padding-top:5px;">
+                            <label style="font-weight:bold">Role List</label>
+                            <button type="button" data-toggle="modal" data-target="#IModal" class="btn btn-danger" style="margin-right:4px;padding-top:2px;float:right;">Add New Role</button>
+                        </div>
+                        <div class="row" style="padding:3px">
+                            @Html.DropDownList("GroupId", null, htmlAttributes: new { @class = "myval", onchange = "GetRoleList();" })@*GetGroupWiseStore();*@
+                        </div>
+                        <div id="dvUserRoles">
+
+                            @{ Html.RenderPartial("_UserRolesList");}
+                        </div>
+                    </div>
+                    <div class="formmain col-md-10 dvRoleList">
+                        <div class="row">
+                            <div class="col-md-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="dvRoles">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id="IModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add User Role</h4>
+            </div>
+            <div class="modal-body">
+                <div id="frmUserType" class="form-horizontal">
+                    @{ Html.RenderAction("AddUserType", new EntityModels.Models.UserTypeMaster()); }
+                </div>
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Add" onclick="AddUserType();" />
+                <button type="button" class="buttonbox btncancel" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var URoleRequired = '@ViewBag.URoleRequired';
+    var LevelRequired = '@ViewBag.LevelRequired';
+</script>
+<script src="~/Form_JS/UserRoles.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

@@ -1,0 +1,57 @@
+﻿@model SynthesisViewModal.HRViewModel.ConsentStatusListModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Popups
+@using Utility
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HRConsent.css" rel="stylesheet" />
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+
+
+<div class="header-small special_bg consent-page" style="margin: 0px;position:sticky;top:80px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Consent Status List</h3>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="form-group">
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                @Html.EJS().DatePickerFor(m => m.FromDate).EnableMask(true).Format("MM/dd/yyyy").Render()
+            </div>
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                @Html.EJS().DatePickerFor(m => m.ToDate).EnableMask(true).Format("MM/dd/yyyy").Render()
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="customRadio ">
+                    @Html.DropDownListFor(m => m.SignCheck, null, new { @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="customRadio ">
+                    @Html.DropDownListFor(m => m.StoreId, null, new { @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="col-md-1 col-sm-6 col-xs-12">
+                <input type="submit" value="Search" id="btnSearch" class="btn btn-red" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@{ Html.RenderAction("PartialIndexConsentlist", "HRConsentMasters"); }
+
+<script>
+    document.title = '@ViewBag.Title';
+    $(document).ready(function () {
+    var HeaderStoreId = $("#HeaderStoreId option:selected").val();
+    if (HeaderStoreId == "" || HeaderStoreId != "") {
+        $(".storeheaderstatus").hide();
+    }
+});
+</script>
+@Html.EJS().ScriptManager()

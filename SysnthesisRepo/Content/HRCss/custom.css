@@ -1,0 +1,71 @@
+.redSpan {
+    color: red;
+}
+.addtopmargin{
+    padding-top:5px;
+}
+
+.form-group select {
+    border: 1px solid #dfdfdf;
+    box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    height: 54px;
+    padding-left: 15px;
+    width: 100%;
+}
+
+.modal-header1 {
+    min-height: 16.43px;
+    padding: 2% 48% 6% 0%;
+    border-bottom: 3px solid #d9534f;
+    font-size: 24px;
+}
+
+.modal-header2 {
+    min-height: 16.43px;
+    padding: 1%;
+    border-bottom: 1px solid #e5e5e5;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+.trainingpending {
+    padding: 0px 0px;
+}
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -35px;
+    position: relative;
+    margin-right:5px;
+    z-index: 2;
+}
+
+.field-icon-model {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    margin-right: 5px;
+    z-index: 2;
+}
+
+.btnFile {
+    max-width: 100%;
+    min-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnFile span.content {
+   max-width: 70%;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   color: #0064FF;
+}
+
+.jpgFile {
+    background-image: url(../images/jpg.png);
+}

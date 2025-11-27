@@ -1,0 +1,175 @@
+@model EntityModels.Models.DashboardDaily
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Date</th>
+            @if (ViewBag.StateName != "")
+            {
+                <th>State</th>
+            }
+            @if (ViewBag.StoreName != "")
+            {
+                <th>Store</th>
+            }
+        </tr>
+        <tr>
+            <td>@ViewBag.Startdate</td>
+            @if (ViewBag.StateName != "")
+            {
+                <td>@ViewBag.StateName</td>
+            }
+            @if (ViewBag.StoreName != "")
+            {
+                <td>@ViewBag.StoreName</td>
+            }
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>All Voids</th>
+            <th>Item Corrects</th>
+            <th>Item Returns</th>
+            <th>Cash Payouts</th>
+            <th>Over / Short</th>
+        </tr>
+        <tr>
+            <td>@Model.AllVoids | $ @Model.AllVoidsAmt</td>
+            <td>@Model.ItemCorrects | $ @Model.ItemCorrectsAmt</td>
+            <td>@Model.ItemReturns | $ @Model.ItemReturnsAmt</td>
+            <td>$ @Model.CashPayout</td>
+            <td>$ @Model.Over</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Current @Model.DayName</th>
+            <th>Net Sales (+Tax)</th>
+            <th>Customer Count</th>
+            <th>Average Sale</th>
+        </tr>
+        <tr>
+            <td>@Model.HourTime</td>
+            <td>$ @Model.TotalSalesCurrentDay</td>
+            <td>@Model.CustomerCountCurrentDay</td>
+            <td>$ @Model.AverageSaleCurrentDay</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Last @Model.DayName</th>
+            <th>Net Sales (+Tax)</th>
+            <th>Customer Count</th>
+            <th>Average Sale</th>
+        </tr>
+        <tr>
+            <td>@Model.HourTime</td>
+            <td>$ @Model.TotalSalesLastWeek</td>
+            <td>@Model.CustomerCountLastWeek</td>
+            <td>$ @Model.AverageSalesLastWeek</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>In-Store</th>
+            <th>Online</th>
+        </tr>
+        <tr>
+            <td>@Model.Offline%</td>
+            <td>@Model.Online%</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Invoices</th>
+        </tr>
+        <tr>
+            <th>Added</th>
+            <th>Processed</th>
+        </tr>
+        <tr>
+            <td>@Model.InvoicesAdded</td>
+            <td>@Model.InvoicesApproved</td>
+        </tr>
+    </table>
+
+</body>
+</html>
+
+

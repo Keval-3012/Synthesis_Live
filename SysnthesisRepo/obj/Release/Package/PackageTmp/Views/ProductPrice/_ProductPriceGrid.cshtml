@@ -1,0 +1,14 @@
+﻿@using Syncfusion.EJ2
+<style>
+    #ajax_dialog1_dialog-header {
+        padding: 12px 14px 12px 12px !important;
+    }
+</style>
+<div class="control-section">
+@Html.EJS().Grid("InlineEditing3").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource((IEnumerable<object>)ViewBag.DataSourse).AllowTextWrap().Columns(col =>
+{
+    col.Field("UPC").HeaderText("Item").Width("150").Add();
+}).DataBound("dataBound").Toolbar(new List<string>() { "Search" }).Render()
+</div>
+
+@Html.EJS().ScriptManager()

@@ -1,0 +1,451 @@
+﻿@model List<EntityModels.Models.RightsStore>
+<style>
+    #table1 {
+        border: none;
+    }
+
+    .row1 {
+        padding-top: 5px;
+        border: 2px;
+    }
+    
+    .col-md-1 {
+        width: 12%;
+    }
+
+    .LabelRoles {
+        padding-bottom: 10px;
+    }
+    hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .clsLeveldrp {
+        height:30px !important;
+        padding:2px 12px !important;
+    }
+</style>
+@if (Model.Count > 0)
+{
+<div class="col-md-12">
+    @*<div class="row" style="text-align:center;background:#555555;color:#fff">
+        <label style="font-weight:bold">@ViewBag.UserTypeName - User Rights List</label>
+    </div>*@
+    <div class="row row1" style="font-weight:bold;background-color:#555555;color:#fff">
+        <div class="col-md-1">
+            <label style="font-weight:bold">Modules Name</label>
+        </div>
+        @foreach (var store in ViewBag.Stores)
+        {
+            <div class="col-md-1" style="text-align:center;">
+                <label style="font-weight:bold"> @store</label>
+            </div>
+        }
+        @*<div class="col-md-6">
+
+            </div>*@
+        @*<div class="col-md-12">
+            <hr />
+        </div>*@
+
+    </div>
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        @*<div class="col-md-1">*@
+            <div style="border:initial;padding-bottom:10px">
+
+                <div class="row row1" style="font-weight:bold;background-color:white;">
+                    <div class="col-md-12" style="top:10px;">
+                        @Html.HiddenFor(x => Model[i].ModuleName)
+                        @Html.HiddenFor(x => Model[i].ModuleId)
+                        @Html.HiddenFor(x => Model[i].UserTypeId)
+                        <label style="font-weight:bold">@Html.DisplayFor(modelItem => Model[i].ModuleDispName)</label>
+                       
+                    </div>
+                    @*<div class="col-md-1" style="text-align:right;top:10px;">
+                    </div>
+                    <div class="col-md-6">
+                    </div>*@
+                    <div class="col-md-12">
+                        <hr />
+                    </div>
+
+                </div>
+
+                @*<div class="row row2" style="font-weight:bold;background-color:white;">
+                        <div class="col-md-1">
+                            <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">View</label></span>
+                        </div>
+                        @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                        {
+                            <div class="col-md-1">
+
+                                <input type="checkbox" value="@("Create" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;" /><span><label class="LabelRoles">Create</label></span>
+
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                        {
+                            <div class="col-md-1">
+                                <input type="checkbox" value="@("Update" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">Update</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                        {
+                            <div class="col-md-1">
+                                <input type="checkbox" value="@("Delete" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">Delete</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "JournalEntries")
+                        {
+                            <div class="col-md-1">
+                                <input type="checkbox" value="@("Approve" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Approve" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">Approve</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "Invoice")
+                        {
+                            <div class="col-md-1">
+                                <input type="checkbox" value="@("Reject" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Reject" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">Reject</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "Invoice")
+                        {
+                            <div class="col-md-1">
+                                <input type="checkbox" value="@("OnHold" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("OnHold" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">OnHold</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "DailyPOSFeeds" || Model[i].ModuleName.Trim() == "PayrollReports")
+                        {
+                            <div class="col-md-1">
+                                <input type="checkbox" value="@("Upload" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Upload" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">Upload</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "COGsReport")
+                        {
+                            <div class="col-md-3">
+                                <input type="checkbox" value="@("Download" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Download" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">Download</label></span>
+                            </div>
+                        }
+                        @if (Model[i].ModuleName.Trim() == "OperatingRatioReport")
+                        {
+                            <div class="col-md-3">
+                                <input type="checkbox" value="@("PayrollComparision" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("PayrollComparision" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span><label class="LabelRoles">PayrollComparision</label></span>
+                            </div>
+                        }
+                    </div>*@
+
+
+
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    <div class="col-md-1">
+                        <label class="LabelRoles">View</label>
+                    </div>
+                   @foreach (var storeId in ViewBag.StoresIds)
+                   {
+                    <div class="col-md-1 center-text">
+                        <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                    </div>
+                   }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">Create</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            <div class="col-md-1 center-text">
+                                <input type="checkbox" value="@("Create" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;" />
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">Update</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("Update" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">Delete</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("Delete" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "JournalEntries")
+                    {
+                    <div class="col-md-1" style="padding-bottom:10px;">
+                        <label class="LabelRoles">Approve</label>
+                        @if (Model[i].ModuleName.Trim() == "Invoice")
+                        {
+                        <p>Send for Approve to:</p><span>
+                            @Html.DropDownList("RoleLevelId", null, "select", htmlAttributes: new { @class = "form-control clsLeveldrp" })
+                        </span>
+                        }
+                    </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("Approve" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Approve" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">Reject</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("Reject" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Reject" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">OnHold</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("OnHold" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("OnHold" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "DailyPOSFeeds" || Model[i].ModuleName.Trim() == "PayrollReports")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">Upload</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("Upload" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Upload" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "COGsReport")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">Download</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("Download" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Download" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="row row2" style="font-weight:bold;background-color:white;">
+                    @if (Model[i].ModuleName.Trim() == "OperatingRatioReport")
+                    {
+                        <div class="col-md-1">
+                            <label class="LabelRoles">PayrollComparision</label>
+                        </div>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                        <div class="col-md-1 center-text">
+                            <input type="checkbox" value="@("PayrollComparision" + Model[i].ModuleName.Trim()+"_"+storeId+"_"+Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("PayrollComparision" + Model[i].ModuleName.Trim()+storeId)) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </div>
+                        }
+                    }
+                </div>
+            </div>
+         
+        @*</div>*@
+        
+            }
+        </div>
+    }
+    @*<table id="table1" class="table table-striped table-bordered bulk_action dataTable no-footer" style="width:100%;border:none">
+            <thead class="text-nowrap bg-primary" style="background: #56524b">
+                @*<tr>
+                        <th class="" width="10%">
+                            Form
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            View
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Create
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Update
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Delete
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Approve
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Reject
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            OnHold
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Upload
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Download
+                        </th>
+                        <th class="text-center no-sort" width="6%">
+                            Payroll Comparision
+                        </th>
+                        <th class="text-center no-sort" width="30%">
+                            Stores
+                        </th>
+                    </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td colspan="6">
+                            @Html.HiddenFor(x => Model[i].ModuleName)
+                            @Html.HiddenFor(x => Model[i].ModuleId)
+                            @Html.HiddenFor(x => Model[i].UserTypeId)
+                            @Html.DisplayFor(modelItem => Model[i].ModuleName)
+                        </td>
+                        <td class="text-center" colspan="6">
+                            Store: @Html.ListBoxFor(modelItem => Model[i].StoreIds, new MultiSelectList(ViewBag.StoreIds, "value", "text", Model[i].StoreIds), new { id = "Storename", @class = "myval" })
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td class="text-center">
+                            <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                            {
+                                <input type="checkbox" value="@("Create" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                            {
+                                <input type="checkbox" value="@("Update" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                            {
+                                <input type="checkbox" value="@("Delete" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "Invoice")
+                            {
+                                <input type="checkbox" value="@("Approve" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Approve" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "Invoice")
+                            {
+                                <input type="checkbox" value="@("Reject" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Reject" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "Invoice")
+                            {
+                                <input type="checkbox" value="@("OnHold" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("OnHold" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "DailyPOSFeeds" || Model[i].ModuleName.Trim() == "PayrollReports")
+                            {
+                                <input type="checkbox" value="@("Upload" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Upload" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "COGsReport")
+                            {
+                                <input type="checkbox" value="@("Download" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Download" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (Model[i].ModuleName.Trim() == "OperatingRatioReport")
+                            {
+                                <input type="checkbox" value="@("PayrollComparision" + Model[i].ModuleName.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("PayrollComparision" + Model[i].ModuleName.Trim())) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            }
+                        </td>
+
+                        @*<td class="text-center">
+                                <label>
+                                    <input type="checkbox" class="flat" value="@("View" + item.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + item.Trim())) ? "checked=\"checked\"" : "")>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label>
+                                    <input type="checkbox" class="flat" value="@("Create" + item.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + item.Trim())) ? "checked=\"checked\"" : "")>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label>
+                                    <input type="checkbox" class="flat" value="@("Update" + item.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + item.Trim())) ? "checked=\"checked\"" : "")>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                <label>
+                                    <input type="checkbox" class="flat" value="@("Delete" + item.Trim())" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + item.Trim())) ? "checked=\"checked\"" : "")>
+                                </label>
+                            </td>
+                    </tr>
+
+
+                }
+
+                @*<tr>
+                        <td class="">
+                            Reports
+                        </td>
+                        <td>
+                            <input type="checkbox" value="ViewExpenseReport" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewExpenseReport")) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;height: 22px;display: inline;opacity: unset;"> View Expense Report
+                        </td>
+                        <td>
+                            <input type="checkbox" value="ViewInvoiceReport" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewInvoiceReport")) ? "checked=\"checked\"" : "") class="Remember" style="margin: 1px;position: initial;left: 3%;height: 22px;display: inline;opacity: unset;"> View Invoice Report
+                        </td>
+                        <td class="text-center">
+                        </td>
+                        <td class="text-center">
+                        </td>
+                        <td class="text-center">
+                        </td>
+                        <td class="text-center">
+                        </td>
+                        <td class="text-center">
+                        </td>
+                    </tr>
+            </tbody>
+        </table>*@

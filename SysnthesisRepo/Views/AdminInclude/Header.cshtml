@@ -1,0 +1,1037 @@
+﻿@using Utility
+@model EntityModels.Models.Header
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #ddd;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        margin-top: 33px;
+    }
+
+    .dropdown1 {
+        float: left;
+        overflow: hidden;
+        border-radius: 0px;
+    }
+
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+        .dropdown-content a:hover {
+            background-color: #787878;
+        }
+
+    .show {
+        display: block;
+    }
+
+    .dropdown1:hover .dropdown-content {
+        display: block;
+    }
+
+
+    .clockButton {
+        background: #66A97F;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px;
+        height: 30px;
+        width: 40px;
+        border-radius: 50px;
+        position: relative;
+        box-sizing: border-box;
+        cursor: pointer;
+        box-shadow: 0px 5px 10px rgba(101, 169, 127, 0.5);
+    }
+
+    .clockButtonInner {
+        background: #2b2b2b;
+        display: flex;
+        align-items: center;
+        justify-content: space-between !important;
+        padding: 10px;
+        height: 30px;
+        margin: 10px 0px;
+        width: 100%;
+        border-radius: 50px;
+        position: relative;
+        box-sizing: border-box;
+        cursor: pointer;
+        box-shadow: 0px 5px 10px rgb(99 99 99 / 50%);
+        transition: all 0.2s ease-in-out;
+    }
+
+        .clockButtonInner img {
+            width: 20px;
+        }
+
+        .clockButtonInner span {
+            color: white;
+            user-select: none;
+            font-size: 14px;
+        }
+
+    .clockButton img {
+        width: 20px;
+    }
+
+    .clockButtonInner.disabled {
+        background: grey !important;
+        box-shadow: 0px 5px 10px rgba(25, 25, 25, 0.2);
+    }
+
+    .clockButtonInner:hover {
+        filter: brightness(1.1);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .clockButtonInner.disabled span {
+        color: lightgrey;
+    }
+
+    .clockButtonInner.disabled img {
+        opacity: 0.5;
+    }
+
+    .d-none {
+        display: none !important;
+    }
+
+    .activityMenu {
+        display: flex;
+        width: 200px;
+        position: absolute;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgb(255, 255, 255);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(224, 224, 224, 1) 100%);
+        height: auto;
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+        top: 50px;
+        right: 20px;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+        .activityMenu span.activityTitle {
+            font-size: 17px;
+            color: black;
+        }
+
+        .activityMenu span.activitySubTitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: black;
+            font-style: italic;
+            padding: 5px;
+        }
+
+        .activityMenu ul {
+            display: flex;
+            width: 100%;
+            padding: 0;
+            list-style-type: none;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+            .activityMenu ul li {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+                text-indent: 0px;
+                box-sizing: border-box;
+                padding: 10px 15px;
+            }
+
+                .activityMenu ul li span {
+                    font-weight: 600;
+                }
+
+                .activityMenu ul li.inTime::before {
+                    content: "";
+                    display: flex;
+                    width: 10px;
+                    height: 10px;
+                    background: #66A97F;
+                    border-radius: 5px;
+                }
+
+                .activityMenu ul li.outTime::before {
+                    content: "";
+                    display: flex;
+                    width: 10px;
+                    height: 10px;
+                    background: #cf4366;
+                    border-radius: 5px;
+                }
+
+                .activityMenu ul li.inTime span {
+                    color: black;
+                }
+
+                .activityMenu ul li.outTime span {
+                    color: rgb(134, 134, 134);
+                }
+
+    .disable {
+        pointer-events: none;
+    }
+
+    .toast.toast-error {
+        background: #e53939;
+        font-size: 14px;
+    }
+
+    .btnstickynote {
+        position: relative;
+    }
+
+    .note-no {
+        position: absolute;
+        right: 5px;
+        top: 6px;
+        width: 12px;
+        height: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: red;
+        transition: all .1s ease;
+    }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+<div class="headermainbox printarea">
+    <div class="logo"><a href="@Url.Action("IndexBeta", "Invoices")"><img src="~/Content/Admin/images/img_logosysthesis.png" /> </a></div>
+
+    @using (Html.BeginForm("Header", "AdminInclude", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmid" }))
+    {
+        <span class="applicationtext storeheaderstatus">
+            @Html.HiddenFor(Model => Model.Flg)
+            @if (ViewBag.StoreCount > 1)
+            {
+                @Html.DropDownList("HeaderStoreId", null, "All Stores", htmlAttributes: new { @class = "myval", onchange = "drpSelect(this.value)", detail = "Store" })
+            }
+            else
+            {
+                @Html.DropDownList("HeaderStoreId", null, htmlAttributes: new { @class = "myval", onchange = "drpSelect(this.value)" })
+            }
+        </span>
+    }
+    <a href="#" class="burgermenu"><i class="fa fa-bars"></i></a>
+    <div class="mobileclear"></div>
+    <div class="headerrightbox">
+
+        <div class="dropdown1 menu-dropdown btnstickynote">
+            <button class="dropbtn btnstickynote" id="btnSettings" onclick="opensubmenu1()" style="background:transparent;border-radius:0px;display:contents;">
+                <i class="menu-icon"><img src="~/Content/Admin/images/settings.svg" alt="" style="fill: #fff!important; filter: invert(.9);" /></i>
+            </button>
+            <div class="dropdown-content" id="myDropdown1">
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("Index", "BankAccounts")">
+                        <span class="menu-text">Bank Accounts</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("Index", "CameraFeedsArchive")">
+                        <span class="menu-text">Camera Feeds Archive</span>
+                    </a>
+                }
+                <a href="@Url.Action("ChangePassword", "UserMasters")">
+                    <span class="menu-text">Change Password</span>
+                </a>
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("StoreSettings"))
+                {
+                    <a href="@Url.Action("Index", "Companies")">
+                        <span class="menu-text">Companies</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CompGroupSettings"))
+                {
+                    <a href="@Url.Action("Index", "CompanyGroups")">
+                        <span class="menu-text">Company Groups</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("CompetitorsScanLogGrid", "ItemProductScanLog")">
+                        <span class="menu-text">Competition Module logs</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("Grid_New", "UserLog")">
+                        <span class="menu-text">Detail User Log</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DocCategorySettings"))
+                {
+                    <a href="@Url.Action("Index", "DocumentCategories")">
+                        <span class="menu-text">Document Categories</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ExpenseCheckSetting"))
+                {
+                    <a href="@Url.Action("Index", "ExpenseAccounts")">
+                        <span class="menu-text">Expense Accounts</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("GroupAccountSettings"))
+                {
+                    <a href="@Url.Action("Index", "GroupAccountMasters")">
+                        <span class="menu-text">Group Account Master</span>
+                    </a>
+                }
+                @*@if (Roles.IsUserInRole("Administrator"))
+        {
+            <a href="@Url.Action("Index", "GroupWiseStateStore")">
+                <span class="menu-text">Group Wise State Store</span>
+            </a>
+        }*@
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewExpenseWeeklySettings"))
+                {
+                    <a href="@Url.Action("Index", "ExpenseWeeklySetting")">
+                        <span class="menu-text">Home Expense Weekly Sales Setting</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("LevelApproverSettings"))
+                {
+                    <a href="@Url.Action("Create", "InvoiceApprovalLevels")">
+                        <span class="menu-text">Invoice Approval Levels</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("Index", "InvoiceMultithreadedProcess")">
+                        <span class="menu-text">Invoice Multi-threaded Process</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewItemProductScanLog"))
+                {
+                    <a href="@Url.Action("ItemProductScanLog", "ItemProductScanLog")">
+                        <span class="menu-text">Item Product Scan Log</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("BarcodeLookupGrid", "ItemProductScanLog")">
+                        <span class="menu-text">Item Product Detail</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UsersSettings"))
+                {
+                    <a href="@Url.Action("ManagerUserList", "UserMasters")">
+                        <span class="menu-text">Manage Users</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("PayCycleSettings", "PayCycleSettings")">
+                        <span class="menu-text">Pay Cycle Settings</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("PayrollAccountSettings"))
+                {
+                    <a href="@Url.Action("Index", "PayrollAccount")">
+                        <span class="menu-text">Payroll Account</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewProductMappingLog"))
+                {
+                    <a href="@Url.Action("ProductMappingLog", "ProductMappingLog")">
+                        <span class="menu-text">Product Mapping Log</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="@Url.Action("Index", "TimeclockIPControls")">
+                        <span class="menu-text">Timeclock IP Controls</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("TenderAccountSettings"))
+                {
+                    <a href="@Url.Action("Index", "Configuration")">
+                        <span class="menu-text">Tender Account Master</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ActivityLogSettings"))
+                {
+                    <a href="@Url.Action("Index", "UserActivityLog")">
+                        <span class="menu-text">User Activity Log</span>
+                    </a>
+                }
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UserRightsSettings"))
+                {
+                    <a href="@Url.Action("Create", "UserRoles")">
+                        <span class="menu-text">User Rights</span>
+                    </a>
+                }
+            </div>
+        </div>
+        @*<a href="#stickymyModal" class="btnstickynote" data-toggle="modal" data-target="#stickymyModal"><img src="~/Content/Admin/images/icons/icon_stickynotes.png" /></a>*@
+        <div id="showNotePopup" class="btnstickynote">
+            @if (ViewBag.UserReminderCount != 0 || ViewBag.UserTaskCount != 0 || ViewBag.UserNoteCount != 0)
+            {
+                <span class="note-no" id="note-no"></span>
+            }
+            <img src="~/Content/Admin/images/icons/icon_stickynotes.png" />
+        </div>
+        @{
+            var Name = "";
+            string s;
+            string firstlet = "";
+
+            Name = User.Identity.Name;
+            s = Name;
+            if (s != null && s != "")
+            {
+                firstlet = s.Substring(0, 1).ToUpper();
+            }
+            if (!Roles.IsUserInRole("Administrator"))
+            {
+                <span class="badgeicon dropdown" id="invoice_notification">
+                </span>
+            }
+            <span class="profile">
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <span class="profinename bg_profil_system_admin" id="circleid">@Html.Raw(firstlet)</span>
+                }
+                else
+                {
+                    <span class="profinename bg_profil_store_manager" id="circleid">@Html.Raw(firstlet)</span>
+                }
+                <span class="name">@Html.Raw(Model.FirstName)</span>
+            </span>
+            <div class="clockButton" style="float:left;margin-left:10px;margin-top:10px;" id="clockbtn">
+                <img src="~/Content/Admin/images/clock.png" \>
+                <div class="d-none" id="hideshowdiv">
+                    <div class="activityMenu">
+                        <span class="activityTitle" id="ClockInTime"><strong>Clocked In:</strong> 9:00 AM</span>
+                        <span class="activitySubTitle" id="TotalHours">6.53 hours worked so far</span>
+                        <button type="button" onclick="CheckIn(1)" class="clockButtonInner" id="CheckIn" style="display:none;">
+                            <img src="~/Content/Admin/images/clock.png" \>
+                            <span>Clock In</span>
+                        </button>
+                        <button type="button" onclick="CheckIn(2)" class="clockButtonInner" id="CheckOut" style="display: none;">
+                            <img src="~/Content/Admin/images/clock.png" \>
+                            <span id="ClockOutHoursh">Clock Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <a href="@Url.Action("LogOut", "Login")" onclick="setitem()" detail="Logout" class="logout icon_color_wight" data-toggle="tooltip" data-placement="bottom" data-original-title="Logout"> <img src="~/Content/Admin/images/log-in.svg" alt="" /> </a>
+        }
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+<div id="dialogTempNote" style="display:none;">
+</div>
+<link rel="stylesheet" href="~/Content/Admin/assets/css/main.min.css" />
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet" />
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+@*<button id="showNotePopup" style="position: absolute; z-index: 99999999999999999;">
+        Show Note Module
+    </button>*@
+
+<div id="master-note-module" class="full-w-wrapper">
+    <div class="notes-wrapper">
+        <div class="notes-header-container">
+            <ul>
+                <li id="NoteHdSw" class="active">
+                    <img src="~/Content/Admin/images/icons/note.svg" /><span>Notes</span>
+                    <span class="tagNumber" id="UserNoteCount">@ViewBag.UserNoteCount</span>
+                </li>
+                <li id="TaskHdSw">
+                    <img src="~/Content/Admin/images/icons/task.svg" /><span>Tasks</span>
+                    <span class="tagNumber" id="UserTaskCount">@ViewBag.UserTaskCount</span>
+                </li>
+                <li id="ReminderHdSw">
+                    <img src="~/Content/Admin/images/icons/reminder.svg" /><span>Reminders</span>
+                    <span class="tagNumber" id="UserReminderCount">@ViewBag.UserReminderCount</span>
+                </li>
+            </ul>
+            <div class="headerActionBar">
+                <div id="createNotesBtn">
+                    <button id="createNote">Add Note</button>
+                    <button id="createTask">Add Task</button>
+                    <button id="createReminder">Add Reminder</button>
+                </div>
+                @* <button id="createNotesBtn">
+                        <span>Create</span>
+                        <img class="arrow-down" src="~/Content/Admin/images/icons/arrow-down.svg" />
+                        <ul id="creatNotesMenu">
+                            <li id="createNote">
+                                <img src="~/Content/Admin/images/icons/add-note.svg" /> <span>Note</span>
+                            </li>
+                            <li id="createTask">
+                                <img src="~/Content/Admin/images/icons/task.svg" /> <span>Task</span>
+                            </li>
+                            <li id="createReminder">
+                                <img src="~/Content/Admin/images/icons/reminder.svg" /> <span>Reminder</span>
+                            </li>
+                        </ul>
+                    </button>*@
+                @*<button id="closeNotePopUp">
+                        <img src="~/Content/Admin/images/icons/close.svg" />
+                    </button>*@
+            </div>
+        </div>
+        <div class="notes-module-container">
+            <div class="add-note">
+                <h2>Add Note</h2>
+                <input type="hidden" id="noteIdHidden" />
+                <input type="text" id="noteTitle" placeholder="Note Name" style="display:none;" />
+                <div id="noteEditor" style="height: 200px"></div>
+                <!-- Quill editor container -->
+                <div class="actionButtons">
+                    <button class="save" id="saveNote">Save</button>
+                    <button class="cancel" id="cancelNote">Cancel</button>
+                </div>
+            </div>
+            <div class="note-listing">
+                @foreach (var note in Model.UserNoteList)
+                {
+                    <div class="note">
+                        <input type="hidden" class="noteId" value="@note.NoteId" />
+                        <div class="note-header">
+                            @if (note.InvoiceId != null)
+                            {
+                                <h2>
+                                    <a href="/Invoices/Details/@note.InvoiceId" style="color: #385585 !important ;cursor:pointer;">Invoice # - @note.NoteName</a>
+                                </h2>
+                            }
+                            else
+                            {
+                                <h2 style="color: #000 !important">@note.NoteName</h2>
+                            }
+                            <div class="actionBar">
+                                <div id="deleteNote_@note.NoteId" class="deleteNt">
+                                    <img src="~/Content/Admin/images/icons/delete.svg"
+                                         alt="Delete" />
+                                </div>
+
+                                <div id="editNote_@note.NoteId" class="editNt">
+                                    <img src="~/Content/Admin/images/icons/edit-05.svg"
+                                         alt="Edit" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note-body">
+                            <span>
+                                @Html.Raw(note.NoteDescription)
+                            </span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="task-module-container" style="display: none">
+            <div class="add-task">
+                <h2>Add Task</h2>
+                <input type="hidden" id="taskIdHidden" />
+                <input type="text" id="taskName" placeholder="Task Name" />
+                <textarea name="taskDescription" id="taskDescription" cols="30" rows="10" placeholder="Task Description"></textarea>
+                <div class="taskControls">
+                    <div class="taskControlGroup">
+                        <label>Priority <span style="color:red;">*</span></label>
+                        @Html.DropDownList("PriorityDropData", null, "-Select Priority-", htmlAttributes: new { @class = "myval" })
+                    </div>
+                    <div class="taskControlGroup">
+                        <label>Assigned to <span style="color:red;">*</span></label>
+                        @Html.DropDownList("UserDropData", null, "-Select User-", htmlAttributes: new { @class = "myval" })
+                    </div>
+                    <div class="taskControlGroup">
+                        <label>Due Date <span style="color:red;">*</span></label>
+                        <input type="date" id="dueDate" />
+                    </div>
+                </div>
+                <div class="actionButtons">
+                    <button class="save" id="saveTask">Save</button>
+                    <button class="cancel" id="cancelTask">Cancel</button>
+                </div>
+            </div>
+            <div class="task-listing">
+                @foreach (var task in Model.UserTaskList.OrderBy(task => task.IsCompleted))
+                {
+                    <div class="@(task.DueDate.HasValue ? (task.DueDate.Value.Date == DateTime.Today && !task.IsCompleted ? "task dueToday" : (task.DueDate.Value.Date < DateTime.Today && !task.IsCompleted ? "task overDue" : "task")) : "task")">
+                        @*<div class="@(task.DueDate.HasValue && task.DueDate.Value.Date == DateTime.Today ? "task dueToday" : "task")">*@
+                        <input type="hidden" class="taskId" value="@task.TaskId" />
+                        <div class="taskHeader">
+
+                            @if (task.DueDate.HasValue && task.DueDate.Value.Date != DateTime.Today || task.IsCompleted)
+                            {
+                                <span class="dueDate">@task.DueDate.Value.ToString("dd-MMM-yyyy")</span>
+                            }
+                            else
+                            {
+                                <span class=""></span>
+                            }
+
+                            <div class="task-row">
+                                @if (task.IsCompleted)
+                                {
+                                    <button id="markAsCompletedBtn" class="mark-completed completed" data-status="completed">
+                                        <span class="completed-content">
+                                            <img src="~/Content/Admin/images/icons/mark-as-completed.svg" class="completed-icon" />
+                                            <span class="button-text">Completed</span>
+                                        </span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    if (task != null && Session["UserId"] != null && task.Createdby == Convert.ToInt32(Session["UserId"].ToString()))
+                                    //if (task.Createdby == Convert.ToInt32(Session["UserId"].ToString()))
+                                    {
+                                        <div class="deleteTask">
+                                            <img src="~/Content/Admin/images/icons/delete.svg" alt="Delete" />
+                                        </div>
+                                        <div class="editTask">
+                                            <img src="~/Content/Admin/images/icons/edit-05.svg" alt="Edit" />
+                                        </div>
+                                    }
+                                    <button id="markAsCompletedBtn" class="mark-completed" data-status="mark-as-completed">
+                                        <span class="button-content">
+                                            <img src="~/Content/Admin/images/icons/completed-note.svg" class="default-icon" />
+                                            <span class="button-text">Mark as Completed</span>
+                                        </span>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                        @if (task.InvoiceId != null)
+                        {
+                            <h1>
+                                <a href="/Invoices/Details/@task.InvoiceId" style="color: #385585;cursor:pointer;">Invoice # - @task.TaskName</a>
+                            </h1>
+                        }
+                        else
+                        {
+                            <h1>@task.TaskName</h1>
+                        }
+                        <h2>@task.TaskDescription</h2>
+                        @if (task != null && Session["UserId"] != null)
+                        {
+                            int userId = Convert.ToInt32(Session["UserId"].ToString());
+
+                            if (task.AssignTo == userId && task.Createdby == userId)
+                            {
+                                <span class="assignedBy">Assigned by <a href="#">Me</a></span>
+                            }
+                            else if (task.AssignTo == userId && task.Createdby != userId)
+                            {
+                                <span class="assignedBy">Assigned by <a href="#">@task.AssignByName</a></span>
+                            }
+                            else
+                            {
+                                <span class="assignedBy">Assigned to <a href="#">@task.AssignToName</a></span>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+        <div class="reminder-module-container" style="display: none">
+            <div class="add-reminder">
+                <h2>Add Reminder</h2>
+                <input type="hidden" id="reminderIdHidden" />
+                <input type="text" id="reminderTitle" placeholder="Reminder Title *" />
+                <textarea name="reminderDiscription" id="reminderDiscription" cols="30" rows="10" placeholder="Reminder Description (optional)"></textarea>
+                <div class="taskControls">
+                    <div class="taskControlGroup">
+                        <label>Reminder Date & Time <span style="color:red;">*</span></label>
+                        <input type="datetime-local" id="ReminderDate" />
+                    </div>
+                </div>
+                <div class="actionButtons">
+                    <button class="save" id="saveReminder">Save</button>
+                    <button class="cancel" id="cancelReminder">Cancel</button>
+                </div>
+            </div>
+            <div class="reminder-listing">
+                @foreach (var reminder in Model.UserReminderList)
+                {
+                    <div class="reminder">
+                        <input type="hidden" class="reminderId" value="@reminder.ReminderId" />
+                        <div class="reminder-section-01">
+                            @*<div class="reminder-list">*@
+                            <img src="~/Content/Admin/images/icons/reminder-listing-icon.svg" />
+                            <h1>@reminder.ReminderName</h1>
+                            @*</div>*@
+                        </div>
+                        <div class="actionBar">
+                            <div class="deleteReminder">
+                                <img src="~/Content/Admin/images/icons/delete.svg" alt="Delete" />
+                            </div>
+                            <div class="editReminder">
+                                <img src="~/Content/Admin/images/icons/edit-05.svg" alt="Edit" />
+                            </div>
+                        </div>
+                        <div class="reminderContent">
+                            <span>@reminder.ReminderDescription</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="NoteModuleDeletePopup" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+        <div class="modal-content ">
+
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="modal-title">Message</div>
+            <input id="NoteModuleIdDelete" type="hidden" />
+            <input id="NoteModuleId" type="hidden" />
+            <div class="modal-body"><p id="deleModalbodyNoteModule"></p></div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" detail="Recent Entry Delete Confirm -" id="DeleteNoteModule">Ok </a>
+                <a class="btn" data-dismiss="modal" detail="Recent Entry Delete Confirm -" onclick="closemodalnotemodule(event)">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="backdrop-popup" onclick="RemoveBlurBackdrop(event)"></div>
+
+<script src="~/Content/Admin/assets/js/main.min.js"></script>
+
+<script>
+
+    //$('#openstickynote').click(function () {
+    //    var ajax = new ej.base.Ajax({
+    //        url: ROOTURL + 'AdminInclude/SetUserWiseNoteModule', //render the partial view
+    //        type: "POST",
+    //        contentType: "application/json",
+    //    });
+    //    ajax.send().then((data) => {
+    //        $("#dialogTempNote").css('display', 'block');
+    //        $("#dialogTempNote").html(data);
+    //    });
+    //});
+
+    $(document).on("click", ".clockButton", function () {
+        if ($("#hideshowdiv").hasClass("d-none")) {
+            $.ajax({
+                url: '@AdminSiteConfiguration.GetURL()/AdminInclude/GetCheckInData',
+                type: 'POST',
+                cache: false,
+                beforeSend: function () { Loader(1); },
+                success: function (response) {
+
+                    $("#hideshowdiv").removeClass('d-none');
+                    $("#ClockInTime").html("<strong>Clocked In:</strong> " + response.Clockintime)
+                    $("#TotalHours").html(response.TotalHoursWorked + " hours worked so far")
+                    Loader(0);
+                }
+            });
+        }
+        else {
+            $("#hideshowdiv").addClass('d-none');
+        }
+    });
+    $(document).ready(function () {
+
+
+        if ('@Session["CheckInOutTrack"]' == 1) {
+            if ('@Session["CheckInOut"]' == 1) {
+                if ('@Session["CheckInOutStatus"]' == '1') //CheckIn
+                {
+                    $('#CheckOut').hide();
+                    $('#CheckIn').show();
+                    $('#clockbtn').addClass('statusTypeClockOut');
+                    $('#clockbtn').removeClass('statusTypeClockIn');
+                }
+                else if ('@Session["CheckInOutStatus"]' == '2') //CheckOut
+                {
+                    $('#CheckOut').show();
+                    $('#CheckIn').hide();
+                    $('#clockbtn').addClass('statusTypeClockIn');
+                    $('#clockbtn').removeClass('statusTypeClockOut');
+
+                    var aa = sessionStorage.getItem("StartTime");
+                    if (aa == null) {
+                        sessionStorage.setItem("StartTime", $('#ClockOutHoursh').text());
+                    }
+                }
+                else {
+                    $('#CheckOut').hide();
+                    $('#CheckIn').hide();
+                    $('#clockbtn').hide();
+                }
+
+
+
+
+
+            }
+            else {
+                $('#CheckOut').hide();
+                $('#CheckIn').show();
+                $('#CheckOut').attr('disabled', true);
+                $('#CheckIn').attr('disabled', true);
+                $('#clockbtn').addClass('disable');
+                $('#clockbtn').removeClass('statusTypeClockIn');
+                $('#clockbtn').removeClass('statusTypeClockOut');
+            }
+        }
+        else {
+            $('#CheckOut').hide();
+            $('#CheckIn').hide();
+            $('#clockbtn').hide();
+        }
+    });
+
+    function CheckIn(sType) {
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/Login/UpdateCheckInOut',
+            data: { Type: sType },
+            type: 'POST',
+            cache: false,
+            beforeSend: function () { Loader(1); },
+            success: function (response) {
+                if (response.result == true) {
+
+                    if (sType == "1") {
+                        MyCustomToster('Clocked In Successfully.');
+                        $('#CheckIn').hide();
+                        $('#CheckOut').show();
+                        $('#clockbtn').removeClass('statusTypeClockOut');
+                        $('#clockbtn').addClass('statusTypeClockIn');
+                    }
+                    else if (sType == "2") {
+                        MyCustomToster('Clocked Out Successfully.');
+                        $('#CheckOut').hide();
+                        $('#CheckIn').show();
+                        $('#clockbtn').addClass('statusTypeClockOut');
+                        $('#clockbtn').removeClass('statusTypeClockIn');
+                    }
+                    else {
+                        $('#CheckOut').hide();
+                        $('#CheckIn').hide();
+                        $('#clockbtn').hide();
+                    }
+                }
+                else {
+                    alert("Session is expired, login again..!!");
+                      window.location.href = "@Url.RouteUrl(new { Controller = "Login", Action = "Index"})"
+                }
+                Loader(0);
+            }
+        });
+    }
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $(".loading-container").attr("style", "display:block;")
+        }
+        else {
+            $(".loading-container").attr("style", "display:none;")
+        }
+
+    }
+
+    function setitem() {
+        localStorage.removeItem();
+        sessionStorage.removeItem();
+        localStorage.setItem('FromInvoicePage', '');
+        localStorage.removeItem("InvoiceReport_Dept");
+        localStorage.removeItem("InvoiceReport_StartDate");
+        localStorage.removeItem("InvoiceReport_EndDate");
+        localStorage.removeItem("InvoiceReport_Payment");
+        localStorage.removeItem("InvoiceReport_Status");
+        localStorage.removeItem("InvoiceReport_Vendor");
+        localStorage.removeItem("InvoiceReport_AmtMax");
+        localStorage.removeItem("InvoiceReport_AmtMin");
+        localStorage.removeItem("JournalEntry_Date");
+        localStorage.removeItem("PayrollExpense_Date");
+        localStorage.removeItem("StartTerminalId");
+        localStorage.removeItem("Dashboard_Vendor");
+        localStorage.removeItem("DashboardFilter_AmtMinimum");
+        localStorage.removeItem("DashboardFilter_AmtMaximum");
+        localStorage.removeItem("DashboardFilter_StartDate");
+        localStorage.removeItem("DashboardFilter_EndDate");
+        localStorage.removeItem("DashboardFilter_Payment1");
+        localStorage.removeItem("DashboardFilter_Payment2");
+        localStorage.removeItem("DashboardFilter_Department");
+        localStorage.removeItem("DashboardFilter_SearchVendor");
+        localStorage.removeItem("Dashboard_SearchFlg");
+        localStorage.removeItem("VendorIsAsc");
+        localStorage.removeItem("DepartmentIsAsc");
+
+        localStorage.removeItem("PriceFilter_StartDate");
+        localStorage.removeItem("PriceFilter_EndDate");
+        localStorage.removeItem("PriceFilter_Store");
+        localStorage.removeItem("PriceFilter_SearchVendor");
+        localStorage.removeItem("PriceFilter_SearchFlg");
+        localStorage.removeItem("PriceFilter_Vendors");
+
+        localStorage.removeItem("ECheckFilter_StartDate");
+        localStorage.removeItem("ECheckFilter_EndDate");
+        localStorage.removeItem("ECheckFilter_Store");
+        localStorage.removeItem("ECheckFilter_SearchVendor");
+        localStorage.removeItem("ECheckFilter_SearchFlg");
+    }
+
+    function drpSelect(Store) {
+        if (Store == "") {
+            localStorage.clear();
+        }
+        localStorage.setItem('FromInvoicePage', '');
+        localStorage.removeItem("InvoiceReport_Dept");
+        localStorage.removeItem("InvoiceReport_StartDate");
+        localStorage.removeItem("InvoiceReport_EndDate");
+        localStorage.removeItem("InvoiceReport_Payment");
+        localStorage.removeItem("InvoiceReport_Status");
+        localStorage.removeItem("InvoiceReport_Vendor");
+        localStorage.removeItem("InvoiceReport_AmtMax");
+        localStorage.removeItem("InvoiceReport_AmtMin");
+        localStorage.removeItem("JournalEntry_Date");
+        localStorage.removeItem("PayrollExpense_Date");
+        localStorage.removeItem("StartTerminalId");
+        localStorage.removeItem("Dashboard_Vendor");
+        localStorage.removeItem("DashboardFilter_AmtMinimum");
+        localStorage.removeItem("DashboardFilter_AmtMaximum");
+        localStorage.removeItem("DashboardFilter_StartDate");
+        localStorage.removeItem("DashboardFilter_EndDate");
+        localStorage.removeItem("DashboardFilter_Payment1");
+        localStorage.removeItem("DashboardFilter_Payment2");
+        localStorage.removeItem("DashboardFilter_Department");
+        localStorage.removeItem("DashboardFilter_SearchVendor");
+        localStorage.removeItem("Dashboard_SearchFlg");
+        localStorage.removeItem("VendorIsAsc");
+        localStorage.removeItem("DepartmentIsAsc");
+        localStorage.removeItem("PriceFilter_StartDate");
+        localStorage.removeItem("PriceFilter_EndDate");
+        localStorage.removeItem("PriceFilter_Store");
+        localStorage.removeItem("PriceFilter_SearchVendor");
+        localStorage.removeItem("PriceFilter_SearchFlg");
+        localStorage.removeItem("PriceFilter_Vendors");
+
+        localStorage.removeItem("ECheckFilter_StartDate");
+        localStorage.removeItem("ECheckFilter_EndDate");
+        localStorage.removeItem("ECheckFilter_Store");
+        localStorage.removeItem("ECheckFilter_SearchVendor");
+        localStorage.removeItem("ECheckFilter_SearchFlg");
+
+         if (Store != "") {
+            $('#frmid').submit();
+        }
+        else {
+             $("#Flg").val(1);
+             $('#frmid').submit();
+        }
+    }
+
+    $('#invoice_notification').click(function () {
+        $('.overlaytransparent').addClass('hidediv');
+
+    });
+    function opensubmenu1() {
+        document.getElementById("myDropdown1").classList.toggle("show");
+    }
+
+    getStickynote();
+
+        function getStickynote() {
+            $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/AdminInclude/GetUserWiseStickyNote',
+            data: { },
+            beforeSend: function () { },
+            cache: false,
+                success: function (response) {
+                    $("#hdrstickyNotesText").val(response.notes)
+            },
+            error:function()
+            {
+            }
+        });
+    }
+    $(document).ready(function () {
+        $("#hdrCancelNote").click(function () {
+            getStickynote();
+        });
+        $("#hdrSaveNote").click(function () {
+            var note = $("#hdrstickyNotesText").val();
+            $.ajax({
+                url: '@AdminSiteConfiguration.GetURL()/AdminInclude/SetUserWiseStickyNote',
+                data: { notes: note },
+                method: "POST",
+                beforeSend: function () { },
+                cache: false,
+                success: function (response) {
+                    if (response.msgstatus == 1) {
+                        $("#hdrstickyNotesText").val(response.notes);
+                        MyCustomToster(response.msg)
+                    }
+                    else {
+                        MyCustomAlert(response.msg, 2);
+                    }
+                    $("#stickymyModal").modal("hide");
+                },
+                error: function () {
+                }
+            });
+        })
+
+        getAll();
+    });
+
+    function getAll() {
+    var model = $('#invoice_notification');
+    $.ajax({
+        url: '@AdminSiteConfiguration.GetURL()AdminInclude/GetAllData',
+        contentType: 'application/html ; charset:utf-8',
+        type: 'GET',
+        dataType: 'html'
+    }).success(function (result) { model.empty().append(result); })
+   .error(function (e) {
+   });
+}
+</script>
+
+<div class="modal fade stickynotemodal" id="stickymyModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body" style="padding:0px;">
+                <textarea maxlength="65500" id="hdrstickyNotesText"></textarea>
+            </div>
+            <div class="modal-footer" style="">
+                <input type="submit" id="hdrSaveNote" value="Save Note" class="btnsavenote btn btn-default" />  <button type="button" id="hdrCancelNote" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

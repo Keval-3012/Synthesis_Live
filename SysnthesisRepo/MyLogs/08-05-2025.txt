@@ -1,0 +1,27 @@
+2025-08-05 10:55:30.2029|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/5/2025 10:55:30 AM
+2025-08-05 10:55:54.6895|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/5/2025 10:55:54 AM - An error occurred while sending the request.
+2025-08-05 10:57:01.4034|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 8/5/2025 10:57:01 AM - String was not recognized as a valid DateTime.
+2025-08-05 11:00:30.1429|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:00:30 AM
+2025-08-05 11:00:39.6429|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:00:39 AM
+2025-08-05 11:01:23.6133|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:01:23 AM
+2025-08-05 11:01:32.0372|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:01:32 AM
+2025-08-05 11:01:34.5010|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:01:34 AM
+2025-08-05 11:01:35.5103|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:01:35 AM
+2025-08-05 11:01:38.7341|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:01:38 AM
+2025-08-05 11:01:58.0137|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:01:58 AM
+2025-08-05 11:02:06.2412|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:02:06 AM
+2025-08-05 11:02:09.0766|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 8/5/2025 11:02:09 AM
+2025-08-05 11:07:56.5500|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 8/5/2025 11:07:56 AM - Could not find a part of the path 'D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SysnthesisRepo\UserFiles\Done\2036136333_1-3.pdf'.
+2025-08-05 11:12:29.7539|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/5/2025 11:12:29 AM
+2025-08-05 11:12:35.5424|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/5/2025 11:12:35 AM - An error occurred while sending the request.
+2025-08-05 11:12:56.2395|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 8/5/2025 11:12:56 AM - String was not recognized as a valid DateTime.
+2025-08-05 11:49:54.9927|ERROR|SysnthesisRepo.Controllers.LineItemController|LineItemController - Index - 8/5/2025 11:49:54 AM - The best overloaded method match for 'System.Collections.Generic.List<EntityModels.Models.VendorNameList>.Insert(int, EntityModels.Models.VendorNameList)' has some invalid arguments
+2025-08-05 11:50:03.5919|ERROR|SysnthesisRepo.Controllers.LineItemController|LineItemController - Index - 8/5/2025 11:50:03 AM - The best overloaded method match for 'System.Collections.Generic.List<EntityModels.Models.VendorNameList>.Insert(int, EntityModels.Models.VendorNameList)' has some invalid arguments
+2025-08-05 12:08:37.3825|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 8/5/2025 12:08:37 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-08-05 12:08:40.7027|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 8/5/2025 12:08:40 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-08-05 16:05:49.3029|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/5/2025 4:05:49 PM
+2025-08-05 16:06:04.4998|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/5/2025 4:06:04 PM - An error occurred while sending the request.
+2025-08-05 16:06:17.4230|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 8/5/2025 4:06:17 PM - String was not recognized as a valid DateTime.
+2025-08-05 17:21:48.3169|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/5/2025 5:21:48 PM
+2025-08-05 17:22:03.5766|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/5/2025 5:22:03 PM - An error occurred while sending the request.
+2025-08-05 17:22:58.7172|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 8/5/2025 5:22:58 PM - String was not recognized as a valid DateTime.

@@ -1,0 +1,2171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BB5246D8-6F02-495D-8628-7535A89FAC41}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntityModels</RootNamespace>
+    <AssemblyName>EntityModels</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\SysnthesisRepo\bin\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HRModels\EnumMaster.cs" />
+    <Compile Include="HRModels\HRConsentDetails.cs" />
+    <Compile Include="HRModels\HRConsentMaster.cs" />
+    <Compile Include="HRModels\HRDepartmentMaster.cs" />
+    <Compile Include="HRModels\HREmployeeChild.cs" />
+    <Compile Include="HRModels\HREmployeeDocument.cs" />
+    <Compile Include="HRModels\HREmployeeHealthBenefitInfo.cs" />
+    <Compile Include="HRModels\HREmployeeInsurance.cs" />
+    <Compile Include="HRModels\HREmployeeMaster.cs" />
+    <Compile Include="HRModels\HREmployeeNotes.cs" />
+    <Compile Include="HRModels\HREmployeePayRate.cs" />
+    <Compile Include="HRModels\HREmployeeRetirementInfo.cs" />
+    <Compile Include="HRModels\HREmployeeSickTimes.cs" />
+    <Compile Include="HRModels\HREmployeeTermination.cs" />
+    <Compile Include="HRModels\HREmployeeTrainingHistory.cs" />
+    <Compile Include="HRModels\HREmployeeVacationTime.cs" />
+    <Compile Include="HRModels\HREmployeeVaccineCertificateInfo.cs" />
+    <Compile Include="HRModels\HREmployeeWarning.cs" />
+    <Compile Include="HRModels\HREthnicityMaster.cs" />
+    <Compile Include="HRModels\HRFormTypeMaster.cs" />
+    <Compile Include="HRModels\HRStoreManagers.cs" />
+    <Compile Include="Migrations\202102011328178_GroupMaster.cs" />
+    <Compile Include="Migrations\202102011328178_GroupMaster.Designer.cs">
+      <DependentUpon>202102011328178_GroupMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102020542050_CategoryMaster.cs" />
+    <Compile Include="Migrations\202102020542050_CategoryMaster.Designer.cs">
+      <DependentUpon>202102020542050_CategoryMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102020657210_UserMaster.cs" />
+    <Compile Include="Migrations\202102020657210_UserMaster.Designer.cs">
+      <DependentUpon>202102020657210_UserMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102020854172_StoreMaster.cs" />
+    <Compile Include="Migrations\202102020854172_StoreMaster.Designer.cs">
+      <DependentUpon>202102020854172_StoreMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102020937512_StoreChild.cs" />
+    <Compile Include="Migrations\202102020937512_StoreChild.Designer.cs">
+      <DependentUpon>202102020937512_StoreChild.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102021318415_UserRole.cs" />
+    <Compile Include="Migrations\202102021318415_UserRole.Designer.cs">
+      <DependentUpon>202102021318415_UserRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102150931128_UserTypeMaster.cs" />
+    <Compile Include="Migrations\202102150931128_UserTypeMaster.Designer.cs">
+      <DependentUpon>202102150931128_UserTypeMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102151050243_AddNewFields.cs" />
+    <Compile Include="Migrations\202102151050243_AddNewFields.Designer.cs">
+      <DependentUpon>202102151050243_AddNewFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102151251050_UserFieldChanges.cs" />
+    <Compile Include="Migrations\202102151251050_UserFieldChanges.Designer.cs">
+      <DependentUpon>202102151251050_UserFieldChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102160927586_RightsStore.cs" />
+    <Compile Include="Migrations\202102160927586_RightsStore.Designer.cs">
+      <DependentUpon>202102160927586_RightsStore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102170949432_StateNdVendorMaster.cs" />
+    <Compile Include="Migrations\202102170949432_StateNdVendorMaster.Designer.cs">
+      <DependentUpon>202102170949432_StateNdVendorMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102181126071_AccountTypeNdDetailMaster.cs" />
+    <Compile Include="Migrations\202102181126071_AccountTypeNdDetailMaster.Designer.cs">
+      <DependentUpon>202102181126071_AccountTypeNdDetailMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102181331289_DepartmentMaster.cs" />
+    <Compile Include="Migrations\202102181331289_DepartmentMaster.Designer.cs">
+      <DependentUpon>202102181331289_DepartmentMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102190610381_SyncDateNullInDepartmentForm.cs" />
+    <Compile Include="Migrations\202102190610381_SyncDateNullInDepartmentForm.Designer.cs">
+      <DependentUpon>202102190610381_SyncDateNullInDepartmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102230435212_InvoiceandOtherRelatedForms.cs" />
+    <Compile Include="Migrations\202102230435212_InvoiceandOtherRelatedForms.Designer.cs">
+      <DependentUpon>202102230435212_InvoiceandOtherRelatedForms.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102230510168_InvoiceandOtherRelatedFormsTblNmChng.cs" />
+    <Compile Include="Migrations\202102230510168_InvoiceandOtherRelatedFormsTblNmChng.Designer.cs">
+      <DependentUpon>202102230510168_InvoiceandOtherRelatedFormsTblNmChng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103191029534_UserTypeGroupIdAdd.cs" />
+    <Compile Include="Migrations\202103191029534_UserTypeGroupIdAdd.Designer.cs">
+      <DependentUpon>202103191029534_UserTypeGroupIdAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103220450020_UserMstGroupFldAdd.cs" />
+    <Compile Include="Migrations\202103220450020_UserMstGroupFldAdd.Designer.cs">
+      <DependentUpon>202103220450020_UserMstGroupFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103220727312_UserRoleRightsFK.cs" />
+    <Compile Include="Migrations\202103220727312_UserRoleRightsFK.Designer.cs">
+      <DependentUpon>202103220727312_UserRoleRightsFK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103260909266_QBOnlineConfiguration.cs" />
+    <Compile Include="Migrations\202103260909266_QBOnlineConfiguration.Designer.cs">
+      <DependentUpon>202103260909266_QBOnlineConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103260932438_QBDesktopConfiguration.cs" />
+    <Compile Include="Migrations\202103260932438_QBDesktopConfiguration.Designer.cs">
+      <DependentUpon>202103260932438_QBDesktopConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103261257373_UpdateBankAccIDIntToString.cs" />
+    <Compile Include="Migrations\202103261257373_UpdateBankAccIDIntToString.Designer.cs">
+      <DependentUpon>202103261257373_UpdateBankAccIDIntToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103310614108_GroupAccountMaster.cs" />
+    <Compile Include="Migrations\202103310614108_GroupAccountMaster.Designer.cs">
+      <DependentUpon>202103310614108_GroupAccountMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103311225243_DocumentTables.cs" />
+    <Compile Include="Migrations\202103311225243_DocumentTables.Designer.cs">
+      <DependentUpon>202103311225243_DocumentTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104011317103_ModuleandActivitylogMaster.cs" />
+    <Compile Include="Migrations\202104011317103_ModuleandActivitylogMaster.Designer.cs">
+      <DependentUpon>202104011317103_ModuleandActivitylogMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104020946152_QBHistory.cs" />
+    <Compile Include="Migrations\202104020946152_QBHistory.Designer.cs">
+      <DependentUpon>202104020946152_QBHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104021118173_VendorMasterUpdate.cs" />
+    <Compile Include="Migrations\202104021118173_VendorMasterUpdate.Designer.cs">
+      <DependentUpon>202104021118173_VendorMasterUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104021307287_DepartmentMasterUpdate.cs" />
+    <Compile Include="Migrations\202104021307287_DepartmentMasterUpdate.Designer.cs">
+      <DependentUpon>202104021307287_DepartmentMasterUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104031108569_ErrorLog.cs" />
+    <Compile Include="Migrations\202104031108569_ErrorLog.Designer.cs">
+      <DependentUpon>202104031108569_ErrorLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104070406096_PayrollTables.cs" />
+    <Compile Include="Migrations\202104070406096_PayrollTables.Designer.cs">
+      <DependentUpon>202104070406096_PayrollTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104071030426_SalesActivitySummary,TerminalMaster.cs" />
+    <Compile Include="Migrations\202104071030426_SalesActivitySummary,TerminalMaster.Designer.cs">
+      <DependentUpon>202104071030426_SalesActivitySummary,TerminalMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104071037363_TenderInDrawer.cs" />
+    <Compile Include="Migrations\202104071037363_TenderInDrawer.Designer.cs">
+      <DependentUpon>202104071037363_TenderInDrawer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104071044494_DepartmentNetSales.cs" />
+    <Compile Include="Migrations\202104071044494_DepartmentNetSales.Designer.cs">
+      <DependentUpon>202104071044494_DepartmentNetSales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104071122486_ConfigurationAndConfigurationGroupAndTenderInDrawer.cs" />
+    <Compile Include="Migrations\202104071122486_ConfigurationAndConfigurationGroupAndTenderInDrawer.Designer.cs">
+      <DependentUpon>202104071122486_ConfigurationAndConfigurationGroupAndTenderInDrawer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104071129357_TypicalBalanceMaster.cs" />
+    <Compile Include="Migrations\202104071129357_TypicalBalanceMaster.Designer.cs">
+      <DependentUpon>202104071129357_TypicalBalanceMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104080514449_SetFkNullable.cs" />
+    <Compile Include="Migrations\202104080514449_SetFkNullable.Designer.cs">
+      <DependentUpon>202104080514449_SetFkNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104081301406_DepartmentConfiguration.cs" />
+    <Compile Include="Migrations\202104081301406_DepartmentConfiguration.Designer.cs">
+      <DependentUpon>202104081301406_DepartmentConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104081307017_DefaultAccount.cs" />
+    <Compile Include="Migrations\202104081307017_DefaultAccount.Designer.cs">
+      <DependentUpon>202104081307017_DefaultAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104131004248_InvoiceUpdate.cs" />
+    <Compile Include="Migrations\202104131004248_InvoiceUpdate.Designer.cs">
+      <DependentUpon>202104131004248_InvoiceUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104131015346_InvoiceUpdate1.cs" />
+    <Compile Include="Migrations\202104131015346_InvoiceUpdate1.Designer.cs">
+      <DependentUpon>202104131015346_InvoiceUpdate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104131055585_InvoiceUpdate2.cs" />
+    <Compile Include="Migrations\202104131055585_InvoiceUpdate2.Designer.cs">
+      <DependentUpon>202104131055585_InvoiceUpdate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104131100515_InvoiceUpdate3.cs" />
+    <Compile Include="Migrations\202104131100515_InvoiceUpdate3.Designer.cs">
+      <DependentUpon>202104131100515_InvoiceUpdate3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104150650284_InvoiceUpdate4.cs" />
+    <Compile Include="Migrations\202104150650284_InvoiceUpdate4.Designer.cs">
+      <DependentUpon>202104150650284_InvoiceUpdate4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104150936177_InvoiceUpdate5.cs" />
+    <Compile Include="Migrations\202104150936177_InvoiceUpdate5.Designer.cs">
+      <DependentUpon>202104150936177_InvoiceUpdate5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104160638085_TerminalTables.cs" />
+    <Compile Include="Migrations\202104160638085_TerminalTables.Designer.cs">
+      <DependentUpon>202104160638085_TerminalTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104170608209_TerminalsTableChanges.cs" />
+    <Compile Include="Migrations\202104170608209_TerminalsTableChanges.Designer.cs">
+      <DependentUpon>202104170608209_TerminalsTableChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104170617293_ScriptData.cs" />
+    <Compile Include="Migrations\202104170617293_ScriptData.Designer.cs">
+      <DependentUpon>202104170617293_ScriptData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104230917224_SalesGeneralEntryTables.cs" />
+    <Compile Include="Migrations\202104230917224_SalesGeneralEntryTables.Designer.cs">
+      <DependentUpon>202104230917224_SalesGeneralEntryTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105031241169_RightsModuleFkAdd.cs" />
+    <Compile Include="Migrations\202105031241169_RightsModuleFkAdd.Designer.cs">
+      <DependentUpon>202105031241169_RightsModuleFkAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106101244463_UserRolesStoreAdd.cs" />
+    <Compile Include="Migrations\202106101244463_UserRolesStoreAdd.Designer.cs">
+      <DependentUpon>202106101244463_UserRolesStoreAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106111003367_UserRoleModuleIdFldAdd.cs" />
+    <Compile Include="Migrations\202106111003367_UserRoleModuleIdFldAdd.Designer.cs">
+      <DependentUpon>202106111003367_UserRoleModuleIdFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106140618066_LevelApproverTableAdd.cs" />
+    <Compile Include="Migrations\202106140618066_LevelApproverTableAdd.Designer.cs">
+      <DependentUpon>202106140618066_LevelApproverTableAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106140633139_LevelApproverFldAdd.cs" />
+    <Compile Include="Migrations\202106140633139_LevelApproverFldAdd.Designer.cs">
+      <DependentUpon>202106140633139_LevelApproverFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106230935317_DayCloseOutStatus.cs" />
+    <Compile Include="Migrations\202106230935317_DayCloseOutStatus.Designer.cs">
+      <DependentUpon>202106230935317_DayCloseOutStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106231058299_AddDepartmentInOtherDeposite.cs" />
+    <Compile Include="Migrations\202106231058299_AddDepartmentInOtherDeposite.Designer.cs">
+      <DependentUpon>202106231058299_AddDepartmentInOtherDeposite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106241131061_UpdateCreditCardDetails.cs" />
+    <Compile Include="Migrations\202106241131061_UpdateCreditCardDetails.Designer.cs">
+      <DependentUpon>202106241131061_UpdateCreditCardDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106251319117_levelapproval.cs" />
+    <Compile Include="Migrations\202106251319117_levelapproval.Designer.cs">
+      <DependentUpon>202106251319117_levelapproval.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106290932515_SalesOtherDeposite.cs" />
+    <Compile Include="Migrations\202106290932515_SalesOtherDeposite.Designer.cs">
+      <DependentUpon>202106290932515_SalesOtherDeposite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106291145505_DepartmentConfiguration1.cs" />
+    <Compile Include="Migrations\202106291145505_DepartmentConfiguration1.Designer.cs">
+      <DependentUpon>202106291145505_DepartmentConfiguration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106291242545_RemoveGroupAccountMaster.cs" />
+    <Compile Include="Migrations\202106291242545_RemoveGroupAccountMaster.Designer.cs">
+      <DependentUpon>202106291242545_RemoveGroupAccountMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106300505453_UpdateDeptconfiguration.cs" />
+    <Compile Include="Migrations\202106300505453_UpdateDeptconfiguration.Designer.cs">
+      <DependentUpon>202106300505453_UpdateDeptconfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106301112258_CustomerMaster.cs" />
+    <Compile Include="Migrations\202106301112258_CustomerMaster.Designer.cs">
+      <DependentUpon>202106301112258_CustomerMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107010458310_OtherDepositeSetting.cs" />
+    <Compile Include="Migrations\202107010458310_OtherDepositeSetting.Designer.cs">
+      <DependentUpon>202107010458310_OtherDepositeSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107010520352_QBPaymentType.cs" />
+    <Compile Include="Migrations\202107010520352_QBPaymentType.Designer.cs">
+      <DependentUpon>202107010520352_QBPaymentType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107010640102_UpdateGroupMaster.cs" />
+    <Compile Include="Migrations\202107010640102_UpdateGroupMaster.Designer.cs">
+      <DependentUpon>202107010640102_UpdateGroupMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107020449555_UserWiseStickyNotesTblAdd.cs" />
+    <Compile Include="Migrations\202107020449555_UserWiseStickyNotesTblAdd.Designer.cs">
+      <DependentUpon>202107020449555_UserWiseStickyNotesTblAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107020940507_PayrollCashAnalysisandDetail.cs" />
+    <Compile Include="Migrations\202107020940507_PayrollCashAnalysisandDetail.Designer.cs">
+      <DependentUpon>202107020940507_PayrollCashAnalysisandDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107020949213_PayrollBankAccount.cs" />
+    <Compile Include="Migrations\202107020949213_PayrollBankAccount.Designer.cs">
+      <DependentUpon>202107020949213_PayrollBankAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107021108299_PayrollCashAnalysisFieldChange.cs" />
+    <Compile Include="Migrations\202107021108299_PayrollCashAnalysisFieldChange.Designer.cs">
+      <DependentUpon>202107021108299_PayrollCashAnalysisFieldChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107021123416_PayrollMasterChange.cs" />
+    <Compile Include="Migrations\202107021123416_PayrollMasterChange.Designer.cs">
+      <DependentUpon>202107021123416_PayrollMasterChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107070708343_OtherDepositesettingUpdate.cs" />
+    <Compile Include="Migrations\202107070708343_OtherDepositesettingUpdate.Designer.cs">
+      <DependentUpon>202107070708343_OtherDepositesettingUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107070953462_UploadFileAndInvoiceProductTblAdd.cs" />
+    <Compile Include="Migrations\202107070953462_UploadFileAndInvoiceProductTblAdd.Designer.cs">
+      <DependentUpon>202107070953462_UploadFileAndInvoiceProductTblAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107090543293_CashPaidoutInvoice.cs" />
+    <Compile Include="Migrations\202107090543293_CashPaidoutInvoice.Designer.cs">
+      <DependentUpon>202107090543293_CashPaidoutInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107091234467_UpdateSalesOtherDeposite.cs" />
+    <Compile Include="Migrations\202107091234467_UpdateSalesOtherDeposite.Designer.cs">
+      <DependentUpon>202107091234467_UpdateSalesOtherDeposite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107130646187_UpdateOtherDepositedeptID.cs" />
+    <Compile Include="Migrations\202107130646187_UpdateOtherDepositedeptID.Designer.cs">
+      <DependentUpon>202107130646187_UpdateOtherDepositedeptID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107190604151_UpdateConfigurationgroup.cs" />
+    <Compile Include="Migrations\202107190604151_UpdateConfigurationgroup.Designer.cs">
+      <DependentUpon>202107190604151_UpdateConfigurationgroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107191249304_IsFirstLoginFldAdd.cs" />
+    <Compile Include="Migrations\202107191249304_IsFirstLoginFldAdd.Designer.cs">
+      <DependentUpon>202107191249304_IsFirstLoginFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107200709437_StoremasterPassFldAdd.cs" />
+    <Compile Include="Migrations\202107200709437_StoremasterPassFldAdd.Designer.cs">
+      <DependentUpon>202107200709437_StoremasterPassFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108060717391_UpdateQBonlineconfiguration.cs" />
+    <Compile Include="Migrations\202108060717391_UpdateQBonlineconfiguration.Designer.cs">
+      <DependentUpon>202108060717391_UpdateQBonlineconfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108060947401_UpdateDepartmentconfigurations.cs" />
+    <Compile Include="Migrations\202108060947401_UpdateDepartmentconfigurations.Designer.cs">
+      <DependentUpon>202108060947401_UpdateDepartmentconfigurations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108060958201_UpdateDepartmentconfigurations1.cs" />
+    <Compile Include="Migrations\202108060958201_UpdateDepartmentconfigurations1.Designer.cs">
+      <DependentUpon>202108060958201_UpdateDepartmentconfigurations1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108130449151_DepartmentFldAddRightsStoreTbl.cs" />
+    <Compile Include="Migrations\202108130449151_DepartmentFldAddRightsStoreTbl.Designer.cs">
+      <DependentUpon>202108130449151_DepartmentFldAddRightsStoreTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108161247535_UserTypeIsViewInvoiceOnlyFldAdd.cs" />
+    <Compile Include="Migrations\202108161247535_UserTypeIsViewInvoiceOnlyFldAdd.Designer.cs">
+      <DependentUpon>202108161247535_UserTypeIsViewInvoiceOnlyFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108170431260_UpdateVendorMasterEmail.cs" />
+    <Compile Include="Migrations\202108170431260_UpdateVendorMasterEmail.Designer.cs">
+      <DependentUpon>202108170431260_UpdateVendorMasterEmail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109221309420_AnalysisPdfFileRead.cs" />
+    <Compile Include="Migrations\202109221309420_AnalysisPdfFileRead.Designer.cs">
+      <DependentUpon>202109221309420_AnalysisPdfFileRead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110111448324_DailyTables.cs" />
+    <Compile Include="Migrations\202110111448324_DailyTables.Designer.cs">
+      <DependentUpon>202110111448324_DailyTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110131141006_AddFieldinUploadPDF.cs" />
+    <Compile Include="Migrations\202110131141006_AddFieldinUploadPDF.Designer.cs">
+      <DependentUpon>202110131141006_AddFieldinUploadPDF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110131145082_AddFieldinStorewisePDFUpload.cs" />
+    <Compile Include="Migrations\202110131145082_AddFieldinStorewisePDFUpload.Designer.cs">
+      <DependentUpon>202110131145082_AddFieldinStorewisePDFUpload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110131203346_removefieldfromcreditcarddetaildaily.cs" />
+    <Compile Include="Migrations\202110131203346_removefieldfromcreditcarddetaildaily.Designer.cs">
+      <DependentUpon>202110131203346_removefieldfromcreditcarddetaildaily.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110180931072_addPDFPageCountInInvoice.cs" />
+    <Compile Include="Migrations\202110180931072_addPDFPageCountInInvoice.Designer.cs">
+      <DependentUpon>202110180931072_addPDFPageCountInInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110221004167_ExpenseCheck_Setting.cs" />
+    <Compile Include="Migrations\202110221004167_ExpenseCheck_Setting.Designer.cs">
+      <DependentUpon>202110221004167_ExpenseCheck_Setting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110221042032_Addstoreidinexpensechecksetting.cs" />
+    <Compile Include="Migrations\202110221042032_Addstoreidinexpensechecksetting.Designer.cs">
+      <DependentUpon>202110221042032_Addstoreidinexpensechecksetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110221046292_Addstoreidinexpensechecksetting1.cs" />
+    <Compile Include="Migrations\202110221046292_Addstoreidinexpensechecksetting1.Designer.cs">
+      <DependentUpon>202110221046292_Addstoreidinexpensechecksetting1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110221340298_AddExpenseCheck.cs" />
+    <Compile Include="Migrations\202110221340298_AddExpenseCheck.Designer.cs">
+      <DependentUpon>202110221340298_AddExpenseCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110230624419_RemoveColumnExpenseCheck.cs" />
+    <Compile Include="Migrations\202110230624419_RemoveColumnExpenseCheck.Designer.cs">
+      <DependentUpon>202110230624419_RemoveColumnExpenseCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110260953099_AddtableProducts.cs" />
+    <Compile Include="Migrations\202110260953099_AddtableProducts.Designer.cs">
+      <DependentUpon>202110260953099_AddtableProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110281034384_AddExcludeListInExpense.cs" />
+    <Compile Include="Migrations\202110281034384_AddExcludeListInExpense.Designer.cs">
+      <DependentUpon>202110281034384_AddExcludeListInExpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110291155509_FldProductIdAdd.cs" />
+    <Compile Include="Migrations\202110291155509_FldProductIdAdd.Designer.cs">
+      <DependentUpon>202110291155509_FldProductIdAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111201133419_ExpenseCheckTxnFldTypeChange.cs" />
+    <Compile Include="Migrations\202111201133419_ExpenseCheckTxnFldTypeChange.Designer.cs">
+      <DependentUpon>202111201133419_ExpenseCheckTxnFldTypeChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111261506446_SalesActivityDailyNewFieldsAdd.cs" />
+    <Compile Include="Migrations\202111261506446_SalesActivityDailyNewFieldsAdd.Designer.cs">
+      <DependentUpon>202111261506446_SalesActivityDailyNewFieldsAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112021026323_ExpenseCheckDocumentsTableAdd.cs" />
+    <Compile Include="Migrations\202112021026323_ExpenseCheckDocumentsTableAdd.Designer.cs">
+      <DependentUpon>202112021026323_ExpenseCheckDocumentsTableAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112031023130_PayrollHoursTableAdd.cs" />
+    <Compile Include="Migrations\202112031023130_PayrollHoursTableAdd.Designer.cs">
+      <DependentUpon>202112031023130_PayrollHoursTableAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112031129113_CheckExpenseDetailFlagFldAdd.cs" />
+    <Compile Include="Migrations\202112031129113_CheckExpenseDetailFlagFldAdd.Designer.cs">
+      <DependentUpon>202112031129113_CheckExpenseDetailFlagFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112100508522_CreateHourliesTables.cs" />
+    <Compile Include="Migrations\202112100508522_CreateHourliesTables.Designer.cs">
+      <DependentUpon>202112100508522_CreateHourliesTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112100656154_SalesActivityTableFieldsAddAndChange.cs" />
+    <Compile Include="Migrations\202112100656154_SalesActivityTableFieldsAddAndChange.Designer.cs">
+      <DependentUpon>202112100656154_SalesActivityTableFieldsAddAndChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112170633536_WeeklyPeriodTableAdd.cs" />
+    <Compile Include="Migrations\202112170633536_WeeklyPeriodTableAdd.Designer.cs">
+      <DependentUpon>202112170633536_WeeklyPeriodTableAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112221302023_WeeklyPeriodWNumFldAdd.cs" />
+    <Compile Include="Migrations\202112221302023_WeeklyPeriodWNumFldAdd.Designer.cs">
+      <DependentUpon>202112221302023_WeeklyPeriodWNumFldAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112301014031_EmployeeMaster.cs" />
+    <Compile Include="Migrations\202112301014031_EmployeeMaster.Designer.cs">
+      <DependentUpon>202112301014031_EmployeeMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201120542485_ExpenseCheckField.cs" />
+    <Compile Include="Migrations\202201120542485_ExpenseCheckField.Designer.cs">
+      <DependentUpon>202201120542485_ExpenseCheckField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201211416335_AddFieldsProductMaster.cs" />
+    <Compile Include="Migrations\202201211416335_AddFieldsProductMaster.Designer.cs">
+      <DependentUpon>202201211416335_AddFieldsProductMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201241012418_ProductVendor.cs" />
+    <Compile Include="Migrations\202201241012418_ProductVendor.Designer.cs">
+      <DependentUpon>202201241012418_ProductVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202180712136_ProductsAddNewField.cs" />
+    <Compile Include="Migrations\202202180712136_ProductsAddNewField.Designer.cs">
+      <DependentUpon>202202180712136_ProductsAddNewField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203040444228_QBWebhook.cs" />
+    <Compile Include="Migrations\202203040444228_QBWebhook.Designer.cs">
+      <DependentUpon>202203040444228_QBWebhook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204050732388_DocumentFileVersion.cs" />
+    <Compile Include="Migrations\202204050732388_DocumentFileVersion.Designer.cs">
+      <DependentUpon>202204050732388_DocumentFileVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204191043135_VendorDepartmentRelationMaster.cs" />
+    <Compile Include="Migrations\202204191043135_VendorDepartmentRelationMaster.Designer.cs">
+      <DependentUpon>202204191043135_VendorDepartmentRelationMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204300907442_AddNewFieldVendorMaster.cs" />
+    <Compile Include="Migrations\202204300907442_AddNewFieldVendorMaster.Designer.cs">
+      <DependentUpon>202204300907442_AddNewFieldVendorMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205041102027_BankAccountSetting.cs" />
+    <Compile Include="Migrations\202205041102027_BankAccountSetting.Designer.cs">
+      <DependentUpon>202205041102027_BankAccountSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205041328334_AddNewFldBankAccount.cs" />
+    <Compile Include="Migrations\202205041328334_AddNewFldBankAccount.Designer.cs">
+      <DependentUpon>202205041328334_AddNewFldBankAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205060535028_AddNFBAS.cs" />
+    <Compile Include="Migrations\202205060535028_AddNFBAS.Designer.cs">
+      <DependentUpon>202205060535028_AddNFBAS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205061428094_QBUnclearBalanceInfo.cs" />
+    <Compile Include="Migrations\202205061428094_QBUnclearBalanceInfo.Designer.cs">
+      <DependentUpon>202205061428094_QBUnclearBalanceInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206011336027_uploadpdfAddnewfld.cs" />
+    <Compile Include="Migrations\202206011336027_uploadpdfAddnewfld.Designer.cs">
+      <DependentUpon>202206011336027_uploadpdfAddnewfld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206021144362_AddnewmodelUploadPdfapi.cs" />
+    <Compile Include="Migrations\202206021144362_AddnewmodelUploadPdfapi.Designer.cs">
+      <DependentUpon>202206021144362_AddnewmodelUploadPdfapi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206030934389_VendorMasterQBCopy.cs" />
+    <Compile Include="Migrations\202206030934389_VendorMasterQBCopy.Designer.cs">
+      <DependentUpon>202206030934389_VendorMasterQBCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206060846513_addnewfieldStateMaster.cs" />
+    <Compile Include="Migrations\202206060846513_addnewfieldStateMaster.Designer.cs">
+      <DependentUpon>202206060846513_addnewfieldStateMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206131409207_InvoiceProductModelAddNewFld.cs" />
+    <Compile Include="Migrations\202206131409207_InvoiceProductModelAddNewFld.Designer.cs">
+      <DependentUpon>202206131409207_InvoiceProductModelAddNewFld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206290459303_AddnewfldInvoiceproductin.cs" />
+    <Compile Include="Migrations\202206290459303_AddnewfldInvoiceproductin.Designer.cs">
+      <DependentUpon>202206290459303_AddnewfldInvoiceproductin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206290622499_AddNewFiledinInvoiceproduct.cs" />
+    <Compile Include="Migrations\202206290622499_AddNewFiledinInvoiceproduct.Designer.cs">
+      <DependentUpon>202206290622499_AddNewFiledinInvoiceproduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206300559415_invoiceproductaddnewfld.cs" />
+    <Compile Include="Migrations\202206300559415_invoiceproductaddnewfld.Designer.cs">
+      <DependentUpon>202206300559415_invoiceproductaddnewfld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207221344193_ManageIpAddressAllModel.cs" />
+    <Compile Include="Migrations\202207221344193_ManageIpAddressAllModel.Designer.cs">
+      <DependentUpon>202207221344193_ManageIpAddressAllModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207251234584_Addnewfieldusertime.cs" />
+    <Compile Include="Migrations\202207251234584_Addnewfieldusertime.Designer.cs">
+      <DependentUpon>202207251234584_Addnewfieldusertime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207270600254_AddNewFieldUserMaster.cs" />
+    <Compile Include="Migrations\202207270600254_AddNewFieldUserMaster.Designer.cs">
+      <DependentUpon>202207270600254_AddNewFieldUserMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208171146063_AddnewfldproductMaster.cs" />
+    <Compile Include="Migrations\202208171146063_AddnewfldproductMaster.Designer.cs">
+      <DependentUpon>202208171146063_AddnewfldproductMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208251131435_AddpayPeriodSettings.cs" />
+    <Compile Include="Migrations\202208251131435_AddpayPeriodSettings.Designer.cs">
+      <DependentUpon>202208251131435_AddpayPeriodSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208251246512_newfieldchangespayperiod.cs" />
+    <Compile Include="Migrations\202208251246512_newfieldchangespayperiod.Designer.cs">
+      <DependentUpon>202208251246512_newfieldchangespayperiod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208251249417_PayperiodSettingtableUpdate.cs" />
+    <Compile Include="Migrations\202208251249417_PayperiodSettingtableUpdate.Designer.cs">
+      <DependentUpon>202208251249417_PayperiodSettingtableUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208290857588_Addnewtableweekmaster.cs" />
+    <Compile Include="Migrations\202208290857588_Addnewtableweekmaster.Designer.cs">
+      <DependentUpon>202208290857588_Addnewtableweekmaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208290945523_UpdateWeekMasterTable].cs" />
+    <Compile Include="Migrations\202208290945523_UpdateWeekMasterTable].Designer.cs">
+      <DependentUpon>202208290945523_UpdateWeekMasterTable].cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208290949296_removecolumn.cs" />
+    <Compile Include="Migrations\202208290949296_removecolumn.Designer.cs">
+      <DependentUpon>202208290949296_removecolumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209030654510_AddNewFieldsProductMaster.cs" />
+    <Compile Include="Migrations\202209030654510_AddNewFieldsProductMaster.Designer.cs">
+      <DependentUpon>202209030654510_AddNewFieldsProductMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209060940422_Addforeingnkeyinstoremasterandaccountinvendor.cs" />
+    <Compile Include="Migrations\202209060940422_Addforeingnkeyinstoremasterandaccountinvendor.Designer.cs">
+      <DependentUpon>202209060940422_Addforeingnkeyinstoremasterandaccountinvendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209121015448_NewfieldaddProducts.cs" />
+    <Compile Include="Migrations\202209121015448_NewfieldaddProducts.Designer.cs">
+      <DependentUpon>202209121015448_NewfieldaddProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209121143530_addnewfieldImageProducts.cs" />
+    <Compile Include="Migrations\202209121143530_addnewfieldImageProducts.Designer.cs">
+      <DependentUpon>202209121143530_addnewfieldImageProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209121247150_addtableItemMovementBySupplier.cs" />
+    <Compile Include="Migrations\202209121247150_addtableItemMovementBySupplier.Designer.cs">
+      <DependentUpon>202209121247150_addtableItemMovementBySupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209151152195_tableAdditemmovementdatehistory.cs" />
+    <Compile Include="Migrations\202209151152195_tableAdditemmovementdatehistory.Designer.cs">
+      <DependentUpon>202209151152195_tableAdditemmovementdatehistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209160952203_newfieldadditemmovementsupplier.cs" />
+    <Compile Include="Migrations\202209160952203_newfieldadditemmovementsupplier.Designer.cs">
+      <DependentUpon>202209160952203_newfieldadditemmovementsupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209210613246_AddTestVendorMaster.cs" />
+    <Compile Include="Migrations\202209210613246_AddTestVendorMaster.Designer.cs">
+      <DependentUpon>202209210613246_AddTestVendorMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209210702055_AddItemLibraryDepartment.cs" />
+    <Compile Include="Migrations\202209210702055_AddItemLibraryDepartment.Designer.cs">
+      <DependentUpon>202209210702055_AddItemLibraryDepartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209270627139_AddfieldInUserTimeTrackInfo.cs" />
+    <Compile Include="Migrations\202209270627139_AddfieldInUserTimeTrackInfo.Designer.cs">
+      <DependentUpon>202209270627139_AddfieldInUserTimeTrackInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210061056412_ExpenseCheckDetailIncludeBySettingfieldadd.cs" />
+    <Compile Include="Migrations\202210061056412_ExpenseCheckDetailIncludeBySettingfieldadd.Designer.cs">
+      <DependentUpon>202210061056412_ExpenseCheckDetailIncludeBySettingfieldadd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211040447370_LocationTypefieldaddIpAdressInfo.cs" />
+    <Compile Include="Migrations\202211040447370_LocationTypefieldaddIpAdressInfo.Designer.cs">
+      <DependentUpon>202211040447370_LocationTypefieldaddIpAdressInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211100858188_addnewfieldemailaddressusermaster.cs" />
+    <Compile Include="Migrations\202211100858188_addnewfieldemailaddressusermaster.Designer.cs">
+      <DependentUpon>202211100858188_addnewfieldemailaddressusermaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211100955068_addnewcolumnismailsendallowpayperiodsettings.cs" />
+    <Compile Include="Migrations\202211100955068_addnewcolumnismailsendallowpayperiodsettings.Designer.cs">
+      <DependentUpon>202211100955068_addnewcolumnismailsendallowpayperiodsettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211250411221_invoicelengthincrease.cs" />
+    <Compile Include="Migrations\202211250411221_invoicelengthincrease.Designer.cs">
+      <DependentUpon>202211250411221_invoicelengthincrease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212020723136_addnewfieldistimecardentryusertimetrackinfo.cs" />
+    <Compile Include="Migrations\202212020723136_addnewfieldistimecardentryusertimetrackinfo.Designer.cs">
+      <DependentUpon>202212020723136_addnewfieldistimecardentryusertimetrackinfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303280542254_HomeExpenseWeeklySalesSetting.cs" />
+    <Compile Include="Migrations\202303280542254_HomeExpenseWeeklySalesSetting.Designer.cs">
+      <DependentUpon>202303280542254_HomeExpenseWeeklySalesSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303280555304_HomeExpenseWeeklySalesSettingAdd.cs" />
+    <Compile Include="Migrations\202303280555304_HomeExpenseWeeklySalesSettingAdd.Designer.cs">
+      <DependentUpon>202303280555304_HomeExpenseWeeklySalesSettingAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303280710107_HomeExpenseWeeklySalesSettingAdd1.cs" />
+    <Compile Include="Migrations\202303280710107_HomeExpenseWeeklySalesSettingAdd1.Designer.cs">
+      <DependentUpon>202303280710107_HomeExpenseWeeklySalesSettingAdd1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303281055318_HomeExpenseDetail1.cs" />
+    <Compile Include="Migrations\202303281055318_HomeExpenseDetail1.Designer.cs">
+      <DependentUpon>202303281055318_HomeExpenseDetail1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303281236125_HomeExpenseDetail11.cs" />
+    <Compile Include="Migrations\202303281236125_HomeExpenseDetail11.Designer.cs">
+      <DependentUpon>202303281236125_HomeExpenseDetail11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303291129164_HomeExpenseDetailSettingAddBankAccount.cs" />
+    <Compile Include="Migrations\202303291129164_HomeExpenseDetailSettingAddBankAccount.Designer.cs">
+      <DependentUpon>202303291129164_HomeExpenseDetailSettingAddBankAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303300912194_HomeSomeExpensesUpdate.cs" />
+    <Compile Include="Migrations\202303300912194_HomeSomeExpensesUpdate.Designer.cs">
+      <DependentUpon>202303300912194_HomeSomeExpensesUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303310457302_HomeSomeExpensesWeeklySettingUpdate1.cs" />
+    <Compile Include="Migrations\202303310457302_HomeSomeExpensesWeeklySettingUpdate1.Designer.cs">
+      <DependentUpon>202303310457302_HomeSomeExpensesWeeklySettingUpdate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304051002265_ChecklistTable.cs" />
+    <Compile Include="Migrations\202304051002265_ChecklistTable.Designer.cs">
+      <DependentUpon>202304051002265_ChecklistTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304051032272_ChecklistTable1fieldadded.cs" />
+    <Compile Include="Migrations\202304051032272_ChecklistTable1fieldadded.Designer.cs">
+      <DependentUpon>202304051032272_ChecklistTable1fieldadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304051107141_ChecklistTableamountfieldaddded.cs" />
+    <Compile Include="Migrations\202304051107141_ChecklistTableamountfieldaddded.Designer.cs">
+      <DependentUpon>202304051107141_ChecklistTableamountfieldaddded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304051126387_ChecklistTablecreateddateaddedfield.cs" />
+    <Compile Include="Migrations\202304051126387_ChecklistTablecreateddateaddedfield.Designer.cs">
+      <DependentUpon>202304051126387_ChecklistTablecreateddateaddedfield.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304250630330_FieldaddTxnID.cs" />
+    <Compile Include="Migrations\202304250630330_FieldaddTxnID.Designer.cs">
+      <DependentUpon>202304250630330_FieldaddTxnID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305030537452_ItemMovementdatehistory add FileName Column.cs" />
+    <Compile Include="Migrations\202305030537452_ItemMovementdatehistory add FileName Column.Designer.cs">
+      <DependentUpon>202305030537452_ItemMovementdatehistory add FileName Column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305121108327_AddChecklist2newcolumn.cs" />
+    <Compile Include="Migrations\202305121108327_AddChecklist2newcolumn.Designer.cs">
+      <DependentUpon>202305121108327_AddChecklist2newcolumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306290916324_Change Column Type.cs" />
+    <Compile Include="Migrations\202306290916324_Change Column Type.Designer.cs">
+      <DependentUpon>202306290916324_Change Column Type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306291149300_AddManualFlagProductVendor.cs" />
+    <Compile Include="Migrations\202306291149300_AddManualFlagProductVendor.Designer.cs">
+      <DependentUpon>202306291149300_AddManualFlagProductVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306300557182_InvoiceUserProductMapLog.cs" />
+    <Compile Include="Migrations\202306300557182_InvoiceUserProductMapLog.Designer.cs">
+      <DependentUpon>202306300557182_InvoiceUserProductMapLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202307060634221_INSERTCOLUMNProducts.cs" />
+    <Compile Include="Migrations\202307060634221_INSERTCOLUMNProducts.Designer.cs">
+      <DependentUpon>202307060634221_INSERTCOLUMNProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202307080859110_InsertColumnStoreID.cs" />
+    <Compile Include="Migrations\202307080859110_InsertColumnStoreID.Designer.cs">
+      <DependentUpon>202307080859110_InsertColumnStoreID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202307181009441_TopSellerNormalizationRatio.cs" />
+    <Compile Include="Migrations\202307181009441_TopSellerNormalizationRatio.Designer.cs">
+      <DependentUpon>202307181009441_TopSellerNormalizationRatio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308101358585_WebCamRecordingHistory.cs" />
+    <Compile Include="Migrations\202308101358585_WebCamRecordingHistory.Designer.cs">
+      <DependentUpon>202308101358585_WebCamRecordingHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309250538020_storemasterupdate.cs" />
+    <Compile Include="Migrations\202309250538020_storemasterupdate.Designer.cs">
+      <DependentUpon>202309250538020_storemasterupdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309250635383_removeWebCamtabel.cs" />
+    <Compile Include="Migrations\202309250635383_removeWebCamtabel.Designer.cs">
+      <DependentUpon>202309250635383_removeWebCamtabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309250722090_webcamcamerawodel.cs" />
+    <Compile Include="Migrations\202309250722090_webcamcamerawodel.Designer.cs">
+      <DependentUpon>202309250722090_webcamcamerawodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309260550419_WebcamHistoryaddcolumn.cs" />
+    <Compile Include="Migrations\202309260550419_WebcamHistoryaddcolumn.Designer.cs">
+      <DependentUpon>202309260550419_WebcamHistoryaddcolumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309260940168_addendhourcolumnwebcamhistory.cs" />
+    <Compile Include="Migrations\202309260940168_addendhourcolumnwebcamhistory.Designer.cs">
+      <DependentUpon>202309260940168_addendhourcolumnwebcamhistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309261014181_UpdateColumnWebcamHistory.cs" />
+    <Compile Include="Migrations\202309261014181_UpdateColumnWebcamHistory.Designer.cs">
+      <DependentUpon>202309261014181_UpdateColumnWebcamHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202312061019491_MessageMasterandProdectinaddField.cs" />
+    <Compile Include="Migrations\202312061019491_MessageMasterandProdectinaddField.Designer.cs">
+      <DependentUpon>202312061019491_MessageMasterandProdectinaddField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402190530009_addcolumnDepartmentNumberinProductModel.cs" />
+    <Compile Include="Migrations\202402190530009_addcolumnDepartmentNumberinProductModel.designer.cs">
+      <DependentUpon>202402190530009_addcolumnDepartmentNumberinProductModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402190617568_updatecolumnDepartmentNumberinProductModel.cs" />
+    <Compile Include="Migrations\202402190617568_updatecolumnDepartmentNumberinProductModel.designer.cs">
+      <DependentUpon>202402190617568_updatecolumnDepartmentNumberinProductModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403110537448_NewTableOperatingRatioExpenseDepartment.cs" />
+    <Compile Include="Migrations\202403110537448_NewTableOperatingRatioExpenseDepartment.designer.cs">
+      <DependentUpon>202403110537448_NewTableOperatingRatioExpenseDepartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405020457032_pendingmigrationlasttwo.cs" />
+    <Compile Include="Migrations\202405020457032_pendingmigrationlasttwo.Designer.cs">
+      <DependentUpon>202405020457032_pendingmigrationlasttwo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405020959113_CheckAllMigration.cs" />
+    <Compile Include="Migrations\202405020959113_CheckAllMigration.designer.cs">
+      <DependentUpon>202405020959113_CheckAllMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405140530400_UpdatethependingmigrationforInvoiceAutomation.cs" />
+    <Compile Include="Migrations\202405140530400_UpdatethependingmigrationforInvoiceAutomation.designer.cs">
+      <DependentUpon>202405140530400_UpdatethependingmigrationforInvoiceAutomation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405170944466_updatedtwocolumnlengtHREmployeeMaster.cs" />
+    <Compile Include="Migrations\202405170944466_updatedtwocolumnlengtHREmployeeMaster.Designer.cs">
+      <DependentUpon>202405170944466_updatedtwocolumnlengtHREmployeeMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405210651056_updatependingmodule.cs" />
+    <Compile Include="Migrations\202405210651056_updatependingmodule.designer.cs">
+      <DependentUpon>202405210651056_updatependingmodule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405270614239_usermasternullableremoveforhradmin.cs" />
+    <Compile Include="Migrations\202405270614239_usermasternullableremoveforhradmin.Designer.cs">
+      <DependentUpon>202405270614239_usermasternullableremoveforhradmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405271359586_pendingupdatemigrationtomatchdatabase.cs" />
+    <Compile Include="Migrations\202405271359586_pendingupdatemigrationtomatchdatabase.designer.cs">
+      <DependentUpon>202405271359586_pendingupdatemigrationtomatchdatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405310546392_addedtwonewfieldfornewInvoiceAutomationinUploadPDFAutomationtable.cs" />
+    <Compile Include="Migrations\202405310546392_addedtwonewfieldfornewInvoiceAutomationinUploadPDFAutomationtable.designer.cs">
+      <DependentUpon>202405310546392_addedtwonewfieldfornewInvoiceAutomationinUploadPDFAutomationtable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405311049486_addedInvoicefeedbackcolumnforuserfedbackstrategy.cs" />
+    <Compile Include="Migrations\202405311049486_addedInvoicefeedbackcolumnforuserfedbackstrategy.designer.cs">
+      <DependentUpon>202405311049486_addedInvoicefeedbackcolumnforuserfedbackstrategy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406131233002_twonewmodelCustomerRecieveablesandApiKeyConfig.cs" />
+    <Compile Include="Migrations\202406131233002_twonewmodelCustomerRecieveablesandApiKeyConfig.designer.cs">
+      <DependentUpon>202406131233002_twonewmodelCustomerRecieveablesandApiKeyConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406131300537_updatedcustomerrecieveablemodeladdressfieldtomaxlength.cs" />
+    <Compile Include="Migrations\202406131300537_updatedcustomerrecieveablemodeladdressfieldtomaxlength.designer.cs">
+      <DependentUpon>202406131300537_updatedcustomerrecieveablemodeladdressfieldtomaxlength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406170624579_updatedcustomerrecieveablemodelandUploadPDFmodel.cs" />
+    <Compile Include="Migrations\202406170624579_updatedcustomerrecieveablemodelandUploadPDFmodel.designer.cs">
+      <DependentUpon>202406170624579_updatedcustomerrecieveablemodelandUploadPDFmodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406181339366_updatedAPIKeyConfigmodel.cs" />
+    <Compile Include="Migrations\202406181339366_updatedAPIKeyConfigmodel.designer.cs">
+      <DependentUpon>202406181339366_updatedAPIKeyConfigmodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406190540581_updatedInvoicemodelforInvoiceDate.cs" />
+    <Compile Include="Migrations\202406190540581_updatedInvoicemodelforInvoiceDate.designer.cs">
+      <DependentUpon>202406190540581_updatedInvoicemodelforInvoiceDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406240719298_twonewmodelmultiandbucketupdatedInvoiceAutomationmodels.cs" />
+    <Compile Include="Migrations\202406240719298_twonewmodelmultiandbucketupdatedInvoiceAutomationmodels.designer.cs">
+      <DependentUpon>202406240719298_twonewmodelmultiandbucketupdatedInvoiceAutomationmodels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406241141267_customermigrationchanges.cs" />
+    <Compile Include="Migrations\202406241141267_customermigrationchanges.designer.cs">
+      <DependentUpon>202406241141267_customermigrationchanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406251031470_addnullableandremoveforeignkeyinMultithreadingInvoiceLogs.cs" />
+    <Compile Include="Migrations\202406251031470_addnullableandremoveforeignkeyinMultithreadingInvoiceLogs.Designer.cs">
+      <DependentUpon>202406251031470_addnullableandremoveforeignkeyinMultithreadingInvoiceLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406280449528_removeforeignkeyCustomersReceiveablesReceiptsandnullablecompanynameid.cs" />
+    <Compile Include="Migrations\202406280449528_removeforeignkeyCustomersReceiveablesReceiptsandnullablecompanynameid.Designer.cs">
+      <DependentUpon>202406280449528_removeforeignkeyCustomersReceiveablesReceiptsandnullablecompanynameid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406280722016_newmodelHRStoremanageradded.cs" />
+    <Compile Include="Migrations\202406280722016_newmodelHRStoremanageradded.designer.cs">
+      <DependentUpon>202406280722016_newmodelHRStoremanageradded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407011131096_updatedCustomersReceiveablesReceiptsmodelwithtwonewfields.cs" />
+    <Compile Include="Migrations\202407011131096_updatedCustomersReceiveablesReceiptsmodelwithtwonewfields.designer.cs">
+      <DependentUpon>202407011131096_updatedCustomersReceiveablesReceiptsmodelwithtwonewfields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407031006526_twonewmodelterminationandwarninginHR.cs" />
+    <Compile Include="Migrations\202407031006526_twonewmodelterminationandwarninginHR.designer.cs">
+      <DependentUpon>202407031006526_twonewmodelterminationandwarninginHR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407301249563_addednewcolumnupdateddateinproductstable.cs" />
+    <Compile Include="Migrations\202407301249563_addednewcolumnupdateddateinproductstable.Designer.cs">
+      <DependentUpon>202407301249563_addednewcolumnupdateddateinproductstable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408161003495_UserMasterCustomPasswordforProductAPI.cs" />
+    <Compile Include="Migrations\202408161003495_UserMasterCustomPasswordforProductAPI.Designer.cs">
+      <DependentUpon>202408161003495_UserMasterCustomPasswordforProductAPI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408230502532_addNoteTaskReminderTable.cs" />
+    <Compile Include="Migrations\202408230502532_addNoteTaskReminderTable.Designer.cs">
+      <DependentUpon>202408230502532_addNoteTaskReminderTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202408291054484_addcolumninnoteandtasktable.cs" />
+    <Compile Include="Migrations\202408291054484_addcolumninnoteandtasktable.Designer.cs">
+      <DependentUpon>202408291054484_addcolumninnoteandtasktable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409030450458_addinvoiceidinUserWiseTaskManagetable.cs" />
+    <Compile Include="Migrations\202409030450458_addinvoiceidinUserWiseTaskManagetable.Designer.cs">
+      <DependentUpon>202409030450458_addinvoiceidinUserWiseTaskManagetable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409061205454_addcolumnIsdeletedinusertaskmanagetable.cs" />
+    <Compile Include="Migrations\202409061205454_addcolumnIsdeletedinusertaskmanagetable.Designer.cs">
+      <DependentUpon>202409061205454_addcolumnIsdeletedinusertaskmanagetable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409110644551_addcolumnsinusermasterandremindermanagetableforNotificationofWp.cs" />
+    <Compile Include="Migrations\202409110644551_addcolumnsinusermasterandremindermanagetableforNotificationofWp.Designer.cs">
+      <DependentUpon>202409110644551_addcolumnsinusermasterandremindermanagetableforNotificationofWp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409241006361_StoreMasterLongitudeandLatitudefieldadded.cs" />
+    <Compile Include="Migrations\202409241006361_StoreMasterLongitudeandLatitudefieldadded.Designer.cs">
+      <DependentUpon>202409241006361_StoreMasterLongitudeandLatitudefieldadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202409271015242_StoreMasterLongitudeandLatitudefielddatatypechangedandradiusfieldadded.cs" />
+    <Compile Include="Migrations\202409271015242_StoreMasterLongitudeandLatitudefielddatatypechangedandradiusfieldadded.Designer.cs">
+      <DependentUpon>202409271015242_StoreMasterLongitudeandLatitudefielddatatypechangedandradiusfieldadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410170435135_UserMasterModuleaddednewproductScanfieldsAPK.cs" />
+    <Compile Include="Migrations\202410170435135_UserMasterModuleaddednewproductScanfieldsAPK.Designer.cs">
+      <DependentUpon>202410170435135_UserMasterModuleaddednewproductScanfieldsAPK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410170533570_UserMasterModuleaddednewproductScanfieldsAPKUpdated.cs" />
+    <Compile Include="Migrations\202410170533570_UserMasterModuleaddednewproductScanfieldsAPKUpdated.Designer.cs">
+      <DependentUpon>202410170533570_UserMasterModuleaddednewproductScanfieldsAPKUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410171335431_UserMasterModuleChangeDatatypeStoreAccess.cs" />
+    <Compile Include="Migrations\202410171335431_UserMasterModuleChangeDatatypeStoreAccess.Designer.cs">
+      <DependentUpon>202410171335431_UserMasterModuleChangeDatatypeStoreAccess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202410181017412_UserMasteraddednewDatastorefield.cs" />
+    <Compile Include="Migrations\202410181017412_UserMasteraddednewDatastorefield.Designer.cs">
+      <DependentUpon>202410181017412_UserMasteraddednewDatastorefield.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411050509491_apkikeyconfigurationmodelupdatedwithcreatedandmodifiedbyanddatetime.cs" />
+    <Compile Include="Migrations\202411050509491_apkikeyconfigurationmodelupdatedwithcreatedandmodifiedbyanddatetime.Designer.cs">
+      <DependentUpon>202411050509491_apkikeyconfigurationmodelupdatedwithcreatedandmodifiedbyanddatetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412021339329_addExpensePaymentMethodMasterTable.cs" />
+    <Compile Include="Migrations\202412021339329_addExpensePaymentMethodMasterTable.Designer.cs">
+      <DependentUpon>202412021339329_addExpensePaymentMethodMasterTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412050638163_addedtwonewmodelnamedexpensecheckmasterandexpensecheckmasterdetails.cs" />
+    <Compile Include="Migrations\202412050638163_addedtwonewmodelnamedexpensecheckmasterandexpensecheckmasterdetails.Designer.cs">
+      <DependentUpon>202412050638163_addedtwonewmodelnamedexpensecheckmasterandexpensecheckmasterdetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412170641453_UpdatedExpenseCheckModuleforaddupdateanddeletefunctionality.cs" />
+    <Compile Include="Migrations\202412170641453_UpdatedExpenseCheckModuleforaddupdateanddeletefunctionality.Designer.cs">
+      <DependentUpon>202412170641453_UpdatedExpenseCheckModuleforaddupdateanddeletefunctionality.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412191221027_RemovePaymentMethodIdFromExpenseCheckTable.cs" />
+    <Compile Include="Migrations\202412191221027_RemovePaymentMethodIdFromExpenseCheckTable.Designer.cs">
+      <DependentUpon>202412191221027_RemovePaymentMethodIdFromExpenseCheckTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412270918549_UpdateExpenseCheckTablePrintLaterAndMailingAddressDefaultTrue.cs" />
+    <Compile Include="Migrations\202412270918549_UpdateExpenseCheckTablePrintLaterAndMailingAddressDefaultTrue.Designer.cs">
+      <DependentUpon>202412270918549_UpdateExpenseCheckTablePrintLaterAndMailingAddressDefaultTrue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501021039068_updateExpenseCheckTableAddIsSyncField.cs" />
+    <Compile Include="Migrations\202501021039068_updateExpenseCheckTableAddIsSyncField.Designer.cs">
+      <DependentUpon>202501021039068_updateExpenseCheckTableAddIsSyncField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501091348071_paymentmethodidaddinexpensechecktablealsolistidadd.cs" />
+    <Compile Include="Migrations\202501091348071_paymentmethodidaddinexpensechecktablealsolistidadd.Designer.cs">
+      <DependentUpon>202501091348071_paymentmethodidaddinexpensechecktablealsolistidadd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501100528435_addisactiveinexpensepaymentmethodtable.cs" />
+    <Compile Include="Migrations\202501100528435_addisactiveinexpensepaymentmethodtable.Designer.cs">
+      <DependentUpon>202501100528435_addisactiveinexpensepaymentmethodtable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501101317535_addedstoreIdasforeginkeyinExpensePaymentMethodMaster.cs" />
+    <Compile Include="Migrations\202501101317535_addedstoreIdasforeginkeyinExpensePaymentMethodMaster.Designer.cs">
+      <DependentUpon>202501101317535_addedstoreIdasforeginkeyinExpensePaymentMethodMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202501280511593_addqberrorandpaymentdateinexpensechecktable.cs" />
+    <Compile Include="Migrations\202501280511593_addqberrorandpaymentdateinexpensechecktable.Designer.cs">
+      <DependentUpon>202501280511593_addqberrorandpaymentdateinexpensechecktable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502040727026_HREmployeeMasterModifiedPassworddatecolumnaddedinTable.cs" />
+    <Compile Include="Migrations\202502040727026_HREmployeeMasterModifiedPassworddatecolumnaddedinTable.Designer.cs">
+      <DependentUpon>202502040727026_HREmployeeMasterModifiedPassworddatecolumnaddedinTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202502101331557_removedforeignkeyinexpensecheckmoduleofvendorandpaymentmethodId.cs" />
+    <Compile Include="Migrations\202502101331557_removedforeignkeyinexpensecheckmoduleofvendorandpaymentmethodId.Designer.cs">
+      <DependentUpon>202502101331557_removedforeignkeyinexpensecheckmoduleofvendorandpaymentmethodId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503071037471_CreatedGroupWiseStateStoreandUpdatedColumnstoShowPaidStatusofInvoiceandUpdatedBothTablefields.cs" />
+    <Compile Include="Migrations\202503071037471_CreatedGroupWiseStateStoreandUpdatedColumnstoShowPaidStatusofInvoiceandUpdatedBothTablefields.Designer.cs">
+      <DependentUpon>202503071037471_CreatedGroupWiseStateStoreandUpdatedColumnstoShowPaidStatusofInvoiceandUpdatedBothTablefields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503200942178_AddedQBPaidAmountinInvoiceTabletoshowPaidAmountfromQBend..cs" />
+    <Compile Include="Migrations\202503200942178_AddedQBPaidAmountinInvoiceTabletoshowPaidAmountfromQBend..Designer.cs">
+      <DependentUpon>202503200942178_AddedQBPaidAmountinInvoiceTabletoshowPaidAmountfromQBend..cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503211139215_addnewtableInvoicePaymentStatusDetails.cs" />
+    <Compile Include="Migrations\202503211139215_addnewtableInvoicePaymentStatusDetails.Designer.cs">
+      <DependentUpon>202503211139215_addnewtableInvoicePaymentStatusDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503220745501_addednewfieldinUserMasterTableforImageUploadRightinProductScanApp.cs" />
+    <Compile Include="Migrations\202503220745501_addednewfieldinUserMasterTableforImageUploadRightinProductScanApp.Designer.cs">
+      <DependentUpon>202503220745501_addednewfieldinUserMasterTableforImageUploadRightinProductScanApp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202503240724542_addQbTotalAmountandupdateddateinInvoicePaymentStatusDetailstable.cs" />
+    <Compile Include="Migrations\202503240724542_addQbTotalAmountandupdateddateinInvoicePaymentStatusDetailstable.Designer.cs">
+      <DependentUpon>202503240724542_addQbTotalAmountandupdateddateinInvoicePaymentStatusDetailstable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504020718490_addednewModifiedondateforQBRefnewconsoletoupdatethemaintable.cs" />
+    <Compile Include="Migrations\202504020718490_addednewModifiedondateforQBRefnewconsoletoupdatethemaintable.Designer.cs">
+      <DependentUpon>202504020718490_addednewModifiedondateforQBRefnewconsoletoupdatethemaintable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504021141289_UserMasterModelChangesforSynthesisInventoryRightsUploadtomanagetheUpdatedRights.cs" />
+    <Compile Include="Migrations\202504021141289_UserMasterModelChangesforSynthesisInventoryRightsUploadtomanagetheUpdatedRights.Designer.cs">
+      <DependentUpon>202504021141289_UserMasterModelChangesforSynthesisInventoryRightsUploadtomanagetheUpdatedRights.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504030733410_AddednewmigrationforDesignatedStoreAccessinUserMasterforSynthesisInventoryApplication.cs" />
+    <Compile Include="Migrations\202504030733410_AddednewmigrationforDesignatedStoreAccessinUserMasterforSynthesisInventoryApplication.Designer.cs">
+      <DependentUpon>202504030733410_AddednewmigrationforDesignatedStoreAccessinUserMasterforSynthesisInventoryApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504080542447_QBonlineConfigurationmodeladdednewCompanyNamecolumntoshowinQBonlinescreen.cs" />
+    <Compile Include="Migrations\202504080542447_QBonlineConfigurationmodeladdednewCompanyNamecolumntoshowinQBonlinescreen.Designer.cs">
+      <DependentUpon>202504080542447_QBonlineConfigurationmodeladdednewCompanyNamecolumntoshowinQBonlinescreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202504300625464_AddednewfieldIsActiveinAPIKeyConfigurationmodelforStatusofKey.cs" />
+    <Compile Include="Migrations\202504300625464_AddednewfieldIsActiveinAPIKeyConfigurationmodelforStatusofKey.Designer.cs">
+      <DependentUpon>202504300625464_AddednewfieldIsActiveinAPIKeyConfigurationmodelforStatusofKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505011913431_Addednewtabletohandletheuserwiserightsaccess.cs" />
+    <Compile Include="Migrations\202505011913431_Addednewtabletohandletheuserwiserightsaccess.Designer.cs">
+      <DependentUpon>202505011913431_Addednewtabletohandletheuserwiserightsaccess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505071232421_AddednewmoduleforUserWiseRightStoresandUserRightsTypeModuleApproverfornewupdateofUserRightsModule.cs" />
+    <Compile Include="Migrations\202505071232421_AddednewmoduleforUserWiseRightStoresandUserRightsTypeModuleApproverfornewupdateofUserRightsModule.Designer.cs">
+      <DependentUpon>202505071232421_AddednewmoduleforUserWiseRightStoresandUserRightsTypeModuleApproverfornewupdateofUserRightsModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505080512104_addednewfieldforDepartmentReferenceforUserRightsnewImplementation.cs" />
+    <Compile Include="Migrations\202505080512104_addednewfieldforDepartmentReferenceforUserRightsnewImplementation.Designer.cs">
+      <DependentUpon>202505080512104_addednewfieldforDepartmentReferenceforUserRightsnewImplementation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202506021150422_addednewnamedCompaniesCompetitiorsandUseofCompaniesCompetitorsinSynthesisAPKInventoryinCompaniesPage.cs" />
+    <Compile Include="Migrations\202506021150422_addednewnamedCompaniesCompetitiorsandUseofCompaniesCompetitorsinSynthesisAPKInventoryinCompaniesPage.Designer.cs">
+      <DependentUpon>202506021150422_addednewnamedCompaniesCompetitiorsandUseofCompaniesCompetitorsinSynthesisAPKInventoryinCompaniesPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202506261017211_addednewenumcolumnnamedlangauageselectioninUserMasterModule.cs" />
+    <Compile Include="Migrations\202506261017211_addednewenumcolumnnamedlangauageselectioninUserMasterModule.Designer.cs">
+      <DependentUpon>202506261017211_addednewenumcolumnnamedlangauageselectioninUserMasterModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507021012417_AddIsOnlineinUserMasterAndChatModuleTablesCreated.cs" />
+    <Compile Include="Migrations\202507021012417_AddIsOnlineinUserMasterAndChatModuleTablesCreated.Designer.cs">
+      <DependentUpon>202507021012417_AddIsOnlineinUserMasterAndChatModuleTablesCreated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507081208418_updateconversationidcolumninttolong.cs" />
+    <Compile Include="Migrations\202507081208418_updateconversationidcolumninttolong.Designer.cs">
+      <DependentUpon>202507081208418_updateconversationidcolumninttolong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507090535569_addednewtablenamedmenumasterandchangesdoneinUserMasterforDesignatedHomePageUserwise.cs" />
+    <Compile Include="Migrations\202507090535569_addednewtablenamedmenumasterandchangesdoneinUserMasterforDesignatedHomePageUserwise.Designer.cs">
+      <DependentUpon>202507090535569_addednewtablenamedmenumasterandchangesdoneinUserMasterforDesignatedHomePageUserwise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507101041216_updatedmenumasterwithnewcolumnnameMenuRoleList.cs" />
+    <Compile Include="Migrations\202507101041216_updatedmenumasterwithnewcolumnnameMenuRoleList.Designer.cs">
+      <DependentUpon>202507101041216_updatedmenumasterwithnewcolumnnameMenuRoleList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507131000398_UpdatedNewSetofRuleforCompaniesCompetitorsUserMasterandStoreMaster.cs" />
+    <Compile Include="Migrations\202507131000398_UpdatedNewSetofRuleforCompaniesCompetitorsUserMasterandStoreMaster.Designer.cs">
+      <DependentUpon>202507131000398_UpdatedNewSetofRuleforCompaniesCompetitorsUserMasterandStoreMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507131023227_UpdatedCompaniesCompetitorsforImageURLColumnAddition.cs" />
+    <Compile Include="Migrations\202507131023227_UpdatedCompaniesCompetitorsforImageURLColumnAddition.Designer.cs">
+      <DependentUpon>202507131023227_UpdatedCompaniesCompetitorsforImageURLColumnAddition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507131120167_CreatednewcolumninStoreMasterTable.cs" />
+    <Compile Include="Migrations\202507131120167_CreatednewcolumninStoreMasterTable.Designer.cs">
+      <DependentUpon>202507131120167_CreatednewcolumninStoreMasterTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507140452343_UpdatednewmoduleofChatGroupsforIsAdminandCreatedDate.cs" />
+    <Compile Include="Migrations\202507140452343_UpdatednewmoduleofChatGroupsforIsAdminandCreatedDate.Designer.cs">
+      <DependentUpon>202507140452343_UpdatednewmoduleofChatGroupsforIsAdminandCreatedDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507140516032_UpdatedUserMasterModuleforCompaniesCompetitorsSelectionId.cs" />
+    <Compile Include="Migrations\202507140516032_UpdatedUserMasterModuleforCompaniesCompetitorsSelectionId.Designer.cs">
+      <DependentUpon>202507140516032_UpdatedUserMasterModuleforCompaniesCompetitorsSelectionId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507230637384_UpdateChatMessengertableaddnewColumns.cs" />
+    <Compile Include="Migrations\202507230637384_UpdateChatMessengertableaddnewColumns.Designer.cs">
+      <DependentUpon>202507230637384_UpdateChatMessengertableaddnewColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202507300946575_UpdateChatGroupMemberTableAddColumnIsAdmin.cs" />
+    <Compile Include="Migrations\202507300946575_UpdateChatGroupMemberTableAddColumnIsAdmin.Designer.cs">
+      <DependentUpon>202507300946575_UpdateChatGroupMemberTableAddColumnIsAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202508011000470_updatechatmessengertableaddIsReadField.cs" />
+    <Compile Include="Migrations\202508011000470_updatechatmessengertableaddIsReadField.Designer.cs">
+      <DependentUpon>202508011000470_updatechatmessengertableaddIsReadField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202508040515019_updateisreadcolumntostringinchatmessengertable.cs" />
+    <Compile Include="Migrations\202508040515019_updateisreadcolumntostringinchatmessengertable.Designer.cs">
+      <DependentUpon>202508040515019_updateisreadcolumntostringinchatmessengertable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202508070714553_addednewtwofieldsforQBAppchangesnamedClientIdandClientSecret.cs" />
+    <Compile Include="Migrations\202508070714553_addednewtwofieldsforQBAppchangesnamedClientIdandClientSecret.Designer.cs">
+      <DependentUpon>202508070714553_addednewtwofieldsforQBAppchangesnamedClientIdandClientSecret.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202508071022258_addednewtableQuickBooksStorewiseTokenfortempcredentialssave.cs" />
+    <Compile Include="Migrations\202508071022258_addednewtableQuickBooksStorewiseTokenfortempcredentialssave.Designer.cs">
+      <DependentUpon>202508071022258_addednewtableQuickBooksStorewiseTokenfortempcredentialssave.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202508211413587_AddednewmigrationofUniversalVendorManagementModuleNewTableCreation.cs" />
+    <Compile Include="Migrations\202508211413587_AddednewmigrationofUniversalVendorManagementModuleNewTableCreation.Designer.cs">
+      <DependentUpon>202508211413587_AddednewmigrationofUniversalVendorManagementModuleNewTableCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202508220607256_UpdatedoneinVendorMasterForeginkeyofnewtableUniversalVendorMaster.cs" />
+    <Compile Include="Migrations\202508220607256_UpdatedoneinVendorMasterForeginkeyofnewtableUniversalVendorMaster.Designer.cs">
+      <DependentUpon>202508220607256_UpdatedoneinVendorMasterForeginkeyofnewtableUniversalVendorMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509040724242_AddednewTwocolumnsnameFCMTokenWebandFCMTokenAppforNotificationAPKofChatModule.cs" />
+    <Compile Include="Migrations\202509040724242_AddednewTwocolumnsnameFCMTokenWebandFCMTokenAppforNotificationAPKofChatModule.Designer.cs">
+      <DependentUpon>202509040724242_AddednewTwocolumnsnameFCMTokenWebandFCMTokenAppforNotificationAPKofChatModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509080613157_AddedtwonewfieldsnamePlayerIdandDeviceTypetostoreforFirebasepushnotificationinchatmodule.cs" />
+    <Compile Include="Migrations\202509080613157_AddedtwonewfieldsnamePlayerIdandDeviceTypetostoreforFirebasepushnotificationinchatmodule.Designer.cs">
+      <DependentUpon>202509080613157_AddedtwonewfieldsnamePlayerIdandDeviceTypetostoreforFirebasepushnotificationinchatmodule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509081415366_CheckAllPendingMigrationforUpdateVendorUniversalandVendorManagementUpdatesonit.cs" />
+    <Compile Include="Migrations\202509081415366_CheckAllPendingMigrationforUpdateVendorUniversalandVendorManagementUpdatesonit.Designer.cs">
+      <DependentUpon>202509081415366_CheckAllPendingMigrationforUpdateVendorUniversalandVendorManagementUpdatesonit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509100600545_VendorDepartmentRelationMasterAddIsFlag.cs" />
+    <Compile Include="Migrations\202509100600545_VendorDepartmentRelationMasterAddIsFlag.Designer.cs">
+      <DependentUpon>202509100600545_VendorDepartmentRelationMasterAddIsFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509160542491_addednewmodelnameQBFinanicalClosingYearforconfiguartionoffinalyear.cs" />
+    <Compile Include="Migrations\202509160542491_addednewmodelnameQBFinanicalClosingYearforconfiguartionoffinalyear.Designer.cs">
+      <DependentUpon>202509160542491_addednewmodelnameQBFinanicalClosingYearforconfiguartionoffinalyear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202510060911542_addednewfieldofNewSortingNoforpayrollaccountsettingwithpayrollexpense.cs" />
+    <Compile Include="Migrations\202510060911542_addednewfieldofNewSortingNoforpayrollaccountsettingwithpayrollexpense.Designer.cs">
+      <DependentUpon>202510060911542_addednewfieldofNewSortingNoforpayrollaccountsettingwithpayrollexpense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511060916148_addnewfiledsinUniversalVendorMaster.cs" />
+    <Compile Include="Migrations\202511060916148_addnewfiledsinUniversalVendorMaster.Designer.cs">
+      <DependentUpon>202511060916148_addnewfiledsinUniversalVendorMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511131326594_UpdatedUniversalVendorMasterTableforUpdateFlag.cs" />
+    <Compile Include="Migrations\202511131326594_UpdatedUniversalVendorMasterTableforUpdateFlag.Designer.cs">
+      <DependentUpon>202511131326594_UpdatedUniversalVendorMasterTableforUpdateFlag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511131330249_updatedUniversalVendorMasterwithBankAccountNumberandRoutingNumber.cs" />
+    <Compile Include="Migrations\202511131330249_updatedUniversalVendorMasterwithBankAccountNumberandRoutingNumber.Designer.cs">
+      <DependentUpon>202511131330249_updatedUniversalVendorMasterwithBankAccountNumberandRoutingNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511131334384_UpdatedVendorMasterwithBankAccountNumberandRoutingNumber.cs" />
+    <Compile Include="Migrations\202511131334384_UpdatedVendorMasterwithBankAccountNumberandRoutingNumber.Designer.cs">
+      <DependentUpon>202511131334384_UpdatedVendorMasterwithBankAccountNumberandRoutingNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountDetailTypeMaster.cs" />
+    <Compile Include="Models\AccountTypeMaster.cs" />
+    <Compile Include="Models\ActivityLog.cs" />
+    <Compile Include="Models\AdminAccount.cs" />
+    <Compile Include="Models\ApiKeyConfiguartion.cs" />
+    <Compile Include="Models\BankAccountSettingModel.cs" />
+    <Compile Include="Models\BucketSizeMaster.cs" />
+    <Compile Include="Models\ChatGroupMembers.cs" />
+    <Compile Include="Models\QBFinanicalClosingYear.cs" />
+    <Compile Include="Models\ChatGroups.cs" />
+    <Compile Include="Models\ChatMessenger.cs" />
+    <Compile Include="Models\ChatReactions.cs" />
+    <Compile Include="Models\CheckList.cs" />
+    <Compile Include="Models\clsActivityLog.cs" />
+    <Compile Include="Models\clsPlaidAPIOperations.cs" />
+    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\ConfigurationGroup.cs" />
+    <Compile Include="Models\CreditcardDetails.cs" />
+    <Compile Include="Models\CreditcardDetailsDaily.cs" />
+    <Compile Include="Models\CreditcardDetailsHourly.cs" />
+    <Compile Include="Models\CustomerMaster.cs" />
+    <Compile Include="Models\CustomersReceivablesManagement.cs" />
+    <Compile Include="Models\DailyDashboardXML.cs" />
+    <Compile Include="Models\Dashboard.cs" />
+    <Compile Include="Models\DayCloseOutStatus.cs" />
+    <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Models\DefaultAccount.cs" />
+    <Compile Include="Models\DeleteHourlyFilesModel.cs" />
+    <Compile Include="Models\Departmentconfiguration.cs" />
+    <Compile Include="Models\DepartmentMaster.cs" />
+    <Compile Include="Models\DepartmentNetSales.cs" />
+    <Compile Include="Models\DepartmentNetSalesDaily.cs" />
+    <Compile Include="Models\DepartmentNetSalesHourly.cs" />
+    <Compile Include="Models\DiscountTypeMaster.cs" />
+    <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentCategory.cs" />
+    <Compile Include="Models\DocumentFileVersion.cs" />
+    <Compile Include="Models\EmployeeMaster.cs" />
+    <Compile Include="Models\ErrorLog.cs" />
+    <Compile Include="Models\ExpenseCheck.cs" />
+    <Compile Include="Models\ExpenseCheckDetail.cs" />
+    <Compile Include="Models\ExpenseCheckDocuments.cs" />
+    <Compile Include="Models\ExpenseCheckMaster.cs" />
+    <Compile Include="Models\ExpenseCheckMasterDetails.cs" />
+    <Compile Include="Models\ExpenseCheck_Setting.cs" />
+    <Compile Include="Models\ExpensePaymentMethodMaster.cs" />
+    <Compile Include="Models\GroupMaster.cs" />
+    <Compile Include="Models\GroupWiseStateStore.cs" />
+    <Compile Include="Models\HomeExpensesDetail.cs" />
+    <Compile Include="Models\HomeExpenseWeeklySalesSetting.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoiceAutomation.cs" />
+    <Compile Include="Models\InvoicePaymentStatusDetails.cs" />
+    <Compile Include="Models\InvoiceTypeMaster.cs" />
+    <Compile Include="Models\InvoiceUserProductMapLog.cs" />
+    <Compile Include="Models\IpAdressInfo.cs" />
+    <Compile Include="Models\ItemLibraryDepartment.cs" />
+    <Compile Include="Models\ItemMovementBySupplier.cs" />
+    <Compile Include="Models\ItemMovementdatehistory.cs" />
+    <Compile Include="Models\LevelsApprover.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\MenuMaster.cs" />
+    <Compile Include="Models\MessageMaster.cs" />
+    <Compile Include="Models\ModuleMaster.cs" />
+    <Compile Include="Models\MultithreadingLogs.cs" />
+    <Compile Include="Models\OptionMaster.cs" />
+    <Compile Include="Models\OperatingRatioExpenseDepartment.cs" />
+    <Compile Include="Models\OtherDeposit.cs" />
+    <Compile Include="Models\OtherDepositeSetting.cs" />
+    <Compile Include="Models\PaidOut.cs" />
+    <Compile Include="Models\PaidOutDaily.cs" />
+    <Compile Include="Models\PaidOutHourly.cs" />
+    <Compile Include="Models\PaidOutSettlement.cs" />
+    <Compile Include="Models\PaymentMethodMaster.cs" />
+    <Compile Include="Models\PaymentTypeMaster.cs" />
+    <Compile Include="Models\PayPeriodSettings.cs" />
+    <Compile Include="Models\PayrollBankAccount.cs" />
+    <Compile Include="Models\PayrollCashAnalysis.cs" />
+    <Compile Include="Models\PayrollCashAnalysisDetail.cs" />
+    <Compile Include="Models\PayrollHours.cs" />
+    <Compile Include="Models\PayrollHoursDetails.cs" />
+    <Compile Include="Models\PayrollReport.cs" />
+    <Compile Include="Models\PdfFieldMapping.cs" />
+    <Compile Include="Models\Products.cs" />
+    <Compile Include="Models\ProductsVendor.cs" />
+    <Compile Include="Models\QBDesktopConfiguration.cs" />
+    <Compile Include="Models\QuickBooksStorewiseToken.cs" />
+    <Compile Include="Models\QBHistory.cs" />
+    <Compile Include="Models\QBOnlineConfiguration.cs" />
+    <Compile Include="Models\QBPaymentType.cs" />
+    <Compile Include="Models\QBUnclearBalanceInfo.cs" />
+    <Compile Include="Models\QBWebhook.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\SalesActivitySummary.cs" />
+    <Compile Include="Models\SalesActivitySummaryDaily.cs" />
+    <Compile Include="Models\SalesActivitySummaryHourly.cs" />
+    <Compile Include="Models\SalesGeneralEntries.cs" />
+    <Compile Include="Models\ShiftMaster.cs" />
+    <Compile Include="Models\CompaniesCompetitors.cs" />
+    <Compile Include="Models\StateMaster.cs" />
+    <Compile Include="Models\StoreMaster.cs" />
+    <Compile Include="Models\StoreTerminal.cs" />
+    <Compile Include="Models\StoreTerminalDaily.cs" />
+    <Compile Include="Models\StoreTerminalHourly.cs" />
+    <Compile Include="Models\StorewisePDFUpload.cs" />
+    <Compile Include="Models\TenderInDrawer.cs" />
+    <Compile Include="Models\TenderInDrawerDaily.cs" />
+    <Compile Include="Models\TenderInDrawerHourly.cs" />
+    <Compile Include="Models\Terminal.cs" />
+    <Compile Include="Models\TerminalDailyMaster.cs" />
+    <Compile Include="Models\TerminalHourlyMaster.cs" />
+    <Compile Include="Models\TerminalMaster.cs" />
+    <Compile Include="Models\TopSellerNormalizationRatio.cs" />
+    <Compile Include="Models\TypicalBalanceMaster.cs" />
+    <Compile Include="Models\UniversalVendorMaster.cs" />
+    <Compile Include="Models\UploadPdf.cs" />
+    <Compile Include="Models\UploadPDFAutomation.cs" />
+    <Compile Include="Models\UploadPdf_Api.cs" />
+    <Compile Include="Models\UserMaster.cs" />
+    <Compile Include="Models\UserRightsTypeModuleApprover.cs" />
+    <Compile Include="Models\UserWiseRightsStores.cs" />
+    <Compile Include="Models\UserWiseRights.cs" />
+    <Compile Include="Models\UserRoles.cs" />
+    <Compile Include="Models\UserTimeTrackInfo.cs" />
+    <Compile Include="Models\UserTypeMaster.cs" />
+    <Compile Include="Models\UserTypeModuleApprover.cs" />
+    <Compile Include="Models\UserWiseNoteManage.cs" />
+    <Compile Include="Models\UserWiseReminderManage.cs" />
+    <Compile Include="Models\UserWiseStickyNote.cs" />
+    <Compile Include="Models\UserWiseTaskManage.cs" />
+    <Compile Include="Models\VendorDepartmentRelationMaster.cs" />
+    <Compile Include="Models\VendorMaster.cs" />
+    <Compile Include="Models\VendorMaster_QBCopy.cs" />
+    <Compile Include="Models\WebCamCameraList.cs" />
+    <Compile Include="Models\WebcamRecordingHistory.cs" />
+    <Compile Include="Models\WeeklyPeriod.cs" />
+    <Compile Include="Models\WeekMaster.cs" />
+    <Compile Include="Models\YearlySales.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="HRModels\HREmployeeInsurance.cs.bak" />
+    <None Include="HRModels\HREmployeeVacationTime.cs.bak" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202102011328178_GroupMaster.resx">
+      <DependentUpon>202102011328178_GroupMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102020542050_CategoryMaster.resx">
+      <DependentUpon>202102020542050_CategoryMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102020657210_UserMaster.resx">
+      <DependentUpon>202102020657210_UserMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102020854172_StoreMaster.resx">
+      <DependentUpon>202102020854172_StoreMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102020937512_StoreChild.resx">
+      <DependentUpon>202102020937512_StoreChild.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102021318415_UserRole.resx">
+      <DependentUpon>202102021318415_UserRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102150931128_UserTypeMaster.resx">
+      <DependentUpon>202102150931128_UserTypeMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102151050243_AddNewFields.resx">
+      <DependentUpon>202102151050243_AddNewFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102151251050_UserFieldChanges.resx">
+      <DependentUpon>202102151251050_UserFieldChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102160927586_RightsStore.resx">
+      <DependentUpon>202102160927586_RightsStore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102170949432_StateNdVendorMaster.resx">
+      <DependentUpon>202102170949432_StateNdVendorMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102181126071_AccountTypeNdDetailMaster.resx">
+      <DependentUpon>202102181126071_AccountTypeNdDetailMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102181331289_DepartmentMaster.resx">
+      <DependentUpon>202102181331289_DepartmentMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102190610381_SyncDateNullInDepartmentForm.resx">
+      <DependentUpon>202102190610381_SyncDateNullInDepartmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102230435212_InvoiceandOtherRelatedForms.resx">
+      <DependentUpon>202102230435212_InvoiceandOtherRelatedForms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102230510168_InvoiceandOtherRelatedFormsTblNmChng.resx">
+      <DependentUpon>202102230510168_InvoiceandOtherRelatedFormsTblNmChng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103191029534_UserTypeGroupIdAdd.resx">
+      <DependentUpon>202103191029534_UserTypeGroupIdAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103220450020_UserMstGroupFldAdd.resx">
+      <DependentUpon>202103220450020_UserMstGroupFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103220727312_UserRoleRightsFK.resx">
+      <DependentUpon>202103220727312_UserRoleRightsFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103260909266_QBOnlineConfiguration.resx">
+      <DependentUpon>202103260909266_QBOnlineConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103260932438_QBDesktopConfiguration.resx">
+      <DependentUpon>202103260932438_QBDesktopConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103261257373_UpdateBankAccIDIntToString.resx">
+      <DependentUpon>202103261257373_UpdateBankAccIDIntToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103310614108_GroupAccountMaster.resx">
+      <DependentUpon>202103310614108_GroupAccountMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103311225243_DocumentTables.resx">
+      <DependentUpon>202103311225243_DocumentTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104011317103_ModuleandActivitylogMaster.resx">
+      <DependentUpon>202104011317103_ModuleandActivitylogMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104020946152_QBHistory.resx">
+      <DependentUpon>202104020946152_QBHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104021118173_VendorMasterUpdate.resx">
+      <DependentUpon>202104021118173_VendorMasterUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104021307287_DepartmentMasterUpdate.resx">
+      <DependentUpon>202104021307287_DepartmentMasterUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104031108569_ErrorLog.resx">
+      <DependentUpon>202104031108569_ErrorLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104070406096_PayrollTables.resx">
+      <DependentUpon>202104070406096_PayrollTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104071030426_SalesActivitySummary,TerminalMaster.resx">
+      <DependentUpon>202104071030426_SalesActivitySummary,TerminalMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104071037363_TenderInDrawer.resx">
+      <DependentUpon>202104071037363_TenderInDrawer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104071044494_DepartmentNetSales.resx">
+      <DependentUpon>202104071044494_DepartmentNetSales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104071122486_ConfigurationAndConfigurationGroupAndTenderInDrawer.resx">
+      <DependentUpon>202104071122486_ConfigurationAndConfigurationGroupAndTenderInDrawer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104071129357_TypicalBalanceMaster.resx">
+      <DependentUpon>202104071129357_TypicalBalanceMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104080514449_SetFkNullable.resx">
+      <DependentUpon>202104080514449_SetFkNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104081301406_DepartmentConfiguration.resx">
+      <DependentUpon>202104081301406_DepartmentConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104081307017_DefaultAccount.resx">
+      <DependentUpon>202104081307017_DefaultAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104131004248_InvoiceUpdate.resx">
+      <DependentUpon>202104131004248_InvoiceUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104131015346_InvoiceUpdate1.resx">
+      <DependentUpon>202104131015346_InvoiceUpdate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104131055585_InvoiceUpdate2.resx">
+      <DependentUpon>202104131055585_InvoiceUpdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104131100515_InvoiceUpdate3.resx">
+      <DependentUpon>202104131100515_InvoiceUpdate3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104150650284_InvoiceUpdate4.resx">
+      <DependentUpon>202104150650284_InvoiceUpdate4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104150936177_InvoiceUpdate5.resx">
+      <DependentUpon>202104150936177_InvoiceUpdate5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104160638085_TerminalTables.resx">
+      <DependentUpon>202104160638085_TerminalTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104170608209_TerminalsTableChanges.resx">
+      <DependentUpon>202104170608209_TerminalsTableChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104170617293_ScriptData.resx">
+      <DependentUpon>202104170617293_ScriptData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104230917224_SalesGeneralEntryTables.resx">
+      <DependentUpon>202104230917224_SalesGeneralEntryTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105031241169_RightsModuleFkAdd.resx">
+      <DependentUpon>202105031241169_RightsModuleFkAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106101244463_UserRolesStoreAdd.resx">
+      <DependentUpon>202106101244463_UserRolesStoreAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106111003367_UserRoleModuleIdFldAdd.resx">
+      <DependentUpon>202106111003367_UserRoleModuleIdFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106140618066_LevelApproverTableAdd.resx">
+      <DependentUpon>202106140618066_LevelApproverTableAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106140633139_LevelApproverFldAdd.resx">
+      <DependentUpon>202106140633139_LevelApproverFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106230935317_DayCloseOutStatus.resx">
+      <DependentUpon>202106230935317_DayCloseOutStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106231058299_AddDepartmentInOtherDeposite.resx">
+      <DependentUpon>202106231058299_AddDepartmentInOtherDeposite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106241131061_UpdateCreditCardDetails.resx">
+      <DependentUpon>202106241131061_UpdateCreditCardDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106251319117_levelapproval.resx">
+      <DependentUpon>202106251319117_levelapproval.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106290932515_SalesOtherDeposite.resx">
+      <DependentUpon>202106290932515_SalesOtherDeposite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106291145505_DepartmentConfiguration1.resx">
+      <DependentUpon>202106291145505_DepartmentConfiguration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106291242545_RemoveGroupAccountMaster.resx">
+      <DependentUpon>202106291242545_RemoveGroupAccountMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106300505453_UpdateDeptconfiguration.resx">
+      <DependentUpon>202106300505453_UpdateDeptconfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106301112258_CustomerMaster.resx">
+      <DependentUpon>202106301112258_CustomerMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107010458310_OtherDepositeSetting.resx">
+      <DependentUpon>202107010458310_OtherDepositeSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107010520352_QBPaymentType.resx">
+      <DependentUpon>202107010520352_QBPaymentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107010640102_UpdateGroupMaster.resx">
+      <DependentUpon>202107010640102_UpdateGroupMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107020449555_UserWiseStickyNotesTblAdd.resx">
+      <DependentUpon>202107020449555_UserWiseStickyNotesTblAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107020940507_PayrollCashAnalysisandDetail.resx">
+      <DependentUpon>202107020940507_PayrollCashAnalysisandDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107020949213_PayrollBankAccount.resx">
+      <DependentUpon>202107020949213_PayrollBankAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107021108299_PayrollCashAnalysisFieldChange.resx">
+      <DependentUpon>202107021108299_PayrollCashAnalysisFieldChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107021123416_PayrollMasterChange.resx">
+      <DependentUpon>202107021123416_PayrollMasterChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107070708343_OtherDepositesettingUpdate.resx">
+      <DependentUpon>202107070708343_OtherDepositesettingUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107070953462_UploadFileAndInvoiceProductTblAdd.resx">
+      <DependentUpon>202107070953462_UploadFileAndInvoiceProductTblAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107090543293_CashPaidoutInvoice.resx">
+      <DependentUpon>202107090543293_CashPaidoutInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107091234467_UpdateSalesOtherDeposite.resx">
+      <DependentUpon>202107091234467_UpdateSalesOtherDeposite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107130646187_UpdateOtherDepositedeptID.resx">
+      <DependentUpon>202107130646187_UpdateOtherDepositedeptID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107190604151_UpdateConfigurationgroup.resx">
+      <DependentUpon>202107190604151_UpdateConfigurationgroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107191249304_IsFirstLoginFldAdd.resx">
+      <DependentUpon>202107191249304_IsFirstLoginFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107200709437_StoremasterPassFldAdd.resx">
+      <DependentUpon>202107200709437_StoremasterPassFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108060717391_UpdateQBonlineconfiguration.resx">
+      <DependentUpon>202108060717391_UpdateQBonlineconfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108060947401_UpdateDepartmentconfigurations.resx">
+      <DependentUpon>202108060947401_UpdateDepartmentconfigurations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108060958201_UpdateDepartmentconfigurations1.resx">
+      <DependentUpon>202108060958201_UpdateDepartmentconfigurations1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108130449151_DepartmentFldAddRightsStoreTbl.resx">
+      <DependentUpon>202108130449151_DepartmentFldAddRightsStoreTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108161247535_UserTypeIsViewInvoiceOnlyFldAdd.resx">
+      <DependentUpon>202108161247535_UserTypeIsViewInvoiceOnlyFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108170431260_UpdateVendorMasterEmail.resx">
+      <DependentUpon>202108170431260_UpdateVendorMasterEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109221309420_AnalysisPdfFileRead.resx">
+      <DependentUpon>202109221309420_AnalysisPdfFileRead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110111448324_DailyTables.resx">
+      <DependentUpon>202110111448324_DailyTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110131141006_AddFieldinUploadPDF.resx">
+      <DependentUpon>202110131141006_AddFieldinUploadPDF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110131145082_AddFieldinStorewisePDFUpload.resx">
+      <DependentUpon>202110131145082_AddFieldinStorewisePDFUpload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110131203346_removefieldfromcreditcarddetaildaily.resx">
+      <DependentUpon>202110131203346_removefieldfromcreditcarddetaildaily.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110180931072_addPDFPageCountInInvoice.resx">
+      <DependentUpon>202110180931072_addPDFPageCountInInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110221004167_ExpenseCheck_Setting.resx">
+      <DependentUpon>202110221004167_ExpenseCheck_Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110221042032_Addstoreidinexpensechecksetting.resx">
+      <DependentUpon>202110221042032_Addstoreidinexpensechecksetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110221046292_Addstoreidinexpensechecksetting1.resx">
+      <DependentUpon>202110221046292_Addstoreidinexpensechecksetting1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110221340298_AddExpenseCheck.resx">
+      <DependentUpon>202110221340298_AddExpenseCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110230624419_RemoveColumnExpenseCheck.resx">
+      <DependentUpon>202110230624419_RemoveColumnExpenseCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110260953099_AddtableProducts.resx">
+      <DependentUpon>202110260953099_AddtableProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110281034384_AddExcludeListInExpense.resx">
+      <DependentUpon>202110281034384_AddExcludeListInExpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110291155509_FldProductIdAdd.resx">
+      <DependentUpon>202110291155509_FldProductIdAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111201133419_ExpenseCheckTxnFldTypeChange.resx">
+      <DependentUpon>202111201133419_ExpenseCheckTxnFldTypeChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111261506446_SalesActivityDailyNewFieldsAdd.resx">
+      <DependentUpon>202111261506446_SalesActivityDailyNewFieldsAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112021026323_ExpenseCheckDocumentsTableAdd.resx">
+      <DependentUpon>202112021026323_ExpenseCheckDocumentsTableAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112031023130_PayrollHoursTableAdd.resx">
+      <DependentUpon>202112031023130_PayrollHoursTableAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112031129113_CheckExpenseDetailFlagFldAdd.resx">
+      <DependentUpon>202112031129113_CheckExpenseDetailFlagFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112100508522_CreateHourliesTables.resx">
+      <DependentUpon>202112100508522_CreateHourliesTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112100656154_SalesActivityTableFieldsAddAndChange.resx">
+      <DependentUpon>202112100656154_SalesActivityTableFieldsAddAndChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112170633536_WeeklyPeriodTableAdd.resx">
+      <DependentUpon>202112170633536_WeeklyPeriodTableAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112221302023_WeeklyPeriodWNumFldAdd.resx">
+      <DependentUpon>202112221302023_WeeklyPeriodWNumFldAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112301014031_EmployeeMaster.resx">
+      <DependentUpon>202112301014031_EmployeeMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201211416335_AddFieldsProductMaster.resx">
+      <DependentUpon>202201211416335_AddFieldsProductMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201241012418_ProductVendor.resx">
+      <DependentUpon>202201241012418_ProductVendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202180712136_ProductsAddNewField.resx">
+      <DependentUpon>202202180712136_ProductsAddNewField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203040444228_QBWebhook.resx">
+      <DependentUpon>202203040444228_QBWebhook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204050732388_DocumentFileVersion.resx">
+      <DependentUpon>202204050732388_DocumentFileVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204191043135_VendorDepartmentRelationMaster.resx">
+      <DependentUpon>202204191043135_VendorDepartmentRelationMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204300907442_AddNewFieldVendorMaster.resx">
+      <DependentUpon>202204300907442_AddNewFieldVendorMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205041102027_BankAccountSetting.resx">
+      <DependentUpon>202205041102027_BankAccountSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205041328334_AddNewFldBankAccount.resx">
+      <DependentUpon>202205041328334_AddNewFldBankAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205060535028_AddNFBAS.resx">
+      <DependentUpon>202205060535028_AddNFBAS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205061428094_QBUnclearBalanceInfo.resx">
+      <DependentUpon>202205061428094_QBUnclearBalanceInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206011336027_uploadpdfAddnewfld.resx">
+      <DependentUpon>202206011336027_uploadpdfAddnewfld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206021144362_AddnewmodelUploadPdfapi.resx">
+      <DependentUpon>202206021144362_AddnewmodelUploadPdfapi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206030934389_VendorMasterQBCopy.resx">
+      <DependentUpon>202206030934389_VendorMasterQBCopy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206060846513_addnewfieldStateMaster.resx">
+      <DependentUpon>202206060846513_addnewfieldStateMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206131409207_InvoiceProductModelAddNewFld.resx">
+      <DependentUpon>202206131409207_InvoiceProductModelAddNewFld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206290459303_AddnewfldInvoiceproductin.resx">
+      <DependentUpon>202206290459303_AddnewfldInvoiceproductin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206290622499_AddNewFiledinInvoiceproduct.resx">
+      <DependentUpon>202206290622499_AddNewFiledinInvoiceproduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206300559415_invoiceproductaddnewfld.resx">
+      <DependentUpon>202206300559415_invoiceproductaddnewfld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207221344193_ManageIpAddressAllModel.resx">
+      <DependentUpon>202207221344193_ManageIpAddressAllModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207251234584_Addnewfieldusertime.resx">
+      <DependentUpon>202207251234584_Addnewfieldusertime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207270600254_AddNewFieldUserMaster.resx">
+      <DependentUpon>202207270600254_AddNewFieldUserMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208171146063_AddnewfldproductMaster.resx">
+      <DependentUpon>202208171146063_AddnewfldproductMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208251131435_AddpayPeriodSettings.resx">
+      <DependentUpon>202208251131435_AddpayPeriodSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208251246512_newfieldchangespayperiod.resx">
+      <DependentUpon>202208251246512_newfieldchangespayperiod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208251249417_PayperiodSettingtableUpdate.resx">
+      <DependentUpon>202208251249417_PayperiodSettingtableUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208290857588_Addnewtableweekmaster.resx">
+      <DependentUpon>202208290857588_Addnewtableweekmaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208290945523_UpdateWeekMasterTable].resx">
+      <DependentUpon>202208290945523_UpdateWeekMasterTable].cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208290949296_removecolumn.resx">
+      <DependentUpon>202208290949296_removecolumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209030654510_AddNewFieldsProductMaster.resx">
+      <DependentUpon>202209030654510_AddNewFieldsProductMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209060940422_Addforeingnkeyinstoremasterandaccountinvendor.resx">
+      <DependentUpon>202209060940422_Addforeingnkeyinstoremasterandaccountinvendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209121015448_NewfieldaddProducts.resx">
+      <DependentUpon>202209121015448_NewfieldaddProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209121143530_addnewfieldImageProducts.resx">
+      <DependentUpon>202209121143530_addnewfieldImageProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209121247150_addtableItemMovementBySupplier.resx">
+      <DependentUpon>202209121247150_addtableItemMovementBySupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209151152195_tableAdditemmovementdatehistory.resx">
+      <DependentUpon>202209151152195_tableAdditemmovementdatehistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209160952203_newfieldadditemmovementsupplier.resx">
+      <DependentUpon>202209160952203_newfieldadditemmovementsupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209210613246_AddTestVendorMaster.resx">
+      <DependentUpon>202209210613246_AddTestVendorMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209210702055_AddItemLibraryDepartment.resx">
+      <DependentUpon>202209210702055_AddItemLibraryDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209270627139_AddfieldInUserTimeTrackInfo.resx">
+      <DependentUpon>202209270627139_AddfieldInUserTimeTrackInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210061056412_ExpenseCheckDetailIncludeBySettingfieldadd.resx">
+      <DependentUpon>202210061056412_ExpenseCheckDetailIncludeBySettingfieldadd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211040447370_LocationTypefieldaddIpAdressInfo.resx">
+      <DependentUpon>202211040447370_LocationTypefieldaddIpAdressInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211100858188_addnewfieldemailaddressusermaster.resx">
+      <DependentUpon>202211100858188_addnewfieldemailaddressusermaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211100955068_addnewcolumnismailsendallowpayperiodsettings.resx">
+      <DependentUpon>202211100955068_addnewcolumnismailsendallowpayperiodsettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211250411221_invoicelengthincrease.resx">
+      <DependentUpon>202211250411221_invoicelengthincrease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212020723136_addnewfieldistimecardentryusertimetrackinfo.resx">
+      <DependentUpon>202212020723136_addnewfieldistimecardentryusertimetrackinfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303280542254_HomeExpenseWeeklySalesSetting.resx">
+      <DependentUpon>202303280542254_HomeExpenseWeeklySalesSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303280555304_HomeExpenseWeeklySalesSettingAdd.resx">
+      <DependentUpon>202303280555304_HomeExpenseWeeklySalesSettingAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303280710107_HomeExpenseWeeklySalesSettingAdd1.resx">
+      <DependentUpon>202303280710107_HomeExpenseWeeklySalesSettingAdd1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303281055318_HomeExpenseDetail1.resx">
+      <DependentUpon>202303281055318_HomeExpenseDetail1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303281236125_HomeExpenseDetail11.resx">
+      <DependentUpon>202303281236125_HomeExpenseDetail11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303291129164_HomeExpenseDetailSettingAddBankAccount.resx">
+      <DependentUpon>202303291129164_HomeExpenseDetailSettingAddBankAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303300912194_HomeSomeExpensesUpdate.resx">
+      <DependentUpon>202303300912194_HomeSomeExpensesUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303310457302_HomeSomeExpensesWeeklySettingUpdate1.resx">
+      <DependentUpon>202303310457302_HomeSomeExpensesWeeklySettingUpdate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304051002265_ChecklistTable.resx">
+      <DependentUpon>202304051002265_ChecklistTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304051032272_ChecklistTable1fieldadded.resx">
+      <DependentUpon>202304051032272_ChecklistTable1fieldadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304051107141_ChecklistTableamountfieldaddded.resx">
+      <DependentUpon>202304051107141_ChecklistTableamountfieldaddded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304051126387_ChecklistTablecreateddateaddedfield.resx">
+      <DependentUpon>202304051126387_ChecklistTablecreateddateaddedfield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304250630330_FieldaddTxnID.resx">
+      <DependentUpon>202304250630330_FieldaddTxnID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305030537452_ItemMovementdatehistory add FileName Column.resx">
+      <DependentUpon>202305030537452_ItemMovementdatehistory add FileName Column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305121108327_AddChecklist2newcolumn.resx">
+      <DependentUpon>202305121108327_AddChecklist2newcolumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306290916324_Change Column Type.resx">
+      <DependentUpon>202306290916324_Change Column Type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306291149300_AddManualFlagProductVendor.resx">
+      <DependentUpon>202306291149300_AddManualFlagProductVendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306300557182_InvoiceUserProductMapLog.resx">
+      <DependentUpon>202306300557182_InvoiceUserProductMapLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307060634221_INSERTCOLUMNProducts.resx">
+      <DependentUpon>202307060634221_INSERTCOLUMNProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307080859110_InsertColumnStoreID.resx">
+      <DependentUpon>202307080859110_InsertColumnStoreID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307181009441_TopSellerNormalizationRatio.resx">
+      <DependentUpon>202307181009441_TopSellerNormalizationRatio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308101358585_WebCamRecordingHistory.resx">
+      <DependentUpon>202308101358585_WebCamRecordingHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309250538020_storemasterupdate.resx">
+      <DependentUpon>202309250538020_storemasterupdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309250635383_removeWebCamtabel.resx">
+      <DependentUpon>202309250635383_removeWebCamtabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309250722090_webcamcamerawodel.resx">
+      <DependentUpon>202309250722090_webcamcamerawodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309260550419_WebcamHistoryaddcolumn.resx">
+      <DependentUpon>202309260550419_WebcamHistoryaddcolumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309260940168_addendhourcolumnwebcamhistory.resx">
+      <DependentUpon>202309260940168_addendhourcolumnwebcamhistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309261014181_UpdateColumnWebcamHistory.resx">
+      <DependentUpon>202309261014181_UpdateColumnWebcamHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312061019491_MessageMasterandProdectinaddField.resx">
+      <DependentUpon>202312061019491_MessageMasterandProdectinaddField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402190530009_addcolumnDepartmentNumberinProductModel.resx">
+      <DependentUpon>202402190530009_addcolumnDepartmentNumberinProductModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402190617568_updatecolumnDepartmentNumberinProductModel.resx">
+      <DependentUpon>202402190617568_updatecolumnDepartmentNumberinProductModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403110537448_NewTableOperatingRatioExpenseDepartment.resx">
+      <DependentUpon>202403110537448_NewTableOperatingRatioExpenseDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405020457032_pendingmigrationlasttwo.resx">
+      <DependentUpon>202405020457032_pendingmigrationlasttwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405020959113_CheckAllMigration.resx">
+      <DependentUpon>202405020959113_CheckAllMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405140530400_UpdatethependingmigrationforInvoiceAutomation.resx">
+      <DependentUpon>202405140530400_UpdatethependingmigrationforInvoiceAutomation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405170944466_updatedtwocolumnlengtHREmployeeMaster.resx">
+      <DependentUpon>202405170944466_updatedtwocolumnlengtHREmployeeMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405210651056_updatependingmodule.resx">
+      <DependentUpon>202405210651056_updatependingmodule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405270614239_usermasternullableremoveforhradmin.resx">
+      <DependentUpon>202405270614239_usermasternullableremoveforhradmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405271359586_pendingupdatemigrationtomatchdatabase.resx">
+      <DependentUpon>202405271359586_pendingupdatemigrationtomatchdatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405310546392_addedtwonewfieldfornewInvoiceAutomationinUploadPDFAutomationtable.resx">
+      <DependentUpon>202405310546392_addedtwonewfieldfornewInvoiceAutomationinUploadPDFAutomationtable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405311049486_addedInvoicefeedbackcolumnforuserfedbackstrategy.resx">
+      <DependentUpon>202405311049486_addedInvoicefeedbackcolumnforuserfedbackstrategy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406131233002_twonewmodelCustomerRecieveablesandApiKeyConfig.resx">
+      <DependentUpon>202406131233002_twonewmodelCustomerRecieveablesandApiKeyConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406131300537_updatedcustomerrecieveablemodeladdressfieldtomaxlength.resx">
+      <DependentUpon>202406131300537_updatedcustomerrecieveablemodeladdressfieldtomaxlength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406170624579_updatedcustomerrecieveablemodelandUploadPDFmodel.resx">
+      <DependentUpon>202406170624579_updatedcustomerrecieveablemodelandUploadPDFmodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406181339366_updatedAPIKeyConfigmodel.resx">
+      <DependentUpon>202406181339366_updatedAPIKeyConfigmodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406190540581_updatedInvoicemodelforInvoiceDate.resx">
+      <DependentUpon>202406190540581_updatedInvoicemodelforInvoiceDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406240719298_twonewmodelmultiandbucketupdatedInvoiceAutomationmodels.resx">
+      <DependentUpon>202406240719298_twonewmodelmultiandbucketupdatedInvoiceAutomationmodels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406241141267_customermigrationchanges.resx">
+      <DependentUpon>202406241141267_customermigrationchanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406251031470_addnullableandremoveforeignkeyinMultithreadingInvoiceLogs.resx">
+      <DependentUpon>202406251031470_addnullableandremoveforeignkeyinMultithreadingInvoiceLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406280449528_removeforeignkeyCustomersReceiveablesReceiptsandnullablecompanynameid.resx">
+      <DependentUpon>202406280449528_removeforeignkeyCustomersReceiveablesReceiptsandnullablecompanynameid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406280722016_newmodelHRStoremanageradded.resx">
+      <DependentUpon>202406280722016_newmodelHRStoremanageradded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407011131096_updatedCustomersReceiveablesReceiptsmodelwithtwonewfields.resx">
+      <DependentUpon>202407011131096_updatedCustomersReceiveablesReceiptsmodelwithtwonewfields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407031006526_twonewmodelterminationandwarninginHR.resx">
+      <DependentUpon>202407031006526_twonewmodelterminationandwarninginHR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407301249563_addednewcolumnupdateddateinproductstable.resx">
+      <DependentUpon>202407301249563_addednewcolumnupdateddateinproductstable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408161003495_UserMasterCustomPasswordforProductAPI.resx">
+      <DependentUpon>202408161003495_UserMasterCustomPasswordforProductAPI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408230502532_addNoteTaskReminderTable.resx">
+      <DependentUpon>202408230502532_addNoteTaskReminderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408291054484_addcolumninnoteandtasktable.resx">
+      <DependentUpon>202408291054484_addcolumninnoteandtasktable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409030450458_addinvoiceidinUserWiseTaskManagetable.resx">
+      <DependentUpon>202409030450458_addinvoiceidinUserWiseTaskManagetable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409061205454_addcolumnIsdeletedinusertaskmanagetable.resx">
+      <DependentUpon>202409061205454_addcolumnIsdeletedinusertaskmanagetable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409110644551_addcolumnsinusermasterandremindermanagetableforNotificationofWp.resx">
+      <DependentUpon>202409110644551_addcolumnsinusermasterandremindermanagetableforNotificationofWp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409241006361_StoreMasterLongitudeandLatitudefieldadded.resx">
+      <DependentUpon>202409241006361_StoreMasterLongitudeandLatitudefieldadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202409271015242_StoreMasterLongitudeandLatitudefielddatatypechangedandradiusfieldadded.resx">
+      <DependentUpon>202409271015242_StoreMasterLongitudeandLatitudefielddatatypechangedandradiusfieldadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410170435135_UserMasterModuleaddednewproductScanfieldsAPK.resx">
+      <DependentUpon>202410170435135_UserMasterModuleaddednewproductScanfieldsAPK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410170533570_UserMasterModuleaddednewproductScanfieldsAPKUpdated.resx">
+      <DependentUpon>202410170533570_UserMasterModuleaddednewproductScanfieldsAPKUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410171335431_UserMasterModuleChangeDatatypeStoreAccess.resx">
+      <DependentUpon>202410171335431_UserMasterModuleChangeDatatypeStoreAccess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202410181017412_UserMasteraddednewDatastorefield.resx">
+      <DependentUpon>202410181017412_UserMasteraddednewDatastorefield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411050509491_apkikeyconfigurationmodelupdatedwithcreatedandmodifiedbyanddatetime.resx">
+      <DependentUpon>202411050509491_apkikeyconfigurationmodelupdatedwithcreatedandmodifiedbyanddatetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412021339329_addExpensePaymentMethodMasterTable.resx">
+      <DependentUpon>202412021339329_addExpensePaymentMethodMasterTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412050638163_addedtwonewmodelnamedexpensecheckmasterandexpensecheckmasterdetails.resx">
+      <DependentUpon>202412050638163_addedtwonewmodelnamedexpensecheckmasterandexpensecheckmasterdetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412170641453_UpdatedExpenseCheckModuleforaddupdateanddeletefunctionality.resx">
+      <DependentUpon>202412170641453_UpdatedExpenseCheckModuleforaddupdateanddeletefunctionality.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412191221027_RemovePaymentMethodIdFromExpenseCheckTable.resx">
+      <DependentUpon>202412191221027_RemovePaymentMethodIdFromExpenseCheckTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412270918549_UpdateExpenseCheckTablePrintLaterAndMailingAddressDefaultTrue.resx">
+      <DependentUpon>202412270918549_UpdateExpenseCheckTablePrintLaterAndMailingAddressDefaultTrue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501021039068_updateExpenseCheckTableAddIsSyncField.resx">
+      <DependentUpon>202501021039068_updateExpenseCheckTableAddIsSyncField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501091348071_paymentmethodidaddinexpensechecktablealsolistidadd.resx">
+      <DependentUpon>202501091348071_paymentmethodidaddinexpensechecktablealsolistidadd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501100528435_addisactiveinexpensepaymentmethodtable.resx">
+      <DependentUpon>202501100528435_addisactiveinexpensepaymentmethodtable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501101317535_addedstoreIdasforeginkeyinExpensePaymentMethodMaster.resx">
+      <DependentUpon>202501101317535_addedstoreIdasforeginkeyinExpensePaymentMethodMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202501280511593_addqberrorandpaymentdateinexpensechecktable.resx">
+      <DependentUpon>202501280511593_addqberrorandpaymentdateinexpensechecktable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502040727026_HREmployeeMasterModifiedPassworddatecolumnaddedinTable.resx">
+      <DependentUpon>202502040727026_HREmployeeMasterModifiedPassworddatecolumnaddedinTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202502101331557_removedforeignkeyinexpensecheckmoduleofvendorandpaymentmethodId.resx">
+      <DependentUpon>202502101331557_removedforeignkeyinexpensecheckmoduleofvendorandpaymentmethodId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503071037471_CreatedGroupWiseStateStoreandUpdatedColumnstoShowPaidStatusofInvoiceandUpdatedBothTablefields.resx">
+      <DependentUpon>202503071037471_CreatedGroupWiseStateStoreandUpdatedColumnstoShowPaidStatusofInvoiceandUpdatedBothTablefields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503200942178_AddedQBPaidAmountinInvoiceTabletoshowPaidAmountfromQBend..resx">
+      <DependentUpon>202503200942178_AddedQBPaidAmountinInvoiceTabletoshowPaidAmountfromQBend..cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503211139215_addnewtableInvoicePaymentStatusDetails.resx">
+      <DependentUpon>202503211139215_addnewtableInvoicePaymentStatusDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503220745501_addednewfieldinUserMasterTableforImageUploadRightinProductScanApp.resx">
+      <DependentUpon>202503220745501_addednewfieldinUserMasterTableforImageUploadRightinProductScanApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202503240724542_addQbTotalAmountandupdateddateinInvoicePaymentStatusDetailstable.resx">
+      <DependentUpon>202503240724542_addQbTotalAmountandupdateddateinInvoicePaymentStatusDetailstable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504020718490_addednewModifiedondateforQBRefnewconsoletoupdatethemaintable.resx">
+      <DependentUpon>202504020718490_addednewModifiedondateforQBRefnewconsoletoupdatethemaintable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504021141289_UserMasterModelChangesforSynthesisInventoryRightsUploadtomanagetheUpdatedRights.resx">
+      <DependentUpon>202504021141289_UserMasterModelChangesforSynthesisInventoryRightsUploadtomanagetheUpdatedRights.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504030733410_AddednewmigrationforDesignatedStoreAccessinUserMasterforSynthesisInventoryApplication.resx">
+      <DependentUpon>202504030733410_AddednewmigrationforDesignatedStoreAccessinUserMasterforSynthesisInventoryApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504080542447_QBonlineConfigurationmodeladdednewCompanyNamecolumntoshowinQBonlinescreen.resx">
+      <DependentUpon>202504080542447_QBonlineConfigurationmodeladdednewCompanyNamecolumntoshowinQBonlinescreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202504300625464_AddednewfieldIsActiveinAPIKeyConfigurationmodelforStatusofKey.resx">
+      <DependentUpon>202504300625464_AddednewfieldIsActiveinAPIKeyConfigurationmodelforStatusofKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505011913431_Addednewtabletohandletheuserwiserightsaccess.resx">
+      <DependentUpon>202505011913431_Addednewtabletohandletheuserwiserightsaccess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505071232421_AddednewmoduleforUserWiseRightStoresandUserRightsTypeModuleApproverfornewupdateofUserRightsModule.resx">
+      <DependentUpon>202505071232421_AddednewmoduleforUserWiseRightStoresandUserRightsTypeModuleApproverfornewupdateofUserRightsModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505080512104_addednewfieldforDepartmentReferenceforUserRightsnewImplementation.resx">
+      <DependentUpon>202505080512104_addednewfieldforDepartmentReferenceforUserRightsnewImplementation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202506021150422_addednewnamedCompaniesCompetitiorsandUseofCompaniesCompetitorsinSynthesisAPKInventoryinCompaniesPage.resx">
+      <DependentUpon>202506021150422_addednewnamedCompaniesCompetitiorsandUseofCompaniesCompetitorsinSynthesisAPKInventoryinCompaniesPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202506261017211_addednewenumcolumnnamedlangauageselectioninUserMasterModule.resx">
+      <DependentUpon>202506261017211_addednewenumcolumnnamedlangauageselectioninUserMasterModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507021012417_AddIsOnlineinUserMasterAndChatModuleTablesCreated.resx">
+      <DependentUpon>202507021012417_AddIsOnlineinUserMasterAndChatModuleTablesCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507081208418_updateconversationidcolumninttolong.resx">
+      <DependentUpon>202507081208418_updateconversationidcolumninttolong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507090535569_addednewtablenamedmenumasterandchangesdoneinUserMasterforDesignatedHomePageUserwise.resx">
+      <DependentUpon>202507090535569_addednewtablenamedmenumasterandchangesdoneinUserMasterforDesignatedHomePageUserwise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507101041216_updatedmenumasterwithnewcolumnnameMenuRoleList.resx">
+      <DependentUpon>202507101041216_updatedmenumasterwithnewcolumnnameMenuRoleList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507131000398_UpdatedNewSetofRuleforCompaniesCompetitorsUserMasterandStoreMaster.resx">
+      <DependentUpon>202507131000398_UpdatedNewSetofRuleforCompaniesCompetitorsUserMasterandStoreMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507131023227_UpdatedCompaniesCompetitorsforImageURLColumnAddition.resx">
+      <DependentUpon>202507131023227_UpdatedCompaniesCompetitorsforImageURLColumnAddition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507131120167_CreatednewcolumninStoreMasterTable.resx">
+      <DependentUpon>202507131120167_CreatednewcolumninStoreMasterTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507140452343_UpdatednewmoduleofChatGroupsforIsAdminandCreatedDate.resx">
+      <DependentUpon>202507140452343_UpdatednewmoduleofChatGroupsforIsAdminandCreatedDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507140516032_UpdatedUserMasterModuleforCompaniesCompetitorsSelectionId.resx">
+      <DependentUpon>202507140516032_UpdatedUserMasterModuleforCompaniesCompetitorsSelectionId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507230637384_UpdateChatMessengertableaddnewColumns.resx">
+      <DependentUpon>202507230637384_UpdateChatMessengertableaddnewColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202507300946575_UpdateChatGroupMemberTableAddColumnIsAdmin.resx">
+      <DependentUpon>202507300946575_UpdateChatGroupMemberTableAddColumnIsAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202508011000470_updatechatmessengertableaddIsReadField.resx">
+      <DependentUpon>202508011000470_updatechatmessengertableaddIsReadField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202508040515019_updateisreadcolumntostringinchatmessengertable.resx">
+      <DependentUpon>202508040515019_updateisreadcolumntostringinchatmessengertable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202508070714553_addednewtwofieldsforQBAppchangesnamedClientIdandClientSecret.resx">
+      <DependentUpon>202508070714553_addednewtwofieldsforQBAppchangesnamedClientIdandClientSecret.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202508071022258_addednewtableQuickBooksStorewiseTokenfortempcredentialssave.resx">
+      <DependentUpon>202508071022258_addednewtableQuickBooksStorewiseTokenfortempcredentialssave.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202508211413587_AddednewmigrationofUniversalVendorManagementModuleNewTableCreation.resx">
+      <DependentUpon>202508211413587_AddednewmigrationofUniversalVendorManagementModuleNewTableCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202508220607256_UpdatedoneinVendorMasterForeginkeyofnewtableUniversalVendorMaster.resx">
+      <DependentUpon>202508220607256_UpdatedoneinVendorMasterForeginkeyofnewtableUniversalVendorMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509040724242_AddednewTwocolumnsnameFCMTokenWebandFCMTokenAppforNotificationAPKofChatModule.resx">
+      <DependentUpon>202509040724242_AddednewTwocolumnsnameFCMTokenWebandFCMTokenAppforNotificationAPKofChatModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509080613157_AddedtwonewfieldsnamePlayerIdandDeviceTypetostoreforFirebasepushnotificationinchatmodule.resx">
+      <DependentUpon>202509080613157_AddedtwonewfieldsnamePlayerIdandDeviceTypetostoreforFirebasepushnotificationinchatmodule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509081415366_CheckAllPendingMigrationforUpdateVendorUniversalandVendorManagementUpdatesonit.resx">
+      <DependentUpon>202509081415366_CheckAllPendingMigrationforUpdateVendorUniversalandVendorManagementUpdatesonit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509100600545_VendorDepartmentRelationMasterAddIsFlag.resx">
+      <DependentUpon>202509100600545_VendorDepartmentRelationMasterAddIsFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509160542491_addednewmodelnameQBFinanicalClosingYearforconfiguartionoffinalyear.resx">
+      <DependentUpon>202509160542491_addednewmodelnameQBFinanicalClosingYearforconfiguartionoffinalyear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202510060911542_addednewfieldofNewSortingNoforpayrollaccountsettingwithpayrollexpense.resx">
+      <DependentUpon>202510060911542_addednewfieldofNewSortingNoforpayrollaccountsettingwithpayrollexpense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511060916148_addnewfiledsinUniversalVendorMaster.resx">
+      <DependentUpon>202511060916148_addnewfiledsinUniversalVendorMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511131326594_UpdatedUniversalVendorMasterTableforUpdateFlag.resx">
+      <DependentUpon>202511131326594_UpdatedUniversalVendorMasterTableforUpdateFlag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511131330249_updatedUniversalVendorMasterwithBankAccountNumberandRoutingNumber.resx">
+      <DependentUpon>202511131330249_updatedUniversalVendorMasterwithBankAccountNumberandRoutingNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511131334384_UpdatedVendorMasterwithBankAccountNumberandRoutingNumber.resx">
+      <DependentUpon>202511131334384_UpdatedVendorMasterwithBankAccountNumberandRoutingNumber.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{8AD24E48-618E-445A-8514-583110ADDC49}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

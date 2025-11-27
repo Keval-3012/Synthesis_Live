@@ -1,0 +1,55 @@
+@*this is for notification dropdown which is on bell icon*@
+@{
+    string ControllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    string ActionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+}
+@if (@ViewBag.Modalcount > 0)
+{
+    <a class="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#" aria-expanded="true"><span class="badge">@ViewBag.Modalcount</span> </a>
+}
+else
+{
+    <a class="dropdown-toggle" title="Tasks"> </a>
+}
+@if (@ViewBag.Modalcount > 0)
+{
+    var storenameval = "";
+
+    <ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
+        @foreach (var item in Model)
+        {
+            storenameval = item.StoreName;
+            if (item.NotificationColor == false || item.NotificationColor == null)
+            {
+                <li class="blue"> <a href="@Url.Action("Details", "Invoices", new { Id = item.InvoiceId})"> <span class="message"><strong> @item.UserName </strong>sent you the Invoice# <strong>@item.InvoiceNumber</strong> for approval.</span> </a> </li>
+            }
+            else
+            {
+                <li class="grey"> <a href="@Url.Action("Details", "Invoices", new { Id = item.InvoiceId})"> <span class="message"> <strong>@item.UserName</strong> sent you the Invoice# <strong>@item.InvoiceNumber</strong> for approval.</span> </a> </li>
+            }
+        }
+
+        <li class="btnviewall"><a href="@Url.Action("Index", "Notificationreport", new { storenameval = storenameval })" class="dropdownviewall">View all</a></li>}
+    </ul>
+}
+
+<script>
+    $('.badgeicon').click(function () {
+        var cnt = '@ViewBag.Modalcount';
+        if (cnt == 0) {
+
+            $('.overlaytransparent').hide();
+        }
+        else {
+            $('.overlaytransparent').show();
+        }
+})
+
+$('.overlaytransparent').click(function(){
+    $(this).hide();
+
+    })
+    $(document).ready(function () {
+        localStorage.setItem('FromInvoicePage', '');
+    });
+</script>

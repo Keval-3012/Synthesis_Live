@@ -1,0 +1,78 @@
+﻿@model EntityModels.Models.LevelsApprover
+<style>
+    hr {
+        border-top: 1px solid #a52f2f;
+    }
+</style>
+<div id="globalTabContent">
+    <div id="PanAddUpdate">
+        <div class="header-small special_bg">
+            <h3>Edit Invoice Approval Levels </h3>
+        </div>
+        @using (Html.BeginForm("Edit", "InvoiceApprovalLevels", FormMethod.Post, new { id = "frmuser" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.LevelsApproverId)
+            @Html.HiddenFor(model => model.CreatedBy)
+            @Html.HiddenFor(model => model.CreatedOn)
+
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label>
+                                        Level Approver<span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.LevelName, new { maxlength = 100, @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Sort Name<span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.LevelSortName, new { maxlength = 100, @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LevelSortName, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding-top:45px;">
+                                <div class="form-group">
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;  @Html.CheckBoxFor(model => model.IsActive, htmlAttributes: new { @class = "Remember ", @style = "margin: 1px;position: absolute;left: 25px;width: 26px;height: 22px;display: inline;opacity: unset;" })
+                                    <span class="text" style="font-size: 18px;margin-bottom: 8px;">Active</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding-top:40px;text-align:center;">
+                                <div class="from-group row">
+                                    <div class="col-sm-12">
+                                        <input type="submit" value="Update" class="buttonbox btnsubmit" />
+                                        @Html.ActionLink("Cancel", "Create", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr style="color:red" />
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        }
+        @{
+            Html.RenderAction("Grid");
+        }
+    </div>
+
+</div>
+
+<script src="~/Form_JS/InvoiceApprovalLevels.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

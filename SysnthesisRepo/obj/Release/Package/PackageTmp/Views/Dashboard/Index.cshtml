@@ -1,0 +1,192 @@
+﻿@model EntityModels.Models.DashboardDaily
+@{ Layout = "~/Views/Shared/AdminMaster.cshtml"; }
+@using Utility
+
+<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />
+
+@*<script src="js/Chart.min.js"></script>
+
+    <script src="js/bar-multicolor.js"></script>*@
+<script src="~/Content/Admin/js/DashboardChart/bar-multicolor.js"></script>
+<script src="~/Content/Admin/js/DashboardChart/Chart.min.js"></script>
+<body>
+    <div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>
+    @*<div class="logoblock"></div>*@
+    @*<div class="topbar"></div>*@
+    @*<div class="sidebar"></div>*@
+    <div class="synthesisdashboardcontainer">
+        <div class="datepicker-placeholder">
+            <input name="Startdate" type="text" value="11-26-2021" maxlength="100" id="Startdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+        </div>
+        <div class="top-widget-row">
+            <div>
+                <span id="CustomerCount">@Model.CustomerCount</span>
+                <span>Customer Count</span>
+            </div>
+            <div>
+                <span id="AllVoids">$ @Model.AllVoidsAmt</span>
+                <span>All Voids</span>
+            </div>
+
+            <div>
+                <span id="ItemCorrects">$ @Model.ItemCorrectsAmt</span>
+                <span>Item Corrects</span>
+            </div>
+
+            <div>
+                <span id="ItemReturns">$ @Model.ItemReturnsAmt</span>
+                <span>Item Returns</span>
+            </div>
+
+            <div>
+                <span id="TotalCash">$ @Model.TotalCash</span>
+                <span>Total Cash</span>
+            </div>
+
+            <div>
+                <span id="AverageSale">$ @Model.AverageSale</span>
+                <span>Average Sale</span>
+            </div>
+
+            <div>
+                <span id="CashPayout">$ @Model.CashPayout</span>
+                <span>Cash Payout</span>
+            </div>
+            <div>
+                <span id="Over">$ @Model.Over</span>
+                <span>Over</span>
+            </div>
+
+        </div>
+        <div class="middle-widget-row">
+            <div class="middle-widget-one">
+                <img src="/Content/Admin/images/Dashboard/Group 43.png" />
+                <div class="middle-widget-row-item02">
+                    <span>Total Sale, @*<b>Current Monday</b>*@</span>
+                    <span id="TotalSalesCurrentDay">$ @Model.TotalSalesCurrentDay</span>
+                    <span id="TotalSalesLastWeek">@*Last Monday,*@ $ @Model.TotalSalesLastWeek</span>
+                </div>
+
+                <div class="middle-widget-row-item03">
+
+                    <span>Sales Growth</span>
+
+
+                    <div><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" /><span>@Model.SalesGrowth%</span></div>
+                </div>
+            </div>
+            <div class="middle-widget-two">
+                <div class="middle-widget-two-Offline">
+                    <div class="offlineStoreDiv">
+                        <img src="/Content/Admin/images/Dashboard/offline-store.png">
+                        <span>Offline</span>
+                        <span id="Offline">@Model.Offline%</span>
+                    </div>
+
+                </div>
+                <div class="vs"><span>Vs</span></div>
+                <div class="middle-widget-two-online">
+                    <div class="offlineStoreDiv">
+
+                        <img src="/Content/Admin/images/Dashboard/online-store.png">
+                        <span>Online</span>
+                        <span id="Online">@Model.Online%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="middle-widget-three">
+
+                <span>Invoices</span>
+                <div>
+                    <img src="/Content/Admin/images/Dashboard/added-invoices.png">
+                    <span>Added Invoices</span>
+
+
+                </div>
+
+                <span id="InvoicesAdded">@Model.InvoicesAdded</span>
+
+                <div>
+                    <img src="/Content/Admin/images/Dashboard/approved-invoices.png">
+                    <span>Approved Invoices</span>
+                </div>
+
+                <span id="InvoicesApproved">@Model.InvoicesApproved</span>
+
+            </div>
+
+
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span>Daily Sales Graph</span>
+                <div>
+                    <label><input type="radio" name="radio" />Sales</label>
+                    <label><input type="radio" name="radio" />Customer Count</label>
+                    <label><input type="radio" name="radio" />Average Basket</label>
+                </div>
+                <div class="graphPlaceHolder">
+                    <canvas id="bar-chartcanvas"></canvas>
+                </div>
+
+            </div>
+
+
+            <div class=refineContainer>
+                <span>Refine</span>
+                <div class="filterStore">
+                    <span>Store</span>
+                    <div class="storeList">
+                        @foreach (var item in Model.StoreList)
+                        {
+                            <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="Bike"><label for="@item.Id">@item.Text</label></li>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="filterStore">
+                    <span>Departments</span>
+                    <div class="departmentList">
+                        @foreach (var item in Model.DepartmentList)
+                        {
+                            <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="Bike"><label for="@item.Id">@item.Text</label></li>
+
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+<script>
+    var Startdate = '@ViewBag.Startdate';
+</script>
+
+

@@ -1,0 +1,22 @@
+2025-11-07 09:59:04.9659|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/7/2025 9:59:04 AM
+2025-11-07 09:59:04.9659|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/7/2025 9:59:04 AM
+2025-11-07 09:59:26.2506|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/7/2025 9:59:26 AM - An error occurred while sending the request.
+2025-11-07 09:59:56.8567|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/7/2025 9:59:56 AM
+2025-11-07 09:59:57.4544|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 9:59:57 AM
+2025-11-07 10:00:04.8452|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:04 AM
+2025-11-07 10:00:06.6959|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:06 AM
+2025-11-07 10:00:07.7575|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:07 AM
+2025-11-07 10:00:10.0325|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/7/2025 10:00:10 AM
+2025-11-07 10:00:10.1879|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:10 AM
+2025-11-07 10:00:32.3935|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/7/2025 10:00:32 AM
+2025-11-07 10:00:33.6335|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:33 AM
+2025-11-07 10:00:41.8685|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:41 AM
+2025-11-07 10:00:43.1670|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:43 AM
+2025-11-07 10:00:44.5506|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:44 AM
+2025-11-07 10:00:46.0234|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:46 AM
+2025-11-07 10:00:47.7486|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:47 AM
+2025-11-07 10:00:49.3205|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:00:49 AM
+2025-11-07 10:01:02.2128|INFO|SysnthesisRepo.Controllers.CompaniesController|CompaniesController - Index - 11/7/2025 10:01:02 AM
+2025-11-07 10:01:02.6734|INFO|Repository.CompaniesRepository|CompaniesRepository - GetAllStoreMasters - Retrieved 12 stores for GroupId: 0
+2025-11-07 10:01:05.3424|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersRepository - ManagerUserList - 11/7/2025 10:01:05 AM
+2025-11-07 10:01:05.8389|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 11/7/2025 10:01:05 AM

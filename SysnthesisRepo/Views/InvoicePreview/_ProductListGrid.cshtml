@@ -1,0 +1,24 @@
+﻿@*@using Syncfusion.EJ2
+@{
+
+    List<object> commands = new List<object>();
+
+    commands.Add(new { type = "Link", buttonOption = new { content = "Link" }});
+    commands.Add(new { type = "Linked", buttonOption = new { content = "Linked" } });
+}
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/InvoicePreview/UrlDatasource").Adaptor("UrlAdaptor")).EnableStickyHeader(false).AllowTextWrap().Columns(col =>
+{
+    col.Field("ProductVendorId").IsPrimaryKey(true).HeaderText("Vendor ID").Visible(false).Add();
+    col.Field("ProductId").HeaderText("Product Id").Visible(false).Add();
+    col.HeaderText("Action").Width("60").Commands(commands).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+    col.Field("Vendors").HeaderText("Vendor Name").Width("200").Add();
+    col.Field("ItemNo").HeaderText("Item No").Width("100").Add();
+    col.Field("Description").HeaderText("Description").Width("300").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+    col.Field("UPCCode").HeaderText("UPC Code").Width("150").Add();
+    col.Field("Brand").HeaderText("Brands").Width("100").Add();
+    col.Field("Size").HeaderText("Size").Width("80").Add();
+    col.Field("Price").HeaderText("Price").Width("80").Add();
+}).AllowPaging().Load("load").RowDataBound("rowDataBound").PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(new List<string>() { "Search" }).Render()
+</div>
+@Html.EJS().ScriptManager()*@

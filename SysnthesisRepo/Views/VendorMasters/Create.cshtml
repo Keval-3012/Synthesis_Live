@@ -1,0 +1,426 @@
+﻿@model EntityModels.Models.VendorMaster
+@using Utility 
+@{
+    //Layout = "~/Areas/Admin/Views/Shared/AdminMAster.cshtml";
+}
+@*<script src='@wwwroot.Class.AdminSiteConfiguration.GetURL()Content/Admin/assets/js/datetime/bootstrap-datepicker.js'></script>*@
+
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+</style>
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            @*<a class="btn btn-danger" onclick="IsLock(@item.Reg_userid)" ;>Ok </a>*@
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            $(".modal-title").append("@ViewBag.Message");
+            $("#popupid").modal("show");
+            //$(".modal-content").css('border-radius','20px');
+        };
+    </script>
+}
+@if (ViewBag.StatusMessageString != null)
+{
+    if (ViewBag.StatusMessageString != "")
+    {
+        <script>
+                MyCustomToster('@ViewBag.StatusMessageString');
+        </script>
+    }
+}
+
+@using (Html.BeginForm("Create", "VendorMasters", FormMethod.Post, new { id = "frmMain" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div id="globalTabContent">
+
+        <div id="progress" class="modal">
+            <div class="center">
+                @*<img src="/images/loading.gif" />*@
+            </div>
+        </div>
+        <div id="PanAddUpdate">
+            <div class="header-small special_bg">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3>Add Vendor </h3>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+
+
+            </div>
+            @if (TempData["sMessage"] != null)
+            {
+                <script type="text/javascript">
+
+                </script>
+            }
+            @if (TempData["Sucessme"] != null)
+            {
+                <script type="text/javascript">
+                    window.onload = function () {
+                        alert('@TempData["Sucessme"]');
+                    };
+                </script>
+            }
+
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                @*@Html.HiddenFor(m => m.QBType)*@
+                @Html.HiddenFor(m => m.StoreId)
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Select Store
+                                    </label>
+                                    @Html.ListBox("MultiStoreId", null, htmlAttributes: new { @class = "form-control multi-select" , @onchange = "SetDepartmentDropDown();" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row addinvoicere">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Display Name <span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.VendorName, new { maxlength = 300, @class = "form-control", placeholder = "Name" })
+                                    <span class="highlight">     @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "form-error-msg show" })</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Company Name
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CompanyName, new { maxlength = 100, @class = "form-control", placeholder = "Company Name" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row addinvoicere">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Print On check
+                                    </label>
+                                    @Html.TextBoxFor(model => model.PrintOnCheck, new { maxlength = 200, @class = "form-control", placeholder = "Print On check" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Address 1
+                                    </label>
+                                    @Html.TextAreaFor(model => model.Address, new { maxlength = 500, @class = "form-control", placeholder = "Address", autocomplete = "off" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row addinvoicere">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Address 2
+                                    </label>
+                                    @Html.TextAreaFor(model => model.Address2, new { maxlength = 500, @class = "form-control", placeholder = "Address", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Phone Number
+                                    </label>
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { maxlength = 30, @class = "form-control", placeholder = "(XXX) XXX-XXXX", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row addinvoicere">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        City
+                                    </label>
+                                    @Html.TextBoxFor(model => model.City, new { maxlength = 50, @class = "form-control", placeholder = "City", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        State
+                                    </label>
+                                    @Html.DropDownList("State", null, "-- Select --", htmlAttributes: new { @class = "form-control" })
+                                    @*@Html.TextBoxFor(model => model.State, new { maxlength = 255, @class = "form-control", placeholder = "State" })*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Country
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Country, new { maxlength = 50, @class = "form-control", placeholder = "Country", @readonly = true })
+                                </div>
+                            </div>
+                            <div class="col-md-6 addinvoicere">
+                                <div class="form-group">
+                                    <label>
+                                        Postal Code
+                                    </label>
+                                    @Html.TextBoxFor(model => model.PostalCode, new { maxlength = 50, @class = "form-control", placeholder = "Postal Code", autocomplete = "off" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Email
+                                    </label>
+                                    @Html.TextBoxFor(model => model.EMail, new { maxlength = 80, @class = "form-control", placeholder = "Email" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Select Department
+                                    </label>
+                                    @Html.ListBox("MultiDepartmentId", null, htmlAttributes: new { @class = "form-control multi-select" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Instructions
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Instruction, new { @class = "form-control", placeholder = "Instructions" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBoxFor(a => a.IsActive, new { @class = "chk", @style = "opacity:1;display:block;position:initial;" })
+                                        <label for="IsActive" style="padding-left:28px;margin-top:-30px;">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                <input type="submit" name="btnsubmit" value="Save" id="btnSave" class="buttonbox btnsubmit" />
+                                <input type="submit" name="btnsubmit" value="Save & New" id="btnSaveNew" class="buttonbox btnsubmit" />
+                                @Html.ActionLink("Cancel", "Index", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+<script>
+    var isValid = '@Html.Raw(Json.Encode(ViewData.ModelState.IsValid))'
+    $(document).ready(function () {
+        $("#VendorName").autocomplete(false);
+        $("#CompanyName").autocomplete(false);
+        $("#PrintOnCheck").autocomplete(false);
+        $("#Address").attr("autocomplete", "nope");
+        $("#Address2").attr("autocomplete", "nope");
+        $("#PhoneNumber").attr("autocomplete", "nope");
+        $("#City").attr("autocomplete", "nope");
+        $("#PostalCode").attr("autocomplete", "nope");
+        $("#EMail").attr("autocomplete", "nope");
+
+        if (isValid == "false") {
+            $('.addinvoicere :input').attr('disabled', false);
+            $('#btnSave').attr("disabled", false);
+            $('#btnSaveNew').attr("disabled", false);
+        }
+        else {
+            $('.addinvoicere :input').attr('disabled', true);
+            $('#btnSave').attr("disabled", true);
+            $('#btnSaveNew').attr("disabled", true);
+        }
+
+        $("#Country").val("USA")
+    })
+    $(document).ready(function () {
+        $(".multi-select").select2({ multiple: true });
+    });
+
+    $("#VendorName").keyup(function () {
+        $("#CompanyName").val($(this).val());
+    });
+    $("#CompanyName").keyup(function () {
+        $("#PrintOnCheck").val($(this).val());
+    });
+
+    document.getElementById('PhoneNumber').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+    //$("#PhoneNumber").keyup(function () {
+    //    $(this).val($(this).val().replace(/^(\d{3})(\d{3})(\d)+$/, "($1)$2-$3"));
+
+    //});
+
+    $("#MultiStoreId").change(function () {
+        var optionSelected = $(this).find("option:selected").val();
+        if (optionSelected == undefined) {
+            $('.addinvoicere :input').attr('disabled', true);
+            $('#btnSave').attr("disabled", true);
+            $('#btnSaveNew').attr("disabled", true);
+        }
+        else {
+            $('#btnSave').attr("disabled", false);
+            $('#btnSaveNew').attr("disabled", false);
+            $('.addinvoicere :input').attr('disabled', false);
+            var selected = $('#MultiStoreId option:selected');
+            var Store = [];
+            var x = document.getElementById("MultiStoreId");
+            for (var i = 0; i < x.options.length; i++) {
+                if (x.options[i].selected == true) {
+                    Store.push(x.options[i].value);
+                }
+            }
+        }
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/QBConfiguration/GetQBTypeAndFlag',
+            type: "POST",
+            data: { "StoreID": Store },
+            success: function (response) {
+                if (response.QBType == "Online") {
+                    if (response.DesktopTrue == "False") {
+                        $("#Name").attr('maxlength', 500);
+                        $("#CompanyName").attr('maxlength', 100);
+                        $("#Address1").attr('maxlength', 500);
+                        $("#Address2").attr('maxlength', 500);
+                        $("#PhoneNumber").attr('maxlength', 30);
+                        $("#City").attr('maxlength', 255);
+                        $("#State").attr('maxlength', 255);
+                        $("#Country").attr('maxlength', 255);
+                        $("#PostalCode").attr('maxlength', 255);
+                        $("#EMail").attr('maxlength', 80);
+                        $(".addinvoice").show();
+                        $("#StoreId").val(response.StoreID);
+                        $("#QBType").val(response.QBType);
+                    }
+                    else {
+                        $("#Name").attr('maxlength', 41);
+                        $("#CompanyName").attr('maxlength', 41);
+                        $("#Address1").attr('maxlength', 41);
+                        $("#Address2").attr('maxlength', 41);
+                        $("#PhoneNumber").attr('maxlength', 21);
+                        $("#City").attr('maxlength', 31);
+                        $("#State").attr('maxlength', 21);
+                        $("#Country").attr('maxlength', 31);
+                        $("#PostalCode").attr('maxlength', 31);
+                        $("#EMail").attr('maxlength', 41);
+                        $(".addinvoice").show();
+                        $("#StoreId").val(response.StoreID);
+                        $("#QBType").val(response.QBType);
+                    }
+
+
+                }
+                else if (response.QBType == "Desktop") {
+                    $("#Name").attr('maxlength', 41);
+                    $("#CompanyName").attr('maxlength', 41);
+                    $("#Address1").attr('maxlength', 41);
+                    $("#Address2").attr('maxlength', 41);
+                    $("#PhoneNumber").attr('maxlength', 21);
+                    $("#City").attr('maxlength', 31);
+                    $("#State").attr('maxlength', 21);
+                    $("#Country").attr('maxlength', 31);
+                    $("#PostalCode").attr('maxlength', 31);
+                    $("#EMail").attr('maxlength', 41);
+                    $(".addinvoice").show();
+                    $("#StoreId").val(response.StoreID);
+                    $("#QBType").val(response.QBType);
+                }
+                else {
+                    $("#Name").attr('maxlength', 41);
+                    $("#CompanyName").attr('maxlength', 41);
+                    $("#Address1").attr('maxlength', 41);
+                    $("#Address2").attr('maxlength', 41);
+                    $("#PhoneNumber").attr('maxlength', 21);
+                    $("#City").attr('maxlength', 31);
+                    $("#State").attr('maxlength', 21);
+                    $("#Country").attr('maxlength', 31);
+                    $("#PostalCode").attr('maxlength', 31);
+                    $("#EMail").attr('maxlength', 41);
+                    $(".addinvoice").show();
+                    $("#StoreId").val(response.StoreID);
+                    $("#QBType").val(response.QBType);
+                }
+
+            },
+            error: function (Result) {
+            }
+        });
+
+    });
+    function SetDepartmentDropDown() {
+        
+        var Mult = $("#MultiStoreId").val();
+        $.ajax({
+            url: '@Url.Action("SetDepartment", "VendorMasters")',
+            type: "POST",
+            data: { "Mult": Mult },
+            "success": function (response) {
+
+                $("#MultiDepartmentId").html("");
+                $('select#MultiDepartmentId').html('<option value="0">--Select--</option>');
+                $.each(response, function (data, value) {
+
+                    $("#MultiDepartmentId").append(
+                        $('<option></option>').val(value.DepartmentId).html(value.DepartmentName));
+                });
+            },
+            error: function (Result) {
+            }
+        });
+    }
+</script>

@@ -1,0 +1,54 @@
+2025-09-26 15:11:30.6261|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/26/2025 3:11:30 PM
+2025-09-26 15:11:58.3403|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 9/26/2025 3:11:58 PM - An error occurred while sending the request.
+2025-09-26 15:13:04.1051|ERROR|Repository.DashboardRepository|DashboardRepository - Dashboard_Daily - 9/26/2025 3:13:04 PM - Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2025-09-26 15:13:14.5258|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 9/26/2025 3:13:14 PM - Object reference not set to an instance of an object.
+2025-09-26 15:13:19.6580|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 9/26/2025 3:13:19 PM
+2025-09-26 15:13:57.7320|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 9/26/2025 3:13:57 PM - An error occurred while sending the request.
+2025-09-26 15:14:39.0046|ERROR|SysnthesisRepo.Controllers.TerminalController|TerminalController - ShiftDataGrid - 9/26/2025 3:14:39 PM - String was not recognized as a valid DateTime.
+2025-09-26 15:14:41.2371|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:14:41 PM
+2025-09-26 15:14:57.4822|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:14:57 PM
+2025-09-26 15:15:01.9095|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 9/26/2025 3:15:01 PM
+2025-09-26 15:15:09.6731|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 9/26/2025 3:15:09 PM
+2025-09-26 15:29:53.4753|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 9/26/2025 3:29:53 PM
+2025-09-26 15:30:02.5496|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:30:02 PM
+2025-09-26 15:30:40.5287|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:30:40 PM
+2025-09-26 15:31:06.6931|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:31:06 PM
+2025-09-26 15:31:11.4545|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:31:11 PM
+2025-09-26 15:34:25.3061|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:34:25 PM
+2025-09-26 15:34:28.2441|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:34:28 PM
+2025-09-26 15:34:31.3987|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:34:31 PM
+2025-09-26 15:34:32.4997|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:34:32 PM
+2025-09-26 15:34:36.3556|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:34:36 PM
+2025-09-26 15:38:07.5120|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:38:07 PM
+2025-09-26 15:38:09.4716|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:38:09 PM
+2025-09-26 15:38:11.3883|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:38:11 PM
+2025-09-26 15:38:47.4884|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:38:47 PM
+2025-09-26 15:38:52.4104|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:38:52 PM
+2025-09-26 15:40:07.9481|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:40:07 PM
+2025-09-26 15:40:12.4441|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:40:12 PM
+2025-09-26 15:41:20.4113|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:41:20 PM
+2025-09-26 15:44:05.0791|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:44:05 PM
+2025-09-26 15:45:01.6165|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:45:01 PM
+2025-09-26 15:48:16.6544|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 9/26/2025 3:48:16 PM
+2025-09-26 15:49:41.5970|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 9/26/2025 3:49:41 PM - Could not find a part of the path 'D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SysnthesisRepo\UserFiles\Done\1057185078_reg2-2.pdf'.
+2025-09-26 15:49:50.8297|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 9/26/2025 3:49:50 PM
+2025-09-26 15:49:59.3394|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:49:59 PM
+2025-09-26 15:52:44.2655|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:52:44 PM
+2025-09-26 15:55:49.1367|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 3:55:49 PM
+2025-09-26 16:01:25.3036|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:01:25 PM
+2025-09-26 16:03:32.6447|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:03:32 PM
+2025-09-26 16:04:26.1174|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:04:26 PM
+2025-09-26 16:04:44.9595|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:04:44 PM
+2025-09-26 16:05:05.3097|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasourceDailyPos - 9/26/2025 4:05:05 PM
+2025-09-26 16:15:29.6969|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:15:29 PM
+2025-09-26 16:19:13.1358|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:19:13 PM
+2025-09-26 16:20:14.0687|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:20:14 PM
+2025-09-26 16:32:01.6232|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:32:01 PM
+2025-09-26 16:33:43.7416|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:33:43 PM
+2025-09-26 16:36:24.1603|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:36:24 PM
+2025-09-26 16:45:03.3902|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:45:03 PM
+2025-09-26 16:46:57.6513|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:46:57 PM
+2025-09-26 16:52:06.2977|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:52:06 PM
+2025-09-26 16:53:09.8846|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:53:09 PM
+2025-09-26 16:57:29.4333|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:57:29 PM
+2025-09-26 16:57:41.4536|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 9/26/2025 4:57:41 PM

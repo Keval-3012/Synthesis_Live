@@ -1,0 +1,281 @@
+﻿
+.excelBar {
+    width: 100%;
+    background-color: #194835;
+    padding: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    .excelBar .documentName {
+        color: white;
+        font-weight: 400;
+        font-size: 1.2em;
+        margin-left: 1em;
+    }
+
+    .excelBar img {
+        width: 32px;
+    }
+
+    .excelBar .buttonsContainer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .excelBar a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: white;
+        padding: 6px 15px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.4);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 5px;
+        margin: 0px 3px;
+        font-size: 14px;
+        font-weight: 500;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+        .excelBar a:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            -webkit-filter: brightness(1.2);
+            filter: brightness(1.2);
+        }
+
+        .excelBar a.downloadButton {
+            background-color: #3777f7;
+            text-decoration: none;
+        }
+
+        .excelBar a.saveButton {
+            background-color: #008b23;
+            text-decoration: none;
+        }
+
+        .excelBar a img {
+            width: 18px;
+            -webkit-filter: invert(1);
+            filter: invert(1);
+            margin-right: 10px;
+        }
+
+.docXBar {
+    width: 100%;
+    background-color: #282e8b;
+    padding: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    .docXBar .documentName {
+        color: white;
+        font-weight: 400;
+        font-size: 1.2em;
+        margin-left: 1em;
+    }
+
+    .docXBar img {
+        width: 32px;
+    }
+
+    .docXBar .buttonsContainer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .docXBar a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: white;
+        padding: 6px 15px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.4);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 5px;
+        margin: 0px 3px;
+        font-size: 14px;
+        font-weight: 500;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+        .docXBar a:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            -webkit-filter: brightness(1.2);
+            filter: brightness(1.2);
+        }
+
+        .docXBar a.downloadButton {
+            background-color: #3777f7;
+            text-decoration: none;
+        }
+
+        .docXBar a.saveButton {
+            background-color: #008b23;
+            text-decoration: none;
+        }
+
+        .docXBar a img {
+            width: 18px;
+            -webkit-filter: invert(1);
+            filter: invert(1);
+            margin-right: 10px;
+        }
+
+.pdfBar {
+    width: 100%;
+    background-color: #9e1f1f;
+    padding: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    .pdfBar .documentName {
+        color: white;
+        font-weight: 400;
+        font-size: 1.2em;
+        margin-left: 1em;
+    }
+
+    .pdfBar img {
+        width: 32px;
+    }
+
+    .pdfBar .buttonsContainer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .pdfBar a {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: white;
+        padding: 6px 15px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.4);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 5px;
+        margin: 0px 3px;
+        font-size: 14px;
+        font-weight: 500;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+        .pdfBar a:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            -webkit-filter: brightness(1.2);
+            filter: brightness(1.2);
+        }
+
+        .pdfBar a.downloadButton {
+            background-color: #3777f7;
+        }
+
+        .pdfBar a.saveButton {
+            background-color: #008b23;
+        }
+
+        .pdfBar a img {
+            width: 18px;
+            -webkit-filter: invert(1);
+            filter: invert(1);
+            margin-right: 10px;
+        }
+/*# sourceMappingURL=dashboard.css.map */

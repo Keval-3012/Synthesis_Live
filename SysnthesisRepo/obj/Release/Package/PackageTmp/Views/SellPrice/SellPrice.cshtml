@@ -1,0 +1,390 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .header {
+        color: black;
+        font-size: 35px;
+        margin: 0px;
+    }
+
+    .change {
+        color: black !important;
+        text-decoration: unset;
+    }
+
+    .tooltipTop {
+        display: inline-block;
+        position: relative;
+        border-bottom: 1px dotted #666;
+        text-align: left;
+    }
+
+        .tooltipTop .top {
+            min-width: 100px;
+            transform: translate(-50%, -100%);
+            padding: 10px 20px;
+            color: #444444;
+            background-color: #EEEEEE;
+            font-weight: normal;
+            font-size: 13px;
+            border-radius: 8px;
+            position: fixed;
+            z-index: 99999;
+            box-sizing: border-box;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .tooltipTop:hover .top {
+            display: block;
+        }
+
+        .tooltipTop .top i {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -12px;
+            width: 24px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+            .tooltipTop .top i::after {
+                content: '';
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                left: 50%;
+                transform: translate(-50%,-50%) rotate(45deg);
+                background-color: #EEEEEE;
+                box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            }
+
+    .greybox {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: var(--light-gray-color);
+        margin-left: 7px;
+    }
+
+    .Green01box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #80D900;
+        margin-left: 7px;
+    }
+
+    .Red01box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #FF6D6D;
+        margin-left: 7px;
+    }
+
+    .Green02box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #538B00;
+        margin-left: 7px;
+        color: white !important;
+    }
+
+    .Red02box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #E70000;
+        margin-left: 7px;
+        color: white !important;
+    }
+
+    .selectedFilterColor {
+        border: 5px solid;
+        border-color: black;
+    }
+
+    .e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+        width: 20px;
+        height: 20px;
+    }
+
+    .e-checkbox-wrapper .e-check, .e-css.e-checkbox-wrapper .e-check {
+        font-size: 12px;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+    .gridboxs {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 0px;
+    }
+
+        .gridboxs li {
+            margin: 0px 4px;
+            color: #979797;
+        }
+
+            .gridboxs li:first-child {
+                margin-left: 0px;
+            }
+
+            .gridboxs li:last-child {
+                margin-right: 0px;
+            }
+
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 201px !important;
+    }
+
+    .exludefilterbox span {
+        height: 32px !important;
+        width: 32px !important;
+        margin-right: 12px;
+    }
+
+    .itenInfoContainer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+        .itenInfoContainer a {
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #596dff;
+        }
+
+        .itenInfoContainer ul.gridProductInfo {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+            .itenInfoContainer ul.gridProductInfo li:nth-child(1) {
+                font-size: 12px;
+                background: #dfdfdf;
+                border: 1px solid #b7b7b7;
+                padding: 2px 4px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+
+            .itenInfoContainer ul.gridProductInfo li:nth-child(2) {
+                font-size: 12px;
+                padding: 3px 5px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+
+    #gridvaluechange_toolbarItems.e-sticky {
+        top: 145px !important;
+    }
+
+    .tooltiosection .tooltipTop:hover .top {
+        display: block;
+        left: 50%;
+        top: 0;
+    }
+
+    .tooltiosection .tooltipTop {
+        border: none !important;
+    }
+
+    .qtyTooltipContainer {
+        display: flex;
+        font-family: Maven Pro;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: transparent;
+        width: auto;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+        .qtyTooltipContainer ul {
+            display: flex;
+            padding: 0px;
+            list-style: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 10px;
+            user-select: none;
+        }
+
+            .qtyTooltipContainer ul li {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .qtyTooltipContainer ul li span:nth-child(1) {
+                    display: block;
+                    background: Transparent;
+                    color: white;
+                    height: 10px;
+                    padding: 3px 5px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    line-height: 10px;
+                }
+
+                .qtyTooltipContainer ul li span:nth-child(2) {
+                    display: block;
+                    background: Transparent;
+                    color: white;
+                    height: 14px;
+                    padding: 3px 5px;
+                    border-radius: 3px;
+                    font-size: 14px;
+                    line-height: 14px;
+                }
+    .e-content {
+        overflow-y: inherit !important;
+        overflow-x: visible !important;
+    }
+
+    .e-grid .e-gridcontent {
+        overflow: inherit !important;
+    }
+    #gridvaluechange_content_table tr td:last-child p {
+        width: 110px;
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+</style>
+
+<div class="synthesisdashboardcontainer">
+    <div class="heading-w-line">
+        <h1>Sales Price Comparison</h1>
+    </div>
+
+    <div class="page-header-main position-relative gridPageHeader w-100" style="height: 67px !important; background-color: white;margin:0px">
+        <div class="row">
+            <div class="col-md-3">
+                @Html.EJS().DateRangePicker("daterangepicker").StartDate(ViewBag.StartDate).EndDate(ViewBag.EndDate).Change("OnChange").Max(DateTime.Now).Render()
+            </div>
+            <div class="col-md-3" style="display:none;">
+
+                @Html.EJS().DropDownList("Vendor").DataSource(
+                             (IEnumerable<Object>)ViewBag.Vendor).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorName" }).Value("All Vendors").Change("OnChangeVendor").AllowFiltering(true).Filtering("onfilteringvendor").Render()
+            </div>
+            <div class="col-md-2">
+                @Html.EJS().DropDownList("Department").Placeholder("Select a Department").DataSource(
+                            (IEnumerable<Object>)ViewBag.Department).Fields(new DropDownListFieldSettings { Text = "DepartmentName", Value = "DepartmentName" }).Value("All Departments").Change("OnChangeVendor").AllowFiltering(true).Filtering("onfiltering").Enabled(true).Render()
+            </div>
+
+            <div class="col-md-3">
+                @Html.EJS().CheckBox("checkedgreen02").Checked(false).Change("Getdatabycolor").CssClass("Green02box").Value("0").Render()
+                @Html.EJS().CheckBox("checkedgreen01").Checked(false).Change("Getdatabycolor").CssClass("Green01box").Value("1").Render()
+                @Html.EJS().CheckBox("checkedgrey").Checked(false).Change("Getdatabycolor").CssClass("greybox").Value("2").Render()
+                @Html.EJS().CheckBox("checkedRed01").Checked(false).Change("Getdatabycolor").CssClass("Red01box").Value("3").Render()
+                @Html.EJS().CheckBox("checkedRed02").Checked(false).Change("Getdatabycolor").CssClass("Red02box").Value("4").Render()
+            </div>
+
+            <div class="col-md-2 spr-btn">
+                <button type="button" class="btnadddocument" onclick="undofilters();" style="border:none;">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div id="gridvaluechange" style="margin:0;"></div>
+</div>
+
+<script id="template" type="text/x-template">
+    <div>
+        <section class="itenInfoContainer">
+            <ul class="gridProductInfo">
+                <li><span>${UPC}</span></li>
+                ${if(Brand != null)}
+                <li class="tooltiosection">
+                    <a class="tooltipTop" style="text-decoration: unset !important;">
+                        <div class="top">
+                            <div class="qtyTooltipContainer">
+                                <ul>
+                                    ${if(A7484Qty >0 )}
+                                    <li style="background:transparent !important; border:0px !important;"><span>74-84</span><span>${A7484Qty}</span></li>
+                                    ${/if}
+                                    ${if(A1407Qty >0 )}
+                                    <li style="background: transparent !important; border: 0px !important;"><span>1407</span><span>${A1407Qty}</span></li>
+                                    ${/if}
+                                    ${if(A2840Qty >0 )}
+                                    <li style="background: transparent !important; border: 0px !important;"><span>2840</span><span>${A2840Qty}</span></li>
+                                    ${/if}
+                                    ${if(A180Qty >0 )}
+                                    <li style="background: transparent !important; border: 0px !important;"><span>180</span><span>${A180Qty}</span></li>
+                                    ${/if}
+                                    ${if(A14StreetQty >0 )}
+                                    <li style="background: transparent !important; border: 0px !important;"><span>14th Street</span><span>${A14StreetQty}</span></li>
+                                    ${/if}
+                                    ${if(A170Qty >0 )}
+                                    <li style="background: transparent !important; border: 0px !important;"><span>170</span><span>${A170Qty}</span></li>
+                                    ${/if}
+                                    ${if(A2589Qty >0 )}
+                                    <li style="background: transparent !important; border: 0px !important;"><span>2589</span><span>${A2589Qty}</span></li>
+                                    ${/if}
+                                </ul>
+                            </div>
+                        </div>
+                        ${Descritpion}
+                    </a>
+                </li>
+                ${else}
+                <li style="display:none"><span>${Brand}</span></li>
+                ${/if}
+            </ul>
+        </section>
+    </div>
+</script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<script id="boxItem" type="text/x-template">
+    ${statusDetail(data)}
+</script>
+
+<script src="~/Form_JS/SellPrice.js"></script>
+@Html.EJS().ScriptManager()
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

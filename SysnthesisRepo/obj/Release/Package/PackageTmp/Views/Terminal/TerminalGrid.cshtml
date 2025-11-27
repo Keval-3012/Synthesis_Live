@@ -1,0 +1,89 @@
+﻿@model EntityModels.Models.Terminal_Select
+
+@{
+    Layout = null;
+}
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (Convert.ToString(ViewBag.ErrorMessage) == "NoItemFound")
+    {
+        <script>
+            MyfunNoItem();
+            $("#lblCustCount").text("0");
+            $("#lblTotalSaleAmt").text("0");
+            $("#lblTotalAvgSale").text("0");
+            $("#lblTotalCash").text("0");
+            document.getElementById("spanotherdeposit").innerHTML = '0';
+        </script>
+    }
+</div>
+<div class="tabpanelbox">
+    @{
+        if (Model.TerminalData.Count > 0)
+        {
+            <input type="hidden" id="TotalCount" value="@ViewBag.TotalCount" />
+            <input type="hidden" id="TotalDayCloseCount" value="@ViewBag.DayCloseCount" />
+
+            <ul class="nav nav-tabs" id="myTab">
+                @for (int i = 0; i < Model.TerminalData.Count; i++)
+                {
+                    var liid = "li" + Model.TerminalData[i].TerminalId.ToString();
+                    var hrefid = "href" + Model.TerminalData[i].TerminalId.ToString();
+                    var tid = "tid" + i;
+                    <li id="@liid" class="liclass">
+
+                        <input type="hidden" value="@Model.TerminalData[i].TerminalId.ToString()" name="@tid" id="@tid" />
+                        <a id="@hrefid" href="#@Model.TerminalData[i].TerminalId" onclick="BindShiftData(@Model.TerminalData[i].TerminalId,'1');">
+                            @Model.TerminalData[i].TerminalName
+                        </a>
+                    </li>
+                }
+            </ul>
+            <div id="shiftdata">
+            </div>
+        }
+    }
+</div>
+
+<script>
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }   
+    docReady(function () {
+        var Count = $("#TotalCount").val();
+        var DayCount = $("#TotalDayCloseCount").val();
+
+        if (Count == 0) {
+            if (DayCount == 0) {
+                document.getElementById("BtnCloseout").classList.add('openotherbox_blue');
+                document.getElementById("BtnCloseout").classList.remove('openotherbox_red');
+                document.getElementById("BtnCloseout").classList.remove('openotherbox_Green');
+            }
+            else if (DayCount == 1) {
+                document.getElementById("BtnCloseout").classList.add('openotherbox_Green');
+                document.getElementById("BtnCloseout").classList.remove('openotherbox_red');
+                document.getElementById("BtnCloseout").classList.remove('openotherbox_blue');
+            }
+            else if (DayCount == 2) {
+                document.getElementById("BtnCloseout").classList.add('openotherbox_red');
+                document.getElementById("BtnCloseout").classList.remove('openotherbox_Green');
+                document.getElementById("BtnCloseout").classList.remove('openotherbox_blue');
+            }
+            $("#BtnCloseout").show();
+        }
+        else {
+            //$("#BtnCloseout").hide();
+        }
+
+        $(".add-row").click(function () {
+            var table = document.getElementById("data_table");
+            var table_len = (table.rows.length);
+            var row = table.insertRow(table_len).outerHTML = "<tr id='row" + table_len + "'><td colspan='2'><input type='text' class='form-control width100'/></td><td class='text-right'><input type='text' class='form-control width100'/> <input type='button' value='Delete' class='delete_btn' onclick='delete_row(" + table_len + ")'></td></tr>";
+        });
+    });
+</script>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EntityModels.HRModels.HREmployeeMaster>
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HREmployeeTraining.css" rel="stylesheet" />
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add(new { text = "Reset", tooltipText = "Reset Training", prefixIcon = "e-refresh", id = "Reset" }); // New reset button
+    toolbarItems.Add(new { text = "Search" });
+}
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Reset Training</h3>
+        </div>
+        @*<div class="select-wrapper">
+                <button id="resetButton" class="e-btn e-flat e-primary btn btn-danger">Reset</button>
+            </div>*@
+    </div>
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("HRTraining").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+           {
+               col.Type("checkbox").Width("50").Add();
+
+               col.Field("EmployeeUserName").HeaderText("Employee Name").Width("150").Add();
+               col.Field("StoreNikeName").HeaderText("Store").Width("100").Add();
+               col.Field("EmployeeId").IsPrimaryKey(true).HeaderText("Employee Id").Width("100").Add();
+               col.Field("DOB").HeaderText("DOB").Width("100").Add();
+               col.Field("HireDate").HeaderText("HireDate").Width("100").Add();
+               col.Field("SSN").HeaderText("SSN").Width("100").Add();
+               col.Field("TrainingContent").HeaderText("TraningContent").Visible(false).Width("100").Add();
+               col.Field("TrainingFilePath").HeaderText("Training").Width("100").Template("#TraningTemp").Add();
+           }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(toolbarItems).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+<script type="text/x-jsrender" id="TraningTemp">
+    ${TraningTempCreate(data)}
+</script>
+<script>
+    var scrollVal = 0;
+</script>
+
+<script src="~/Content/HRJs/HRTraining.js"></script>
+@Html.EJS().ScriptManager()

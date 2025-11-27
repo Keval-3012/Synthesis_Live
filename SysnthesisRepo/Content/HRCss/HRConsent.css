@@ -1,0 +1,77 @@
+﻿#grid th a {
+    color: white !important;
+}
+
+.ActionWidth {
+    width: 12%;
+}
+
+.footer {
+}
+
+.dfd {
+    border: none !important;
+    box-shadow: none !important;
+    height: unset !important;
+    padding-left: unset !important;
+    width: unset !important;
+}
+
+.form-group {
+    /*display: flex;*/
+    clear: both;
+    width: 100%;
+}
+
+h4 {
+    font-size: 25px;
+    line-height: normal;
+    margin-top: 0;
+    font-weight: 700 !important;
+    margin: 20px 0;
+}
+
+label {
+    font-weight: 600;
+    font-size: 16px;
+    vertical-align: middle;
+    color: #000;
+}
+
+.form-control, select {
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.mt-20 {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.buttonCss {
+    margin-top: 7px;
+    background: red !important;
+}
+
+.table tr th {
+    background: #FFFFFF;
+    padding: 5px 20px;
+    color: black !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+}
+
+.table tbody tr th {
+    color: #787878 !important;
+    background: #FFFFFF;
+    font-size: 15px !important;
+}
+
+.buttonsave {
+    background: #e53939 !important;
+}
+
+.header-small.special_bg.consent-page h3 {
+    margin-bottom: 15px;
+}

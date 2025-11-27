@@ -1,0 +1,578 @@
+@model EntityModels.Models.DashboardDaily
+
+
+
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#DCE1E5" style="margin: 0 auto;">
+    <tr>
+        <td width="100%" align="center">
+            <table width="98%" border="0" cellpadding="0" cellspacing="0" bgcolor="#DCE1E5" align="center" style="padding: 10px 15px;">
+
+                <tr>
+                    <td width="98%" align="center" style="padding: 10px 15px;">
+
+
+                        <table width="98%" align="center" border="0" cellpadding="0" cellspacing="0" style="padding:0 20px;">
+                            <tr>
+                                <td width="20%" align="left">
+                                    <label style="font-weight: 400;font-size: 14px;line-height: 18px;">Date :</label> <span style="font-weight: 600;font-size: 14px;line-height: 18px;">@ViewBag.Startdate</span>
+                                </td>
+                                @if (ViewBag.StateName != "")
+                                {
+                                    <td width="15%" align="left">
+                                        <label style="font-weight: 400;font-size: 14px;line-height: 18px;">State :</label> <span style="font-weight: 600;font-size: 14px;line-height: 18px;">@ViewBag.StateName</span>
+                                    </td>
+                                }
+                                @if (ViewBag.StoreName != "")
+                                {
+                                    <td width="65%" align="left">
+                                        <label style="font-weight: 400;font-size: 14px;line-height: 18px;">Store :</label> <span style="font-weight: 600;font-size: 14px;line-height: 18px;">@ViewBag.StoreName</span>
+                                    </td>
+                                }
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" align="center" height="30px">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" align="center">
+
+
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="padding: 10px 0">
+                            <tr>
+                                <td width="20%" align="center" style="padding: 10px;">
+                                    <table width="90%" align="center" bgcolor="#ffffff" style="padding: 10px 0 10px 0px;">
+                                        <tr>
+                                            <td align="center" valign="top" style="vertical-align:middle;font-size: 12px; line-height: 16px; font-weight: 400; color: #000000; padding: 0px; margin: 0; ">@Model.AllVoids</td>
+                                        </tr>
+
+                                        <tr> <td align="center" valign="top" style="vertical-align:middle;font-size: 15px; line-height: 18px; font-weight: 700; margin: 0; padding: 0; color: #15506f; ">$ @Model.AllVoidsAmt</td></tr>
+
+                                        <tr>
+                                            <td align="center" valign="top" bgcolor="#ffffff" style="padding:0 0 10px 0px;">
+
+                                                <table width="100%" align="center" bgcolor="#ffffff" style="padding:0 0 10px 0px;">
+                                                    <tr>
+                                                        <td align="center" valign="middle" style="vertical-align:middle;font-size: 13px; line-height:20px; font-weight: 500; margin: 0; padding:0 0 10px 0; color: #15506f; "> All Voids</td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+
+                                </td>
+                                <td width="20%" align="center" style="padding: 10px;">
+                                    <table width="90%" align="center" bgcolor="#ffffff" style="padding: 10px 0 10px 0px;">
+                                        <tr>
+                                            <td align="center" valign="top" style="vertical-align:middle;font-size: 12px; line-height: 16px; font-weight: 400; color: #000000; padding: 0px; margin: 0; ">@Model.ItemCorrects</td>
+                                        </tr>
+
+                                        <tr> <td align="center" valign="top" style="vertical-align:middle;font-size: 15px; line-height: 18px; font-weight: 700; margin: 0; padding: 0; color: #782d2d;">$ @Model.ItemCorrectsAmt</td></tr>
+
+
+                                        <tr>
+                                            <td align="center" valign="top" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+
+                                                <table width="100%" align="center" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+                                                    <tr>
+                                                        <td align="center" valign="middle" style="vertical-align:middle;font-size: 13px; line-height: 20px; font-weight: 500; margin: 0; padding: 0 0 10px 0; color: #782d2d; ">Item Corrects</td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+
+                                </td>
+                                <td width="20%" align="center" style="padding: 10px;">
+                                    <table width="90%" align="center" bgcolor="#ffffff" style="padding: 10px 0 10px 0px;">
+                                        <tr>
+                                            <td align="center" valign="top" style="vertical-align:middle;font-size: 12px; line-height: 16px; font-weight: 400; color: #000000; padding: 0px; margin: 0; ">@Model.ItemReturns</td>
+                                        </tr>
+
+                                        <tr> <td align="center" valign="top" style="vertical-align:middle;font-size: 15px; line-height: 18px; font-weight: 700; margin: 0; padding: 0; color: #276118; ">$ @Model.ItemReturnsAmt</td></tr>
+
+                                        <tr>
+                                            <td align="center" valign="top" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+
+                                                <table width="100%" align="center" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+                                                    <tr>
+                                                        <td align="center" valign="middle" style="vertical-align:middle;font-size: 13px; line-height: 20px; font-weight: 500; margin: 0; padding:0 0 10px 0; color: #276118; ">Returns</td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+
+                                </td>
+                                <td width="20%" align="center" style="padding: 10px;">
+                                    <table width="90%" align="center" bgcolor="#ffffff" style=padding: 10px 0 10px 0px;">
+                                        <tr>
+                                            <td align="center" valign="top" style="vertical-align:middle;font-size: 12px; line-height: 16px; font-weight: 400; color: #ffffff; padding: 0px; margin: 0; ">0</td>
+                                        </tr>
+
+                                        <tr> <td align="center" valign="top" style="vertical-align:middle;font-size: 15px; line-height: 18px; font-weight: 700; margin: 0; padding: 0; color: #5a156f; ">$ @Model.CashPayout</td></tr>
+
+
+
+                                        <tr>
+                                            <td align="center" valign="top" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+
+                                                <table width="100%" align="center" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+                                                    <tr>
+                                                        <td align="center" valign="middle" style="vertical-align:middle;font-size: 13px; line-height: 20px; font-weight: 500; margin: 0; padding:0 0 10px 0; color: #5a156f; "> Cash Payouts</td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+
+                                </td>
+                                <td width="20%" align="center" style="padding: 10px 0;">
+                                    <table width="90%" align="center" bgcolor="#ffffff" style="padding: 10px 0 10px 0px;">
+                                        <tr>
+                                            <td align="center" valign="top" style="vertical-align:middle;font-size: 12px; line-height: 16px; font-weight: 400; color: #ffffff; padding: 0px; margin: 0; ">0</td>
+                                        </tr>
+
+                                        <tr> <td align="center" valign="top" style="vertical-align:middle;font-size: 15px; line-height: 18px; font-weight: 700; margin: 0; padding: 0; color: #808080; ">$ @Model.Over</td></tr>
+
+
+                                        <tr>
+                                            <td align="center" valign="top" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+
+                                                <table width="100%" align="center" bgcolor="#ffffff" style="padding: 0 0 10px 0px;">
+                                                    <tr>
+                                                        <td align="center" valign="middle" style="vertical-align:middle;font-size: 13px; line-height: 20px; font-weight: 500; margin: 0; padding:0 0 10px 0; color: #808080; "> Over / Short</td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" align="center" height="30px">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" align="center">
+
+
+                        <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0" style="padding: 10px 0;">
+                            <tr>
+                                <td width="100%" align="center">
+                                    <table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td align="center">
+                                                <table align="center" width="98%" bgcolor="#2778be" style="padding:20px;">
+                                                    <tr>
+                                                        <td width="30%" style="padding: 0 5px;" align="center">
+                                                            <table width="100%" align="left" valign="top">
+                                                                <tr>
+                                                                    <td style="font-size:15px; line-height: 18px; color: #ffffff; font-weight: 600; margin: 0; padding: 0px;">
+                                                                        Current @Model.DayName
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="font-size:12px; line-height: 14px; color: #ffffff; font-weight: 600; margin: 0; padding: 0px;">
+                                                                        @Model.HourTime
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td width="22%" align="center" style="padding:0 5px;">
+                                                            <table width="100%" align="center" valign="top" style="padding:0px;margin: 0;">
+                                                                <tr>
+                                                                    <td style="font-size: 11px; line-height:14px; text-align: center; color: #ffffff; font-weight: 500;">
+                                                                        Net Sales (+Tax)
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="color: black; margin: 0; font-size:14px; line-height: 16px; font-weight: 600;text-align: center;">
+                                                                        $ @Model.TotalSalesCurrentDay
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td width="18%" align="center" style="padding:0 5px;">
+                                                            <table width="100%" align="center" style="padding:0px;margin: 0;">
+                                                                <tr>
+                                                                    <td width="100%" style="font-size: 11px; line-height: 14px; text-align: center; color: #ffffff; font-weight: 500; text-align: center; ">
+                                                                        Customer Count
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td width="100%" style="color: black; margin: 0; font-size: 14px; line-height: 16px; font-weight: 600; text-align: center; ">
+                                                                        @Model.CustomerCountCurrentDay
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td width="18%" align="center" style="padding:0 5px;">
+                                                            <table width="100%" align="center" style="padding:0px;margin: 0;">
+                                                                <tr>
+                                                                    <td style="font-size: 11px; line-height: 14px; text-align: center; color: #ffffff; font-weight: 500; text-align: center; ">
+                                                                        Average Sale
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="color: black; margin: 0; font-size: 14px; line-height: 16px; font-weight: 600;text-align: center; ">
+                                                                        $ @Model.AverageSaleCurrentDay
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table width="98%" align="center" bgcolor="#9ca5a5" style="padding:20px;">
+                                                    <tr>
+
+                                                        <td width="30%" style="padding: 0 5px;" align="center">
+                                                            <table width="100%" align="left" valign="top">
+                                                                <tr>
+                                                                    <td style="font-size: 15px; line-height: 18px; color: #ffffff; font-weight: 600; margin: 0; padding: 0px;">
+                                                                        Last @Model.DayName
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="font-size: 12px; line-height: 14px; color: #ffffff; font-weight: 600; margin: 0; padding: 0px;">
+                                                                        @Model.HourTime
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+
+                                                        <td width="22%" align="center" style="padding:0 5px;">
+                                                            <table width="100%" align="center" style="padding:0px;margin: 5px;">
+                                                                <tr>
+                                                                    <td style="font-size: 11px; line-height: 14px; text-align: center; color: #ffffff; font-weight: 500; ">
+                                                                        Net Sales (+Tax)
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="color: black; margin: 0; font-size: 14px; line-height: 16px; font-weight: 600;  text-align: center;">
+                                                                        $ @Model.TotalSalesLastWeek
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td width="18%" align="center" style="padding:0 5px;">
+                                                            <table width="100%" align="center" style="padding:0px;margin: 5px;">
+                                                                <tr>
+                                                                    <td width="100%" style="font-size: 11px; line-height: 14px; text-align: center; color: #ffffff; font-weight: 500; text-align: center; ">
+                                                                        Customer Count
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td width="100%" style="color: black; margin: 0; font-size: 14px; line-height: 16px; font-weight: 600; text-align: center;">
+                                                                        @Model.CustomerCountLastWeek
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td width="18%" align="center" style="padding:0 5px;">
+                                                            <table width="100%" align="center" style="padding:0px;margin: 5px;">
+                                                                <tr>
+                                                                    <td style="font-size: 11px; line-height: 14px; text-align: center; color: #ffffff; font-weight: 500; text-align: center; ">
+                                                                        Average Sale
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="color: black; margin: 0; font-size: 14px; line-height: 16px; font-weight: 600; text-align: center;">
+                                                                        $ @Model.AverageSalesLastWeek
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="100%" align="center" height="30px">
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="100%" align="center">
+
+
+                        <table align="center" width="98%" border="0" cellpadding="0" cellspacing="0" style="margin:0;padding:0;">
+                            <tr>
+
+                                <td align="left" style="padding:0;">
+                                    <table align="left" width="40%" border="0" cellpadding="0" cellspacing="0" style="padding:10px 15px;">
+                                        <tr>
+                                            <td align="left">
+                                                <table width="100%" align="left" style="padding:0 15px;">
+                                                    <tr>
+                                                        <td bgcolor="#ffdf63" width="50%" height="300px" style="padding: 1em; text-align: center; height:300px;">
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <td style="font-size: 14px; line-height:16px;font-weight: 400;color: #000000;text-align: center;">
+                                                                        In-Store
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="font-size: 18px; line-height: 20px; font-weight: 600; color: #000000; text-align: center; ">
+                                                                        @Model.Offline%
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td bgcolor="#dbf3ff" width="50%" height="300px" style="padding: 1em; text-align: center; height: 300px;">
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <td style="font-size: 14px; line-height:16px;font-weight: 400;color: #000000;text-align: center;">
+                                                                        Online
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td style="font-size: 18px; line-height: 20px; font-weight: 600; color: #000000; text-align: center; ">
+                                                                        @Model.Online%
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" align="center" height="30px">&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <table width="100%" style="padding: 0px;">
+                                                    <tr>
+
+                                                        <td width="30%" bgcolor="#ffffff" style="padding: 10px 20px;margin: 5px;">
+                                                            <table width="100%">
+                                                                <tr>
+                                                                    <td style="font-size:16px;line-height:18px;font-weight: 600;text-align: center;color: #000000;">
+                                                                        Invoices
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="100%" bgcolor="#f1f1f1">
+
+                                                                        <table width="90%" align="center" style="padding: 5px 10px;">
+                                                                            <tr>
+                                                                                <td style="font-size: 14px; line-height: 16px; text-align: center; color: #7b7d81; font-weight: 500; text-align: left;" width="80%">Added</td>
+                                                                                <td style="font-size: 14px; line-height: 16px; font-weight: 600; text-align: right; " width="20%">@Model.InvoicesAdded</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="100%" bgcolor="#f1f1f1">
+
+
+                                                                        <table width="90%" align="center" style="padding: 5px 10px;">
+                                                                            <tr>
+                                                                                <td style="font-size: 14px; line-height: 16px; text-align: center; color: #7b7d81; font-weight: 500; text-align: left;" width="80%">Processed</td>
+                                                                                <td style="font-size: 14px; line-height: 16px; font-weight: 600; text-align: right; " width="20%">@Model.InvoicesApproved</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            </table>
+                                                        </td>
+
+
+
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" align="center" height="30px">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="margin: 0 auto;font-family: Arial, Helvetica, sans-serif;">
+    <tr>
+        <td width="100%" align="center" style="vertical-align: top;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" align="center"
+                   style="padding:0px;">
+
+                <tr>
+                    <td width="100%" align="center" style="padding: 0px;">
+
+
+                        <table width="100%" align="center" border="1" cellpadding="0" cellspacing="0"
+                               style="padding:0;border-color:#bec8cf;">
+                            <tr>
+                                <td width="12%" align="left" valign="top" style="vertical-align: top;">
+                                    <table width="100%" align="left" border="1" cellpadding="0" cellspacing="0" style="padding:0;border-color:#bec8cf;">
+                                        <tr>
+                                            <th bgcolor="#7a8e9d" align="center" style="vertical-align: top;padding: 5px;font-size: 12px;font-weight: 700;line-height:16px;color: #ffffff;">Hour</th>
+                                        </tr>
+                                        @foreach (var hour in ViewBag.HoursList)
+                                        {
+                                            if (hour != "0")
+                                            {
+                                                <tr>
+                                                    <th bgcolor="#7a8e9d" align="center" style="vertical-align: top;padding: 5px;font-size: 12px;font-weight: 700;line-height:16px;color: #ffffff;">@hour<br /><br /><br /></th>
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+
+                                @foreach (var storeId in ViewBag.StoreList)
+                                {
+                                    <td width="11%" align="left" valign="top" style="vertical-align: top;">
+                                        <table width="100%" align="left" border="1" cellpadding="0" cellspacing="0" style="padding:0;border-color:#bec8cf;">
+                                            <tr>
+                                                <th bgcolor="#7a8e9d" align="center" style="vertical-align: top;padding: 5px;font-size: 12px;font-weight: 700;line-height:16px;color: #ffffff;">@(storeId == 1 ? "74-84" : (storeId == 2 ? "Maywood" : (storeId == 3 ? "1407" : (storeId == 4 ? "180" : (storeId == 5 ? "2589" : (storeId == 6 ? "14th street" : (storeId == 7 ? "2840" : (storeId == 9 ? "170" : storeId.ToString()))))))))</th>
+                                            </tr>
+                                            @foreach (var hour in ViewBag.HoursList)
+                                            {
+                                                if (hour != "0")
+                                                {
+                                                    var amounttype1 = Model.dailychartlisttype1.FirstOrDefault(a => a.StoreId == storeId && a.Hours == hour)?.Amount;
+                                                    var amounttype2 = Model.dailychartlisttype2.FirstOrDefault(a => a.StoreId == storeId && a.Hours == hour)?.Amount;
+                                                    var amountToShow = amounttype2 != null ? (int)amounttype2 : 0;
+                                                    var amounttype3 = Model.dailychartlisttype3.FirstOrDefault(a => a.StoreId == storeId && a.Hours == hour)?.Amount;
+                                                    <tr>
+                                                        <td bgcolor="#ffffff" align="center" style="vertical-align: top;padding: 5px;font-size: 12px;font-weight: 400;line-height:16px;color: #000;">
+                                                            <span style="color:#ff0000;">$@amounttype1</span><br /><span style="color:#095da7;">@amountToShow</span><br /><span style="color:#cf9b00;">$@amounttype3</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </table>
+                                    </td>
+                                }
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" align="center" height="30px">
+                        &nbsp;
+                    </td>
+                </tr>
+
+
+
+            </table>
+        </td>
+    </tr>
+</table>
+@*<div style="overflow:hidden;clear:both;width:100%;"></div>*@

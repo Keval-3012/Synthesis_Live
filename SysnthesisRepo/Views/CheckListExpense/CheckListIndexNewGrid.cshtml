@@ -1,0 +1,253 @@
+﻿@using Syncfusion.EJ2
+@model IEnumerable<EntityModels.Models.CheckList>
+@using Syncfusion.EJ2.DropDowns
+@using Utility
+
+@{
+    Layout = null;
+}
+@{
+    int i = 1;
+}
+@{
+    string storeid = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+}
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style type="text/css">
+    div#grddata {
+        max-height:90vh;
+        overflow: hidden;
+    }
+
+    .main-container .page-content {
+        min-height: 850px;
+    }
+
+    .tooltip-arrow,
+    .tooltip > .tooltip-inner {
+        background-color: #fff !important;
+        color: #000;
+        border-radius: 10px;
+
+    }
+
+    .viewBtnUnclearCheck {
+        width: auto;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(83, 115, 244);
+        box-shadow: 0px 0px 20px rgba(83, 115, 244,0.3);
+        border-radius: 6px;
+        border: 0px;
+        transition:all 0.2s ease-in-out;
+    }
+
+        .viewBtnUnclearCheck:hover, .resetBtnUnclearCheck:hover {
+            text-decoration: none;
+            color: white;
+            transform:scale(1.1);
+        }
+
+    .resetBtnUnclearCheck {
+        width: auto;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(244, 161, 83);
+        box-shadow: 0px 0px 20px rgb(244, 161, 83,0.3);
+        border-radius: 6px;
+        border: 0px;
+        margin: 0px 10px;
+        height: 35px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    button#pdf {
+        padding: 10px;
+        box-sizing: border-box;
+        height: 35px;
+        width: 40px;
+        border: 0px;
+        background-color: rgb(180, 33, 33) !important;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button#excel {
+        padding: 10px;
+        box-sizing: border-box;
+        height: 35px;
+        width: 40px;
+        border: 0px;
+        background-color: rgb(25, 162, 107) !important;
+        border-radius: 5px;
+        margin: 0px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        button#excel img, button#pdf img {
+            width: 20px;
+        }
+    .toast.toast-error {
+        background: #e53939;
+        font-size: 14px;
+    }
+    .e-grid.e-default tr th.e-headercell.e-templatecell.e-defaultcursor #SelectAll {
+        margin-left: 10px;
+        margin-right: 8px;
+    }
+</style>
+
+<div id="loadbox"></div>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+    </div>
+    @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+
+
+
+        <div class="page-body headertopbox special_bg exp-check-new">
+            <div class="page-header-main position-relative recentExpenses"  style="justify-content:space-between;align-items:center">
+                <h2>Uncleared Checks</h2>   
+                <!--<div style="padding-top: 25px">
+                    <div>
+                        <label for="VendorList">Mail Out All</label>
+                        <input type="checkbox" name="MailOut" id="SelectAll" onclick="OnchangeAll(this);">-->
+                        @*@Html.EJS().DropDownList("SelectAll").DataSource((IEnumerable<object>)ViewBag.All).Value("0").Change("OnchangeAll").Fields(new DropDownListFieldSettings { Text = "Text", Value = "Value" }).Render()*@
+                    <!--</div>
+                </div>-->
+            <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:10px;padding-left:10px;">
+                <div style="display:flex;flex-direction:column">
+                    <label>Search</label>
+                    @Html.EJS().TextBox("Search").Change("SearchCheck").Width("200px").Render()
+                </div>
+                <div style="max-width:180px">
+                    <label>StartDate</label>
+                    @Html.EJS().DatePicker("StartDate").Format("MM-dd-yyyy").Change("OnChangeStartDate").Max(DateTime.Now).Render()
+                </div>
+
+                <div style="max-width:180px">
+                    <label>EndDate</label>
+                    @Html.EJS().DatePicker("EndDate").Format("MM-dd-yyyy").Change("OnChangeEndDate").Max(DateTime.Now).Render()
+                </div>
+
+                <div>
+                    <label for="VendorList">Mail</label>
+                    @Html.EJS().DropDownList("MailList").DataSource((IEnumerable<object>)ViewBag.List).Value("0").Fields(new DropDownListFieldSettings { Text = "Text", Value = "Value" }).Render()
+                </div>
+
+                @*<div>
+                    <label>Check Type</label>
+                    @Html.EJS().DropDownList("CheckFilterList").DataSource((IEnumerable<object>)ViewBag.CheckFilter).Value("0").Fields(new DropDownListFieldSettings { Text = "Text", Value = "Value" }).Render()
+                </div>*@
+
+
+                <div style="display:flex;align-items:center;justify-content:center;padding-top:22px;">
+                    <a href="javascript:viewdata();" class="viewBtnUnclearCheck" data-toggle="tooltip" data-placement="top" data-original-title="" title="">View</a>
+                    <button type="button" class="resetBtnUnclearCheck" onclick="reset();">Reset</button>
+                </div>
+            </div>
+            </div>
+            
+            @if (storeid == "0")
+            {
+
+        <div class="control-section">
+
+            @Html.EJS().Grid("InlineExpenseEditing").EnableInfiniteScrolling().Height("75vh").FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).AllowPdfExport().AllowExcelExport().DataSource(dm => dm.Url("/CheckListExpense/UrlDatasourceExpense").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("ChecklistId").HeaderText("ChecklistId").Width("50").Visible(false).Add();
+           col.Field("Tx_Date").HeaderText("Date").Format("MM-dd-yyyy").Width("60").Add();
+           col.Field("StoreName").HeaderText("Store Name").Width("50").Add();
+           //col.Field("Doc_no").HeaderText("Check #").Width("50").Add();
+           col.Field("Doc_no").HeaderText("Check #").Template("#CheckTemplate").Width("50").Add();
+           col.Field("Account_name").HeaderText("Bank Account").Width("50").Add();
+           col.Field("Txn_type").HeaderText("Transaction Type").Width("50").Add();
+           col.Field("EntityName").HeaderText("Name").Width("50").Add();
+           col.HeaderText("Mailed Out").Template("#emailTemplate").HeaderTemplate("#emailHeaderTemplate").Width("55").Add();
+           col.Field("Amount").HeaderText("Amount").Width("50").Format("$ 0,0.00").Add();
+           //col.Field("Is_cleared").HeaderText("Is Cleared").Width("50").Add();
+           col.Field("UpdateDate").HeaderText("Update Date").Format("MM-dd-yyyy").Width("50").Add();
+           //col.Type("CheckBox").Width("55").Add();
+       }).AllowSorting().AllowMultiSorting().AllowFiltering().AllowSelection().QueryCellInfo("OnQueryCellInfo").DataBound("OnDataBound").SortSettings(sort => sort.AllowUnsort(false)).PageSettings(page => page.PageSize(50)).Toolbar(new List<string>() { "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClick").Render()
+
+
+        </div>
+            }
+            else
+            {
+                <div class="control-section">
+
+                    @Html.EJS().Grid("InlineExpenseEditing").EnableInfiniteScrolling().Height("75vh").FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).AllowPdfExport().AllowExcelExport().DataSource(dm => dm.Url("/CheckListExpense/UrlDatasourceExpense").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("ChecklistId").HeaderText("ChecklistId").Width("50").Visible(false).Add();
+                   col.Field("Tx_Date").HeaderText("Date").Format("MM-dd-yyyy").Width("60").Add();
+                   //col.Field("StoreName").HeaderText("Store Name").Width("50").Add();
+                   //col.Field("Doc_no").HeaderText("Check #").Width("50").Add();
+                   col.Field("Doc_no").HeaderText("Check #").Template("#CheckTemplate").Width("50").Add();
+                   col.Field("Account_name").HeaderText("Bank Account").Width("50").Add();
+                   col.Field("Txn_type").HeaderText("Transaction Type").Width("50").Add();
+                   col.Field("EntityName").HeaderText("Name").Width("50").Add();
+                   col.HeaderText("Mailed Out").Template("#emailTemplate").HeaderTemplate("#emailHeaderTemplate").Width("55").Add();
+                   col.Field("Amount").HeaderText("Amount").Width("50").Format("$ 0,0.00").Add();
+                   // col.Field("Is_cleared").HeaderText("Is Cleared").Width("50").Add();
+                   col.Field("UpdateDate").HeaderText("Update Date").Format("MM-dd-yyyy").Width("50").Add();
+               }).AllowSorting().AllowSelection().AllowFiltering().QueryCellInfo("OnQueryCellInfo").DataBound("OnDataBound").SortSettings(sort => sort.AllowUnsort(false)).PageSettings(page => page.PageSize(50)).Toolbar(new List<string>() { "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClick").Render()
+
+
+                </div>
+            }
+            </div>
+    </div>
+</div>
+<div id="ModelPopup">
+
+</div>
+<script type="text/x-jsrender" id="emailTemplate">
+    ${if(MailSent == '1')}
+    <input type="checkbox" name="MailOut" id="${ChecklistId}" checked onclick="updatestatus(this);">
+    ${else}
+    <input type="checkbox" name="MailOut" id="${ChecklistId}" onclick="updatestatus(this);">
+    ${/if}
+
+</script>
+<script type="text/x-jsrender" id="emailHeaderTemplate">
+    <input type="checkbox" id="SelectAll" onclick="OnchangeAll(this);">
+    &nbsp;
+    <span for="mailOutHeaderCheckbox">Mailed Out</span>
+</script>
+<script type="text/x-jsrender" id="CheckTemplate">
+    ${if(MailSent == '1')}
+    @*<span>${Doc_no}</span>*@
+    ${Doc_no}
+    <img src="/Content/Admin/images/mailed.png" alt="" style="width:80px;" />
+    ${else}
+    @*<span>${Doc_no}</span>*@
+    ${Doc_no}
+    <img src="/Content/Admin/images/unmailed.png" alt="" style="width:80px;" />
+    ${/if}
+
+</script>
+<script>
+    var scrollVal = 0;
+    function OnDataBound(args) {
+        //Render Bootstrap tooltip here
+        $("[data-toggle=tooltip]").tooltip();
+    }
+</script>
+<script src="~/Form_JS/CheckListExpense.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+@Html.EJS().ScriptManager()
+
+
+

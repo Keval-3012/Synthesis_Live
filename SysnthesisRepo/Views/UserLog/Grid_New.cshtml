@@ -1,0 +1,491 @@
+﻿
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .header {
+        color: black;
+        font-size: 35px;
+        margin: 0px;
+    }
+
+    .change {
+        color: black !important;
+        text-decoration: unset;
+    }
+
+    .e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+        width: 20px;
+        height: 20px;
+    }
+
+    .e-checkbox-wrapper .e-check, .e-css.e-checkbox-wrapper .e-check {
+        font-size: 12px;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+    .gridboxs {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 0px;
+    }
+
+        .gridboxs li {
+            margin: 0px 4px;
+            color: #979797;
+        }
+
+            .gridboxs li:first-child {
+                margin-left: 0px;
+            }
+
+            .gridboxs li:last-child {
+                margin-right: 0px;
+            }
+
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 201px !important;
+    }
+
+    .exludefilterbox span {
+        height: 32px !important;
+        width: 32px !important;
+        margin-right: 12px;
+    }
+
+    .itenInfoContainer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+        .itenInfoContainer a {
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #596dff;
+        }
+
+        .itenInfoContainer ul.gridProductInfo {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+            .itenInfoContainer ul.gridProductInfo li:nth-child(1) {
+                font-size: 12px;
+                background: #dfdfdf;
+                border: 1px solid #b7b7b7;
+                padding: 2px 4px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+
+            .itenInfoContainer ul.gridProductInfo li:nth-child(2) {
+                font-size: 12px;
+                padding: 3px 5px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+
+    #gridvaluechange_toolbarItems.e-sticky {
+        top: 145px !important;
+    }
+
+    .tooltiosection .tooltipTop:hover .top {
+        display: block;
+        left: 50%;
+        top: 0;
+    }
+
+    .tooltiosection .tooltipTop {
+        border: none !important;
+    }
+
+    .qtyTooltipContainer {
+        display: flex;
+        font-family: Maven Pro;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: transparent;
+        width: auto;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+        .qtyTooltipContainer ul {
+            display: flex;
+            padding: 0px;
+            list-style: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 10px;
+            user-select: none;
+        }
+
+            .qtyTooltipContainer ul li {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .qtyTooltipContainer ul li span:nth-child(1) {
+                    display: block;
+                    background: Transparent;
+                    color: white;
+                    height: 10px;
+                    padding: 3px 5px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    line-height: 10px;
+                }
+
+                .qtyTooltipContainer ul li span:nth-child(2) {
+                    display: block;
+                    background: Transparent;
+                    color: white;
+                    height: 14px;
+                    padding: 3px 5px;
+                    border-radius: 3px;
+                    font-size: 14px;
+                    line-height: 14px;
+                }
+</style>
+<style>
+
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+
+    #modl {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .Edit {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .fixeds {
+        top: 248px;
+        position: fixed;
+        width: auto;
+        z-index: 999;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj0gSRkAAAEoAAAAVmNtYXDnM+eRAAABsAAAAEpnbHlmzVnmlwAAAhgAAAZAaGVhZBEYIl8AAADQAAAANmhoZWEHlgN3AAAArAAAACRobXR4LvgAAAAAAYAAAAAwbG9jYQnUCGIAAAH8AAAAGm1heHABHQBcAAABCAAAACBuYW1lfUUTYwAACFgAAAKpcG9zdAxfTDgAAAsEAAAAggABAAADUv9qAFoEAAAAAAAD6AABAAAAAAAAAAAAAAAAAAAADAABAAAAAQAACcU5MF8PPPUACwPoAAAAANcI7skAAAAA1wjuyQAAAAAD6APoAAAACAACAAAAAAAAAAEAAAAMAFAABwAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQPqAZAABQAAAnoCvAAAAIwCegK8AAAB4AAxAQIAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDnCgNS/2oAWgPoAJYAAAABAAAAAAAABAAAAAPoAAAD6AAAA+gAAAPoAAAD6AAAA+gAAAPoAAAD6AAAA+gAAAPoAAAD6AAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA2AAAABAAEAAEAAOcK//8AAOcA//8AAAABAAQAAAABAAIAAwAEAAUABgAHAAgACQAKAAsAAAAAAAAAQgB8AMIA4gEcAZQCBgJwAo4DAAMgAAAAAwAAAAADlAOUAAsAFwAjAAABFwcXNxc3JzcnBycFDgEHLgEnPgE3HgEFHgEXPgE3LgEnDgEBTXh4L3h4L3h4L3h4AbwDt4qKtwMDt4qKt/0eBeuxsesFBeuxsesCbHh4L3h4L3h4L3h4p4q3AwO3ioq3AwO3irHrBQXrsbHrBQXrAAAAAwAAAAADlAOUAAUAEQAdAAABJwcXAScXDgEHLgEnPgE3HgEFHgEXPgE3LgEnDgEBr2UylwEbMqADt4qKtwMDt4qKt/0eBeuxsesFBeuxsesBrGQylgEcMqKKtwMDt4qKtwMDt4qx6wUF67Gx6wUF6wAAAAAFAAAAAAOUA5cABQARAB0AIQAlAAABFzcnNSMFDgEHLgEnPgE3HgEFHgEXPgE3LgEnDgElFzcnBRc3JwHKxiCnPwFOA6V8fKUDA6V8fKX9aATToJ/UBATUn5/UAh7ANsD9fja/NQGedzNj29F8pAMDpHx8pQMDpXyf1AQE1J+g0wQE0/GhQKGhQKFAAAQAAAAAA74DfgADAAcACgANAAAlMzUjNTM1IwEhCQEhAQHLUlJSUgFj/YwBOv42A5T+NuZUUqf+igIc/ZADFgAEAAAAAAOUA5QAAwAHABMAHwAAATM1IzUzNSMFDgEHLgEnPgE3HgEFHgEXPgE3LgEnDgEBylRUVFQBbgO3ioq3AwO3ioq3/R4F67Gx6wUF67Gx6wEk+lNT0Iq3AwO3ioq3AwO3irHrBQXrsbHrBQXrAAAAAAcAAAAAA+gDMQALABUAJQAuADcAQQBLAAABFhcVITUmJz4BMxYFFhcVITU+ATcWJQYHFSE1LgEjIgYHLgEjIgEWFAYiJjQ2MgUWFAYiJjQ2MiUGFBYXPgE0JiIFBhQWFz4BNCYiA1xEBP6sAxUeRiRX/qxEBP45BIlXV/7xZQsD6AvKUypvMzNvKlMCKxozTTMzTP6CGTNMNDRMAQItWUREWlqI/jstWkREWVmIAWMbFjc3IBgKDwQcGxY3NxY3BAQjJUt7e0tKFxgYFwEMGU01NU0zGhlNNTVNMxYthloCAlqGWy4thloCAlqGWwAAAAQAAAAAA5wCxwAIABQANABFAAABFBYyNjQmIgYXDgEHLgEnPgE3HgEfAQcOAQ8BNz4BNS4BJw4BBxQWHwEnLgEvATc+ATc2FiUOAQ8BFx4BNz4BPwEnJiciAb8fLR4eLR+wAkU0NEUBAUU0NEX8BgEemG0FBB8kAlZBQFcBKyUCCkeVTAYBH76RVMP+3bDPBwcKZclcu/AGCwrM2AoBxxYfHy0eHhc0RQEBRTQ1RQEBRSgEARpWGAECFUIoQVcCAldBLEYUAQEIQkAGASJsBwFCoRbFFAoJW0sBCo8LCgztAQAAAAIAAAAAA4ADbAA4AEEAAAEEJCcmDgEWFx4BHwEVFAYHDgEnJg4BFhcWNjc2Fx4BBx4BFzc+ASc2JicmJzUzPgE3PgEnJicjIiUUFjI2NCYiBgNM/tz+pwwMGxEDDAaMfAcSETKEQw8WBg8Og80hNSg4JwICEw0FDhECAjFJEBICPYhKDQgGChQCB/5dMUgxMUgxAuB/ZRcIAxgbCQdHEQGTGi8TOVgKAw8dFwMNuDUFHTGDCA0QAQECFQ8Mnz8LCasJKiUHGg0SATMkMDBJMDAAAAAAAgAAAAAC/QMkAAMADQAAAQchJxMeATMhMjY3EyEC2x3+bB0kBCQZAQQZJARH/ewDBuDg/fcZICAZAicAAwAAAAACzwPoACwAQwBPAAABERQfARYfAzMVHgE7ATI2NRE0JisBNTEWOwEyNjQmJyMiJi8BLgErAQ4BAxUzNTQ2NzMeARcVMzUuAScjIgcjESM1HgEXPgE3LgEnDgEBVQEBAwQCCAjXARENOg0REQ2zDROVExoaE2UQGAQfAxAKYg0RPR8RDZcNEQEeASIalxANAR8CTTo6TQEBTTo6TQJ8/nYEBQIGBAIFArYNERENARENEUoNGicZARMPfQoNARH98Hl5DREBARENeXkaIgEIAe3FOk0CAk06Ok0BAU0AAAAAAgAAAAAC5gMyAAkAEQAAJRQWMyEyNjURITcjFSE1IycjASApHgEaHin+WFBuAeR+JLD8HigoHgGfeT09HgAAAAAAEgDeAAEAAAAAAAAAAQAAAAEAAAAAAAEAEgABAAEAAAAAAAIABwATAAEAAAAAAAMAEgAaAAEAAAAAAAQAEgAsAAEAAAAAAAUACwA+AAEAAAAAAAYAEgBJAAEAAAAAAAoALABbAAEAAAAAAAsAEgCHAAMAAQQJAAAAAgCZAAMAAQQJAAEAJACbAAMAAQQJAAIADgC/AAMAAQQJAAMAJADNAAMAAQQJAAQAJADxAAMAAQQJAAUAFgEVAAMAAQQJAAYAJAErAAMAAQQJAAoAWAFPAAMAAQQJAAsAJAGnIEZpbmFsIFRvYXN0IE1ldHJvcFJlZ3VsYXJGaW5hbCBUb2FzdCBNZXRyb3BGaW5hbCBUb2FzdCBNZXRyb3BWZXJzaW9uIDEuMEZpbmFsIFRvYXN0IE1ldHJvcEZvbnQgZ2VuZXJhdGVkIHVzaW5nIFN5bmNmdXNpb24gTWV0cm8gU3R1ZGlvd3d3LnN5bmNmdXNpb24uY29tACAARgBpAG4AYQBsACAAVABvAGEAcwB0ACAATQBlAHQAcgBvAHAAUgBlAGcAdQBsAGEAcgBGAGkAbgBhAGwAIABUAG8AYQBzAHQAIABNAGUAdAByAG8AcABGAGkAbgBhAGwAIABUAG8AYQBzAHQAIABNAGUAdAByAG8AcABWAGUAcgBzAGkAbwBuACAAMQAuADAARgBpAG4AYQBsACAAVABvAGEAcwB0ACAATQBlAHQAcgBvAHAARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAdQBzAGkAbgBnACAAUwB5AG4AYwBmAHUAcwBpAG8AbgAgAE0AZQB0AHIAbwAgAFMAdAB1AGQAaQBvAHcAdwB3AC4AcwB5AG4AYwBmAHUAcwBpAG8AbgAuAGMAbwBtAAAAAAIAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAECAQMBBAEFAQYBBwEIAQkBCgELAQwBDQAFRXJyb3IHU3VjY2VzcwVBbGFybQdXYXJuaW5nBEluZm8HTWVldGluZwVCbGluawdTdHJldGNoA1NpcANTaXQFVHJhc2gAAAAA) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+
+    .abc {
+        color: blue;
+    }
+
+    .Dashboard {
+        color: #ffffff !important;
+        background-color: #72BBFF !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Dashboardrow {
+        background-color: #F4FAFF !important;
+    }
+
+    .Invoice {
+        color: #ffffff !important;
+        background-color: #ff9548 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Invoicerow {
+        background-color: #FFF3EB !important;
+    }
+
+    .Inventory {
+        color: #ffffff !important;
+        background-color: #A7C186 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Inventoryrow {
+        background-color: #F2FFE7 !important;
+    }
+
+    .Expense {
+        color: #ffffff !important;
+        background-color: #A772FF !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Expensesrow {
+        background-color: #F0E7FF !important;
+    }
+
+    .HR {
+        color: #ffffff !important;
+        background-color: #FF7272 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .HRrow {
+        background-color: #FFE1E1 !important;
+    }
+
+    .Report {
+        color: #ffffff !important;
+        background-color: #0066FF !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Reportsrow {
+        background-color: #E7F0FF !important;
+    }
+
+    .Register {
+        color: #ffffff !important;
+        background-color: #FF72BE !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Registersrow {
+        background-color: #FFF3FA !important;
+    }
+
+    .Document {
+        color: #ffffff !important;
+        background-color: #FF72BE !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Documentsrow {
+        background-color: #FFF3FA !important;
+    }
+
+    .Login {
+        color: #ffffff !important;
+        background-color: #19B400 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Loginrow {
+        background-color: #E9FFDE !important;
+    }
+
+    .Click {
+        color: #000 !important;
+        background-color: #EAEAEA !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Save {
+        color: #ffffff !important;
+        background-color: #3EB315 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Edit {
+        color: #ffffff !important;
+        background-color: #FF7B01 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .Export {
+        color: #ffffff !important;
+        background-color: #4F56FF !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .CRM {
+        color: #ffffff !important;
+        background-color: #2d5da3 !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+
+    .CRMrow {
+        background-color: #FFE1E1 !important;
+    }
+
+    .QuickBooks {
+        color: #ffffff !important;
+        background-color: #9548ff !important;
+        border-radius: 2px;
+        padding: 2px 8px;
+    }
+</style>
+<div id="loadbox"></div>
+<div class="row" style="padding: 25px 25px;">
+    <div class="col-md-12">
+        <h1 class="header">Detail User Log</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="page-header-main position-relative gridPageHeader" style="height: 67px !important; background-color: white;margin: 0px 20px 0px 20px">
+    <div class="col-md-3" style="margin-left: 17px;">
+        @Html.EJS().DropDownList("User").DataSource((IEnumerable<Object>)ViewBag.User).Fields(new DropDownListFieldSettings { Text = "UserName", Value = "UserId" }).Placeholder("Select User").Value(0).AllowFiltering(true).Filtering("onfilteringvendor").Render()
+    </div>
+    <div class="col-md-3" style="margin-left: 17px;">
+        <input name="txtfromdate" type="text" maxlength="100" id="txtfromdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+    </div>
+    <div class="col-md-2" style="margin-left: 17px;">
+        @Html.EJS().DropDownList("Module").DataSource((IEnumerable<Object>)ViewBag.Module).Fields(new DropDownListFieldSettings { Text = "ModuleName", Value = "ModuleName" }).Placeholder("Select Module").Value("All Module").AllowFiltering(true).Filtering("onfilteringModule").Render()
+
+    </div>
+    @*<div class="col-md-2" style="margin-left: 17px;">
+        @Html.EJS().DropDownList("ActionValue").DataSource((IEnumerable<Object>)ViewBag.Action).Fields(new DropDownListFieldSettings { Text = "ActionName", Value = "ActionName" }).Placeholder("Select Module").Value("All Action").AllowFiltering(true).Filtering("onfilteringAction").Render()
+
+    </div>*@
+    <div style="display:flex">
+        <button type="button" class="btnadddocument" onclick="Filterdata();" style="width:100px; border:none;">Go</button>
+        @*<button type="button" class="pdfUnclearExportBtn" style="background-color:red" id="pdf" onclick="toolbarClicks(this)"><img src="https://www.wsmanagementnyc.com/Content/Admin/images/icon_pdf.png" alt=""></button>
+        &nbsp;&nbsp;
+        <button type="button" style="background-color:green" class="exlUnclearExportBtn" id="excel" onclick="toolbarClicks(this)"><img src="https://www.wsmanagementnyc.com/Content/Admin/images/icon_excel.png" alt=""></button>*@
+    </div>
+
+</div>
+<div id="gridvaluechange" style="margin: 20px 20px 20px 20px"></div>
+<script type="text/javascript">
+    document.title = '';
+    var Startdate = '@ViewBag.Sdate';
+
+</script>
+<script src="~/Form_JS/UserLog.js"></script>
+<script src="~/Form_JS/UserLog_Copy.js"></script>
+@Html.EJS().ScriptManager()

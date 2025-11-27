@@ -1,0 +1,56 @@
+9/26/2025 3:38:28 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:38:37 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:39:26 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:39:27 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:39:34 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:39:34 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:39:42 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:39:43 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:39:49 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:39:50 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:39:57 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:39:58 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:40:04 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:40:05 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:08 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:09 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:18 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:19 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:26 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:27 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:34 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:35 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:41 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:42 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:48 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:49 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:42:55 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:42:56 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:02 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:02 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:09 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:10 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:18 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:18 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:25 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:25 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:33 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:33 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:39 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:40 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:43:53 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:43:54 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:44:01 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:44:02 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 3:55:41 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 3:55:45 PM  Create JournalEntry. JournalEntry ID :16193 TxnID :278914
+9/26/2025 4:04:39 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 4:04:41 PM  Create JournalEntry. Message:AuthenticationFailed
+9/26/2025 4:20:08 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 4:20:11 PM  Create JournalEntry. JournalEntry ID :16197 TxnID :104681
+9/26/2025 4:36:17 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 4:36:20 PM  Create JournalEntry. JournalEntry ID :16199 TxnID :309359
+9/26/2025 4:46:51 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 4:46:54 PM  Create JournalEntry. JournalEntry ID :16200 TxnID :258535
+9/26/2025 4:56:38 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+9/26/2025 4:56:42 PM  Create JournalEntry. JournalEntry ID :16201 TxnID :274915

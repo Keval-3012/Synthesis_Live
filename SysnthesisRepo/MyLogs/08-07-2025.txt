@@ -1,0 +1,19 @@
+2025-08-07 12:54:07.0627|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 12:54:07 PM
+2025-08-07 12:54:11.1140|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 8/7/2025 12:54:11 PM - Object reference not set to an instance of an object.
+2025-08-07 12:54:26.0425|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 12:54:26 PM - An error occurred while sending the request.
+2025-08-07 14:40:19.6935|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 2:40:19 PM
+2025-08-07 14:40:34.5420|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 2:40:34 PM - An error occurred while sending the request.
+2025-08-07 14:43:02.5598|ERROR|SysnthesisRepo.Controllers.QBConfigurationController|QBConfigurationController - GotoAuthGrant - 8/7/2025 2:43:02 PM - Object reference not set to an instance of an object.
+2025-08-07 14:43:02.5598|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 2:43:02 PM
+2025-08-07 14:43:08.8873|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 2:43:08 PM - An error occurred while sending the request.
+2025-08-07 14:44:58.2754|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 2:44:58 PM
+2025-08-07 14:45:23.1132|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 2:45:23 PM - An error occurred while sending the request.
+2025-08-07 14:46:01.9731|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 2:46:01 PM
+2025-08-07 14:46:07.2073|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 2:46:07 PM - An error occurred while sending the request.
+2025-08-07 14:48:46.9983|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 2:48:46 PM
+2025-08-07 16:06:01.0156|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 4:06:01 PM
+2025-08-07 16:06:35.9505|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 4:06:35 PM - An error occurred while sending the request.
+2025-08-07 16:13:13.2056|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 4:13:13 PM
+2025-08-07 16:13:19.1609|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 4:13:19 PM - An error occurred while sending the request.
+2025-08-07 16:30:37.7119|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 8/7/2025 4:30:37 PM
+2025-08-07 16:30:59.1421|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 8/7/2025 4:30:59 PM - An error occurred while sending the request.

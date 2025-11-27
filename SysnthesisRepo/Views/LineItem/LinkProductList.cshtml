@@ -1,0 +1,198 @@
+﻿@using Syncfusion.EJ2
+@using Utility
+@model IEnumerable<EntityModels.Models.ProductsList>
+@{ List<EntityModels.Models.productVendorAllList> lstProductVendor = new List<EntityModels.Models.productVendorAllList>();
+                lstProductVendor = ViewBag.lstProductVendor;
+                //EntityModels.Models.ViewBag ViewBag = new EntityModels.Models.ViewBag();
+                //ViewBag = ViewBag.ViewBag;
+                }
+<style>
+    #ajax_dialog_dialog-header {
+        padding: 0px !important;
+    }
+
+    .e-dialog .e-dlg-header {
+        width: 100%;
+    }
+
+    .heading {
+        color: white;
+        font-size: 16px;
+    }
+</style>
+<form>
+
+    <div class="popupBackdrop">
+        <div class="lineItemPopupContainer">
+            <div class="lineItempopUpHeader">
+                <h1 style="color:#000;">Line Item Mapping</h1>
+                <button type="button" onclick="dialogObj.hide()" class="closeButton">x</button>
+            </div>
+            <div class="yourMappingItem">
+                @*<a href="#" onclick="AddtoLibrary()" class="addtoLibraryLink">+ Add to Library</a>*@
+                <li>
+                    <span class="feildLabel">Item</span>
+                    <span class="feildData">@ViewBag.Description</span>
+                </li>
+                @if (ViewBag.UPCCode != null && ViewBag.UPCCode != "")
+                {
+    <li>
+        <span class="feildLabel">UPC</span>
+        <span class="feildData">@ViewBag.UPCCode</span>
+    </li>}
+                @if (ViewBag.ItemNo != null && ViewBag.ItemNo != "")
+                {
+    <li>
+        <span class="feildLabel">Vendor Item No</span>
+        <span class="feildData">@ViewBag.ItemNo</span>
+    </li>}
+                <section>
+                    <img src="~/Content/image/warning.png" /><span>
+                        Please map this line item to both the Mastrer Items Library and
+                        the Vendor Items Library.
+                    </span>
+                </section>
+                <input type="hidden" id="Description" name="Description" value="@ViewBag.Description" />
+                <input type="hidden" id="upccode" name="upccode" value="@ViewBag.UPCCode" />
+                <input type="hidden" id="itemno" name="itemno" value="@ViewBag.ItemNo" />
+                <input type="hidden" id="hdnInvoiceProductId" name="hdnInvoiceProductId" value="@ViewBag.InvoiceProductId" />
+                <input type="hidden" id="hdnInvoiceId" name="hdnInvoiceId" value="@ViewBag.InvoiceId" />
+                <input type="hidden" id="hdnddlProductID" name="hdnddlProductID" value="" />
+                <input type="hidden" id="hdnddlProductVendorID" name="hdnddlProductVendorID" value="" />
+            </div>
+            <div id="AddnewItem" class="addItemToLibrary">
+            </div>
+            <div id="MapContent" class="itemsGridPlaceHolder">
+                <div id="VendorSearch" class="gridSubHeaderContainer">
+                    <input type="search" placeholder="search" id="searchVendorItemData" name="searchVendorItemData" class="searchTextBox" />
+                    <a href="#" onclick="AddtoLibrary('Vendor')" class="addToVendorLibrary">+ Add to the Vendor Items Library</a>
+                </div>
+                @*<input placeholder="search" type="text" id="search" name="search" value="@ViewBag.search" class="searchTextBox" />*@
+
+
+                <div class="vendorGridContainer">
+                    <div class="vendorConfirmedItem displayNone">
+                        <h3>You Have Selected</h3>
+                        <ul>
+                            <li><span>UPC</span> <span id="hdnselectedUPC"></span></li>
+                            <li><span>Item No</span> <span id="hdnselectedItemNo"></span></li>
+                            <li><span>Description</span> <span id="hdnselectedDescription"></span></li>
+                            <li><span>Brand</span> <span id="hdnselectedBrand"></span></li>
+                        </ul>
+                        <button type="button" onclick="CancelVendorRow()">Cancel</button>
+                    </div>
+                    <ul id="VendorrecommendedItemsGridHeader" class="recommendedItemsGridHeader">
+                        <li>UPC Code</li>
+                        <li>Item No</li>
+                        <li>Description</li>
+                        <li>Brand</li>
+                        <li>Size</li>
+                        <li>Action</li>
+                    </ul>
+                    <div id="VendorItemGrid" class="lineItemsgridData">
+                    </div>
+                </div>
+
+            </div>
+            <div class="itemsGridPlaceHolder masterItemsGrid">
+                <div id="MasterSearch" class="gridSubHeaderContainer">
+                    <input type="search" placeholder="search" id="searchMasterItemData" name="searchMasterItemData" class="searchTextBox" />
+                    <a href="#" onclick="AddtoLibrary('Master')" class="addToMasterLibrary">+ Add to the Master Items Library</a>
+                </div>
+                <div class="masterGridContainer">
+                    <div class="masterConfirmedItem displayNone">
+                        <h3>You Have Selected</h3>
+                        <ul>
+                            <li><span>UPC</span> <span id="hdnMselectedUPC"></span></li>
+                            <li><span>Item No</span> <span id="hdnMselectedItemNo"></span></li>
+                            <li><span>Description</span> <span id="hdnMselectedDescription"></span></li>
+                            <li><span>Brand</span> <span id="hdnMselectedBrand"></span></li>
+                        </ul>
+                        <button type="button" onclick="CancelMasterRow()">Cancel</button>
+                    </div>
+                    <ul id="MasterrecommendedItemsGridHeader" class="recommendedItemsGridHeader">
+                        <li>UPC Code</li>
+                        <li>Item No</li>
+                        <li>Generic No</li>
+                        <li>Description</li>
+                        <li>Brand</li>
+                        <li>Size</li>
+                        <li>Action</li>
+                    </ul>
+                    <div id="MasterItemGrid" class="lineItemsgridData">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div id="btnSaveandClose">
+                <div id="btnSaveandMap" class="directionRow">
+                    <button type="button" onclick="AssignProduct()" class="addAndMapBtn">Save and Map</button>
+                    <button type="button" onclick="dialogObj.hide()" class="cancelMapBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+
+    
+
+        $("#searchMasterItemData").keypress(function (event) {
+            if (event.which === 13) {
+                FillSearchMasterItemData();
+                FillSearchVendorItemData();
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        $("#searchVendorItemData").keypress(function (event) {
+            if (event.which === 13) {
+                FillSearchVendorItemData();
+                FillSearchMasterItemData();
+                event.preventDefault();
+                return false;
+            }
+        });
+
+
+    function FillVendorGrid(rowData, VendorName) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetVendorGrid", "LineItem")',
+            contentType: "application/json",
+            data: JSON.stringify({ value: rowData, VendorName: $("#VendorList_hidden").val() }),
+            success: function (response) {
+                $("#VendorItemGrid").html(response);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
+    function FillMasterGrid(rowData, VendorName) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetMasterGrid", "LineItem")',
+            contentType: "application/json",
+            data: JSON.stringify({ value: rowData, VendorName: $("#VendorList_hidden").val() }),
+            success: function (response) {
+                $("#MasterItemGrid").html(response);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>
+@Html.EJS().ScriptManager()

@@ -1,0 +1,43 @@
+﻿@using Syncfusion.EJ2
+<style>
+    #ajax_dialog1_dialog-header {
+        padding: 12px 14px 12px 12px !important;
+    }
+</style>
+
+
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditing3").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource((IEnumerable<object>)ViewBag.DataSourse).AllowTextWrap().Columns(col =>
+{
+    col.Field("ProductVendorId").IsPrimaryKey(true).HeaderText("Product Vendor ID").Visible(false).Add();
+    col.Field("ProductId").HeaderText("Product Id").Visible(false).Add();
+    col.Field("UPCCode").HeaderText("UPC Code").Width("150").Add();
+    col.Field("ItemNo").HeaderText("Item No").Width("100").Add();
+    col.Field("GenericID").HeaderText("Generic ID").Width("100").Add();
+    col.Field("Brand").HeaderText("Brand").Width("150").Add();
+    col.Field("Size").HeaderText("Size").Width("100").Add();
+    col.Field("Description").HeaderText("Description").Width("300").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+}).DataBound("dataBound").Toolbar(new List<string>() { "Search" }).Render()
+</div>
+<script>
+    function dataBound(e) {
+        
+        var grid = document.getElementById("InlineEditing3").ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+  
+</script>
+@Html.EJS().ScriptManager()

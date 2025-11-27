@@ -1,0 +1,235 @@
+﻿@using EntityModels.Models
+@using System.Configuration;
+@using Utility
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<style>
+    .e-sticky#ManageUserGrid_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 134px !important;
+    }
+</style>
+<style>
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+    }
+
+    .toggle-input {
+        display: none;
+    }
+
+    .toggle-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ccc;
+        border-radius: 34px;
+        cursor: pointer;
+    }
+
+        .toggle-label:before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+    .toggle-input:checked + .toggle-label {
+        background-color: #4CAF50; /* Customize the background color when the switch is toggled */
+    }
+
+        .toggle-input:checked + .toggle-label:before {
+            transform: translateX(26px); /* Customize the position of the toggle button when the switch is toggled */
+        }
+
+    #resetPasswordModal .input-box {
+        position: relative;
+    }
+
+        #resetPasswordModal .input-box .fa {
+            position: absolute;
+            right: 10px;
+            top: 8px;
+        }
+</style>
+<div class="header-small special_bg" style="margin:0 1px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Manage Users</h3>
+        </div>
+    </div>
+</div>
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;padding:0px;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+
+<div class="grandchildgrid">
+    @{
+
+        var GrandChildGrid = new Syncfusion.EJ2.Grids.Grid()
+        {
+            DataSource = new DataManager() { Url = "/UserMasters/UrlDatasourceGrandChildList", Adaptor = "UrlAdaptor" },
+            QueryString = "MergeId",
+            //AllowFiltering = true,
+            AllowSorting = true,
+            //Toolbar = new List<string>() { "Search" },
+            ActionBegin = "actionBegin",
+            ActionComplete = "actionComplete",
+            //FilterSettings = new Syncfusion.EJ2.Grids.GridFilterSettings() { Type = Syncfusion.EJ2.Grids.FilterType.CheckBox },
+            Columns = new List<Syncfusion.EJ2.Grids.GridColumn>
+{
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ModuleName", HeaderText="Module Name",Width="50"},
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Roles",HeaderText="Rights", Width="120"},
+                },
+        };
+
+
+    }
+</div>
+
+<div class="childgrid">
+    @{
+
+        var ChildGrid = new Syncfusion.EJ2.Grids.Grid()
+        {
+            DataSource = new DataManager() { Url = "/UserMasters/UrlDatasourceChildList", Adaptor = "UrlAdaptor" },
+            QueryString = "UserId",
+            //AllowFiltering = true,
+            AllowSorting = true,
+            //Toolbar = new List<string>() { "Search" },
+            ActionBegin = "actionBegin",
+            ActionComplete = "actionComplete",
+            ChildGrid = GrandChildGrid,
+            //FilterSettings = new Syncfusion.EJ2.Grids.GridFilterSettings() { Type = Syncfusion.EJ2.Grids.FilterType.CheckBox },
+            Columns = new List<Syncfusion.EJ2.Grids.GridColumn>
+{
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="UserId", HeaderText="UserId",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="StoreId", HeaderText="StoreId",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="MergeId", HeaderText="MergeId",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="StoreName",HeaderText="Store Name", Width="120"},
+                },
+        };
+
+
+    }
+</div>
+
+
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("ManageUserGrid").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("UserId").IsPrimaryKey(true).HeaderText("User Id").Visible(false).Add();
+           col.Field("GroupId").IsPrimaryKey(true).HeaderText("GroupId").Visible(false).Add();
+           col.Field("UserTypeId").IsPrimaryKey(true).HeaderText("UserTypeId").Visible(false).Add();
+           col.Field("FirstName").HeaderText("Name").Width("250").Add();
+           col.Field("Group").HeaderText("Group").Width("250").Add();
+           col.Field("UserType").HeaderText("Assigned Role").Width("250").Add();
+           col.Field("UserName").HeaderText("User Name").Width("200").Add();
+           col.Field("EmailAddress").HeaderText("Email Address").Width("250").Add();
+           col.Field("PhoneNumber").HeaderText("Phone Number").Width("120").Add();
+           col.Field("IsActive").HeaderText("Status").EditType("booleanedit").DefaultValue(true).Width("100").Template("#toggleSwitchTemplate").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTraining" }).Add();
+           //col.Field("TrackHours").HeaderText("Track Hours").EditType("booleanedit").DefaultValue(true).Width("100").Template("#tracktoggleSwitchTemplate").Filter(new { type = "CheckBox", itemTemplate = "#TrackStatusItemTraining" }).Add();
+       }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").ChildGrid(ChildGrid).AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Reset Password", "Search" }).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+
+<div id="resetPasswordModal" class="modal-content" style="display:none">
+    <div class="modal-header">
+        <span class="modal-title">Reset Password</span>
+        <button class="close" onclick="cancelResetPassword()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" id="HiddenUserId" class="e-input" />
+        <div>
+            <label for="NewPassword">New Password: <span class="highlight">*</span></label>
+            <div class="input-box">
+                <input type="password" id="NewPassword" class="e-input" autocomplete="off" onkeyup="ResetPasswordMatchCheck()" />
+                <span toggle="#NewPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+            </div>
+            <div>
+                <span id="password-regex" class="error-message"></span>
+            </div>
+        </div>
+        <div>
+            <label for="NewConfirmPassword" style="margin-top:10px;">Confirm Password: <span class="highlight">*</span></label>
+            <div class="input-box">
+                <input type="password" id="NewConfirmPassword" class="e-input" onkeyup="ResetPasswordMatchCheck()" />
+                <span toggle="#NewConfirmPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+            </div>
+            <div>
+                <span id="password-error" class="error-message"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="ResetPasswordcnf" class="e-btn e-primary" onclick="ResetPasswordcnf()">Reset Password</button>
+        <button id="cancelResetPassword" class="e-btn" onclick="cancelResetPassword()">Cancel</button>
+    </div>
+</div>
+
+
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+<script type="text/x-jsrender" id="StatusItemTraining">
+    ${statusTrainingDetail(data)}
+</script>
+<script type="text/x-jsrender" id="TrackStatusItemTraining">
+    ${trackstatusTrainingDetail(data)}
+</script>
+<script type="text/x-template" id="toggleSwitchTemplate">
+    <div class="toggle-switch">
+        ${if(IsActive)}
+        <input type="checkbox" id="${UserId}^${FirstName}" checked class="toggle-input" onclick="javascript:toggle(this);" style="display:none" value="on" />
+        ${else}
+        <input type="checkbox" id="${UserId}^${FirstName}" class="toggle-input" onclick="javascript:toggle(this);" style="display:none" value="off" />
+        ${/if}
+        <label for="${UserId}^${FirstName}" class="toggle-label"></label>
+    </div>
+</script>
+<script type="text/x-template" id="tracktoggleSwitchTemplate">
+    <div class="toggle-switch">
+        ${if(TrackHours)}
+        <input type="checkbox" id="${UserId}^${FirstName}^" checked class="toggle-input" onclick="javascript:tracktoggle(this);" style="display:none" value="on" />
+        ${else}
+        <input type="checkbox" id="${UserId}^${FirstName}^" class="toggle-input" onclick="javascript:tracktoggle(this);" style="display:none" value="off" />
+        ${/if}
+        <label for="${UserId}^${FirstName}^" class="toggle-label"></label>
+    </div>
+</script>
+<script src="~/Form_JS/ManageUser.js"></script>
+@Html.EJS().ScriptManager()

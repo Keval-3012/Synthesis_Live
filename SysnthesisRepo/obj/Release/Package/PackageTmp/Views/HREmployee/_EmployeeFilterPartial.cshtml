@@ -1,0 +1,95 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model SynthesisViewModal.HRViewModel.EmployeeFilterModel
+<div class="col-md-12">
+    <div class="form-group hiringcls">
+        <label>Hiring date</label>
+        <div class="hiringdt">
+            @Html.EJS().DatePickerFor(m => m.HiringFromDate).Placeholder("Date").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).EnableMask(true).Format("MM/dd/yyyy").Render()
+            @Html.EJS().DatePickerFor(m => m.HiringToDate).Placeholder("Date").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).EnableMask(true).Format("MM/dd/yyyy").Render()
+        </div>
+
+    </div>
+</div>
+<div class="form-group hiringcls">
+    <div class="col-md-12">
+        <label>Training Status</label>
+        <div class="hiringdt">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="TStatusComplete">
+                <label class="form-check-label inline emp-status" for="exampleCheck1">Completed</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="TStatusPending">
+                <label class="form-check-label inline emp-status" for="exampleCheck2">Pending</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group hiringcls">
+    <div class="col-md-12">
+        <label>Employee Status</label>
+        <div class="hiringdt">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="EStatusActive">
+                <label class="form-check-label inline emp-status active" for="">Active</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="EStatusDeceased">
+                <label class="form-check-label inline emp-status deceased" for="">Deceased</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="EStatusOnTerminated">
+                <label class="form-check-label inline emp-status terminated" for="">Terminated</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="EStatusResigned">
+                <label class="form-check-label inline emp-status resigned" for="">Resigned</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group hiringcls">
+    <div class="col-md-12">
+        <label>401(K) Plan Status</label>
+        <div class="hiringdt">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="PStatusNotUsed">
+                <label class="form-check-label inline emp-status" for="">Not Used</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="PStatusOptIn">
+                <label class="form-check-label inline emp-status" for="">Opt In</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="PStatusOptOut">
+                <label class="form-check-label inline emp-status" for="">Opt Out</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group hiringcls">
+    <div class="col-md-12">
+        <label>Medical Insurance</label>
+        <div class="hiringdt">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="MIStatusNotUsed">
+                <label class="form-check-label inline emp-status" for="">Not Used</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="MIStatusUsed">
+                <label class="form-check-label inline emp-status" for="">Used</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="form-group hiringcls">
+        <label>Department</label>
+        <div class="select-wrapper">
+            @Html.DropDownListFor(x => x.DepartmentId, null, new { @class = "form-control select2 drpDept" })
+        </div>
+
+    </div>
+</div>
+@Html.EJS().ScriptManager()

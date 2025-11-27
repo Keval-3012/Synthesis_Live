@@ -1,0 +1,127 @@
+﻿@model List<EntityModels.Models.Invoice>
+@using Utility
+
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+
+<style>
+    .btn_red1 {
+        background: #EF3333 !important;
+        color: #fff !important;
+    }
+
+
+    .btn_small1 {
+        padding: 1px 15px !important;
+        border-radius: 20px !important;
+        text-decoration: none !important;
+    }
+
+    #txtSearchTitle {
+        width: 300px !important;
+    }
+</style>
+
+<div class="header-small special_bg">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>QB Sync </h3>
+        </div>
+    </div>
+</div>
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="searchfinal">
+            <div class="widget-body shadownone brdrgray">
+                <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="dataTables_filter">
+                        <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+                            <tr>
+                                <td width="145">
+                                    <div>
+                                        @Html.DropDownList("StoreId", null, "-- All Store --", new { @class = "myval" })
+                                    </div>
+                                </td>
+                                <td width="100">
+                                    <div class="input-group">
+
+                                    </div>
+                                <td width="265">
+                                    <div class="input-group">
+                                        <input name="txtSearchTitle" type="text" maxlength="100" id="txtSearchTitle" placeholder="Vendor,Invoice No" class="form-control m-b">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class=".searchfinal .btnsearchicon" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="datagrid martop15">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover maintable">
+                    <thead>
+                        <tr>
+                            <th>Vendor Name</th>
+                            <th>Invoice Type</th>
+                            <th>Invoice</th>
+                            <th>Invoice Date</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adta">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModal">
+    <div class="modal-dialog max_width773">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3>Error Log</h3>
+                <div class="blog_li">
+                    <ul id="viewerro">                        
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn_gray" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    FunSearchRecord();
+    function FunSearchRecord() {
+        var StoreId = $('#StoreId').val();
+        var txtSearchTitle = $('#txtSearchTitle').val();
+        $.ajax({
+            url: '/QBConfiguration/getSyncInvoiceData',
+            type: "post",
+            cache: false,
+            data: { StoreId: StoreId, txtSearchTitle: txtSearchTitle },
+            beforeSend: function () {
+                Loader(1);
+                $("#preloader").show();
+                $("#status").show();
+            },
+            success: function (states) {
+                $("#adta").html(states);
+                $("#preloader").hide();
+                $("#status").hide();
+                Loader(0);
+            }
+        });
+    }
+</script>
+<script src="~/Form_JS/QBConfiguration.js"></script>
+
+
+

@@ -1,0 +1,286 @@
+﻿@model IEnumerable<EntityModels.Models.PayrollAccount_Select>
+@{
+    Layout = null;
+}
+@using Utility
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    tr.duplicate td {
+        background-color: red;
+    }
+</style>
+<div class="animate-panelmessesgarea padbtmzero">
+
+    @if (ViewBag.StatusMessage.ToString() == "Success")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('Payroll Account Created Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Delete")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Payroll Account Deleted Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Edit")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('Payroll Account Updated Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Exists")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Payroll Account Is Already Exists.');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Error")
+    {
+        <script>
+            MyfunError();
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "EmailExists")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Email Is Already Exists With Another Store.');
+        </script>
+    }
+</div>
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:18px!important;">
+        <div class="datagrid">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover select_set1" id="data_table">
+                    <thead>
+                        <tr>
+                            <th style="width:15%!important">Payroll Account</th>
+                            <th style="width:19%!important">QB Account</th>
+                            <th style="width:11%!important">Value In</th>
+                            <th>Description</th>
+                            <th style="width:12%!important">Enable/Disable</th>
+                            <th style="width:10%!important">Sorting No</th>
+                            <th style="width:15%!important" class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data_body">
+                        @{if (Model.Count() > 0)
+                            {
+                                int iCount = 0;
+                                foreach (var item in Model)
+                                {
+                                    var Divnamelbl = "Divnamelbl" + @item.PayrollCashAnalysisId;
+                                    var DivQbAccountlbl = "DivQbAccountlbl" + @item.PayrollCashAnalysisId;
+                                    var DivQbAccountddl = "DivQbAccountddl" + @item.PayrollCashAnalysisId;
+                                    var EQBAccountReq = "EQBAccountReq" + @item.PayrollCashAnalysisId;
+
+                                    var DivValueInlbl = "DivValueInlbl" + @item.PayrollCashAnalysisId;
+                                    var DivValueInddl = "DivValueInddl" + @item.PayrollCashAnalysisId;
+                                    var EValueInReq = "EValueInReq" + @item.PayrollCashAnalysisId;
+
+                                    var DivDescriptionlbl = "DivDescriptionlbl" + @item.PayrollCashAnalysisId;
+                                    var DivDescriptiontxt = "DivDescriptiontxt" + @item.PayrollCashAnalysisId;
+                                    var EDescriptionReq = "EVDescriptionReq" + @item.PayrollCashAnalysisId;
+
+                                    var DivIsActivelbl = "DivIsActivelbl" + @item.PayrollCashAnalysisId;
+                                    var DivIsActivechk = "DivIsActivechk" + @item.PayrollCashAnalysisId;
+                                    var EIsActiveReq = "EIsActiveReq" + @item.PayrollCashAnalysisId;
+
+                                    var DivSortingNolbl = "DivSortingNolbl" + @item.PayrollCashAnalysisId;
+                                    var DivSortingNotxt = "DivSortingNotxt" + @item.PayrollCashAnalysisId;
+                                    var ESortingNoReq = "ESortingNoReq" + @item.PayrollCashAnalysisId;
+
+                                    var TempIDd = "TempID" + @item.PayrollCashAnalysisId;
+                                    <tr class="even">
+                                        <td style="vertical-align:middle;text-align:left;">
+                                            <div id="@Divnamelbl">@Html.Raw(item.Name)</div>
+                                        </td>
+                                        <td style="vertical-align:middle;text-align:left;">
+                                            <div id="@DivQbAccountlbl">@Html.Raw(item.QbAccount)</div>
+                                            <div id="@DivQbAccountddl" style="display:none">
+                                                @if (ViewBag.QBAccount != null)
+                                                {
+                                                    @Html.DropDownList("QB".ToString(), new SelectList(ViewBag.QBAccount, "value", "text", item.QbAccountid), "Select QB Account", new { @class = "myval", @id = "EQBAccount_" + @item.PayrollCashAnalysisId })
+                                                    <span class="highlight" id="@EQBAccountReq" style="display: none;">QB Account Is Required</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="highlight" id="@EQBAccountReq">QB Account Not Found</span>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align:middle;text-align:left;">
+                                            <div id="@DivValueInlbl">@Html.Raw(item.ValueInstr)</div>
+                                            <div id="@DivValueInddl" style="display:none">
+                                                @if (ViewBag.ValueInList != null)
+                                                {
+                                                    @Html.DropDownList("ValueIn".ToString(), new SelectList(ViewBag.ValueInList, "value", "text", item.ValueIn), "Select Type", new { @class = "myval", @id = "EValueIn_" + @item.PayrollCashAnalysisId })
+                                                    <span class="highlight" id="@EValueInReq" style="display: none;">Value In Is Required</span>
+                                                }
+                                                
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align:middle;text-align:left;">
+                                            <div id="@DivDescriptionlbl">@Html.Raw(item.Description)</div>
+                                            <div id="@DivDescriptiontxt" style="display:none">
+                                                @Html.TextBox("Memo", item.Description, new { maxlength = 1000, @class = "form-control", @id = "EDescription_" + @item.PayrollCashAnalysisId })
+                                                <span class="highlight" id="@EDescriptionReq" style="display: none;">Description Is Required</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="@DivIsActivelbl">@Html.Raw(item.IsActivestr)</div>
+                                            <div id="@DivIsActivechk" style="display:none">
+                                                @if (item.IsActive == true)
+                                                {
+                                                    <input id="EIsActive_@item.PayrollCashAnalysisId" class="trChkbox" checked="checked" style="left: 30%;top: 30%;height: 22px;display: inline;opacity: unset;" type="checkbox" value="true" />
+                                                }
+                                                else
+                                                {
+                                                    <input id="EIsActive_@item.PayrollCashAnalysisId" class="trChkbox" style="left: 30%;top: 30%;height: 22px;display: inline;opacity: unset;" type="checkbox" value="true" />
+                                                }
+                                                <span class="highlight" id="@EIsActiveReq" style="display: none;">Enable/Disable Is Required</span>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align:middle;text-align:left;">
+                                            <div id="@DivSortingNolbl">@Html.Raw(item.SortingNo)</div>
+                                            <div id="@DivSortingNotxt" style="display:none">
+                                                @Html.TextBox("SortingNo", item.SortingNo, new { maxlength = 1000, @class = "form-control", @id = "ESortingNo_" + @item.PayrollCashAnalysisId })
+                                                <span class="highlight" id="@ESortingNoReq" style="display: none;">Sorting No Is Required</span>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align:middle;text-align:right" class="img_with img_color">
+                                            <input type="hidden" id="ID" name="ID" value="@item.PayrollCashAnalysisId" />
+                                            <input type="hidden" id="@TempIDd" name="@TempIDd" value="@iCount" />
+                                            <a href="#" id="edit_@item.PayrollCashAnalysisId" onclick="return Edit(@item.PayrollCashAnalysisId);"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                                            <input type="submit" id="update_@item.PayrollCashAnalysisId" value="Update" onclick="return Updatedata(@item.PayrollCashAnalysisId)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                            <input type="submit" id="cancel_@item.PayrollCashAnalysisId" value="Cancel" onclick="return Cancel(@item.PayrollCashAnalysisId)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                        </td>
+
+                                    </tr>
+                                    iCount = iCount + 1;
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" style="text-align:center;">
+                                        No Data Available
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var CurrentPageIndex = '@ViewBag.CurrentPageIndex';
+    var OrderByVal = '@ViewBag.OrderByVal';
+    var IsAscVal = '@ViewBag.IsAscVal';
+    var PageSize = '@ViewBag.PageSize';
+    var Alpha = '@ViewBag.Alpha';
+    var SearchRecords = '@ViewBag.SearchRecords';
+    var SearchTitle = '@ViewBag.SearchTitle';
+</script>

@@ -1,0 +1,267 @@
+﻿@model SynthesisViewModal.HRViewModel.HREmployeeProfileViewModal
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Navigations;
+@using Syncfusion.EJ2.Popups
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HREmployeeProfile.css" rel="stylesheet" />
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div class="control-section card-control-section vertical_card_layout" id="EmployeeContent">
+    <div class="e-card-resize-container">
+        <div>
+            <div class="row card-layout">
+                @Html.HiddenFor(a => a.EmployeeId)
+                @Html.Hidden("EmployeeChildId")
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <div tabindex="0" class="e-card profile" style="justify-content: flex-start;">
+                        <div class="e-card-header">
+                            <div class="e-card-header-image e-card-corner"></div>
+                            <div class="e-card-header-caption">
+                                <div class="e-card-header-title">@Model.FullName</div>
+                                <div class="e-card-sub-title">@Model.Designation</div>
+                            </div>
+                            <div class="e-card-drop col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                                @Html.DropDownList("StoreId", null, new { @class = "form-control select2", @onchange = "GetStorWiseData()" })
+                            </div>
+                        </div>
+                        <div class="e-card-separator"></div>
+                        <div class="e-card-content">
+                            <div class="row mb-3">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                                    <div class="form-g-row">
+                                        <div class="form-g">
+                                            <label class="col-form-label">DOB</label>
+                                            <div class="form-text">
+                                                @Model.sDateofBirth
+                                            </div>
+                                        </div>
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                SSN
+                                            </label>
+                                            <div class="form-text">
+                                                <a style="color:blue" onclick="GetDataForSSN('@Model.EmployeeId')">
+                                                    @Model.SSV
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Gender
+                                            </label>
+                                            <div class="form-text">
+                                                @Model.GenderName
+                                            </div>
+                                        </div>
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Marital Status
+                                            </label>
+                                            <div class="form-text">
+                                                @Model.MaritalStatusName
+                                            </div>
+                                        </div>
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Language
+                                            </label>
+                                            <div class="form-text">
+                                                @Model.LanguageIdName
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-g-row" id="EmployeeChildDetail">
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Employee ID
+                                            </label>
+                                            <div class="form-text">
+                                                433116
+                                            </div>
+                                        </div>
+
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Hire date
+                                            </label>
+                                            <div class="form-text">
+                                                01-26-2024
+                                            </div>
+                                        </div>
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Employeement Type
+                                            </label>
+                                            <div class="form-text">
+                                                Full Time
+                                            </div>
+                                        </div>
+                                        <div class="form-g">
+                                            <label class="col-form-label">
+                                                Store
+                                            </label>
+                                            <div class="form-text">
+                                                74-84 Westside Market LLC
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-g-row">
+                                        @if (!String.IsNullOrEmpty(Model.Address))
+                                        {
+                                            <div class="form-g">
+                                                <div class="form-text">
+                                                    <img src="~/Content/images/map.png" width="25" />
+                                                    @Model.Address
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (!String.IsNullOrEmpty(Model.Email))
+                                        {
+                                            <div class="form-g">
+                                                <div class="form-text">
+                                                    <img src="~/Content/images/email.png" width="25" />
+                                                    @Model.Email
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (!String.IsNullOrEmpty(Model.Phone))
+                                        {
+                                            <div class="form-g">
+                                                <div class="form-text">
+                                                    <img src="~/Content/images/smartphone.png" width="25" />
+                                                    @Model.Phone
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (!String.IsNullOrEmpty(Model.MobileNo))
+                                        {
+                                            <div class="form-g">
+                                                <div class="form-text">
+                                                    <img src="~/Content/images/phone.png" width="25" />
+                                                    @Model.MobileNo
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="e-card-footer">
+                            <div class="e-tab-section">
+                                <div class="col-lg-12 content-wrapper control-section" style=" padding-bottom: 15px;" id="ProfileTabing">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.EJS().Dialog("ajax_dialogSSN").IsModal(true).Visible(false).Header("View SSN").Created("createdSSN").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="ValidateRateSSN">
+</div>).Width("500px").Target("body").Buttons(ViewBag.PromptButtonSSN).Render()
+
+@Html.EJS().Dialog("ajax_dialog").IsModal(true).Visible(false).Header("View Pay Rate").Created("created").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="ValidateRate">
+</div>).Width("500px").Target("body").Buttons(ViewBag.PromptButton).Render()
+
+@Html.EJS().Dialog("ajax_dialogAddDocument").IsModal(true).Visible(false).Header("Add Document").Created("createdAddDocument").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="AddDocument">
+</div>).Width("500px").Target("body").Buttons(ViewBag.PromptButtonAddDocument).Render()
+
+@Html.EJS().Dialog("ajax_dialogUpload401plan").IsModal(true).Visible(false).Header("Add Document 401(K) Plan").Created("createdUpload401plan").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="Upload401plan">
+</div>).Width("500px").Target("body").Buttons(ViewBag.PromptbtnUpload401plan).Render()
+
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+
+<script id="payRateTemplate" type="text/x-template">
+    <a onclick='GetData(${EmployeePayRateId})'>$xx-xx <img src="/Content/images/padlock.png" width="12" /></a>
+</script>
+
+<script id='SickTimedialogtemplates' type="text/x-template">
+    <div id="SickTimedialogTemp">
+    </div>
+</script>
+
+<script id='VacationTimedialogtemplates' type="text/x-template">
+    <div id="VacationTimedialogTemp">
+    </div>
+</script>
+
+<script id='Insurancedialogtemplates' type="text/x-template">
+    <div id="InsuranceDialogTempData">
+    </div>
+</script>
+
+<script type="text/x-jsrender" id="UploadTemplate">
+    <a href="/HREmployeeProfile/DownloadInsuranceLetter?InsuranceFileName=${FileName}&EmployeeId=${EmployeeId}">
+        <img src="/Content/Admin/images/pdf.png" />
+    </a>
+</script>
+
+<script type="text/x-jsrender" id="UploadTemplate1">
+    <a href="/HREmployeeProfile/DownloadDocument?DocumentFileName=${FileName}&EmployeeId=${EmployeeId}">
+        <img src="/Content/Admin/images/pdf.png" />
+    </a>
+</script>
+
+<script id='Notesdialogtemplates' type="text/x-template">
+    <div id="NotesdialogTemp">
+    </div>
+</script>
+
+<script id='Trainingdialogtemplates' type="text/x-template">
+    <div id="TrainingdialogTemp">
+    </div>
+</script>
+
+<script>
+    var scrollVal = 0;
+    var Change = 0;
+    function setSelect2() {
+        $(".select2").select2({ closeOnSelect: true });
+    }
+    $(function () {
+        setSelect2();
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        GetStorWiseData();
+        document.body.addEventListener('keydown', function (e) {
+            var tabElement = document.querySelector('#keyboardInteractionTab .e-toolbar-item.e-template.e-active .e-tab-wrap');
+            if (e.altKey && e.keyCode === 74 && tabElement) {
+                tabElement.focus();
+            }
+        });
+    });
+
+    function onImageUploadSuccess(args) {
+        
+        if (args.e.currentTarget.getResponseHeader('name') != null) {
+            args.file.name = args.e.currentTarget.getResponseHeader('name');
+            $("#FileName").val(args.file.name);
+        }
+    }
+
+    $(document).ready(function () {
+        var HeaderStoreId = $("#HeaderStoreId option:selected").val();
+        if (HeaderStoreId == "" || HeaderStoreId != "") {
+            $(".storeheaderstatus").hide();
+        }
+    });
+</script>
+<script src="~/Content/HRJs/HREmployeeProfile.js"></script>
+<script src="~/Content/HRJs/HREmployeePayRate.js"></script>
+<script src="~/Content/HRJs/HREmployeeSickTimes.js"></script>
+<script src="~/Content/HRJs/HREmployeeVacation.js"></script>
+<script src="~/Content/HRJs/HREmployeeInsurance.js"></script>
+<script src="~/Content/HRJs/HREmployeeDocument.js"></script>
+<script src="~/Content/HRJs/HREmployeeNotes.js"></script>
+<script src="~/Content/HRJs/HREmployeeTrainingHistory.js"></script>
+<script src="~/Content/HRJs/HREmployeeWarning.js"></script>
+<script src="~/Content/HRJs/HREmployeeTermination.js"></script>
+@Html.EJS().ScriptManager()

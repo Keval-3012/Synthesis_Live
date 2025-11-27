@@ -1,0 +1,183 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@using Syncfusion.EJ2.Popups
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HREmployee.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+<style>
+    .blur-background {
+        filter: blur(5px); /* Adjust blur amount as needed */
+        pointer-events: none; /* Allow clicks to pass through the blurred background */
+    }
+
+    .hiringcls {
+        flex-direction: column;
+    }
+
+    .hiringdt {
+        gap: 10px;
+        display: flex;
+    }
+
+    .drpDept {
+        width: 300px;
+    }
+
+    .emp-status.terminated {
+        background: #707070;
+        border-radius: 15px;
+    }
+
+    .form-check label.inline {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    .emp-status.active {
+        background: #24B545;
+        border-radius: 15px;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .form-check input[type="checkbox"] {
+            margin: 0;
+        }
+
+   
+</style>
+<div>
+    @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+@{
+    List<object> toolbarItems = new List<object>();
+    //toolbarItems.Add(new { text = "Expand All", tooltipText = "Expand All", prefixIcon = "e-expand", id = "expandall", align = "Left" });
+    //toolbarItems.Add(new { text = "Collapse All", tooltipText = "Collapse All", prefixIcon = "e-collapse", id = "collapseall", align = "Right" });
+    toolbarItems.Add(new { text = "Add", tooltipText = "Add", prefixIcon = "e-add", id = "Add" });
+    toolbarItems.Add(new { text = "Edit", tooltipText = "Edit", prefixIcon = "e-edit", id = "Edit" });
+    toolbarItems.Add(new { text = "Delete", tooltipText = "Delete", prefixIcon = "e-delete", id = "delete" });
+    toolbarItems.Add(new { text = "Reset Password", tooltipText = "Reset Password", prefixIcon = "e-refresh", id = "Reset" }); // New reset button
+    toolbarItems.Add(new { text = "Search" });
+    toolbarItems.Add(new { text = "PdfExport" });
+    toolbarItems.Add(new { text = "ExcelExport" });
+    toolbarItems.Add(new { text = "Filter", tooltipText = "Filter", prefixIcon = "e-filter", id = "Filter" });
+    toolbarItems.Add(new { text = "Reset Training", tooltipText = "Reset Training", prefixIcon = "e-refresh", id = "ResetTraining" });
+}
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Employee List</h3>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            <div id="customDialog"></div>
+            @Html.EJS().Grid("HREmployee").AllowSorting().AllowFiltering().AllowPdfExport().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+            {
+                col.Type("checkbox").Width("50").Add();
+                col.Field("EmployeeId").IsPrimaryKey(true).HeaderText("Employee Id").Visible(false).Add();
+                col.HeaderText("Employee").Template("#EmployeeTemp").Width("20%").Add();
+                col.Field("EmployeeUserName").HeaderText("User Name").Width("8%").Add();
+                col.Field("EmployeeId").HeaderText("User Id").Width("8%").Add();
+                col.Field("NickName").HeaderText("Store Name").Width("8%").Add();
+                col.Field("OfficeEmployeeID").HeaderText("Employee Id").Width("8%").Add();
+                col.Field("DateofBirth").HeaderText("DOB").Format("MM/dd/yyyy").Width("8%").Add();
+                col.Field("HireDate").HeaderText("Hire Date").Format("MM/dd/yyyy").Width("8%").Add();
+                col.Field("SSN").HeaderText("SSN").Template("#SSNTemp").Width("10%").Add();
+                col.Field("IsTraningCompleted").HeaderText("Training").Template("#TraningTemp").Width("10%").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTraining" }).Add();
+                col.Field("OptStatusValue").HeaderText("401(K) Plan Status").Width("8%").Add();
+                col.Field("HelathBenefitUsed").HeaderText("Medical Insurance").Width("8%").Add();
+            }).DataBound("dataBound").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(toolbarItems).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+@Html.EJS().Dialog("ajax_dialogSSN").IsModal(true).Visible(false).Header("View SSN").Created("createdSSN").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="ValidateRateSSN">
+</div>).Width("500px").Target("body").Buttons(ViewBag.PromptButtonSSN).Render()
+@Html.EJS().Dialog("filterDialog").IsModal(true).Visible(false).Header("Filter Records").Created("createdFilter").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="filterDialogContent">
+</div>).Width("500px").Target("body").Buttons(ViewBag.FilterButtons).Render()
+
+
+
+<script type="text/x-jsrender" id="EmployeeTemp">
+
+    <div class="emp-info">
+        <a href="/HREmployeeProfile/Index?EmployeeId=${EmployeeId}">
+            <img src="/Content/image/avatar.png" />
+        </a>
+        <div class="emp-text">
+            <div class="emp-name" style="text-align:left;">
+                <a href="/HREmployeeProfile/Index?EmployeeId=${EmployeeId}">
+                    <span>${FullName}&nbsp;</span>
+                </a>
+
+                <span class="emp-status">${StatusName(data)}</span>
+            </div>
+
+            <div class="emp-designation" style="text-align:left;">${DepartmentName}</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jsrender" id="SSNTemp">
+    ${SSNTempCreate(data)}
+</script>
+<script type="text/x-jsrender" id="TraningTemp">
+    ${TraningTempCreate(data)}
+</script>
+<script type="text/x-jsrender" id="StatusItemTraining">
+    ${statusTrainingDetail(data)}
+</script>
+<script>
+    var scrollVal = 0;
+    document.title = '@ViewBag.Title';
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        var toastModel = @Html.Raw(Json.Encode(TempData["ToastrMessage"]));
+        if (toastModel != null) {
+            toastObj.content = toastModel.Content;
+            toastObj.target = document.body;
+            toastObj.show({ title: toastModel.Title, cssClass: toastModel.CssClass, icon: toastModel.Icon });
+        }
+
+    });
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+</script>
+<script src="~/Content/HRJs/HREmploayee.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+@Html.EJS().ScriptManager()

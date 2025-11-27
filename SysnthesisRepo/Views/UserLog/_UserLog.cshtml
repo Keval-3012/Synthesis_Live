@@ -1,0 +1,38 @@
+﻿@using Syncfusion.EJ2
+
+<div>
+    <div class="form-row">
+
+        <div class="control-section">
+            @Html.EJS().Grid("InlineEditingCopy").AllowSorting().DataSource(dm => dm.Url("/UserLog/UrlDatasourceUnmapped").Adaptor("UrlAdaptor")).AllowTextWrap().Columns(col =>
+       {
+           col.Field("ModuleName").HeaderText("Module").Template("#template2").Width("15%").Add();
+           col.Field("LandingDate").HeaderText("Date/Time").Width("25%").Add();
+           col.Field("Action").HeaderText("Action").Template("#template1").Width("10%").Add();
+           col.Field("Message").HeaderText("Message").Template("#template3").Width("60%").Add();
+           col.Field("InvoiceID").HeaderText("InvoiceID").Visible(false).Add();
+       }).RowDataBound("rowData").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(100); }).Render()
+        </div>
+    </div>
+</div>
+<script id="template2" type="text/x-template">
+        <span class="${ModuleName}">${ModuleName}</span>
+</script>
+<script id="template3" type="text/x-template">
+    ${if(InvoiceID != "0")}
+    <a target="_blank" href="@(Url.Action("Details","Invoices"))/${InvoiceID}">${Message}</a>
+    ${/if}
+
+    ${if(ProductId != "0")}
+    <a target="_blank" href="@(Url.Action("ProductDetailLineItem","LineItem"))/${ProductId}">${Message}</a>
+    ${/if}
+
+    ${if(InvoiceID == "0" && ProductId == "0")}
+    <span>${Message}</span>
+    ${/if}
+</script>
+<script id="template1" type="text/x-template">
+    <span class="${Action}">${Action}</span>
+</script>
+@Html.EJS().ScriptManager()
+

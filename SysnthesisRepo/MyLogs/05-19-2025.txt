@@ -1,0 +1,11 @@
+2025-05-19 10:45:07.5036|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/19/2025 10:45:07 AM
+2025-05-19 10:45:31.2385|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 5/19/2025 10:45:31 AM - An error occurred while sending the request.
+2025-05-19 10:46:05.3515|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/19/2025 10:46:05 AM - A public action method 'GetQBAccountId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-19 10:46:07.0513|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/19/2025 10:46:07 AM - A public action method 'GetTypicalBalanceId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-19 10:46:09.6515|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/19/2025 10:46:09 AM - A public action method 'GetTypicalBalanceId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-19 10:46:11.4801|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/19/2025 10:46:11 AM - A public action method 'GetTypicalBalanceId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-19 10:46:12.8291|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/19/2025 10:46:12 AM - A public action method 'GetTypicalBalanceId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-19 10:46:15.8910|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/19/2025 10:46:15 AM - A public action method 'GetTypicalBalanceId' was not found on controller 'SysnthesisRepo.Controllers.GroupAccountMastersController'.
+2025-05-19 10:47:51.3442|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 5/19/2025 10:47:51 AM
+2025-05-19 10:47:56.6834|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 5/19/2025 10:47:56 AM
+2025-05-19 10:52:10.6432|INFO|SysnthesisRepo.Controllers.JournalEntriesController|JournalEntriesController - UrlDatasource - 5/19/2025 10:52:10 AM

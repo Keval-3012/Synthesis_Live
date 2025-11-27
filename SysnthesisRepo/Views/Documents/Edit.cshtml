@@ -1,0 +1,364 @@
+﻿@model EntityModels.Models.Document
+@using Utility
+@{ ViewBag.Title = "AddDocument";
+    Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+
+@if (Model.strErrMessage != null && Model.strErrMessage.Length > 5)
+{
+    <script>
+        MyCustomToster(Model.strErrMessage);
+        Model.strErrMessage = "";
+    </script>
+}
+
+@using (Html.BeginForm("Edit", "Documents", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.AttachExtention)
+    @Html.HiddenFor(model => model.FilePath)
+    @Html.HiddenFor(model => model.DocumentId)
+    @Html.HiddenFor(model => model.CreatedOn)
+    @Html.HiddenFor(model => model.CreatedBy)
+    @Html.HiddenFor(model => model.FilePath)
+    @Html.HiddenFor(model => model.IsPrivate)
+
+
+    <div class="newdocumentuploadpage">
+        <div class="header-small yellowback">
+            <h3>Edit Document</h3>
+        </div>
+
+        <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+            <div class="row">
+
+                @*<div id="popupidext" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-alert"></i>
+                        </div>
+                        <div class="modal-title">PDF</div>
+                        <div class="modal-body ">Please upload only pdf files.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>*@
+                <div id="popupSizeValidFileExtenstion" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed; left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-alert"></i>
+                        </div>
+                        <div class="modal-title">Invalid File</div>
+                        <div class="modal-body ">File extension is not valid.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-alert"></i>
+                        </div>
+                        <div class="modal-title"></div>
+                        <div class="modal-body ">No file selected.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupSize" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-alert"></i>
+                        </div>
+                        <div class="modal-title">Invalid File Size</div>
+                        <div class="modal-body ">File Size is too Big.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupSizeBlankFile" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-alert"></i>
+                        </div>
+                        <div class="modal-title">Invalid File Size</div>
+                        <div class="modal-body ">File is Blank.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 leftpart documentleftpart">
+                    <div class="header-small yellowback">
+                        @if (!string.IsNullOrEmpty(Model.AttachFile))
+                        {
+                            <h3>@Model.AttachFile@Model.AttachExtention <a target="_blank" href="@AdminSiteConfiguration.GetURL()UserFiles/DocFiles/@Model.AttachLink" class="btndownloadhead btn btn-md"><img src="/Content/Admin/images/icon-download.svg"> Download</a></h3>
+                        }
+                    </div>
+                    <div>
+                        <div class="invoiceimage"></div>
+                        <div class="uploadscanbutton uploaddocument">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <span class="btn btn-file">
+                                    <span class="fileupload-new"> <span class="btnbox btnupload"> <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon_uploadfile.svg" alt="" style="height:75px;" /> <span>Replace File</span> </span> </span> <span class="fileupload-exists">Change</span>
+                                    @Html.TextBoxFor(model => model.AttachFile, new { type = "file", accept = ".jpg, .png, .gif, .pdf, .doc, .dcox, .xls, .xlsx, .mp4, .avi, .wmv, .mov, .mkv" })
+                                </span>
+                                <div class="filenamebox blankfileupload" style="display:none">
+                                    <span class="fileupload-preview"></span> <a class="close fileupload-exists" style="float: none">×</a>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="clear"></div>
+                            <span class="filesizenotebox">
+                                Maximum File size Allowed upto <br />25 mb<br />@Html.ValidationMessageFor(model => model.AttachFile)
+                            </span>
+                        </div>
+
+                        <div class="pdf_popup_area">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 rightpart documentrightpart">
+                    <h3 class="normal">
+                        Document Information
+                        <a href="@AdminSiteConfiguration.GetURL()/Documents/MyDocumentIndex" class="pull-right btnbackbox" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Back"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+                    </h3>
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Document Title</label>
+                                    @if (Model.Title.Contains("UnAssigned"))
+                                    {
+                                        @Html.TextBoxFor(model => model.Title, new { maxlength = 100, @class = "form-control required"})
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.Title, new { maxlength = 100, @class = "form-control required", @readonly = true })
+                                    }
+                                    @*@Html.TextBoxFor(model => model.Title, new { maxlength = 100, @class = "form-control required" })*@
+                                    <span class="highlight">     @Html.ValidationMessageFor(model => model.Title)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Category</label><span class="highlight">*</span>
+                                    @Html.DropDownList("DocumentCategoryId", null, "Select Category ", new { @class = "form-control drpcls wdith255 myval required" })
+                                    @Html.ValidationMessageFor(model => model.DocumentCategoryId)
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Store Name</label><span class="highlight">*</span>
+                                    @Html.DropDownList("StoreId", null, "Select Store ", new { @class = "form-control drpcls wdith255 myval required" })
+                                    @Html.ValidationMessageFor(model => model.StoreId)
+                                    @Html.HiddenFor(x => x.StoreId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Keywords</label>
+                                    @Html.TextBoxFor(model => model.KeyWords, new { maxlength = 100, @class = "form-control height150 required", @data_role = "tagsinput" })
+                                    <span class="highlight">     @Html.ValidationMessageFor(model => model.KeyWords)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    @Html.TextAreaFor(model => model.Notes, new { maxlenght = 250, @class = "form-control addinvoicearea" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="privatefavbox">
+                                    <span>
+                                        @if (Model.chkFav == "1")
+                                        {
+                                            <input id="chkFav" type="checkbox" name="chkFav" checked="checked" value="1">
+                                        }
+                                        else
+                                        {
+                                            <input id="chkFav" type="checkbox" name="chkFav" value="1">
+                                        }
+                                        <label for="chkFav"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" style="width:16px" />  Favorite</label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <input type="submit" value="Update" id="btnDocSubmit" name="btnsubmit"
+                                       class="buttonbox btnsubmit btn_spcial" onclick="return validatedrptext(1)" />
+                                @Html.ActionLink("Cancel", "MyDocumentIndex", "Documents", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.AttachFile)
+        @Html.Hidden("AttachFile1", Model.AttachFile)
+    </div>
+}
+
+<script type="text/javascript">
+    var uploadField = document.getElementById("AttachFile");
+    uploadField.onchange = function () {
+        var extension = uploadField.value.substr((uploadField.value.lastIndexOf('.') + 1));
+
+        switch (extension.toLowerCase()) {
+            case 'jpg':
+                removestyle();
+                break;
+            case 'jpeg':
+                removestyle();
+                break;
+            case 'png':
+                removestyle();
+                break;
+            case 'gif':
+                removestyle();
+                break;
+            /*alert('was jpg png gif');*/  // There's was a typo in the example where
+            // the alert ended with pdf instead of gif.
+            case 'pdf':
+                removestyle();
+                break;
+            case 'doc':
+                removestyle();
+                break;
+            case 'docx':
+                removestyle();
+                break;
+            case 'xls':
+                removestyle();
+                break;
+            case 'xlsx':
+                removestyle();
+                break;
+            //case 'eml':
+            //    removestyle();
+            //    break;
+            //case 'msg':
+            //    removestyle();
+            //    break;
+            //case 'txt':
+            //    removestyle();
+            //    break;
+            //case 'csv':
+            //    removestyle();
+            //    break;
+            //case 'msg':
+            //    removestyle();
+            //    break;
+            //case 'rtf':
+            //    removestyle();
+            //    break;
+            case 'mp4':
+                removestyle();
+                break;
+            case 'avi':
+                removestyle();
+                break;
+            case 'wmv':
+                removestyle();
+                break;
+            case 'mov':
+                removestyle();
+                break;
+            case 'mkv':
+                removestyle();
+                break;
+            case '':
+                $(".blankfileupload").hide();
+                break;
+            default:
+                uploadField.value = '';
+                $("#popupSizeValidFileExtenstion").show();
+
+        };
+        if (this.files.length > 0) {
+            if (this.files[0].size > 26214400) {
+                //alert("File is too big!");
+                $("#popupSize").show();
+                this.value = "";
+            };
+            if (this.files[0].size <= 0) {
+                //alert("File is too big!");
+                $("#popupSizeBlankFile").show();
+                this.value = "";
+            };
+        }
+    };
+    function removestyle() {
+        $(".blankfileupload").removeAttr("style");
+    }
+
+    $(".blankfileupload a").click(function () {
+        $(".blankfileupload").hide();
+        $("#AttachFile").val('');
+    });
+
+    $('#Title').bind('blur change', function (e) {
+        if ($('#Title').val() === null || $('#Title').val() === '') {
+            $('#Title').addClass('redborderbox');
+        }
+        else {
+            $('#Title').removeClass('redborderbox');
+        }
+    })
+
+    function validatedrptext(myVald) {
+        $('.drpcls').each(function () {
+            if ($(this).val() === null || $(this).val() === '') {
+                $(this).addClass('input-validation-error');
+                //alert();
+                event.preventDefault();
+            }
+            else {
+                $(this).removeClass('input-validation-error');
+                $(this).addClass('input-validation-valid');
+            }
+        });
+
+        if ($('#Title').val() === null || $('#Title').val() === '') {
+            $('#Title').addClass('redborderbox');
+            event.preventDefault();
+        }
+        else {
+            $('#Title').removeClass('redborderbox');
+        }
+
+        if (myVald == 1) {
+            var AttachFile1 = $("#AttachFile1").val();
+            var AttachFile = $("#AttachFile").val();
+
+            if (AttachFile == "" && AttachFile1 == "") {
+                $('#popupid').show();
+                return false;
+            }
+            else {
+                $('#popupid').hide();
+            }
+        }
+        $("#hdnreqval").val("1");
+    }
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+</script>

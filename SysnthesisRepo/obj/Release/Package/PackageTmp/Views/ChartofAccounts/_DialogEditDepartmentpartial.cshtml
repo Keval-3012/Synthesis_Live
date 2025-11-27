@@ -1,0 +1,68 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.Models.DepartmentMaster
+@Html.HiddenFor(model => model.DepartmentId)
+@Html.HiddenFor(model => model.StoreId)
+<div>
+    <div class="col-md-9" style="text-align: center;">
+        <h5><b>Store :  @Html.DisplayFor(m => m.StoreMasters.Name)</b></h5>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+
+                @Html.TextBoxFor(model => model.DepartmentName, new { maxlength = 500, @class = "form-control", placeholder = "Name", @style = "text-transform: uppercase" })
+                @Html.Label("DepartmentName", "Display Name", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.AccountNumber, new { maxlength = 6, @class = "form-control", placeholder = "Account Number", @style = "text-transform: uppercase" })
+
+                @Html.Label("AccountNumber", "Account Number", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.EJS().DropDownList("AccountTypeId").Value(Model.AccountTypeId).Enabled(true).Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "AccountType", Value = "AccountTypeId" }).Placeholder("Account Type").Change("SetdataByAccountTypeID").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>
+                    )ViewBag.AccountTypeId).Render()
+
+            
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.EJS().DropDownList("AccountDetailTypeId").Value(Model.AccountDetailTypeId).Enabled(true).Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "DetailType", Value = "AccountDetailTypeId" }).Placeholder("Detail Type").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.AccountDetailTypeId).Render()
+           
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        @*<div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.EJS().DropDownList("IsSubAccounts").Value(Model.IsSubAccount).Enabled(false).Placeholder("IsSubAccounts").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+                
+
+            </div>
+        </div>*@
+
+        <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextAreaFor(model => model.Description, new { maxlength = 500, @class = "form-control", placeholder = "Description", @style = "text-transform: uppercase" })
+
+                @Html.Label("Description", "Description", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            @Html.EJS().CheckBoxFor(model => model.IsActive).Label("Active").Render()
+        </div>
+    </div>
+</div>
+
+
+@Html.EJS().ScriptManager()

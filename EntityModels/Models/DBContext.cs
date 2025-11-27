@@ -1,0 +1,571 @@
+﻿using EntityModels.HRModels;
+using EntityModels.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+namespace EntityModels.Models
+{
+    public class DBContext : DbContext
+    {
+        public DBContext(): base("DBConn")
+        {
+        }
+
+        public static DBContext Create()
+        {
+            return new DBContext();
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<StoreChild>()
+            .HasRequired(t => t.UserMasters)
+            .WithMany(t => t.StoreChilds)
+            .HasForeignKey(d => d.UserId)
+            .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserMaster>()
+          .HasRequired(t => t.UserTypeMasters)
+          .WithMany(t => t.UserMasters)
+          .HasForeignKey(d => d.UserTypeId)
+          .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<StoreMaster>()
+         .HasRequired(t => t.GroupMasters)
+         .WithMany(t => t.StoreMasters)
+         .HasForeignKey(d => d.GroupId)
+         .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<VendorMaster>()
+            .HasOptional(t => t.StoreMasters)
+            .WithMany(t => t.VendorMasters)
+            .HasForeignKey(d => d.StoreId)
+            .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AccountDetailTypeMaster>().HasRequired(t => t.AccountTypeMasters).WithMany(t => t.AccountDetailTypeMasters).HasForeignKey(d => d.AccountTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<DepartmentMaster>().HasRequired(t => t.AccountTypeMasters).WithMany(t => t.DepartmentMasters).HasForeignKey(d => d.AccountTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<DepartmentMaster>().HasRequired(t => t.AccountDetailTypeMasters).WithMany(t => t.DepartmentMasters).HasForeignKey(d => d.AccountDetailTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<DepartmentMaster>().HasOptional(t => t.StoreMasters).WithMany(t => t.DepartmentMasters).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Invoice>().HasRequired(t => t.StoreMasters).WithMany(t => t.Invoices).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Invoice>().HasRequired(t => t.InvoiceTypeMasters).WithMany(t => t.Invoices).HasForeignKey(d => d.InvoiceTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Invoice>().HasRequired(t => t.PaymentTypeMasters).WithMany(t => t.Invoices).HasForeignKey(d => d.PaymentTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Invoice>().HasRequired(t => t.VendorMasters).WithMany(t => t.Invoices).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Invoice>().HasOptional(t => t.DiscountTypeMasters).WithMany(t => t.Invoices).HasForeignKey(d => d.DiscountTypeId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InvoiceDepartmentDetail>().HasRequired(t => t.DepartmentMasters).WithMany(t => t.InvoiceDepartmentDetails).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTypeMaster>().HasOptional(t => t.GroupMasters).WithMany(t => t.UserTypeMasters).HasForeignKey(d => d.GroupId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserTypeMaster>().HasOptional(t => t.LevelsApprovers).WithMany(t => t.UserTypeMasters).HasForeignKey(d => d.LevelsApproverId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserMaster>().HasOptional(t => t.GroupMasters).WithMany(t => t.UserMasters).HasForeignKey(d => d.GroupId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserRoles>().HasRequired(t => t.UserTypeMasters).WithMany(t => t.userRoles).HasForeignKey(d => d.UserTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<RightsStore>().HasRequired(t => t.UserTypeMasters).WithMany(t => t.RightsStores).HasForeignKey(d => d.UserTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<RightsStore>().HasRequired(t => t.StoreMasters).WithMany(t => t.RightsStores).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<RightsStore>().HasRequired(t => t.ModuleMasters).WithMany(t => t.RightsStores).HasForeignKey(d => d.ModuleId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<RightsStore>().HasOptional(t => t.DepartmentMaster).WithMany(t => t.RightsStores).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserRoles>().HasOptional(t => t.StoreMasters).WithMany(t => t.userRoles).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserRoles>().HasOptional(t => t.ModuleMasters).WithMany(t => t.userRoles).HasForeignKey(d => d.ModuleId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<QBOnlineConfiguration>().HasRequired(t => t.StoreMasters).WithMany(t => t.QBOnlineConfigurations).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<QBDesktopConfiguration>().HasRequired(t => t.StoreMasters).WithMany(t => t.QBDesktopConfigurations).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Document>().HasRequired(t => t.StoreMasters).WithMany(t => t.Documents).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Document>().HasRequired(t => t.DocumentCategories).WithMany(t => t.Documents).HasForeignKey(d => d.DocumentCategoryId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<QBHistory>().HasRequired(t => t.StoreMasters).WithMany(t => t.QBHistorys).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ErrorLog>().HasRequired(t => t.StoreMasters).WithMany(t => t.ErrorLogs).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ErrorLog>().HasRequired(t => t.Invoices).WithMany(t => t.ErrorLogs).HasForeignKey(d => d.InvoiceId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PayrollReport>().HasRequired(t => t.StoreMasters).WithMany(t => t.PayrollReports).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollMaster>().HasRequired(t => t.StoreMasters).WithMany(t => t.PayrollMasters).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollDepartment>().HasRequired(t => t.StoreMasters).WithMany(t => t.PayrollDepartments).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollDepartmentDetails>().HasRequired(t => t.PayrollDepartments).WithMany(t => t.payrollDepartmentDetails).HasForeignKey(d => d.PayrollDepartmentId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SalesActivitySummary>().HasRequired(t => t.StoreMasters).WithMany(t => t.SalesActivitySummaries).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<StoreTerminal>().HasRequired(t => t.StoreMasters).WithMany(t => t.StoreTerminals).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesActivitySummary>().HasOptional(t => t.StoreTerminals).WithMany(t => t.SalesActivitySummaries).HasForeignKey(d => d.StoreTerminalId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<TenderInDrawer>().HasOptional(t => t.SalesActivitySummary).WithMany(t => t.TenderInDrawers).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<DepartmentNetSales>().HasOptional(t => t.SalesActivitySummary).WithMany(t => t.DepartmentNetSales).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Configuration>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.Configurations).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Configuration>().HasOptional(t => t.StoreMaster).WithMany(t => t.Configurations).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ConfigurationGroup>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.ConfigurationGroups).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ConfigurationGroup>().HasOptional(t => t.StoreMaster).WithMany(t => t.ConfigurationGroups).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Configuration>().HasOptional(t => t.ConfigurationGroups).WithMany(t => t.Configurations).HasForeignKey(d => d.ConfigurationGroupId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Configuration>().HasOptional(t => t.TypicalBalanceMasters).WithMany(t => t.Configurations).HasForeignKey(d => d.TypicalBalanceId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ConfigurationGroup>().HasOptional(t => t.TypicalBalanceMasters).WithMany(t => t.ConfigurationGroups).HasForeignKey(d => d.TypicalBalanceId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Departmentconfiguration>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.Departmentconfigurations).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Departmentconfiguration>().HasOptional(t => t.StoreMaster).WithMany(t => t.Departmentconfigurations).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Departmentconfiguration>().HasOptional(t => t.TypicalBalanceMasters).WithMany(t => t.Departmentconfigurations).HasForeignKey(d => d.TypicalBalanceId).WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<StoreTerminal>().HasRequired(t => t.StoreMasters).WithMany(t => t.StoreTerminals).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PaidOut>().HasRequired(t => t.SalesActivitySummaries).WithMany(t => t.PaidOuts).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PaidOutSettlement>().HasRequired(t => t.SalesActivitySummaries).WithMany(t => t.PaidOutSettlements).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CreditcardDetails>().HasRequired(t => t.StoreMasters).WithMany(t => t.creditcardDetails).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetails>().HasOptional(t => t.StoreTerminals).WithMany(t => t.creditcardDetails).HasForeignKey(d => d.StoreTerminalId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetails>().HasOptional(t => t.SalesActivitySummaries).WithMany(t => t.creditcardDetails).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<OtherDeposit>().HasRequired(t => t.StoreMasters).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.PaymentMethodMasters).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.PaymentMethodId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.OptionMasters).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.OptionId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.VendorMasters).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.StoreTerminals).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.StoreTerminalId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.SalesActivitySummaries).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.ShiftMasters).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.ShiftId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CashPaidoutInvoice>().HasRequired(t => t.Invoices).WithMany(t => t.CashPaidoutInvoices).HasForeignKey(d => d.InvoiceId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CashPaidoutInvoice>().HasRequired(t => t.StoreMasters).WithMany(t => t.CashPaidoutInvoices).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CashPaidoutInvoice>().HasOptional(t => t.StoreTerminals).WithMany(t => t.CashPaidoutInvoices).HasForeignKey(d => d.StoreTerminalId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CashPaidoutInvoice>().HasOptional(t => t.PaidOuts).WithMany(t => t.CashPaidoutInvoices).HasForeignKey(d => d.PaidOutId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<StorewisePDFUpload>().HasRequired(t => t.StoreMasters).WithMany(t => t.StorewisePDFUploads).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<StoreTerminal>().HasRequired(t => t.TerminalMasters).WithMany(t => t.StoreTerminals).HasForeignKey(d => d.TerminalId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesActivitySummary>().HasOptional(t => t.ShiftMasters).WithMany(t => t.SalesActivitySummaries).HasForeignKey(d => d.ShiftId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetails>().HasOptional(t => t.ShiftMasters).WithMany(t => t.creditcardDetails).HasForeignKey(d => d.ShiftId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CashPaidoutInvoice>().HasOptional(t => t.ShiftMasters).WithMany(t => t.CashPaidoutInvoices).HasForeignKey(d => d.ShiftId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SalesGeneralEntries>().HasRequired(t => t.StoreMasters).WithMany(t => t.salesGeneralEntries).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesGeneralEntries>().HasRequired(t => t.UserMasters).WithMany(t => t.salesGeneralEntries).HasForeignKey(d => d.UserId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SalesChildEntries>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.salesChildEntries).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SalesGeneralEntriesHistory>().HasRequired(t => t.StoreMasters).WithMany(t => t.salesGeneralEntriesHistory).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesGeneralEntriesHistory>().HasRequired(t => t.UserMasters).WithMany(t => t.salesGeneralEntriesHistory).HasForeignKey(d => d.UserId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DayCloseOutStatus>().HasRequired(t => t.StoreMasters).WithMany(t => t.DayCloseOutStatuses).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDeposit>().HasOptional(t => t.DepartmentMaster).WithMany(t => t.OtherDeposits).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTypeModuleApprover>().HasRequired(t => t.UserTypeMasters).WithMany(t => t.UserTypeModuleApprovers).HasForeignKey(d => d.UserTypeId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserTypeModuleApprover>().HasRequired(t => t.ModuleMasters).WithMany(t => t.UserTypeModuleApprovers).HasForeignKey(d => d.ModuleId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<UserTypeModuleApprover>().HasRequired(t => t.LevelsApprovers).WithMany(t => t.UserTypeModuleApprovers).HasForeignKey(d => d.LevelsApproverId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SalesOtherDeposite>().HasRequired(t => t.StoreMasters).WithMany(t => t.SalesOtherDeposites).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesOtherDeposite>().HasRequired(t => t.salesGeneralEntries).WithMany(t => t.SalesOtherDeposites).HasForeignKey(d => d.SalesGeneralId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<SalesOtherDeposite>().HasRequired(t => t.OtherDeposits).WithMany(t => t.SalesOtherDeposites).HasForeignKey(d => d.OtherDepositId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<OtherDepositeSetting>().HasRequired(t => t.StoreMasters).WithMany(t => t.OtherDepositeSettings).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<OtherDepositeSetting>().HasOptional(t => t.DepartmentMaster).WithMany(t => t.OtherDepositeSettings).HasForeignKey(d => d.BankAccountId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<QBPaymentType>().HasRequired(t => t.StoreMasters).WithMany(t => t.QBPaymentTypes).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<GroupMaster>().HasOptional(t => t.VendorMaster).WithMany(t => t.GroupMasters).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<GroupMaster>().HasOptional(t => t.CustomerMaster).WithMany(t => t.GroupMasters).HasForeignKey(d => d.CustomerId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PayrollCashAnalysis>().HasOptional(t => t.StoreMasters).WithMany(t => t.PayrollCashAnalysises).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollCashAnalysis>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.PayrollCashAnalyses).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PayrollCashAnalysisDetail>().HasOptional(t => t.PayrollMaster).WithMany(t => t.PayrollCashAnalysisDetails).HasForeignKey(d => d.PayrollId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<PayrollBankAccount>().HasOptional(t => t.StoreMasters).WithMany(t => t.PayrollBankAccounts).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollBankAccount>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.PayrollBankAccounts).HasForeignKey(d => d.BankAccountId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollBankAccount>().HasOptional(t => t.VendorMasters).WithMany(t => t.PayrollBankAccounts).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UploadPdf>().HasOptional(t => t.StoreMasters).WithMany(t => t.UploadPdfs).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CashPaidoutInvoice>().HasOptional(t => t.SalesActivitySummarys).WithMany(t => t.CashPaidoutInvoices).HasForeignKey(d => d.SalesActivitySummaryId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ConfigurationGroup>().HasOptional(t => t.VendorMasters).WithMany(t => t.ConfigurationGroups).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ConfigurationGroup>().HasOptional(t => t.CustomerMasters).WithMany(t => t.ConfigurationGroups).HasForeignKey(d => d.CustomerId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SalesActivitySummaryDaily>().HasOptional(t => t.StoreMasters).WithMany(t => t.salesActivitySummaryDaily).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesActivitySummaryDaily>().HasOptional(t => t.storeTerminalDaily).WithMany(t => t.SalesActivitySummaryDailys).HasForeignKey(d => d.StoreTerminalDailylId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<StoreTerminalDaily>().HasOptional(t => t.StoreMasters).WithMany(t => t.storeTerminalDaily).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<StoreTerminalDaily>().HasOptional(t => t.TerminalDailyMasters).WithMany(t => t.storeTerminalDaily).HasForeignKey(d => d.TerminalDailyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<TenderInDrawerDaily>().HasOptional(t => t.SalesActivitySummaryDailys).WithMany(t => t.tenderInDrawerDaily).HasForeignKey(d => d.SalesActivitySummaryDailyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<DepartmentNetSalesDaily>().HasOptional(t => t.SalesActivitySummaryDailys).WithMany(t => t.departmentNetSalesDaily).HasForeignKey(d => d.SalesActivitySummaryDailyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetailsDaily>().HasRequired(t => t.StoreMasters).WithMany(t => t.creditcardDetailsDaily).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<CreditcardDetailsDaily>().HasOptional(t => t.ShiftMasters).WithMany(t => t.creditcardDetailsDaily).HasForeignKey(d => d.ShiftId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetailsDaily>().HasOptional(t => t.StoreTerminalDailys).WithMany(t => t.creditcardDetailsDaily).HasForeignKey(d => d.StoreTerminalDailylId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetailsDaily>().HasOptional(t => t.salesActivitySummaryDaily).WithMany(t => t.creditcardDetailsDaily).HasForeignKey(d => d.SalesActivitySummaryDailyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PaidOutDaily>().HasOptional(t => t.salesActivitySummaryDaily).WithMany(t => t.paidOutDaily).HasForeignKey(d => d.SalesActivitySummaryDailyId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ExpenseCheck_Setting>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.ExpenseCheck_Settings).HasForeignKey(d => d.AccountId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ExpenseCheck_Setting>().HasOptional(t => t.StoreMasters).WithMany(t => t.ExpenseCheck_Settings).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ExpenseCheck>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.ExpenseCheck).HasForeignKey(d => d.BankAccountId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ExpenseCheck>().HasOptional(t => t.StoreMasters).WithMany(t => t.ExpenseCheck).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<ExpenseCheck>().HasOptional(t => t.VendorMaster).WithMany(t => t.ExpenseCheck).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ExpenseCheckDetail>().HasOptional(t => t.DepartmentMasters).WithMany(t => t.ExpenseCheckDetails).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ExpenseCheckDetail>().HasOptional(t => t.CustomerMaster).WithMany(t => t.ExpenseCheckDetails).HasForeignKey(d => d.CustomerId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InvoiceProduct>().HasOptional(t => t.products).WithMany(t => t.invoiceProducts).HasForeignKey(d => d.ProductId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ExpenseCheckDocuments>().HasRequired(t => t.ExpenseCheck).WithMany(t => t.expenseCheckDocuments).HasForeignKey(d => d.ExpenseCheckId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PayrollHours>().HasRequired(t => t.StoreMasters).WithMany(t => t.payrollHours).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PayrollHoursDetails>().HasRequired(t => t.payrollDepartment).WithMany(t => t.payrollHoursDetails).HasForeignKey(d => d.PayrollDepartmentId).WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<SalesActivitySummaryHourly>().HasOptional(t => t.StoreMasters).WithMany(t => t.salesActivitySummaryHourly).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesActivitySummaryHourly>().HasOptional(t => t.storeTerminalHourly).WithMany(t => t.salesActivitySummaryHourly).HasForeignKey(d => d.StoreTerminalHourlylId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<StoreTerminalHourly>().HasOptional(t => t.StoreMasters).WithMany(t => t.storeTerminalHourly).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<StoreTerminalHourly>().HasOptional(t => t.TerminalHourlyMasters).WithMany(t => t.storeTerminalHourly).HasForeignKey(d => d.TerminalHourlyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<TenderInDrawerHourly>().HasOptional(t => t.SalesActivitySummaryHourlys).WithMany(t => t.tenderInDrawerHourly).HasForeignKey(d => d.SalesActivitySummaryHourlyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<DepartmentNetSalesHourly>().HasOptional(t => t.SalesActivitySummaryHourlys).WithMany(t => t.departmentNetSalesHourly).HasForeignKey(d => d.SalesActivitySummaryHourlyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetailsHourly>().HasRequired(t => t.StoreMasters).WithMany(t => t.creditcardDetailsHourly).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<CreditcardDetailsHourly>().HasOptional(t => t.ShiftMasters).WithMany(t => t.creditcardDetailsHourly).HasForeignKey(d => d.ShiftId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetailsHourly>().HasOptional(t => t.StoreTerminalHourlys).WithMany(t => t.creditcardDetailsHourly).HasForeignKey(d => d.StoreTerminalHourlylId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<CreditcardDetailsHourly>().HasOptional(t => t.salesActivitySummaryHourly).WithMany(t => t.creditcardDetailsHourly).HasForeignKey(d => d.SalesActivitySummaryHourlyId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<PaidOutHourly>().HasOptional(t => t.salesActivitySummaryHourly).WithMany(t => t.paidOutHourly).HasForeignKey(d => d.SalesActivitySummaryHourlyId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EmployeeMaster>().HasRequired(t => t.StoreMasters).WithMany(t => t.EmployeeMasters).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ProductVendor>().HasOptional(t => t.products).WithMany(t => t.productVendors).HasForeignKey(d => d.ProductId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<VendorDepartmentRelationMaster>().HasRequired(t => t.DepartmentMasters).WithMany(t => t.VendorDepartmentRelationMasters).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<VendorDepartmentRelationMaster>().HasRequired(t => t.StoreMasters).WithMany(t => t.VendorDepartmentRelationMasters).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<VendorDepartmentRelationMaster>().HasRequired(t => t.VendorMasters).WithMany(t => t.VendorDepartmentRelationMasters).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<InvoiceProduct>().HasOptional(t => t.ProductVendors).WithMany(t => t.invoiceProducts).HasForeignKey(d => d.ProductVendorId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ItemMovementBySupplier>().Property(p => p.QtyOnHand).HasPrecision(18, 3);
+            modelBuilder.Entity<ItemMovementBySupplier>().Property(p => p.QtySold).HasPrecision(18, 3);
+            modelBuilder.Entity<ItemMovementBySupplier>().Property(p => p.BasePrice).HasPrecision(18, 4);
+            modelBuilder.Entity<ItemMovementBySupplier>().Property(p => p.LastCOst).HasPrecision(18, 4);
+            modelBuilder.Entity<HomeExpenseWeeklySalesSetting>().HasRequired(t => t.StoreMasters).WithMany(t => t.HomeExpenseStoreMasters).HasForeignKey(d => d.StoreId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<HomeExpenseWeeklySalesSetting>().HasRequired(t => t.DepartmentMaster).WithMany(t => t.HomeExpenseDepartmentMasters).HasForeignKey(d => d.DepartmentId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<HomeExpenseWeeklySalesSetting>().HasRequired(t => t.VendorMaster).WithMany(t => t.HomeExpenseVendorMasters).HasForeignKey(d => d.VendorId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<HomeExpensesDetail>().HasRequired(t => t.StoreMasters).WithMany(t => t.HomeExpenseDetailStoreMasters).HasForeignKey(d => d.StoreID).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ChatReactions>().HasRequired(t => t.ChatMessenger).WithMany(t => t.chatReactions).HasForeignKey(d => d.ChatId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ChatReactions>().HasRequired(t => t.UserMasters).WithMany(t => t.chatReactions).HasForeignKey(d => d.UserId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ChatMessenger>().HasRequired(t => t.UserMastersSender).WithMany(t => t.senderChatMessenger).HasForeignKey(d => d.SenderId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ChatMessenger>().HasOptional(t => t.UserMastersReceiver).WithMany(t => t.receiverChatMessenger).HasForeignKey(d => d.ReceiverId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ChatMessenger>().HasOptional(t => t.ChatGroups).WithMany(t => t.ChatMessengers).HasForeignKey(d => d.GroupId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ChatGroupMembers>().HasRequired(t => t.ChatGroups).WithMany(t => t.chatGroupMembers).HasForeignKey(d => d.GroupId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ChatGroupMembers>().HasRequired(t => t.UserMasters).WithMany(t => t.chatGroupMembers).HasForeignKey(d => d.UserId).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserMaster>().HasOptional(t => t.MenuMasters).WithMany(t => t.UserMasters).HasForeignKey(d => d.DesignatedPageId).WillCascadeOnDelete(false);
+        }
+
+        public DbSet<GroupMaster> GroupMasters { get; set; }
+        public DbSet<DocumentCategory> DocumentCategories { get; set; }
+        public DbSet<UserMaster> UserMasters { get; set; }
+        public DbSet<StoreMaster> StoreMasters { get; set; }
+        public DbSet<StoreChild> StoreChilds { get; set; }
+        public DbSet<UserRoles> userRoles { get; set; }
+        public DbSet<UserTypeMaster> UserTypeMasters { get; set; }
+        public DbSet<RightsStore> RightsStores { get; set; }
+        public DbSet<StateMaster> StateMasters { get; set; }
+        public DbSet<VendorMaster> VendorMasters { get; set; }
+        public DbSet<DepartmentMaster> DepartmentMasters { get; set; }
+        public DbSet<AccountDetailTypeMaster> AccountDetailTypeMasters { get; set; }
+        public DbSet<AccountTypeMaster> AccountTypeMasters { get; set; }
+        public DbSet<InvoiceTypeMaster> InvoiceTypeMasters { get; set; }
+        public DbSet<PaymentTypeMaster> PaymentTypeMasters { get; set; }
+        public DbSet<DiscountTypeMaster> DiscountTypeMasters { get; set; }
+
+        public System.Data.Entity.DbSet<EntityModels.Models.Invoice> Invoices { get; set; }
+        public DbSet<InvoiceDepartmentDetail> InvoiceDepartmentDetails { get; set; }
+
+        public DbSet<QBOnlineConfiguration> QBOnlineConfigurations { get; set; }
+        public DbSet<QBDesktopConfiguration> QBDesktopConfigurations { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<DocumentFavorite> DocumentFavorites { get; set; }
+        public DbSet<DocumentKeyword> DocumentKeywords { get; set; }
+        public DbSet<ModuleMaster> ModuleMasters { get; set; }
+        public DbSet<ActivityLog> ActivityLogs { get; set; }
+        public DbSet<QBHistory> QBHistorys { get; set; }
+
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
+        public DbSet<PayrollReport> PayrollReports { get; set; }
+        public DbSet<PayrollMaster> PayrollMasters { get; set; }
+        public DbSet<PayrollDepartment> PayrollDepartments { get; set; }
+        public DbSet<PayrollDepartmentDetails> payrollDepartmentDetails { get; set; }
+
+        public DbSet<SalesActivitySummary> SalesActivitySummaries { get; set; }
+        public DbSet<TerminalMaster> TerminalMasters { get; set; }
+        public DbSet<DepartmentNetSales> DepartmentNetSales { get; set; }
+        public DbSet<TenderInDrawer> TenderInDrawers { get; set; }
+        public DbSet<Configuration> Configurations { get; set; }
+        public DbSet<ConfigurationGroup> ConfigurationGroups { get; set; }
+        public DbSet<TypicalBalanceMaster> TypicalBalanceMasters { get; set; }
+        public DbSet<Departmentconfiguration> Departmentconfigurations { get; set; }
+        public DbSet<DefaultAccount> DefaultAccounts { get; set; }
+
+        public DbSet<OptionMaster> OptionMasters { get; set; }
+        public DbSet<CreditcardDetails> creditcardDetails { get; set; }
+        public DbSet<PaidOut> PaidOuts { get; set; }
+        public DbSet<PaidOutSettlement> PaidOutSettlements { get; set; }
+        public DbSet<OtherDeposit> OtherDeposits { get; set; }
+        public DbSet<PaymentMethodMaster> PaymentMethodMasters { get; set; }
+        public DbSet<CashPaidoutInvoice> CashPaidoutInvoices { get; set; }
+        public DbSet<ShiftMaster> ShiftMasters { get; set; }
+        public DbSet<StorewisePDFUpload> StorewisePDFUploads { get; set; }
+        public DbSet<StoreTerminal> StoreTerminals { get; set; }
+
+        public DbSet<SalesGeneralEntries> salesGeneralEntries { get; set; }
+        public DbSet<SalesGeneralEntriesHistory> salesGeneralEntriesHistory { get; set; }
+        public DbSet<SalesChildEntries> salesChildEntries { get; set; }
+        public DbSet<LevelsApprover> levelsApprovers { get; set; }
+        public DbSet<DayCloseOutStatus> dayCloseOutStatuses { get; set; }
+
+        public DbSet<UserTypeModuleApprover> UserTypeModuleApprovers { get; set; }
+        public DbSet<SalesOtherDeposite> SalesOtherDeposites { get; set; }
+
+        public DbSet<CustomerMaster> CustomerMasters { get; set; }
+        public DbSet<OtherDepositeSetting> OtherDepositeSettings { get; set; }
+        public DbSet<QBPaymentType> QBPaymentTypes { get; set; }
+
+        public DbSet<UserWiseStickyNote> userWiseStickyNotes { get; set; }
+        public DbSet<PayrollCashAnalysis> payrollCashAnalyses { get; set; }
+        public DbSet<PayrollCashAnalysisDetail> payrollCashAnalysisDetails { get; set; }
+        public DbSet<PayrollBankAccount> PayrollBankAccounts { get; set; }
+        public DbSet<UploadPdf> UploadPdfs { get; set; }
+
+        public DbSet<InvoiceProduct> InvoiceProducts { get; set; }
+        public DbSet<PdfFieldMapping> pdfFieldMapping { get; set; }
+
+        public DbSet<SalesActivitySummaryDaily> SalesActivitySummaryDailys { get; set; }
+        public DbSet<StoreTerminalDaily> storeTerminalDaily { get; set; }
+        public DbSet<CreditcardDetailsDaily> creditcardDetailsDaily { get; set; }
+        public DbSet<ExpenseCheck_Setting> ExpenseCheck_Settings { get; set; }
+        public DbSet<ExpenseCheck> ExpenseChecks { get; set; }
+        public DbSet<ExpenseCheckDetail> ExpenseCheckDetails { get; set; }
+        public DbSet<Products> products { get; set; }
+        public DbSet<ExpenseCheckDocuments> expenseCheckDocuments { get; set; }
+        public DbSet<PayrollHours> payrollHours { get; set; }
+        public DbSet<PayrollHoursDetails> payrollHoursDetails { get; set; }
+
+        public DbSet<SalesActivitySummaryHourly> SalesActivitySummaryHourlies { get; set; }
+        public DbSet<StoreTerminalHourly> storeTerminalHourlies { get; set; }
+        public DbSet<CreditcardDetailsHourly> creditcardDetailsHourlies { get; set; }
+        public DbSet<TenderInDrawerHourly> tenderInDrawerHourlies { get; set; }
+        public DbSet<DepartmentNetSalesHourly> departmentNetSalesHourlies { get; set; }
+        public DbSet<PaidOutHourly> paidOutHourlies { get; set; }
+        public DbSet<TerminalHourlyMaster> terminalHourlyMasters { get; set; }
+        public DbSet<WeeklyPeriod> weeklyPeriods { get; set; }
+        public DbSet<ProductVendor> productVendors { get; set; }
+
+        public DbSet<QBWebhook> QBWebhooks { get; set; }
+        public DbSet<DocumentFileVersion> DocumentFileVersions { get; set; }
+
+        public DbSet<VendorDepartmentRelationMaster> VendorDepartmentRelationMasters { get; set; }
+
+        public DbSet<BankAccountSettingModel> BankAccountSettingModels { get; set; }
+
+        public DbSet<QBUnclearBalanceInfo> QBUnclearBalanceInfos { get; set; }
+        public DbSet<UploadPdf_Api> UploadPdfApi { get; set; }
+        public DbSet<VendorMaster_QBCopy> vendorMasterQBCopies { get; set; }
+        public DbSet<Login> Logins { get; set; }
+        public DbSet<IpAdressInfo> IpAdressInfos { get; set; }
+
+        public DbSet<UserIpInfo> UserIpInfos { get; set; }
+        public DbSet<UserTimeTrackInfo> UserTimeTrackInfos { get; set; }
+        public DbSet<PayPeriodSettings> PayPeriodSettings { get; set; }
+        public DbSet<WeekMaster> WeekMasters { get; set; }
+        public DbSet<ItemMovementBySupplier> ItemMovementBySuppliers { get; set; }
+        public DbSet<ItemMovementdatehistory> ItemMovementdatehistory { get; set; }
+
+        public DbSet<TestVendorMaster> TestVendorMaster { get; set; }
+        public DbSet<ItemLibraryDepartment> ItemLibraryDepartment { get; set; }
+        public DbSet<HomeExpenseWeeklySalesSetting> HomeExpenseWeeklySalesSettings { get; set; }
+        public DbSet<HomeExpensesDetail> HomeExpensesDetails { get; set; }
+        public DbSet<CheckList> CheckLists { get; set; }
+        public DbSet<InvoiceUserProductMapLog> InvoiceUserProductMapLog { get; set; }
+
+        public DbSet<TopSellerNormalizationRatio> topSellerNormalizationRatio { get; set; }
+
+        public DbSet<WebcamRecordingHistory> WebcamRecordingHistorys { get; set; }
+
+        public DbSet<WebCamCameraList> WebCamCameraList { get; set; }
+
+        //Updated by Dani on 12-05-2024
+        //Start
+        public DbSet<MessageMaster> MessageMasters { get; set; }
+        public DbSet<OperatingRatioExpenseDepartment> OperatingRatioExpenseDepartment { get; set; }
+        public DbSet<InvoiceAutomation> InvoiceAutomation { get; set; }
+        public DbSet<UploadPDFAutomation> UploadPDFAutomation { get; set; }
+        public DbSet<CustomersReceiveablesManagement> CustomersReceiveablesManagement { get; set; }
+        public DbSet<CustomersReceiveablesReceipts> CustomersReceiveablesReceipt { get; set; }
+        public DbSet<ApiKeyConfiguartion> ApiKeyConfiguartions { get; set; }
+        public DbSet<BucketSizeMaster> BucketSizeMasters { get; set; }
+        public DbSet<MultithreadingInvoiceLogs> MultithreadingInvoiceLogs { get; set; }
+        public DbSet<UserWiseNoteManage> UserWiseNoteManage { get; set; }
+        public DbSet<UserWiseTaskManage> UserWiseTaskManage { get; set; }
+        public DbSet<UserWiseReminderManage> UserWiseReminderManage { get; set; }
+        public DbSet<ExpenseCheckMaster> ExpenseCheckMaster { get; set; }
+        public DbSet<ExpenseCheckMasterDetails> ExpenseCheckMasterDetails { get; set; }
+        //End
+
+        //Updated by Himanshu on 11-02-2025
+        //Start
+        public DbSet<ExpensePaymentMethodMaster> ExpensePaymentMethodMaster { get; set; }
+        public DbSet<EmployeeMaster> EmployeeMaster { get; set; }
+        //End
+
+        //Updated by Dani on 24-02-2025
+        //Start
+        public DbSet<GroupWiseStateStore> GroupWiseStateStores { get; set; }
+        //End
+
+        //Updated by Himanshu on 21-03-2025
+        public DbSet<InvoicePaymentStatusDetails> InvoicePaymentStatusDetails { get; set; }
+
+        //Updated by Dani on 02-05-2025
+        //Start
+        public DbSet<UserWiseRights> UserWiseRights { get; set; }
+        //End
+
+        //Updated by Dani on 07-05-2025
+        //Start
+        public DbSet<UserWiseRightsStores> UserWiseRightsStores { get; set; }
+        public DbSet<UserRightsTypeModuleApprover> UserRightsTypeModuleApprover { get; set; }
+        //End
+
+        //Updated by Dani on 02-06-2025
+        //Start
+        public DbSet<CompaniesCompetitors> companiesCompetitors { get; set; }
+        //End
+
+        //Updated by Dani on 02-06-2025
+        //Start
+        public DbSet<MenuMaster> MenuMasters { get; set; }
+        //End
+
+        //Updated by Himanshu on 02-07-2025
+        //Start
+        public DbSet<ChatGroups> ChatGroups { get; set; }
+        public DbSet<ChatMessenger> ChatMessenger { get; set; }
+        public DbSet<ChatGroupMembers> ChatGroupMembers { get; set; }
+        public DbSet<ChatReactions> ChatReactions { get; set; }
+        //End
+
+        //Updated by Dani on 07-08-2025
+        //Start
+        public DbSet<QuickBooksStorewiseToken> QuickBooksStorewiseToken { get; set; }
+        //End
+
+        //Updated by Dani on 21-08-2025
+        //Start
+        public DbSet<UniversalVendorMaster> UniversalVendorMasters { get; set; }
+        //End
+
+        //Updated by Dani on 16-09-2025
+        //Start
+        public DbSet<QBFinanicalClosingYear> QBFinanicalClosingYears { get; set; }
+        //End
+
+        //HR (Add Kirtan) -- Updated by Dani on 28-06-2024
+        //Start
+        public DbSet<HRDepartmentMaster> HRDepartmentMasters { get; set; }
+        public DbSet<HREthnicityMaster> HREthnicityMaster { get; set; }
+        public DbSet<HRFormTypeMaster> HRFormTypeMaster { get; set; }
+        public DbSet<HRConsentMaster> HRConsentMaster { get; set; }
+        public DbSet<HRConsentDetails> HRConsentDetails { get; set; }
+        public DbSet<HREmployeeMaster> HREmployeeMaster { get; set; }
+        public DbSet<HREmployeeChild> HREmployeeChild { get; set; }
+        public DbSet<HREmployeeDocument> HREmployeeDocument { get; set; }
+        public DbSet<HREmployeeHealthBenefitInfo> HREmployeeHealthBenefitInfo { get; set; }
+        public DbSet<HREmployeeInsurance> HREmployeeInsurance { get; set; }
+        public DbSet<HREmployeeNotes> HREmployeeNotes { get; set; }
+        public DbSet<HREmployeePayRate> HREmployeePayRate { get; set; }
+        public DbSet<HREmployeeRetirementInfo> HREmployeeRetirementInfo { get; set; }
+        public DbSet<HREmployeeSickTimes> HREmployeeSickTimes { get; set; }
+        public DbSet<HREmployeeTrainingHistory> HREmployeeTrainingHistory { get; set; }
+        public DbSet<HREmployeeVacationTime> HREmployeeVacationTime { get; set; }
+        public DbSet<HREmployeeVaccineCertificateInfo> HREmployeeVaccineCertificateInfo { get; set; }
+        public DbSet<HRStoreManagers> HRStoreManagers { get; set; }
+        public DbSet<HREmployeeTermination> HREmployeeTermination { get; set; }
+        public DbSet<HREmployeeWarning> HREmployeeWarning { get; set; }        
+        //End
+    }
+
+    public class DBContextHR : DbContext
+    {
+        public DBContextHR()
+           : base("DBConnHR")
+        {
+        }
+
+        public static DBContextHR Create()
+        {
+            return new DBContextHR();
+        }
+
+
+
+    }
+}
+
+public static class UserModule
+{
+    public static int UserID = 0;
+    public static int getUserId()
+    {
+        DBContext db = new DBContext();
+        int UserId = 0;
+        var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+        if (UserName != null && UserName != "")
+        {
+            UserId = db.UserMasters.Where(s => s.UserName == UserName).FirstOrDefault().UserId;
+        }
+        return UserId;
+    }
+
+    public static string getUserFirstName()
+    {
+        DBContext db = new DBContext();
+        string UFname = "";
+        var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+        if (UserName != null && UserName != "")
+        {
+            UFname = db.UserMasters.Where(s => s.UserName == UserName).FirstOrDefault().FirstName;
+        }
+        return UFname;
+    }
+    public static int getUserTypeId()
+    {
+        DBContext db = new DBContext();
+        int UTypeId = 0;
+        var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+        if (UserName != null && UserName != "")
+        {
+            UTypeId = db.UserMasters.Where(s => s.UserName == UserName).FirstOrDefault().UserTypeId;
+        }
+        return UTypeId;
+    }
+
+    public static int getLoginUserTypeId(string UserName)
+    {
+        DBContext db = new DBContext();
+        int UTypeId = 0;
+        //var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+        if (UserName != null && UserName != "")
+        {
+            UTypeId = db.UserMasters.Where(s => s.UserName == UserName).FirstOrDefault().UserTypeId;
+        }
+        return UTypeId;
+    }
+    public static void ManageSession(string UserName)
+    {
+        DBContext db = new DBContext();
+        var UserTypeName = db.UserMasters.Where(s => s.UserName.ToLower() == UserName.ToLower()).FirstOrDefault().UserTypeMasters.UserType;
+        if (UserTypeName != "Administrator")
+        {
+            //if (!Roles.IsUserInRole("Administrator"))
+            //{
+            if (HttpContext.Current.Session["StoreId"] == null || HttpContext.Current.Session["StoreId"] == "0")
+            {
+
+                //List<StoreMaster> StoreList = new List<StoreMaster>();
+                var UserType = UserModule.getUserTypeId();
+                var StoresIdsList = db.userRoles.Where(s => s.UserTypeId == UserType).Select(s => s.StoreId).ToList();
+                var StoreList = db.StoreMasters.Where(s => s.IsActive == true && StoresIdsList.Contains(s.StoreId)).Select(s => new { s.StoreId }).ToList();
+                if (StoreList.Count() > 0)
+                {
+                    HttpContext.Current.Session["StoreId"] = StoreList.FirstOrDefault().StoreId;
+                }
+            }
+        }
+    }
+}

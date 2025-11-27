@@ -1,0 +1,81 @@
+﻿.btn-danger:hover {
+    background-color: #989898;
+    border-color: #d43f3a;
+}
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: 1;
+    background-color: gray;
+}
+
+.button {
+    font-size: 18px;
+    font-weight: 1000;
+}
+
+.workSpaceRights {
+    display: flex;
+    width: 100% !important;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.workPlaceRights div {
+    flex-direction: row;
+    display: flex;
+    padding: 10px;
+}
+
+    .workPlaceRights div span {
+        margin-left: 10px;
+    }
+
+.div-default-content-setting h3 {
+    margin-bottom: 20px !important;
+}
+
+.user span.userbadge {
+    font-family: inherit;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    background: #000;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(-90deg, #000, #434343);
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    text-transform: uppercase;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end !important;
+    align-items: center;
+}
+
+a.training-status {
+    width: 120px;
+    text-align: center;
+    font-size: 15px;
+    color: #7E7E7E;
+    border-radius: 15px;
+    background: #C6C6C6;
+    padding: 6px 5px;
+    display: inline-block;
+}
+
+    a.training-status.certificate {
+        background: #24B545;
+        color: #fff;
+    }

@@ -1,0 +1,345 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.Models.UserMaster
+
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
+
+        .form-group label {
+            width: 30%;
+        }
+
+        .form-group .input-box {
+            width: 70%;
+            position: relative;
+        }
+
+            .form-group .input-box .fa {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                z-index: 9;
+            }
+
+            .form-group .input-box select {
+                width: 100%;
+            }
+
+    .checkbox-sec {
+        display: flex;
+        flex-direction: row;
+    }
+
+        .checkbox-sec .form-group {
+            width: 30%;
+        }
+
+            .checkbox-sec .form-group label {
+                width: auto;
+                margin: 0;
+            }
+
+        .checkbox-sec.whatsapp-checkbox {
+            margin: 0 0 0 160px;
+        }
+
+            .checkbox-sec.whatsapp-checkbox .form-group {
+                width: 100%;
+            }
+</style>
+<div>
+    <div>
+        <div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Name<span class="highlight">*</span>
+                        </label>
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.FirstName, new { maxlength = 100, @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            User Name <span class="highlight">*</span>
+                        </label>
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.UserName, new { maxlength = 100, @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Group<span class="highlight">*</span>
+                        </label>
+                        <div class="input-box">
+                            @Html.DropDownList("GroupId", null, "-- Select --", htmlAttributes: new { @class = "form-control", onchange = "getUserTypeData();", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            User Role<span class="highlight">*</span>
+                        </label>
+                        <div class="input-box">
+                            @Html.DropDownList("UserTypeId", null, "-- Select --", htmlAttributes: new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.UserTypeId, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Store Group
+                        </label>
+                        <div class="input-box">
+                            @Html.DropDownList("GroupWiseStateStoreId", null, "-- Select --", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.GroupWiseStateStoreId, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Email Address
+                        </label>
+                        <div class="input-box">
+                            @Html.TextBoxFor(model => model.EmailAddress, new { maxlength = 100, @class = "form-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Phone Number
+                        </label>
+                        <div class="input-box">
+                            @Html.EJS().MaskedTextBoxFor(model => model.PhoneNumber).Mask("(000) 000-0000").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.ForWhatsAppNotification).Render()
+                            <label>Allow Text Message / WhatsApp Notifications</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.IsActive).Render()
+                            <label>Active</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.TrackHours).Render()
+                            <label>Track Hours</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group" id="ProductScanApp">
+                            @Html.EJS().CheckBoxFor(model => model.IsProductScanApp, new { @onclick = "ProductscanOnchange()" }).Render()
+                            <label>Product Scan App</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.ProductImageUpload).Render()
+                            <label>Product Image Upload</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.UpdateProductDetails).Render()
+                            <label>Update Product Details</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.IsAbleExpiryChange).Render()
+                            <label>Product Expiry Date</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox-sec whatsapp-checkbox">
+                        <div class="form-group">
+                            @Html.EJS().CheckBoxFor(model => model.IsCustomCompetitors, new { @onclick = "CustomCompetitorsOnchange()" }).Render()
+                            <label>Custom Competitors</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="designatedStoreDiv"  @{if (Model.IsCustomCompetitors == true) { <text> style="display:none" </text>  }}>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Designated Store</label>
+                        <div class="input-box">
+                            @Html.DropDownList("DesignatedStore", null, "--Select Store--", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DesignatedStore, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="customCompetitorsDiv" @{if (Model.IsCustomCompetitors == false) { <text> style="display:none" </text>  }}>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                           Competitors
+                        </label>
+                        <div class="input-box">
+                            @if (Model.CompetitorsId != null)
+                            {
+                                @Html.EJS().MultiSelect("CompaniesCompetitors").Placeholder("--Select Competitors--").DataSource((IEnumerable<object>)ViewBag.CompaniesCompetitorsId).Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Value(Model.CompaniesCompetitors).Render()
+                                @Html.ValidationMessageFor(model => model.CompaniesCompetitors, "", new { @class = "highlight1" })
+                            }
+                            else
+                            {
+                                @Html.EJS().MultiSelect("CompaniesCompetitors").Placeholder("--Select Competitors--").DataSource((IEnumerable<object>)ViewBag.CompaniesCompetitorsId).Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Render()
+                                @Html.ValidationMessageFor(model => model.CompaniesCompetitors, "", new { @class = "highlight1" })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divStoreAccess" @{if (Model.IsProductScanApp == false) { <text> style="display:none" </text>  }}>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Store Access
+                        </label>
+                        <div class="input-box">
+                            @if (Model.IsProductScanApp == true)
+                            {
+                                @Html.EJS().DropDownList("UserRightsforStoreAccess").DataSource(
+                                new[] { new { Text = "--Select Access--", Value = "0" }, new { Text = "Anywhere Access", Value = "1" },
+                                new { Text = "InStore Access", Value = "2" } }).Fields(
+                                new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).Placeholder("Select Access"
+                                ).Index(0).Value(Model.UserRightsforStoreAccess.ToString()).Enabled(true).Change("userrightonchange").Render()
+                            }
+                            else
+                            { @Html.EJS().DropDownList("UserRightsforStoreAccess").DataSource(
+                  new[] { new { Text = "--Select Access--", Value = "0" }, new { Text = "Anywhere Access", Value = "1" },
+                  new { Text = "InStore Access", Value = "2" } }).Fields(
+                  new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).Placeholder("Select Access"
+                  ).Index(0).Value(Model.UserRightsforStoreAccess).Enabled(false).Change("userrightonchange").Render()
+                        }
+                            @Html.ValidationMessageFor(model => model.UserRightsforStoreAccess, "", new { @class = "highlight1" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divlocationstoreaccess" @{if (Model.IsProductScanApp == false && (Model.UserRightsforStoreAccess == 1 || Model.UserRightsforStoreAccess == 0)) { <text> style="display:none" </text>  }}>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Store Location Access
+                        </label>
+                        <div class="input-box">
+                            @if (Model.IsProductScanApp == true && (Model.UserRightsforStoreAccess == 2))
+                            {
+                                @Html.EJS().MultiSelect("MuiltiStoreAccess").Placeholder("--Select Store--").DataSource((IEnumerable<object>)ViewBag.MultipleStorer).Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Enabled(true).Value(Model.MuiltiStoreAccess).Render()
+                                @Html.ValidationMessageFor(model => model.MuiltiStoreAccess, "", new { @class = "highlight1" })
+                            }
+                            else
+                            {
+                                @Html.EJS().MultiSelect("MuiltiStoreAccess").Placeholder("--Select Store--").DataSource((IEnumerable<object>)ViewBag.MultipleStorer).Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Enabled(false).Render()
+                                @Html.ValidationMessageFor(model => model.MuiltiStoreAccess, "", new { @class = "highlight1" })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divdatastoreaccess" @{if (Model.IsProductScanApp == false && (Model.UserRightsforStoreAccess == 0)) { <text> style="display:none" </text>  }}>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>
+                            Store Data Access
+                        </label>
+                        <div class="input-box">
+                            @if (Model.IsProductScanApp == true && (Model.UserRightsforStoreAccess == 2 || Model.UserRightsforStoreAccess == 1))
+                            {
+                                @Html.EJS().MultiSelect("MuiltiStoreAccessData").Placeholder("--Select Store--").DataSource((IEnumerable<object>)ViewBag.MultipleStoreres).Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Enabled(true).Value(Model.MuiltiStoreAccessData).Render()
+                                @Html.ValidationMessageFor(model => model.MuiltiStoreAccessData, "", new { @class = "highlight1" })
+                            }
+                            else
+                            {
+                                @Html.EJS().MultiSelect("MuiltiStoreAccessData").Placeholder("--Select Store--").DataSource((IEnumerable<object>)ViewBag.MultipleStoreres).Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Enabled(false).Render()
+                                @Html.ValidationMessageFor(model => model.MuiltiStoreAccessData, "", new { @class = "highlight1" })
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.EJS().ScriptManager()

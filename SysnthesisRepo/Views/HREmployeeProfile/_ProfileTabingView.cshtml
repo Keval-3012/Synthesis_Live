@@ -1,0 +1,168 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Navigations;
+@using Syncfusion.EJ2.Popups
+<div class="e-sample-resize-container">
+    @Html.EJS().Tab("keyboardInteractionTab").Width("100%").OverflowMode(OverflowMode.Popup).Items(ViewBag.items).Render()
+</div>
+<div id="PayRatesContent" style="display: none;">
+    <div class="control-section">
+        @Html.EJS().Grid("HRPayRate").AllowSorting().Created("createdHRPayRate").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+        {
+            col.Field("EmployeePayRateId").IsPrimaryKey(true).HeaderText("EmployeePayRateId").Visible(false).Add();
+            col.Field("EmployeeId").HeaderText("EmployeeId").Visible(false).Add();
+            col.Field("EmployeeChildId").HeaderText("EmployeeChildId").Visible(false).Add();
+            col.Field("PayRateDate").HeaderText("Date").Format("MM/dd/yyyy").Width("25%").Add();
+            col.Field("PayTypeName").HeaderText("Pay Type").Width("20%").Add();
+            col.Field("PayRate").HeaderText("Pay Rate").Template("#payRateTemplate").Width("25%").Add();
+            col.Field("Comments").HeaderText("Comments").Width("30%").Add();
+        }).ActionBegin("actionBeginHRPayRate").ActionComplete("actionCompleteHRPayRate").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(10); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" }).Render()
+    </div>
+</div>
+
+<div id="SickTimesContent" style="display: none;">
+    <div class="control-section">
+        @Html.EJS().Grid("HRSickTime").AllowSorting().Created("createdSickTimes").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+   {
+       col.Field("EmployeeSickTimeId").IsPrimaryKey(true).HeaderText("EmployeeSickTimeId").Visible(false).Add();
+       col.Field("EmployeeId").HeaderText("EmployeeId").Visible(false).Add();
+       col.Field("EmployeeChildId").HeaderText("EmployeeChildId").Visible(false).Add();
+       col.Field("TimeTypeName").HeaderText("Time Type").Visible(false).Width("20%").Add();
+       col.Field("Time").HeaderText("Time").Visible(false).Width("25%").Add();
+       col.Field("EffectiveDate").HeaderText("Date").Format("MM/dd/yyyy").Width("25%").Add();
+       col.Field("Used").HeaderText("Used Hours/Units").Width("25%").Add();
+       col.Field("Awarded").HeaderText("Awarded Time").Width("25%").Add();
+       col.Field("Comments").HeaderText("Comments").Width("30%").Add();
+   }).ActionBegin("actionBeginSickTime").ActionComplete("actionCompleteSickTime").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(10); }).Aggregates(agg =>
+   {
+       agg.Columns(new List<Syncfusion.EJ2.Grids.GridAggregateColumn>
+           () { new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "Used", Format = "0", Type = "Sum", FooterTemplate = "Total used time: ${Sum} hours" },
+            new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "Awarded", Format = "0", Type = "Sum", FooterTemplate = "Total Awarded time: ${Sum} hours" },
+            new Syncfusion.EJ2.Grids.GridAggregateColumn() { ColumnName = "Comments", Format = "0", Type = "Custom", FooterTemplate = "Total Available time: ${Custom} hours", CustomAggregate = "customAggregateFn" }}).Add();
+   }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#SickTimedialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" }).Render()
+    </div>
+</div>
+<div id="VacationTimesContent" style="display: none;">
+    <div class="control-section">
+        @Html.EJS().Grid("HRVacationTime").AllowSorting().Created("createdVacationTimes").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+    {
+    col.Field("EmployeeVacationTimeId").IsPrimaryKey(true).HeaderText("EmployeeVacationTimeId").Visible(false).Add();
+    col.Field("EmployeeId").HeaderText("EmployeeId").Visible(false).Add();
+    col.Field("EmployeeChildId").HeaderText("EmployeeChildId").Visible(false).Add();
+    col.Field("TimeTypeName").HeaderText("Time Type").Visible(false).Width("20%").Add();
+    col.Field("Time").HeaderText("Time").Visible(false).Width("25%").Add();
+    col.Field("EffectiveDate").HeaderText("Date").Format("MM/dd/yyyy").Width("25%").Add();
+    col.Field("Used").HeaderText("Used Hours/Units").Width("25%").Add();
+    col.Field("Awarded").HeaderText("Awarded Time").Width("25%").Add();
+    col.Field("Comments").HeaderText("Comments").Width("30%").Add();
+    }).ActionBegin("actionBeginVacationTime").ActionComplete("actionCompleteVacationTime").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(10); }).Aggregates(agg =>
+    {
+    agg.Columns(new List<Syncfusion.EJ2.Grids.GridAggregateColumn>
+       () { new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "Used", Format = "0", Type = "Sum", FooterTemplate = "Total used time: ${Sum} hours" },
+        new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "Awarded", Format = "0", Type = "Sum", FooterTemplate = "Total Awarded time: ${Sum} hours" },
+        new Syncfusion.EJ2.Grids.GridAggregateColumn() { ColumnName = "Comments", Format = "0", Type = "Custom", FooterTemplate = "Total Available time: ${Custom} hours", CustomAggregate = "customAggregateFn" }}).Add();
+    }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#VacationTimedialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" }).Render()
+    </div>
+</div>
+
+<div id="InsuranceContent" style="display: none;">
+    <div class="control-section">
+        @Html.EJS().Grid("HRInsurance").AllowSorting().Created("createdHRInsurance").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+   {
+       col.Field("EmployeeInsuranceId").IsPrimaryKey(true).HeaderText("EmployeeInsuranceId").Visible(false).Add();
+       col.Field("EmployeeId").HeaderText("EmployeeId").Visible(false).Add();
+       col.Field("EmployeeChildId").HeaderText("EmployeeChildId").Visible(false).Add();
+       col.Field("EffectiveDate").HeaderText("Effective Date").Format("MM/dd/yyyy").Width("25%").Add();
+       col.Field("EnrollmentStatusName").HeaderText("Enrollment Status").Width("20%").Add();
+       col.Field("FileName").HeaderText("Docs").Width("50").Template("#UploadTemplate").Add();
+       col.Field("Comments").HeaderText("Comments").Width("30%").Add();
+   }).ActionBegin("actionBeginHRInsurance").ActionComplete("actionCompleteHRInsurance").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(10); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#Insurancedialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" }).Render()
+    </div>
+</div>
+
+<div id="DocumentsContent" style="display: none;">
+    <div id="customDialog"></div>
+    <div class="control-section">
+        <div class="e-card" style="padding: 10px 0px;">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                @Html.EJS().Button("AddDocumentButtton").IsPrimary(true).Content("Add Document").Click("GetAddDocument").Render()
+                @Html.EJS().Button("Upload401planButton").IsPrimary(true).Content("Upload 401(K) Plan").Click("GetUpload401plan").Render()
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div id="Document"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="NotesContent" style="display: none;">
+    <div class="control-section">
+        @Html.EJS().Grid("HRNotes").AllowSorting().Created("createdHRNotes").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+        {
+            col.Field("EmployeeNoteId").IsPrimaryKey(true).HeaderText("EmployeeNoteId").Visible(false).Add();
+            col.Field("EmployeeId").HeaderText("EmployeeId").Visible(false).Add();
+            col.Field("EmployeeChildId").HeaderText("EmployeeChildId").Visible(false).Add();
+            col.Field("Notes").HeaderText("Notes").Width("60%").Add();
+            col.Field("CreatedOn").HeaderText("Date").Format("MM/dd/yyyy").Width("20%").Add();
+            col.Field("CreatedbyName").HeaderText("Created By").Width("20%").Add();
+        }).ActionBegin("actionBeginHRNotes").ActionComplete("actionCompleteHRNotes").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(10); }).EditSettings(edit => { edit.AllowAdding(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#Notesdialogtemplates"); }).Toolbar(new List<string>() { "Add" }).Render()
+    </div>
+</div>
+
+<div id="TrainingHistoryContent" style="display: none;">
+    <div class="control-section">
+        @Html.EJS().Grid("HRTraining").AllowSorting().Created("createdHRTraining").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+        {
+            col.Field("EmployeeId").HeaderText("EmployeeId").Visible(false).Add();
+            col.Field("TrainingCompletedDateTime").HeaderText("Training Date").Format("MM/dd/yyyy").Width("40%").Add();
+            col.Field("TrainingCompletedDateTime").HeaderText("Training Time").Format("HH:mm:ss").Width("40%").Add();
+            col.Field("TraningContent").Template("#TraningTemp").Width("20%").Add();
+        }).ActionBegin("actionBeginHRTraining").ActionComplete("actionCompleteHRTraining").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(10); }).Render()
+    </div>
+</div>
+<div id="WarningContent" style="display: none;">
+    <div class="control-section">
+        <div class="e-card" style="padding: 10px 0px;">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div id="WarningDocument"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="TerminationContent" style="display: none;">
+    <div class="control-section">
+        <div class="e-card" style="padding: 10px 0px;">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div id="TerminationDocument"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-jsrender" id="TraningTemp">
+    ${TraningTempCreate(data)}
+</script>
+<script>
+    function TraningTempCreate(data) {
+        var grid = document.querySelector(".e-grid").ej2_instances[0]
+        var div = document.createElement('div');
+        var a = document.createElement('a');
+        var span = document.createElement('span');
+
+        a.href = '/HREmployee/DownLoadFile?TraningFilePath=' + data.TraningContent;
+        a.className = 'training-status certificate';
+        //span.textContent = 'aa';
+
+        // Create the <img> element
+        var img = document.createElement('img');
+        img.alt = '';
+        
+        img.src = '/Content/image/pdf.png';
+
+        //a.appendChild(span);
+
+        a.appendChild(img);
+
+        div.appendChild(a);
+        return div.outerHTML;
+    }
+</script>
+@Html.EJS().ScriptManager()

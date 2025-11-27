@@ -1,0 +1,73 @@
+﻿@using Utility 
+<!-- /Page Sidebar -->
+@{
+    Layout = null;
+}
+
+@{
+    string ControllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    string ActionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    string id = null;
+    //
+    if (HttpContext.Current.Request.RequestContext.RouteData.Values["id"] != null)
+    {
+        id = HttpContext.Current.Request.RequestContext.RouteData.Values["id"].ToString();
+    }
+
+    if (ControllerName.ToLower() != "admininclude" && ActionName.ToLower() != "error" && ActionName.ToLower() != "pdfviewerdata")
+    {
+            Session["CurrentPageName"] = ControllerName + "/" + ActionName;
+
+    }
+
+    <div class="page-sidebar  sidebar-fixed menu-compact " id="sidebar">
+        <aside id="menu" class="printorder">
+            <div id="navigation" class="printorder">
+                <ul class="nav sidebar-menu fnt_set2 icon_color_wight">
+                    <li>
+                        <a href="@Url.Action("EnglishTraining", "HREmployeeTraining", new {area="HR"})"><i class="menu-icon"><img src="~/Content/Admin/images/documents.svg" alt="" /></i> <span>HR Module</span> </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+}
+
+<script>
+    function SetItem() {
+        localStorage.removeItem("DashboardFilter_AmtMinimum");
+        localStorage.removeItem("DashboardFilter_AmtMaximum");
+        localStorage.removeItem("DashboardFilter_StartDate");
+        localStorage.removeItem("DashboardFilter_EndDate");
+        localStorage.removeItem("DashboardFilter_Payment1");
+        localStorage.removeItem("DashboardFilter_Payment2");
+        localStorage.removeItem("DashboardFilter_Department");
+        localStorage.removeItem("Dashboard_Vendor");
+        localStorage.removeItem("DashboardFilter_SearchVendor");
+        localStorage.removeItem("Dashboard_SearchFlg");
+        localStorage.removeItem("VendorIsAsc");
+
+        localStorage.removeItem("PriceFilter_StartDate");
+        localStorage.removeItem("PriceFilter_EndDate");
+        localStorage.removeItem("PriceFilter_Store");
+        localStorage.removeItem("PriceFilter_SearchVendor");
+        localStorage.removeItem("PriceFilter_SearchFlg");
+        localStorage.removeItem("PriceFilter_Vendors");
+
+        localStorage.removeItem("ECheckFilter_StartDate");
+        localStorage.removeItem("ECheckFilter_EndDate");
+        localStorage.removeItem("ECheckFilter_Store");
+        localStorage.removeItem("ECheckFilter_SearchVendor");
+        localStorage.removeItem("ECheckFilter_SearchFlg");
+
+        localStorage.removeItem("DepartmentIsAsc");
+            $.ajax({
+                url: '@AdminSiteConfiguration.GetURL()/Invoices/ClearSession',
+                data: {},
+                beforeSend: function () {
+                },
+                success: function (response) {
+                }
+            });
+    }
+</script>

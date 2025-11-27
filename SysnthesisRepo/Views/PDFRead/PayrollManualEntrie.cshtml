@@ -1,0 +1,328 @@
+﻿@model EntityModels.Models.PayrollManualModel
+@using Utility;
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .mpayroll-main {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .paydepartment-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .dr-col-1 {
+        width: 20%;
+    }
+
+    .heading-col-1 {
+        font-size: 16px;
+    }
+
+    .dr-col-btn {
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
+    }
+</style>
+
+@using (Html.BeginForm("PayrollManualEntrie", "PDFRead", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmMain" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="cc-main cc-main-page">
+        <div class="inv-heading">
+            <h3>Payroll Manual Entries</h3>
+        </div>
+        <div class="">
+            <div class="cc-main-sec">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mpayroll-main">
+                            <div class="payee-sec">
+                                <div class="payee">
+                                    <label>FileName</label>
+                                    @Html.TextBoxFor(model => model.FileName, new { @class = "form-control" })
+                                </div>
+                                <div class="payee">
+                                    <label>FileType</label>
+                                    @Html.TextBoxFor(model => model.FileType, new { @class = "form-control", type = "number" })
+                                </div>
+                            </div>
+                            <div class="payee-sec">
+                                <div class="payment-date">
+                                    <label for="" class="form-label">Start Date<span style="color:red">*</span></label>
+                                    @Html.EJS().DatePickerFor(model => model.StartDate, new { @required = "required" }).Value(DateTime.Now).Format("MM-dd-yyyy").Render()
+                                </div>
+                                <div class="payment-date">
+                                    <label for="" class="form-label">End Date<span style="color:red">*</span></label>
+                                    @Html.EJS().DatePickerFor(model => model.EndDate, new { @required = "required" }).Value(DateTime.Now).Format("MM-dd-yyyy").Render()
+                                </div>
+                                <div class="payment-date">
+                                    <label for="" class="form-label">Check Date<span style="color:red">*</span></label>
+                                    @Html.EJS().DatePickerFor(model => model.EndCheckDate, new { @required = "required" }).Value(DateTime.Now).Format("MM-dd-yyyy").Render()
+                                </div>
+                            </div>
+                            <div class="payee-sec">
+                                <div class="payee">
+                                    <label>CHILD SUPPORT</label>
+                                    @Html.TextBoxFor(model => model.CHILDSUPPORT, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>STDIS</label>
+                                    @Html.TextBoxFor(model => model.STDIS, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>CSDispNY</label>
+                                    @Html.TextBoxFor(model => model.CSDispNY, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>EENYPFL</label>
+                                    @Html.TextBoxFor(model => model.EENYPFL, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>GROSS PAY</label>
+                                    @Html.TextBoxFor(model => model.GROSSPAY, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>AFLAC</label>
+                                    @Html.TextBoxFor(model => model.AFLAC, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>401K2</label>
+                                    @Html.TextBoxFor(model => model.K2401, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>LIFE INS</label>
+                                    @Html.TextBoxFor(model => model.LIFEINS, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>SDINY</label>
+                                    @Html.TextBoxFor(model => model.SDINY, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                            </div>
+                            <div class="payee-sec">
+                                <div class="payee">
+                                    <label>Federal Unemployment</label>
+                                    @Html.TextBoxFor(model => model.FederalUnemployment, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>Medicare - Employer</label>
+                                    @Html.TextBoxFor(model => model.MedicareEmployer, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>New York Unemployment</label>
+                                    @Html.TextBoxFor(model => model.NewYorkUnemployment, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>PAYROLL TAXES</label>
+                                    @Html.TextBoxFor(model => model.PAYROLLTAXES, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>Social Security - Employer</label>
+                                    @Html.TextBoxFor(model => model.SocialSecurityEmployer, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>New York Metro Commut Zone 1</label>
+                                    @Html.TextBoxFor(model => model.NewYorkMetroCommutZone, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>Employees' payments</label>
+                                    @Html.TextBoxFor(model => model.Employeepayments, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>NY Re-empl Svc</label>
+                                    @Html.TextBoxFor(model => model.NYReemplSvc, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>NJ ER Work Dev</label>
+                                    @Html.TextBoxFor(model => model.NJERWorkDev, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>NY MCTMT TD MSC</label>
+                                    @Html.TextBoxFor(model => model.NYMCTMTTDMSC, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>Payroll Fee</label>
+                                    @Html.TextBoxFor(model => model.PayrollFee, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>New Jersey Unemployment</label>
+                                    @Html.TextBoxFor(model => model.NewJerseyUnemployment, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>NJ Disability</label>
+                                    @Html.TextBoxFor(model => model.NJDisability, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                            </div>
+                            <div class="payee-sec">
+                                <div class="payee">
+                                    <label>Dental 170</label>
+                                    @Html.TextBoxFor(model => model.Dental, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>LifeInsurance 170</label>
+                                    @Html.TextBoxFor(model => model.LifeInsurance, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>EmployerSocialSecurity 170</label>
+                                    @Html.TextBoxFor(model => model.EmployerSocialSecurity, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>GrossWages 170</label>
+                                    @Html.TextBoxFor(model => model.GrossWages, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                                <div class="payee">
+                                    <label>EmployerMedicare 170</label>
+                                    @Html.TextBoxFor(model => model.EmployerMedicare, new { @class = "form-control", type = "number", step = "0.01" })
+                                </div>
+                            </div>
+                            <div class="paydepartment-main">
+                                <div id="paydepartment-rows">
+                                    <div class="paydepartment-row" id="row-template">
+                                        <div class="dr-col-1">
+                                            <div class="heading-col-1">Department</div>
+                                            <select class="form-select paydepartment-select" name="PayrollManualDetailsModel[0].PayrollDepartmentId">
+                                                <option value="">-Select Department-</option>
+                                                @foreach (var item in (IEnumerable<EntityModels.Models.DropdownViewModel>)ViewBag.PayrollDepartment)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">HOURLY</div>
+                                            <input class="form-control hourly-input" name="PayrollManualDetailsModel[0].HOURLY" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">REGULAR</div>
+                                            <input class="form-control regular-input" name="PayrollManualDetailsModel[0].REGULAR" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">RETRO</div>
+                                            <input class="form-control retro-input" name="PayrollManualDetailsModel[0].RETRO" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">SALARY</div>
+                                            <input class="form-control salary-input" name="PayrollManualDetailsModel[0].SALARY" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">SPREADOFHOURS</div>
+                                            <input class="form-control spread-input" name="PayrollManualDetailsModel[0].SPREADOFHOURS" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">TRAINING</div>
+                                            <input class="form-control training-input" name="PayrollManualDetailsModel[0].TRAINING" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">HOLIDAYWORKED</div>
+                                            <input class="form-control holidaywork-input" name="PayrollManualDetailsModel[0].HOLIDAYWORKED" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">OVERTIME</div>
+                                            <input class="form-control overtime-input" name="PayrollManualDetailsModel[0].OVERTIME" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">BONUS</div>
+                                            <input class="form-control bonus-input" name="PayrollManualDetailsModel[0].BONUS" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">CREDITCARDTIPS</div>
+                                            <input class="form-control credit-input" name="PayrollManualDetailsModel[0].CREDITCARDTIPS" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">HOLIDAY</div>
+                                            <input class="form-control holiday-input" name="PayrollManualDetailsModel[0].HOLIDAY" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">SICK</div>
+                                            <input class="form-control sick-input" name="PayrollManualDetailsModel[0].SICK" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-2">
+                                            <div class="heading-col-1">VACATION</div>
+                                            <input class="form-control vacation-input" name="PayrollManualDetailsModel[0].VACATION" maxlength="18" type="number" step="0.01" />
+                                        </div>
+                                        <div class="dr-col-btn">
+                                            <a class="btn-addbox add-row"><i class="fa fa-plus"></i></a>
+                                            <a class="btn-remove remove-row"><i class="fa fa-minus"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-sec">
+                <input type="submit" value="Save" id="btnExpenseSubmit" name="btnsubmit" class="buttonbox btn_spcial" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+<script>
+    $(document).on('click', '.add-row', function () {
+        const rowIndex = $('#paydepartment-rows .paydepartment-row').length;
+
+        const newRow = $('#row-template').clone();
+        newRow.find('.id-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].PayrollDepartmentDetId`).val('');
+        newRow.find('.paydepartment-select').attr('name', `PayrollManualDetailsModel[${rowIndex}].PayrollDepartmentId`).val('');
+        newRow.find('.hourly-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].HOURLY`).val('');
+        newRow.find('.regular-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].REGULAR`).val('');
+        newRow.find('.retro-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].RETRO`).val('');
+        newRow.find('.salary-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].SALARY`).val('');
+        newRow.find('.spread-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].SPREADOFHOURS`).val('');
+        newRow.find('.training-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].TRAINING`).val('');
+        newRow.find('.holidaywork-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].HOLIDAYWORKED`).val('');
+        newRow.find('.overtime-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].OVERTIME`).val('');
+        newRow.find('.bonus-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].BONUS`).val('');
+        newRow.find('.credit-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].CREDITCARDTIPS`).val('');
+        newRow.find('.holiday-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].HOLIDAY`).val('');
+        newRow.find('.sick-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].SICK`).val('');
+        newRow.find('.vacation-input').attr('name', `PayrollManualDetailsModel[${rowIndex}].VACATION`).val('');
+
+        $('#paydepartment-rows').append(newRow);
+    });
+
+    $(document).on('click', '.remove-row', function () {
+        if ($('.paydepartment-row').length > 1) {
+            $(this).closest('.paydepartment-row').remove();
+            updateRowIndices();
+        }
+    });
+
+    function updateRowIndices() {
+        $('#paydepartment-rows .paydepartment-row').each(function (index) {
+            $(this).find('.id-input').attr('name', `PayrollManualDetailsModel[${index}].PayrollDepartmentDetId`);
+            $(this).find('.paydepartment-select').attr('name', `PayrollManualDetailsModel[${index}].PayrollDepartmentId`);
+            $(this).find('.hourly-input').attr('name', `PayrollManualDetailsModel[${index}].HOURLY`);
+            $(this).find('.regular-input').attr('name', `PayrollManualDetailsModel[${index}].REGULAR`);
+            $(this).find('.retro-input').attr('name', `PayrollManualDetailsModel[${index}].RETRO`);
+            $(this).find('.salary-input').attr('name', `PayrollManualDetailsModel[${index}].SALARY`);
+            $(this).find('.spread-input').attr('name', `PayrollManualDetailsModel[${index}].SPREADOFHOURS`);
+            $(this).find('.training-input').attr('name', `PayrollManualDetailsModel[${index}].TRAINING`);
+            $(this).find('.holidaywork-input').attr('name', `PayrollManualDetailsModel[${index}].HOLIDAYWORKED`);
+            $(this).find('.overtime-input').attr('name', `PayrollManualDetailsModel[${index}].OVERTIME`);
+            $(this).find('.bonus-input').attr('name', `PayrollManualDetailsModel[${index}].BONUS`);
+            $(this).find('.credit-input').attr('name', `PayrollManualDetailsModel[${index}].CREDITCARDTIPS`);
+            $(this).find('.holiday-input').attr('name', `PayrollManualDetailsModel[${index}].HOLIDAY`);
+            $(this).find('.sick-input').attr('name', `PayrollManualDetailsModel[${index}].SICK`);
+            $(this).find('.vacation-input').attr('name', `PayrollManualDetailsModel[${index}].VACATION`);
+        });
+    }
+</script>
+@Html.EJS().ScriptManager()

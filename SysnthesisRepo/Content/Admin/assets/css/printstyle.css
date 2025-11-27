@@ -1,0 +1,24 @@
+﻿
+.printarea {
+    display:none;
+}
+.page-content {
+    margin:0px;
+}
+.main-container{
+    padding:0px;
+}
+
+@page  
+{ 
+    size: landscape;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 0mm 0mm 0mm 0mm;  
+}
+.datagrid .table tr td {padding:10px 3px!important;font-weight:normal!important;
+}
+.width20{width: 12%!important;}
+ .datagrid .table tr th  {padding:10px 3px!important;}
+ table{overflow:hidden;}
+.datagrid .table tr th:first-child{text-align:left;}

@@ -1,0 +1,231 @@
+﻿@model EntityModels.Models.VendorMaster
+
+<style>
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+</style>
+@using (Html.BeginForm("Edit", "VendorMasters", FormMethod.Post, new { id = "frmMain" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div id="globalTabContent">
+        @Html.HiddenFor(m => m.VendorId)
+        <div id="progress" class="modal">
+            <div class="center">
+                <img src="/images/loading.gif" />
+            </div>
+        </div>
+        <div id="PanAddUpdate">
+            <div class="header-small special_bg">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3>Edit Vendor </h3>
+                    </div>
+                    <div class="col-md-9" style="text-align: end;">
+
+                        <h4><b>Store :  @Html.DisplayFor(m => m.StoreMasters.Name)</b></h4>
+                    </div>
+                </div>
+            </div>
+            @if (TempData["sMessage"] != null)
+            {
+                <script type="text/javascript">
+                    window.onload = function () {
+                        alert("Select Store....!");
+                    };
+                </script>
+            }
+            @if (TempData["Sucessme"] != null)
+            {
+                <script type="text/javascript">
+                    window.onload = function () {
+                        alert('@TempData["Sucessme"]');
+                    };
+                </script>
+            }
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                @Html.HiddenFor(m => m.StoreId)
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Display Name <span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.VendorName, new { maxlength = 300, @class = "form-control", placeholder = "Name", autofocus = "autofocus", @style = "text-transform: uppercase" })
+                                    <span class="highlight">     @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "form-error-msg show" })</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Company Name @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextBoxFor(model => model.CompanyName, new { maxlength = 41, @class = "form-control", placeholder = "Company Name", @style = "text-transform: uppercase" })
+                                    <span class="highlight">      @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "form-error-msg show" })</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Print On check @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextAreaFor(model => model.PrintOnCheck, new { maxlength = 200, @class = "form-control", placeholder = "Print On check", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Address 1 @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextAreaFor(model => model.Address, new { maxlength = 500, @class = "form-control", placeholder = "Address", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Address 2 @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextAreaFor(model => model.Address2, new { maxlength = 500, @class = "form-control", placeholder = "Address", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Phone Number @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { maxlength = 30, @class = "form-control", placeholder = "Phone Number", @style = "text-transform: uppercase" })
+                                    <span class="highlight">      @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "form-error-msg show" })</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        City @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextBoxFor(model => model.City, new { maxlength = 31, @class = "form-control", placeholder = "City", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        State @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.DropDownList("State", null, "-- Select --", htmlAttributes: new { @class = "form-control", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Country @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Country, new { maxlength = 50, @class = "form-control", placeholder = "Country", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Postal Code @*<span class="highlight">*</span>*@
+                                    </label>
+                                    @Html.TextBoxFor(model => model.PostalCode, new { maxlength = 50, @class = "form-control", placeholder = "Postal Code", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Email
+                                    </label>
+                                    @Html.TextBoxFor(model => model.EMail, new { maxlength = 80, @class = "form-control", placeholder = "Email", @style = "text-transform: uppercase" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Select Department
+                                    </label>
+                                    @Html.ListBox("MultiDepartmentId", null, htmlAttributes: new { @class = "form-control multi-select" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Instructions
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Instruction, new { @class = "form-control", placeholder = "Instructions" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBoxFor(a => a.IsActive, new { @class = "chk", @style = "opacity:1;display:block;position:initial;" })
+                                        <label for="IsActive" style="padding-left:28px;margin-top:-30px;">Active</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="form-group">
+                                <input type="submit" value="Update" id="btnSave"
+                                       class="buttonbox btnsubmit" />
+
+                                @Html.ActionLink("Cancel", "Index", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                                @*<input type="submit" value="Generate File" id="btnDownLoadFile" class="buttonbox btn-primary" />*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+}
+<script>
+    //$("#PhoneNumber").keyup(function () {
+    //    $(this).val($(this).val().replace(/^(\d{3})(\d{3})(\d)+$/, "($1)$2-$3"));
+    //});
+    $(document).ready(function () {
+        $('#HeaderStoreId').prop('disabled', true);
+        $(".multi-select").select2({ multiple: true });
+    });
+    document.getElementById('PhoneNumber').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+    $("#CompanyName").keyup(function () {
+        $("#PrintOnCheck").val($(this).val());
+    });
+
+    $(document).ready(function () {
+        $("#VendorName").autocomplete(false);
+        $("#CompanyName").autocomplete(false);
+        $("#PrintOnCheck").autocomplete(false);
+        $("#Address").attr("autocomplete", "nope");
+        $("#Address2").attr("autocomplete", "nope");
+        $("#PhoneNumber").attr("autocomplete", "nope");
+        $("#City").attr("autocomplete", "nope");
+        $("#PostalCode").attr("autocomplete", "nope");
+        $("#EMail").attr("autocomplete", "nope");
+    });
+</script>

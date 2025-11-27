@@ -1,0 +1,326 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@using Utility;
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<style>
+    .je-date {
+        display: flex;
+        justify-content: flex-end;
+        margin: 0;
+        gap: 10px;
+    }
+
+    #btnSearch {
+        margin: 0;
+    }
+
+    .btnadddocument {
+        margin: 0;
+    }
+
+    .je-date .form-control {
+        width: 14%;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    #DocumentModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    #btnSearch {
+        width: auto !important;
+        padding: 10px 20px !important;
+        text-decoration: none !important;
+        color: white !important;
+        background: transparent !important;
+        background-color: rgb(83, 115, 244) !important;
+        box-shadow: 0px 0px 20px rgba(83, 115, 244,0.3) !important;
+        border-radius: 6px !important;
+        border: 0px !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+
+        #btnSearch:hover, .resetBtnUnclearCheck:hover {
+            text-decoration: none;
+            color: white;
+            transform: scale(1.1);
+        }
+
+    .resetBtnUnclearCheck {
+        width: auto;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(244, 161, 83);
+        box-shadow: 0px 0px 20px rgb(244, 161, 83,0.3);
+        border-radius: 6px;
+        border: 0px;
+        margin: 0px;
+        height: 35px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .dynamic-tooltip {
+        background-color: #333; /* Dark background to contrast with white text */
+        color: white; /* White font color */
+        padding: 5px; /* Padding inside the tooltip */
+        border-radius: 4px; /* Rounded corners */
+        font-size: 12px; /* Font size */
+        max-width: 200px; /* Max width of the tooltip */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow text */
+        text-overflow: ellipsis; /* Ellipsis for overflow text */
+    }
+</style>
+<div>
+    <div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer " style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+        <div class="row">
+            <div class="col-md-3">
+                <h3>My Documents</h3>
+            </div>
+            @if (Convert.ToString(ViewBag.Storeidvalue) != "0")
+            {
+                <div class="col-md-9">
+                    <div class="je-date">
+                        @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateDocument"))
+                        {
+                            <a class="btnadddocument" href="#" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#DocumentModal"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/plus.svg" style="width:16px" /> Bulk Upload</a>
+                            <a href="@Url.Action("Create", "Documents")" class="btnadddocument"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/plus.svg" style="width:16px" /> Add Document</a>
+                        }
+                        <input name="txtstartdate" id="txtstartdate" detail="My Documents StartDate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" placeholder="From" class="datepicker form-control" onkeydown="return false" autocomplete="off">
+                        <input name="txtenddate" id="txtenddate" detail="My Documents StartDate" data-val="true" data-val-date="The field Startdate must be a date." data-val-required=" " type="text" maxlength="100" onkeydown="return false" placeholder="To" class="datepicker form-control" autocomplete="off">
+                        <input type="button" name="btnSearch" value="Filter" id="btnSearch" onclick="SearchFromDate();" class="viewBtnUnclearCheck">
+                        <button type="button" class="resetBtnUnclearCheck" onclick="RefreshMyDocument();">Reset</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="datagrid" id="grddata">
+        <div class="page-body headertopbox" style="padding-top:0px!important;">
+            <div class="control-section">
+                <div id="customDialog"></div>
+                @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+                @Html.EJS().Grid("MyDocumentGrid").AllowSorting().AllowFiltering().AllowPdfExport().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+           {
+               col.Field("DocumentId").IsPrimaryKey(true).HeaderText("DocumentId").Visible(false).Add();
+               col.Field("AttachExtention").HeaderText("Type").Template("#TypeTemplate").Width("3%").Add();
+               col.HeaderText("Private").Template("#PrivateTemplate").Width("3%").Add();
+               col.Field("Title").HeaderText("Document Title").Template("#DocumentTemplate").Width("18%").Add();
+               //col.Field("StoreName").HeaderText("Store Name").Width("5%").Add();
+               col.Field("CategoryName").HeaderText("Category").Width("10%").Add();
+               col.Field("CreatedDateFormated").HeaderText("Created On").Width("4%").Add();
+               col.Field("Notes").HeaderText("Note").Template("#NoteTemplate").Width("3%").Add();
+               col.Field("IsFavorite").HeaderText("Favorites").Template("#FavoriteTemplate").Width("5%").Filter(new { type = "CheckBox", itemTemplate = "#FavoriteStatus" }).Add();
+               col.HeaderText("Action").Template("#EditTemplate").Width("7%").Add();
+           }).DataBound("dataBound").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(new List<string>() { "Search" }).Render()
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DocumentModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:40%;">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Bulk Documents</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="col-md-12">
+                        <label style="font-size:18px;">Upload Files :</label>
+                        <input style="font-size:16px;" type="file" placeholder="Upload PDF" id="DocumentFU" accept=".jpg, .png, .gif, .pdf, .doc, .dcox, .xls, .xlsx, .mp4, .avi, .wmv, .mov, .mkv" multiple="multiple" name="DocumentFU">
+                        <hr />
+                        <div id="previews" style="font-size:16px;"></div><br />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer modal-delete-footer" style="background-color:white;">
+                <a class="btn btn-primary" href="#" onclick="SaveDocumentModel()">Save<span></span></a>
+                <a class="btn btn-default" href="#" onclick="CloseDocumentModel()">Cancel<span></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="TypeTemplate" type="text/x-template">
+    <td>
+        <a target="_blank" detail="${Title} - PDF" href="${AttachLink}"><img src="/Content/Admin/images/${FileTypeImage}" alt="" style="height:34px;" /></a>
+    </td>
+</script>
+<script id="PrivateTemplate" type="text/x-template">
+    <td>
+        ${if(IsPrivate)}
+        <img src="/Content/Admin/images/lock-document.svg" alt="Private Document" style="height:20px;" />
+        ${else}
+        <text></text>
+        ${/if}
+    </td>
+</script>
+<script id="DocumentTemplate" type="text/x-template">
+    ${if(AttachExtention == ".xls" || AttachExtention == ".xlsx" || AttachExtention == ".csv")}
+    <a href="/SpreadSheet/SpreadSheet?Ids=${DocumentId}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" target="_blank" style="color: #385585; text-transform: uppercase;">${Title}</a>
+    ${else if(AttachExtention == ".docx" || AttachExtention == ".doc")}
+    <a href="/Documents/EditDocument?Ids=${DocumentId}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" target="_blank" style="color: #385585; text-transform: uppercase;">${Title}</a>
+    ${else if(AttachExtention == ".pdf")}
+    <a href="/Documents/PdfViewerData?Ids=${DocumentId}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" target="_blank" style="color: #385585; text-transform: uppercase;">${Title}</a>
+    ${else}
+    <a href="${AttachLink}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" target="_blank" style="color: #385585; text-transform: uppercase;">${Title}</a>
+    ${/if}
+</script>
+<script type="text/x-jsrender" id="EditTemplate">
+    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DeleteDocument"))
+    {
+        <a detail="Recent Entry Delete DocumentId - ${DocumentId}" href="javascript:ComfirmDeleteej2(${DocumentId});" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="/Content/Admin/images/icon-trash.svg" alt="" /> </a>
+    }
+    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UpdateDocument"))
+    {
+        <a detail="Recent Entry Edit DocumentId - ${DocumentId}" href="/Documents/Edit/${DocumentId}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" style="margin-right: 5px;"><img src="/Content/Admin/images/icon-edit.svg" alt="" /></a>
+    }
+    <a detail="Recent Entry Download DocumentId - ${DocumentId}" href="/Documents/Download?Ids=${DocumentId}" data-toggle="tooltip" data-placement="top" target="_blank"><img src="/Content/Admin/images/icon-download.svg" alt="" /></a>
+
+    <div id="${DocumentId}_delete" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="modal-title">Message</div>
+            <div class="modal-body"><p id="deleModalbody"> Are you sure you want to delete this Document?</p></div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" detail="Recent Entry Delete Confirm -" href="javascript:Deleteej2(${DocumentId});">Ok </a>
+                <a class="btn" data-dismiss="modal" detail="Recent Entry Delete Confirm -" onclick="closemodal()">Cancel</a>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="NoteTemplate" type="text/x-jsrender">
+        <td>
+            ${if(Notes != null && Notes != "")}
+            <img src="/Content/Admin/images/icons/icon_notes.png" style="height:30px;" abcd="${Notes}"/>
+            ${else}
+            <text></text>
+            ${/if}
+        </td>
+    </script>
+@*<script id="NoteTemplate" type="text/x-jsrender">
+    <div class="e-tooltip-target">${Notes}</div>
+</script>*@
+<script type="text/x-jsrender" id="FavoriteStatus">
+    ${FavoriteStatusDetails(data)}
+</script>
+<script type="text/x-jsrender" id="TypeStatus">
+    ${TypeStatusDetails(data)}
+</script>
+<script id="FavoriteTemplate" type="text/x-template">
+    <td>
+        ${if(IsFavorite)}
+        <a detail="Recent Entry Favorite DocumentId - ${DocumentId}" href="javascript:ComfirmUnfavorite(${DocumentId});" data-toggle="tooltip" data-placement="top"><img src="/Content/Admin/images/icon-favorites.svg" alt="" style="height:20px;" /> </a>
+        @*<img src="/Content/Admin/images/icon-favorites.svg" alt="Favorite" style="height:20px;" />*@
+        ${else}
+        <a detail="Recent Entry UnFavorite DocumentId - ${DocumentId}" href="javascript:Comfirmfavorite(${DocumentId});" data-toggle="tooltip" data-placement="top"><img src="/Content/Admin/images/icon-unfavorites.svg" alt="" style="height:20px;" /> </a>
+        @*<img src="/Content/Admin/images/icon-unfavorites.svg" alt="UnFavorite" style="height:20px;" />*@
+        ${/if}
+
+        <div id="${DocumentId}" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+            <div class="modal-content ">
+                <div class="modal-header text-center">
+                    <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" style="height:30px;" />
+                </div>
+                <div class="modal-title">Message</div>
+                <div class="modal-body"><p class="CheckFavModalbody"></p></div>
+                <div class="modal-footer" style="text-align:center">
+                    <a class="btn btn-danger" detail="Recent Entry Favorite Confirm -" href="javascript:IsFavoriteUpdate(${DocumentId});">Ok </a>
+                    <a class="btn" data-dismiss="modal" detail="Recent Entry Delete Confirm -" onclick="closemodal()">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </td>
+</script>
+<script>
+        var Startdate = '@ViewBag.Startdate';
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to create dynamic tooltips
+        function initializeTooltips() {
+            var grid = document.getElementById('MyDocumentGrid').ej2_instances[0];
+
+            // Create Tooltip instance
+            var tooltip = new ej.popups.Tooltip({
+                content: '',  // content will be set dynamically
+                target: '.e-grid .e-rowcell[aria-colindex="6"] img',
+                position: 'TopCenter',
+                beforeOpen: function (args) {                    
+                    // Set dynamic content for the tooltip
+                    var cell = args.target;
+                    var cellData = cell.attributes.abcd.nodeValue; // Get the text of the cell
+                    //args.element.innerHTML = cellData;// Set the cell data as tooltip content
+                    //args.element.classList.add(".e-tooltip");
+
+                    var tooltipElement = args.element;
+                    tooltipElement.innerHTML = cellData;  // Set the cell data as tooltip content
+                    tooltipElement.classList.add('dynamic-tooltip'); 
+                }
+            });
+
+            // Append Tooltip to body
+            tooltip.appendTo(document.body);
+        }
+
+        // Initialize tooltips after grid is rendered
+        initializeTooltips();
+    });
+    $(document).ready(function () {
+        var currentDate = new Date();
+        $('#txtstartdate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+        $('#txtenddate').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false,
+            maxDate: currentDate
+        });
+
+
+    });
+
+</script>
+<script src="~/Form_JS/MyDocuments.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+@Html.EJS().ScriptManager()

@@ -1,0 +1,77 @@
+﻿.loading-containers {
+    z-index: 200000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.8)url(../img/white_trans.png) repeat left top !important;
+}
+
+    .loading-containers .loaders {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        -webkit-animation: typing 1s linear infinite alternate;
+        -moz-animation: Typing 1s linear infinite alternate;
+        animation: typing 1s linear infinite alternate;
+        margin: 50vh auto;
+        position: relative;
+        left: -12px;
+    }
+
+.totals {
+    font-family: nunito;
+    display: block;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+    .totals ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .totals ul li {
+            list-style: none;
+            text-indent: 0px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            background: rgba(0,0,0,0.05);
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+            .totals ul li:hover {
+                transition: transform 200ms ease-in-out;
+                transform: scale(1.1);
+            }
+
+            .totals ul li span:nth-child(1) {
+                font-size: 14px;
+                font-weight: 500;
+                margin-right: 5px;
+            }
+
+            .totals ul li span:nth-child(2) {
+                font-size: 14px;
+                font-weight: 800;
+                margin-left: 5px;
+            }
+
+            .totals ul li span:nth-child(3) {
+                font-size: 14px;
+                font-weight: 800;
+                margin-left: 5px;
+                color: cornflowerblue
+            }
+

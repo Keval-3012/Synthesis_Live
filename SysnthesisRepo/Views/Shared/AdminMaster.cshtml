@@ -1,0 +1,843 @@
+﻿@using Utility
+<!DOCTYPE html>
+<html>
+<head id="Head1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page title -->
+
+    <title id="pagetitle">Synthesis</title>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--Basic Styles-->
+    <!--Basic Styles-->
+    <link href="~/Content/Common.css" rel="stylesheet" />
+    <link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/weather-icons.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/css/select2.min.css" rel="stylesheet" />
+    <!--Beyond styles-->
+    <link href="~/Content/Admin/assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/css/loader.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/style.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/printstyle.css" rel="stylesheet" media="print" />
+    <script type="text/javascript" src='~/Content/Admin/vendor/jquery/dist/jquery.min.js'></script>
+
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css'>
+    <link href="~/Content/Admin/assets/css/override.css" rel="stylesheet" />
+    @*<link href="~/Content/Admin/assets-main/scss/main.css" rel="stylesheet" />*@
+
+    <!-- Syncfusion Essential JS 2 Styles -->
+    @*<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />*@
+
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+    <script>
+        $('.overlaytransparent').hide();
+    </script>
+    <style>
+        .loaderdetail {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgb(88 88 88 / 70%);
+            z-index: 1;
+        }
+
+        .LoaderImage {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 47%;
+            top: 43%;
+            width: 100px;
+            height: 100px;
+            -webkit-animation: spin .8s linear infinite;
+            animation: spin .8s linear infinite;
+        }
+    </style>
+    <style>
+        .loaderContainer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            /* right: 5%;
+              top: 12%;*/
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ee4930;
+            background-image: linear-gradient(90deg, #ee4930 0%, #f81643 55%, #ee6e85 100%);
+            padding: 0.5rem 0.8rem;
+            /*  margin: 0px auto;*/
+            width: 100px;
+            border-radius: 30px;
+            box-shadow: 0px 10px 20px rgba(238, 73, 48, 0.2);
+            transition: all 03s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+            .loaderContainer.showSpinner {
+                animation-name: showSpinner;
+                animation-duration: 500ms;
+                animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+                position: relative;
+                top: 50%;
+                z-index: 999999;
+            }
+
+            .loaderContainer.hideSpinner {
+                animation-name: hideSpinner;
+                animation-duration: 1s;
+                animation-iteration-count: 1;
+                display: none;
+            }
+
+            .loaderContainer .spinner {
+                border-radius: 12px;
+            }
+
+            .loaderContainer span {
+                font-family: "Maven pro", Arial, sans-serif;
+                color: white;
+                font-size: 12px;
+                font-weight: 500;
+                user-select: none;
+            }
+        /*@@keyframes hideSpinner {
+          0% {right:5%; opacity:1;}
+          100%{opacity:0}
+          0% {
+             display:none;
+          }
+        }
+        @@keyframes showSpinner {
+          0% {
+              right: 5%;
+              opacity: 1;
+          }
+          100% {
+              right: -15%;
+              opacity: 0;
+          }
+
+        }*/
+
+        @@-webkit-keyframes rotate-forever {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-moz-keyframes rotate-forever {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes rotate-forever {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-spinner {
+            -webkit-animation-duration: 0.75s;
+            -moz-animation-duration: 0.75s;
+            animation-duration: 0.75s;
+            -webkit-animation-iteration-count: infinite;
+            -moz-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            -webkit-animation-name: rotate-forever;
+            -moz-animation-name: rotate-forever;
+            animation-name: rotate-forever;
+            -webkit-animation-timing-function: linear;
+            -moz-animation-timing-function: linear;
+            animation-timing-function: linear;
+            height: 12px;
+            width: 12px;
+            border: 3px solid #ffffff;
+            border-right-color: transparent;
+            border-radius: 50%;
+            display: flex;
+        }
+    </style>
+    @*<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />*@
+</head>
+
+<body class="fixed-navbar fixed-sidebar">
+    <!-- Simple splash screen-->
+    <div class="loading-container" style="display:none;">
+        <div class="loader"></div>
+    </div>
+    @*<div style="position: fixed;height: 100vh;width: 100%;background: #0000007a;z-index: 9;" class="showSpinner">
+            <div class="loaderContainer showSpinner">
+                <div class="loading-spinner"></div>
+                <span>Loading</span>
+            </div>
+        </div>*@
+    <div class="hideSpinner" id="OpenSpinner" style="position: fixed;width: 100%;left: 0;top: 0;height: 100%;background: #0404043d; z-index:9;display:none">
+        <div class="loaderContainer">
+            <div class="loading-spinner"></div>
+            <span>Loading</span>
+        </div>
+    </div>
+    @*header*@
+    @if (UserModule.getUserId() == 0)
+    {
+        <script type="text/javascript">
+            window.location.href = '@AdminSiteConfiguration.GetURL()/Login/Index';
+        </script>
+    }
+    @{Html.RenderAction("Header", "AdminInclude");}
+    <!-- Header -->
+
+    <div class="main-container container-fluid">
+
+        <!-- Page Container -->
+
+        <script type="text/javascript" src="~/Content/Admin/assets/js/toastr/toastr.min.js"></script>
+        <script>
+            function MyfunSuccessChangePassword() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success('Password has been change successfully.');
+            }
+            function MyfunSuccessChangePasswordError() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Your current password is not correct');
+            }
+            function MyfunNoItem() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.info('Your search didn’t return any results.');
+            }
+            function MyfunNoDataInFiles() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.info('Your File is blank.');
+            }
+            function MyfunError() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Transaction Failed.');
+            }
+            function MyfunErrorforproject() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Project Name or CLCNo already exists.');
+            }
+            function MyfunExists() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Record with this name already exists.');
+            }
+            function showpopupnew() {
+                $(document).ready(function () {
+                    $('#popupExists').show();
+                });
+            }
+            function showpopupExist() {
+                $(document).ready(function () {
+                    $('#popupcheckExistsagain').show();
+                });
+            }
+            function showpopupEdit() {
+                $(document).ready(function () {
+                    $('#popupExists').show();
+                });
+            }
+            function showDuplicateInvoicepopup() {
+                $(document).ready(function () {
+                    $('#popupDisplayduplicateinvoice').show();
+                });
+            }
+            function showChangePasswordPopup() {
+                $(document).ready(function () {
+                    $('#popupchangepassword').show();
+                });
+            }
+
+            function PopUpSelectStore() {
+                $(document).ready(function () {
+                    $('#popupStoreAlert').show();
+                });
+            }
+            function MyfunNicknameExists() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Record with this nick name already exists.');
+            }
+            function MyfunExistsInvoice() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Record with this Invoice already exists.');
+            }
+            function MyfunExistsEngineeringHours() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Record with this name and project code already exists.');
+            }
+            function MyfunExistsEmpcode() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('This invoice has already been in the system. Please check again.');
+            }
+            function MyfunNumExists() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Record with this number already exists.');
+            }
+            function MyfunExistsSal() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Record with this time period already exists.');
+            }
+            function MyfunSuccess() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success('Transaction Successful.');
+            }
+            function MyCustomToster(Message) {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success(Message);
+            }
+            function MyCustomAlert(Message, Id) {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                if (Id == 1) {
+                    toastr.success(Message);
+                }
+                else {
+                    toastr.error(Message);
+                }
+            }
+            function MyfunSuccess1() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+
+                toastr.success('Invoice Created Successfully and Sent for Approval.');
+
+
+            }
+            function MyfunError1() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-left",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Transaction Failed.');
+            }
+            function InvalidPDFSize() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-left",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.error('Invalid PDF Size.');
+            }
+
+            function NoRecoedFound() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.error('No Record Found.');
+            }
+        </script>
+
+        <div class="page-container">
+            @{Html.RenderAction("sidemenu", "AdminInclude");}
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+
+    <div class="overlaybox" style="display: none;"></div>
+    <script type="text/javascript" src='~/Content/Scripts/jquery-ui-1.8.24.min.js'></script>
+    <script type="text/javascript" src='~/Content/Scripts/jquery.validate.min.js'></script>
+    @*<script type="text/javascript" src="~/Content/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+    <script type="text/javascript" src='~/Content/Scripts/jquery.validate.unobtrusive.min.js'></script>
+    @* <script type="text/javascript" src="~/Content/Scripts/modernizr-2.6.2.js"></script>
+        <script type="text/javascript" src='~/Content/Admin/assets/js/skins.min.js'></script>*@
+    <script type="text/javascript" src='~/Content/Admin/assets/js/bootstrap.min.js'></script>
+    <script type="text/javascript" src='~/Content/Admin/js/bootstrap.file-input.js'></script>
+    @* <script type="text/javascript" src='~/Content/Admin/js/app.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/metisMenu/dist/metisMenu.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/sparkline/index.js'></script>*@
+    <script type="text/javascript" src='~/Content/Admin/vendor/moment/moment.js'></script>
+    @*<script type="text/javascript" src='~/Content/Admin/vendor/xeditable/bootstrap3-editable/js/bootstrap-editable.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/jquery.flot.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/jquery.flot.tooltip.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/jquery-flot/jquery.flot.resize.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/globalize.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/app.plugin.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/perfect-scrollbar.js'></script>
+
+        <script type="text/javascript" src='~/Content/Admin/js/sweet-alert.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/assets/js/slimscroll/jquery.slimscroll.min.js'></script>*@
+    <script type="text/javascript" src='~/Content/Admin/js/custom.js'></script>
+    <script type="text/javascript" src='~/Content/Admin/assets/js/select2/select2.js'></script>
+    <script type="text/javascript" src='~/Content/Admin/assets/js/select2/select2.full.js'></script>
+    @*<script type="text/javascript" src='~/Content/Admin/assets/js/beyond.js'></script>*@
+    <script src="~/Content/Admin/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/Admin/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/Content/Admin/assets/js/fileupload.js"></script>
+    <script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
+    <script src="~/Scripts/ez.countimer.js"></script>
+    <script src="~/js/Common.js"></script>
+    <script>
+        var ROOTURL = '@AdminSiteConfiguration.GetURL()';
+        $(".myval").select2({
+            width: "50%",
+        });
+        $(".myval1").select2({
+            minimumResultsForSearch: -1
+        });
+        var ActionName = '@(System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action"))';
+        var ControllerName= '@(System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("Controller"))';
+
+    </script>
+    <script>
+        $('.stop-propagation').on('click', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+    <script>
+        $(function () {
+
+            var date = new Date();
+            var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+            $('#datepicker').datetimepicker({
+                format: 'MMM DD, YYYY',
+                useCurrent: false
+            });
+            $('#txtstartdate').datetimepicker({
+                format: 'MMM DD, YYYY',
+                useCurrent: false
+            });
+            $('#txtenddate').datetimepicker({
+                format: 'MMM DD, YYYY',
+                useCurrent: false
+            });
+            $('#datepicker3').datetimepicker({
+                format: 'MMM DD, YYYY',
+                useCurrent: false
+            });
+
+        });
+    </script>
+
+    <script>
+        $('.burgermenu').click(function () {
+            $('#sidebar').toggleClass('showmenu');
+            $('.page-content').toggleClass('marleft110');
+        })
+    </script>
+
+    <script type="text/javascript">
+        //$(function () {
+        //    getAll();
+        //});
+
+        $(document).ready(function () {
+            getAll();
+        });
+
+        function getAll() {
+            var model = $('#invoice_notification');
+            $.ajax({
+                url: '@AdminSiteConfiguration.GetURL()AdminInclude/GetAllData',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html'
+            }).success(function (result) { model.empty().append(result); })
+           .error(function (e) {
+           });
+        }
+
+        function showloader()
+        {
+            $("#OpenSpinner").removeClass("hideSpinner");
+            $("#OpenSpinner").addClass("showSpinner");
+            $("#OpenSpinner").show();
+        }
+
+        function hideloader()
+        {
+            $("#OpenSpinner").removeClass("showSpinner");
+            $("#OpenSpinner").addClass("hideSpinner");
+            $("#OpenSpinner").hide();
+        }
+    </script>
+    <section id="secloader" class="pace pace-active1">
+        <div class="pace-progress" style="width: 100%;" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </section>
+    <div class="overlaytransparent" style="display: none;"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+﻿@using Syncfusion.EJ2
+@model EntityModels.Models.ProductsList
+@using Utility
+<li class="fullWidthItemRow">
+    <span class="feildLabel">Item</span>
+    @Html.TextBoxFor(model => model.Description, new { @id = "AddDescription", maxlength = 100, @class = "form-control" })
+    @Html.HiddenFor(model => model.InvoiceProductId, new { @id = "AddInvoiceProductId" })
+    <input type="hidden" name="hdnItemType" id="hdnItemType" />
+</li>
+<li>
+    <span class="feildLabel">UPC</span>
+
+        @Html.TextBoxFor(model => model.UPCCode, new { @id = "AddUPCCode", maxlength = 100, @class = "form-control" })
+    
+</li>
+<li>
+    <span class="feildLabel">Item No</span>
+ 
+        @Html.TextBoxFor(model => model.ItemNo, new { @id = "AddItemNo", maxlength = 100, @class = "form-control" })
+    
+</li>
+<li>
+    <span class="feildLabel">Brand</span>
+    @Html.TextBoxFor(model => model.Brand, new { @id = "AddBrand", maxlength = 100, @class = "form-control" })
+</li>
+
+<li>
+    <span class="feildLabel">Size</span>
+    @Html.TextBoxFor(model => model.Size, new { @id = "AddSize", maxlength = 100, @class = "form-control" })
+</li>
+
+<li class="directionRow" style="display:none !important;">
+    <label for="addtoVendorLibrary"><input type="checkbox" id="addtoVendorLibrary" />Also add to Vendor Item Library</label>
+</li>
+
+<li class="directionRow">
+    <button type="button" onclick="AddAndMapBtn()" class="addAndMapBtn">Add</button>
+    <button onclick="changethetab()" class="cancelMapBtn">Cancel</button>
+</li>
+@Html.EJS().ScriptManager()

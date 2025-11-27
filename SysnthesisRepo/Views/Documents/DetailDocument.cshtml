@@ -1,0 +1,304 @@
+﻿@model EntityModels.Models.Document
+@using Utility
+@{
+    ViewBag.Title = "AddDocument";
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+
+@using (Html.BeginForm("DetailDocument", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.AttachExtention)
+    @Html.HiddenFor(model => model.FilePath)
+    @Html.HiddenFor(model => model.DocumentId)
+    //@Html.HiddenFor(model => model.AttachFile,new {id })
+
+    <div class="newdocumentuploadpage">
+        <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 leftpart documentleftpart">
+                    <div class="header-small yellowback darkblueback">
+
+                        <h3>
+                            @*@Model.Title@Model.AttachExtention*@
+                            @Model.Title
+                            <span class="pull-right detailbuttonarea">
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DeleteDocument"))
+                                {
+                                    <a class="btn-danger btn btn-md" href="#" onclick="return ComfirmDelete();"> <i class="fa fa-trash"></i> Delete</a>
+                                }
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("UpdateDocument"))
+                                {
+                                    <a class="btn btn-success btn_bule btn-md" href="@Url.Action("Edit", "Documents", new { Id = Model.DocumentId })">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                }
+
+                                <a target="_blank" href="@AdminSiteConfiguration.GetURL()UserFiles/DocFiles/@Model.AttachLink" class="btndownloadhead btn-md btn"><img src="@AdminSiteConfiguration.GetURL()/Content/Admin/images/icon-download.svg" /> Download</a>
+
+                            </span>
+                        </h3>
+                    </div>
+                    <div>
+                        <div class="uploadscanbutton uploaddocument exlsupload">
+                            <span class="xlsdocument">
+                                <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/@Model.FileTypeImage" />
+                            </span>
+                            <div class="clear"></div>
+                            @*<span class="uploadeddocumentname">@Model.AttachFile@Model.AttachExtention</span>*@
+                            <span class="uploadeddocumentname">
+                                <a target="_blank" href="@AdminSiteConfiguration.GetURL()UserFiles/DocFiles/@Model.AttachLink" sytle="color:#337ab7;">@Model.Title</a>
+                            </span>  <div class="clear"></div>
+                            <span class="nopreview">Currently No Preview Available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 rightpart documentrightpart documentdetailpage">
+
+                    <h3 class="normal">
+                        Document Information  <span>
+                            @if (Model.IsPrivate == true)
+                            {
+                                <a class="privatelink"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/lock.svg" style="width:12px" />  Private</a>
+                            }
+
+                            @if (Model.chkFav == "1")
+                            {
+                                <a href="#" class="favlink" onclick="return ComfirmFav1(@Model.DocumentId);"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star-selected.svg" style="width:12px" /> Unfavorite</a>
+                            }
+                            else
+                            {
+                                <a href="#" class="favlink" onclick="return ComfirmFav(@Model.DocumentId);"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star-selected.svg" style="width:12px" /> Add To Favorites</a>
+                            }
+                            <a href="@AdminSiteConfiguration.GetURL()/Documents" class="pull-right btnbackbox" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Back"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+                        </span>
+                    </h3>
+
+                    @{
+                        var UserIdF1 = Model.DocumentId + "F1";
+
+                        <div id="@UserIdF1" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                            <div class="modal-content ">
+                                <div class="modal-header text-center">
+                                    <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" style="width:16px" />
+                                </div>
+                                <div class="modal-title">Message</div>
+                                <div class="modal-body ">Are you sure to Unfavorite this Document?</div>
+                                <div class="modal-footer" style="text-align:center">
+                                    <a class="btn btn-danger" onclick="AddToFavorite(@Model.DocumentId);">Ok </a>
+                                    <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        var UserIdF = Model.DocumentId + "F";
+                        <div id="@UserIdF" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                            <div class="modal-content ">
+                                <div class="modal-header text-center">
+                                    <img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/star.svg" style="width:16px" />
+                                </div>
+                                <div class="modal-title">Message</div>
+                                <div class="modal-body ">Are you sure to add Document in favorite?</div>
+                                <div class="modal-footer" style="text-align:center">
+                                    <a class="btn btn-danger" onclick="AddToFavorite(@Model.DocumentId);">Ok </a>
+                                    <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Document Title</label>
+                                    <div class="addressbox">
+                                        <b> @Model.Title</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <div class="addressbox">@Model.CategoryName</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Store Name</label>
+                                    <div class="addressbox">@Model.StoreName</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="grayboxstorenme">
+                                    <div>
+                                        <label>Created By</label> <br />
+                                        <span>@Model.CreatedByName</span> @*<span class="dateboxdate">@Model.CreatedDate</span>*@
+                                    </div>
+                                    <div>
+                                        <label>Created On</label> <br />
+                                        @*<span>@Model.CreatedByName</span>*@ <span class="dateboxdate">@Model.CreatedDateFormated</span>
+                                    </div>
+                                    <div>
+                                        <label>Last Modified By</label> <br />
+                                        <span>@Model.ModifyByName</span> @*<span class="dateboxdate">@Model.ModifiedDate</span>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Keywords</label>
+                                    <div class="keywordsvaluebox">
+
+                                        @Html.Raw(@Model.KeyWords)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <div class="keywordsvaluebox">
+                                        <label class="notevalue">@Model.Notes</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                @*<input type="submit" value="Save" name="btnsubmit" class="buttonbox btnsubmit btn_spcial" />*@
+
+
+                                @*@Html.ActionLink("Cancel", "Index", "Document", new { @class = "buttonbox btncancel" })*@
+
+                                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DeleteDocument"))
+                                {
+                                    @*<a href="#" onclick="return ComfirmDelete(@Model.Id);" class="buttonbox btnsubmit btn_spcial"  data-original-title="Delete">
+                                               Delete
+                                        </a>*@
+                                    @*<input type="submit" value="Delete" name="btnsubmit" class="buttonbox btnsubmit btn_spcial" />*@
+
+                                    @*<a href="#" onclick="return ComfirmDelete();" class="buttonbox btnsubmit btn_spcial">
+                                            Delete
+                                        </a>*@
+                                    <div id="ConfirmDeleteId" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:350px; top: 10px; display:none">
+                                        <div class="modal-content ">
+                                            <div class="modal-header text-center">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </div>
+                                            <div class="modal-title">Message</div>
+                                            <div class="modal-body ">Are you sure want to delete this Document?</div>
+                                            <div class="modal-footer" style="text-align:center">
+                                                <a class="btn btn-danger" onclick="Delete(@Model.DocumentId);">Ok </a>
+                                                <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+
+<script type="text/javascript">
+
+    function ComfirmFav1(ID) {
+
+        var DivId = "#" + ID + "F1";
+        $(DivId).show();
+    }
+
+    function ComfirmFav(ID) {
+        var DivId = "#" + ID + "F";
+        $(DivId).show();
+
+    }
+
+    function AddToFavorite(ID) {
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/Documents/AddToFavorite',
+            data: { DocId: ID },
+            async: false,
+            success: function (response) {
+                @*GetData(1,@ViewBag.CurrentPageIndex,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,@ViewBag.SearchRecords,'','@ViewBag.SearchTitle','@ViewBag.DocType','@ViewBag.CategoryId','@ViewBag.startdate','@ViewBag.enddate');*@
+                if (response.sucess == 1) {
+                    closemodal();
+                    if (response.msg != "")
+                    {
+                        MyCustomToster(response.msg);
+                    }
+                    window.location = '@AdminSiteConfiguration.GetURL()/Documents/DetailDocument?Id=' + ID;
+                }
+                else {
+                    MyCustomToster(response.msg);
+                    closemodal();
+                    //MyfunError();
+                }
+
+                return true;
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    }
+
+
+
+    function ComfirmDelete() {
+        $("#ConfirmDeleteId").show();
+
+    }
+
+
+    function Delete(ID) {
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/Documents/delete',
+            data: { Id: ID },
+            async: false,
+            success: function (response) {
+
+                if (response.sucess == 1) {
+                    window.location.href = '@AdminSiteConfiguration.GetURL()/Documents/Index'
+                }
+
+                else {
+                    MyfunError();
+                }
+                return true;
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    }
+
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+</script>

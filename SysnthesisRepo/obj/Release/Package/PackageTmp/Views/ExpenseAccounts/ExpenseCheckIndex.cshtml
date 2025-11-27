@@ -1,0 +1,16 @@
+﻿@{
+
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+@{
+
+    Html.RenderAction("ExpenseCheckIndexGrid");
+    //Html.RenderAction("ExpenseCheckIndexGridNew");
+}
+
+
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

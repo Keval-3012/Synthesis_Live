@@ -1,0 +1,15 @@
+﻿@model IEnumerable<EntityModels.Models.ActivityLog>
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+<div class="header-small special_bg">
+    <h3>User Activity Logs </h3>
+</div>
+@{
+    Html.RenderAction("Grid");
+}
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

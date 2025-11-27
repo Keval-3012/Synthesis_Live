@@ -1,0 +1,87 @@
+﻿@model EntityModels.Models.UserMaster
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div id="globalTabContent">
+    <div class="animate-panelmessesgarea padbtmzero">
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+        {
+            <script>
+                MyfunSuccess();
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Delete")
+        {
+            <script>
+                MyfunSuccess();
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Error")
+        {
+            <script>
+                MyfunError();
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "NoItem")
+        {
+            <script>
+                MyfunNoItem();
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Exists")
+        {
+            <script>
+                MyfunExistsEmpcode();
+            </script>
+        }
+    </div>
+
+    <div id="PanAddUpdate">
+        <div class="header-small special_bg icon_12">
+            <h3>User Detail <a runat="server" class="btn btn-default btn-maroon pull-right" href="@Url.Action("Index", "UserMasters")"><i class="fa fa-backward"></i>Back</a></h3>
+        </div>
+
+        @using (Html.BeginForm("Detail", "UserMasters", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            @Html.ValidationSummary(true)
+
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain detailpagecnt">
+
+                        <table class="table">
+                            <tr>
+                                <td width="150"> Name </td>
+                                <td width="15" align="center"> : </td>
+                                <td> @Model.FirstName</td>
+
+                            </tr>
+                            <tr>
+                                <td width="150">    User Name </td>
+                                <td width="15" align="center"> : </td>
+                                <td> @Model.UserName</td>
+
+                            </tr>
+                            <tr>
+                                <td width="150">   Group Name </td>
+                                <td width="15" align="center"> : </td>
+                                <td>  @Model.GroupMasters.Name</td>
+
+                            </tr>
+                            <tr>
+                                <td width="150">   User Role </td>
+                                <td width="15" align="center"> : </td>
+                                <td>  @Model.UserTypeMasters.UserType</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Form_JS/UserMasters.js"></script>

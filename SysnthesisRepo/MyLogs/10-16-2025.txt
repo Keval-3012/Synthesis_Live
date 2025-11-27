@@ -1,0 +1,92 @@
+2025-10-16 11:15:26.9015|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/16/2025 11:15:26 AM
+2025-10-16 11:19:30.6283|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/16/2025 11:19:30 AM - An error occurred while sending the request.
+2025-10-16 12:08:20.1970|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/16/2025 12:08:20 PM
+2025-10-16 12:11:54.7877|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/16/2025 12:11:54 PM
+2025-10-16 12:12:28.7993|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/16/2025 12:12:28 PM
+2025-10-16 12:12:37.8400|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/16/2025 12:12:37 PM
+2025-10-16 12:24:37.4817|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/16/2025 12:24:37 PM
+2025-10-16 12:26:26.2380|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/16/2025 12:26:26 PM
+2025-10-16 12:26:26.7400|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/16/2025 12:26:26 PM
+2025-10-16 19:22:42.1397|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:22:42 PM - Object reference not set to an instance of an object.
+2025-10-16 19:22:49.5836|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:22:49 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:22:49.6496|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:22:49 PM - Object reference not set to an instance of an object.
+2025-10-16 19:22:50.8200|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:22:50 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:22:50.8761|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:22:50 PM - Object reference not set to an instance of an object.
+2025-10-16 19:22:52.3361|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:22:52 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:22:52.3905|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:22:52 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:15.2511|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:15 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:15.3298|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:15 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.1177|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.1722|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.2356|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.2893|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.3568|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.4060|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.4696|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.5219|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.5862|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.6332|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.6966|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.7439|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.8086|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.8550|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:18.9198|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:18 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:18.9696|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:18 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.0341|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:19.0803|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:19 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.1547|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:19.2174|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:19 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.2846|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:19.3369|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:19 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.4050|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:19.4640|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:19 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.5280|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:19.5787|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:19 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.6443|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:19.6938|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:19 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:19.7573|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:19 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:20.8645|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:20 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:20.9319|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:20 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:20.9844|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:20 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.0472|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.0949|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.1597|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.2135|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.2770|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.3233|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.3860|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.4377|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.5014|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.5517|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.6151|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.6652|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.7299|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.7772|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.8428|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:21.8898|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:21 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:21.9555|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:21 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.0026|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.0671|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.1146|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.1775|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.2259|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.2906|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.3419|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.4062|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.4540|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.5195|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.5661|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.6288|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.6740|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.7375|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.7879|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.8513|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:22.9005|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:22 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:22.9741|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:22 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:23.0195|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/16/2025 7:23:23 PM - Object reference not set to an instance of an object.
+2025-10-16 19:23:23.0880|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:23 PM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-16 19:23:23.4820|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/16/2025 7:23:23 PM
+2025-10-16 19:23:30.9904|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/16/2025 7:23:30 PM - An error occurred while sending the request.
+2025-10-16 19:23:44.6096|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/16/2025 7:23:44 PM - A public action method 'CompetitorsScanLogGrid' was not found on controller 'SysnthesisRepo.Controllers.ItemProductScanLogController'.
+2025-10-16 20:33:25.8013|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/16/2025 8:33:25 PM
+2025-10-16 20:33:25.8013|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/16/2025 8:33:25 PM

@@ -1,0 +1,8 @@
+2025-07-24 15:21:06.3319|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/24/2025 3:21:06 PM
+2025-07-24 15:22:07.3181|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/24/2025 3:22:07 PM - An error occurred while sending the request.
+2025-07-24 15:22:39.6471|ERROR|Repository.DashboardRepository|DashboardRepository - Dashboard_Daily - 7/24/2025 3:22:39 PM - Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2025-07-24 15:22:49.0448|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 7/24/2025 3:22:49 PM - Object reference not set to an instance of an object.
+2025-07-24 15:22:53.4104|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 7/24/2025 3:22:53 PM
+2025-07-24 15:23:07.1291|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 7/24/2025 3:23:07 PM - An error occurred while sending the request.
+2025-07-24 15:25:08.5296|ERROR|Repository.ReportRepository|ReportRepository - GetTerminalTracedata - 7/24/2025 3:25:08 PM - Conversion failed when converting the nvarchar value 'ACC1001' to data type int.
+2025-07-24 15:45:09.1787|ERROR|Repository.ReportRepository|ReportRepository - GetTerminalTracedata - 7/24/2025 3:45:09 PM - Conversion failed when converting the nvarchar value 'ACC1001' to data type int.

@@ -1,0 +1,88 @@
+﻿@model SynthesisViewModal.HRViewModel.ConsentModel
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Consent Create";
+
+}
+
+<link href="~/Content/HRCss/HRConsent.css" rel="stylesheet" />
+
+<div class="container-fluid" style=" margin-left: 5px;">
+    <div class="row">
+        <div class="header-small special_bg">
+            <h3>Add Consent</h3>
+            @Html.HiddenFor(a => a.ConsentId)
+        </div>
+    </div>
+</div>
+<div style="background-color:white">
+    <div class="page-body headertopbox addinvoice" style="padding-top: 0px !important; background-color: white">
+        <div class="row">
+            <div class="col-md-2 mt-20">
+                <div class="form-group">
+                    <label>Form Type <span class="redSpan">*</span></label>
+                    @Html.DropDownListFor(x => x.FormTypeId, null, new { @class = "form-control select2" })
+                    @Html.HiddenFor(m => m.FormTypeId)
+                    @Html.ValidationMessageFor(m => m.FormTypeId, "", new { @class = "form-error-msg show" })
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 15px; color: #444; font-size: 27px; font-family: var(--primary-font) !important; font-weight: 300 !important; ">Consent Details</div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2 mt-20">
+                    <label>Language<span class="redSpan">*</span></label>
+                    @Html.DropDownListFor(x => x.LanguageId, null, new { @class = "form-control select2" })
+                </div>
+                <div class="col-md-2 mt-20">
+                    <label>Type</label>
+                    @Html.DropDownListFor(x => x.TypeId, null, new { @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 mt-20">
+                    <label>Description</label>
+                    <textarea class="form-control" placeholder="Comments" id="txtDescription"></textarea>
+                </div>
+                <div class="col-md-1 mt-20" style="padding-top: 35px;">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <a class="btn btn-success" href="#" onclick="AddConsentDetail()"><span class="ul-btn__icon"><i class="fa fa-plus"></i></span></a>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <br />
+            <br />
+            <div class="table-responsive clearfix" id="Vacationlist">
+                <div class="scroll-container tab-table" style="margin:15px;">
+                    <table class="table table-striped table-bordered bulk_action" id="grid">
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th style="display:none;"></th>
+                                <th>Type</th>
+                                <th style="display:none;"></th>
+                                <th>Description</th>
+                                <th width="5%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                    <label id="lblNodata" align="center" style="width:100%">No data!</label>
+                    <div class="clear"></div>
+                    <div class="form-group row mt-20">
+                        <input type="submit" value="Save" class="buttonbox btnsubmit buttonsave" id="btnSaveCreate" />
+                        @Html.ActionLink("Cancel", "Index", "HRConsentMasters", new { @class = "buttonbox btncancel buttonsave" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="~/Content/HRJs/HRConsent.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#MnConsent').addClass("active");
+    });
+</script>

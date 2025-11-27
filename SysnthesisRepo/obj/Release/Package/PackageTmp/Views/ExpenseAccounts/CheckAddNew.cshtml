@@ -1,0 +1,402 @@
+﻿@model EntityModels.Models.ExpenseCheck
+@using Utility;
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .file-input-name {
+        display: none;
+    }
+</style>
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Success Check")
+    {
+        <script>
+            MyCustomAlert('Check Created Successfully.', 1);
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Error Check")
+    {
+        <script>
+            MyCustomAlert('Check Not Created.', 2);
+        </script>
+    }
+</div>
+<div>
+    @if (Convert.ToString(ViewBag.Storeidvalue) == null)
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("CheckAddNew", "ExpenseAccounts", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmMain" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="cc-main cc-main-page add-check-page">
+        <div class="inv-heading">
+            <h3>Add Check</h3>
+            <div class="amount-sec">
+                <label>Amount</label>
+                <input type="hidden" id="totalamtrt" name="TotalAmt" />
+                <div class="amount">
+                    $0.00
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="cc-main-sec">
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-cc-topsection">
+                            <div class="payee-sec">
+                                <div class="payee">
+                                    <label>Payee<span style="color:red">*</span></label>
+                                    @Html.EJS().DropDownList("VendorIdstr").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.PayeeName).Index(0).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Change("OnPayeeChange").Render()
+                                </div>
+                                <div class="payment-ac">
+                                    <label>Bank Account<span style="color:red">*</span></label>
+                                    @Html.EJS().DropDownList("BankAccountId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.AccountName).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Index(0).Render()
+                                </div>
+                            </div>
+
+                            <div class="date-check-sec">
+
+                                <div class="payment-date">
+                                    <label for="" class="form-label">Payment Date<span style="color:red">*</span></label>
+                                    @Html.EJS().DatePickerFor(model => model.TxnDate, new { @required = "required" }).Value(DateTime.Now).Format("MM-dd-yyyy").Render()
+                                </div>
+                                @*<div class="payment-method">
+                    <label>Payment Method</label>
+                    @Html.EJS().DropDownList("PaymentTypeId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.PaymentName).Index(0).Render()
+                </div>*@
+                                <div class="check-print">
+                                    <div class="checkno">
+                                        <div class="pl-check">
+                                            <label for="" class="form-label">Check No.</label> <div class="form-check">
+                                                @*<input class="form-check-input" type="checkbox" value="" id="">*@
+                                                @Html.EJS().CheckBoxFor(model => model.PrintLater).EnableRtl(false).CssClass("form-check-input").Render()
+                                                <div class="print-text">Print Later</div>
+                                            </div>
+                                        </div>
+                                        @Html.TextBoxFor(model => model.DocNumber, new { maxlength = 500, @class = "form-control", disabled = "disabled", @autocomplete = "off" })
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mailing-address">
+                            <label>Mailing Address</label>
+                            @Html.TextAreaFor(model => model.MailingAddress, new { maxlength = 500, @class = "form-control", @style = "width:350px;height:80px;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="department-main">
+                <div class="department">
+                    <h3>Department Breakdown</h3>
+                </div>
+                <div id="trrow_1" class="department-row-heading">
+                    <div class="heading-col-1">Department<span style="color:red">*</span></div>
+                    <div class="heading-col-1">Description</div>
+                    <div class="heading-col-1">Amount<span style="color:red">*</span></div>
+                    <div class="heading-col-btn"></div>
+                </div>
+                <div id="department-rows">
+                    <div class="department-row" id="row-template">
+                        <div class="dr-col-1">
+                            <select class="form-select department-select" name="ExpenseCheckDetails[0].DepartmentId">
+                                <option value="">-Select Department-</option>
+                                @foreach (var item in (IEnumerable<EntityModels.Models.DropdownViewModel>)ViewBag.DepartmentName)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="dr-col-1">
+                            <input class="form-control description-input" name="ExpenseCheckDetails[0].Description" maxlength="100" type="text" autocomplete="off" />
+                        </div>
+                        <div class="dr-col-2">
+                            <input class="form-control amount-input" name="ExpenseCheckDetails[0].Amount" maxlength="18" type="number" step="0.01" />
+                        </div>
+                        <div class="dr-col-btn">
+                            <a class="btn-addbox add-row"><i class="fa fa-plus"></i></a>
+                            <a class="btn-remove remove-row"><i class="fa fa-minus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-sec">
+                <div class="note">
+                    <label>Memo</label>
+                    @Html.TextAreaFor(model => model.Memo, new { maxlength = 500, @class = "form-control" })
+                </div>
+                <div class="attachment control-fluid">
+                    <label>Attachments</label>
+                    @Html.HiddenFor(m => m.FileName)
+                    @Html.EJS().Uploader("UploadFiles").MaxFileSize(20000000).DropArea(".control-fluid").AutoUpload(true).Multiple(true).SequentialUpload(true).AsyncSettings(new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("~/ExpenseAccounts/Save"), RemoveUrl = @Url.Content("~/ExpenseAccounts/Remove") }).Success("onImageUploadSuccess").Render()
+                    <div class="ur-label">Max File Size: 20 MB</div>
+                </div>
+            </div>
+            <div class="btn-sec">
+                @Html.TextBoxFor(model => model.SavebtnName, new { maxlength = 6, @class = "", @style = "display:none;" })
+                <input type="submit" value="Save" id="btnExpenseSubmit" name="btnsubmit" class="buttonbox btn_spcial" onclick="SaveAddExpense('Save')" />
+                <input type="submit" value="Save & New" id="btnExpenseSubmitNew" name="btnsubmit" class="buttonbox btn_spcial" onclick="SaveAddExpense('SaveAndNew')" />
+                <a class="buttonbox btncancel" href="/ExpenseAccounts/ExpenseCheckIndexNew">Cancel</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+<script>
+    $(document).on('click', '.add-row', function () {
+        const rowIndex = $('#department-rows .department-row').length;
+
+        const newRow = $('#row-template').clone();
+        newRow.find('.id-input').attr('name', `ExpenseCheckDetails[${rowIndex}].ExpenseCheckDetailId`).val('');
+        newRow.find('.department-select').attr('name', `ExpenseCheckDetails[${rowIndex}].DepartmentId`).val('').css('border', '');
+        newRow.find('.description-input').attr('name', `ExpenseCheckDetails[${rowIndex}].Description`).val('');
+        newRow.find('.amount-input').attr('name', `ExpenseCheckDetails[${rowIndex}].Amount`).val('').css('border', '');
+
+        $('#department-rows').append(newRow);
+        updateTotalAmount();
+    });
+
+    $(document).on('click', '.remove-row', function () {
+        if ($('.department-row').length > 1) {
+            $(this).closest('.department-row').remove();
+            updateRowIndices();
+            updateTotalAmount();
+        }
+    });
+
+    function updateRowIndices() {
+        $('#department-rows .department-row').each(function (index) {
+            $(this).find('.id-input').attr('name', `ExpenseCheckDetails[${index}].ExpenseCheckDetailId`);
+            $(this).find('.department-select').attr('name', `ExpenseCheckDetails[${index}].DepartmentId`);
+            $(this).find('.description-input').attr('name', `ExpenseCheckDetails[${index}].Description`);
+            $(this).find('.amount-input').attr('name', `ExpenseCheckDetails[${index}].Amount`);
+        });
+    }
+
+
+    function updateTotalAmount() {
+        let totalAmount = 0;
+        $('.amount-input').each(function () {
+            let value = parseFloat($(this).val());
+            if (!isNaN(value)) {
+                totalAmount += value;
+            }
+        });
+
+        let formattedAmount = totalAmount.toFixed(2);
+        if (formattedAmount < 0) {
+            formattedAmount = formattedAmount.replace('-', '');
+            formattedAmount = '-$' + formattedAmount;
+        } else {
+            formattedAmount = '$' + formattedAmount;
+        }
+
+        $('.amount').text(formattedAmount);
+
+        $('input[name="TotalAmt"]').val(totalAmount);
+    }
+
+    $(document).on('input', '.amount-input', function () {
+        if ($(this).val().trim() !== "") {
+            $(this).css("border", "");
+        }
+        updateTotalAmount();
+    });
+
+    $(document).on('blur', '.amount-input', function () {
+        if (this.value) {
+            const value = parseFloat(this.value).toFixed(2);
+            this.value = value;
+        }
+    });
+
+    $(document).on('change', '.department-select', function () {
+        if ($(this).val().trim() !== "") {
+            $(this).css("border", "");
+        }
+    });
+
+    function onImageUploadSuccess(args) {
+        var uploadedFileName = args.e.currentTarget.getResponseHeader('name');
+        if (uploadedFileName != null) {
+            var currentFileNames = $("#FileName").val();
+            if (currentFileNames) {
+                $("#FileName").val(currentFileNames + ',' + uploadedFileName);
+            } else {
+                $("#FileName").val(uploadedFileName);
+            }
+        }
+    }
+
+    function SaveAddExpense(BtnName) {
+        if (BtnName == "Save") {
+            $("#SavebtnName").val(BtnName);
+        }
+        if (BtnName == "SaveAndNew") {
+            $("#SavebtnName").val(BtnName);
+        }
+        if ($("#VendorIdstr").val() === null || $("#VendorIdstr").val() === '' || $("#VendorIdstr").val() === '-Select Payee-') {
+            $("#VendorIdstr").addClass('input-validation-error');
+            event.preventDefault();
+        }
+        else {
+
+            $("#VendorIdstr").removeClass('input-validation-error');
+            $("#VendorIdstr").addClass('input-validation-valid');
+        }
+        if ($("#BankAccountId").val() === null || $("#BankAccountId").val() === '' || $("#BankAccountId").val() === '-Select Bank Account-') {
+            $("#BankAccountId").addClass('input-validation-error');
+            event.preventDefault();
+        }
+        else {
+
+            $("#BankAccountId").removeClass('input-validation-error');
+            $("#BankAccountId").addClass('input-validation-valid');
+        }
+
+        //for amount check 0 or greater then
+        const TotalAmt = $("#totalamtrt").val();
+        var errorElement = document.getElementById("totalamt-error");
+        if (errorElement) {
+            errorElement.remove();
+        }
+        if (TotalAmt < 0) {
+            var errorMessage = document.createElement("div");
+            errorMessage.id = "totalamt-error";
+            errorMessage.style.color = "red";
+            errorMessage.style.marginTop = "10px";
+            errorMessage.style.fontSize = "14px";
+            errorMessage.textContent = "Enter a Transaction amount that is 0 or greater.";
+
+            // Append the error message below the "Amount" section
+            var amountSection = document.querySelector(".amount-sec");
+            amountSection.appendChild(errorMessage);
+            event.preventDefault();
+        }
+
+        // Get all rows in the Department Breakdown section
+        var departmentRows = document.querySelectorAll("#department-rows .department-row");
+        var isValid = true;
+        var firstInvalidElement = null;
+
+        // Loop through each row and validate inputs
+        departmentRows.forEach(function (row, index) {
+            var departmentDropdown = row.querySelector(".department-select");
+            var amountInput = row.querySelector(".amount-input");
+            var errorMessage;
+
+            departmentDropdown.style.border = "";
+            amountInput.style.border = "";
+            var existingError = row.querySelector(".validation-error");
+            if (existingError) {
+                existingError.remove();
+            }
+
+            // Validate Department Dropdown
+            if (!departmentDropdown.value || departmentDropdown.value.trim() === "") {
+                errorMessage = "Please select a department.";
+                departmentDropdown.style.border = "2px solid red";
+                if (!firstInvalidElement) firstInvalidElement = departmentDropdown;
+                isValid = false;
+            }
+
+            // Validate Amount Input
+            if (!amountInput.value || amountInput.value.trim() === "") {
+                errorMessage = "Please enter an amount.";
+                amountInput.style.border = "2px solid red";
+                if (!firstInvalidElement) firstInvalidElement = amountInput;
+                isValid = false;
+            }
+        });
+
+        if (firstInvalidElement) {
+            firstInvalidElement.focus();
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    }
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    function OnPayeeChange(args) {
+        var payeeid = args.value;
+        $.ajax({
+            url: ROOTURL + "ExpenseAccounts/GetPayeeMailingAddress",
+            type: 'POST',
+            data: { payeeidstr: payeeid },
+            success: function (response) {
+                if (response.mailingaddress != "") {
+                    var mailingadrs = response.mailingaddress;
+                    $("#MailingAddress").val(mailingadrs);
+                }
+                else {
+                    $("#MailingAddress").val("");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+
+    $(document).on('click', '#PrintLater', function () {
+        const printLaterCheckbox = document.querySelector('input[name="PrintLater"]');
+        if (printLaterCheckbox.checked) {
+            printLaterCheckbox.checked = false;
+        } else {
+            printLaterCheckbox.checked = true;
+        }
+        toggleDocNumber(printLaterCheckbox.checked);
+    });
+
+
+
+    function toggleDocNumber(isChecked) {
+        const docNumberInput = document.getElementById("DocNumber");
+        if (isChecked) {
+            docNumberInput.disabled = true;
+            docNumberInput.value = "";
+        } else {
+            docNumberInput.disabled = false;
+        }
+    }
+
+</script>
+@Html.EJS().ScriptManager()

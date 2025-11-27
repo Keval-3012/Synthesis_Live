@@ -1,0 +1,120 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+
+<div class="row" style="padding: 25px 25px;">
+    <div class="col-md-10">
+        <div class="col-md-2">
+            <label for="VendorList">Select Vendor</label>
+            @Html.EJS().DropDownList("VendorList").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList).Value("Select").Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorName" }).Render()
+        </div>
+
+        <div class="col-md-2">
+            <label>StartDate</label>
+            @Html.EJS().DatePicker("StartDate").Format("MM-dd-yyyy").Change("OnChangeStartDate").Max(DateTime.Now).Render()
+        </div>
+
+        <div class="col-md-2">
+            <label>EndDate</label>
+            @Html.EJS().DatePicker("EndDate").Format("MM-dd-yyyy").Change("OnChangeEndDate").Max(DateTime.Now).Render()
+        </div>
+        <div class="col-sm-1">
+            <a href="javascript:viewdata();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">View</a>
+        </div>
+        <div class="col-sm-1">
+            <a href="javascript:readfile();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;">Read Files</a>
+        </div>
+    </div>
+</div>
+<div class="page-body headertopbox special_bg">
+    <div class="control-section">
+        <div class="row" style="width:70%;margin-left:10px;">
+            @Html.EJS().Grid("InvoiceEditing").DataSource(dm => dm.Url("/Invoices/ViewInv").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+                  {
+                      col.Field("InvoiceCount").HeaderText("Invoice Count").Width("150").Add();
+                      col.Field("Name").HeaderText("Store Name").Width("150").Add();
+                  }).PageSettings(page => page.PageSize(500)).Render()
+
+
+        </div>
+    </div>
+</div>
+<script>
+    function OnChangeStartDate(args) {
+        var one = formatDate(new Date(args.value.toDateString()));
+        
+        var onClickText = "Invoice File Read StartDate " + one;
+
+        if (onClickText != null && onClickText != "" && onClickText != undefined) {
+            GetActivityLogDetails("Date", onClickText);
+            $.ajax({
+                url: '/UserActivityLog/AddActivityLoad',
+                data: { onClickText: onClickText, ActionName: ActionName, ControllerName: ControllerName, ModuleName: ModuleName, PageName: PageName, LblAction: LblAction, Message: LblMessage },
+                async: false,
+                success: function (response) {
+                    return true;
+                },
+                error: function () {
+
+                }
+            });
+        }
+    }
+
+    function OnChangeEndDate(args) {
+        var one = formatDate(new Date(args.value.toDateString()));
+        
+        var onClickText = "Invoice File Read EndDate " + one;
+
+        if (onClickText != null && onClickText != "" && onClickText != undefined) {
+            GetActivityLogDetails("Date", onClickText);
+            $.ajax({
+                url: '/UserActivityLog/AddActivityLoad',
+                data: { onClickText: onClickText, ActionName: ActionName, ControllerName: ControllerName, ModuleName: ModuleName, PageName: PageName, LblAction: LblAction, Message: LblMessage },
+                async: false,
+                success: function (response) {
+                    return true;
+                },
+                error: function () {
+
+                }
+            });
+        }
+    }
+
+    function viewdata() {
+        
+        var ven = $("#VendorList").val();
+        ven = ven.replace('&','^');
+        var grid = document.getElementById("InvoiceEditing").ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/Invoices/ViewInv?vendor=" + ven + "&startdate=" + $("#StartDate").val() + "&enddate=" + $("#EndDate").val(),
+            adaptor: new ej.data.UrlAdaptor()
+        });
+    }
+
+    function readfile() {
+         $.ajax({
+                 url: '@Url.Action("ReadFiles", "Invoices")',
+                 type: "POST",
+             data: JSON.stringify({ vendor: $("#VendorList").val(), startdate: $("#StartDate").val(), enddate: $("#EndDate").val()}),
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (response) {
+                     if (response == "success") {
+                         toastr.success('@ViewBag.FileRead');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+
+                 },
+                 error: function (response) {
+                 }
+             });
+    }
+</script>
+@Html.EJS().ScriptManager()

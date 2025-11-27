@@ -1,0 +1,555 @@
+﻿@model EntityModels.Models.DashboardDaily
+@{ Layout = "~/Views/Shared/AdminMaster.cshtml";
+                var StoreId = ViewBag.Storeidvalue; }
+@using Utility
+<style>
+    .h1, .h2, .h3, h1, h2, h3 {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    label {
+        margin-bottom: 0px !important;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />
+<script src="~/Content/Admin/js/DashboardChart/bar-multicolor.js"></script>
+<script src="~/Content/Admin/js/DashboardChart/Chart.min.js"></script>
+
+@*<style>
+        #bar-chartcanvas{
+            height:590px !important;
+        }
+    </style>*@
+
+<body>
+    <div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>
+    <div class="synthesisdashboardcontainer">
+
+        <div class="datepicker-placeholder" style="width:13%">
+            @Html.DropDownList("WeeklyPeriodId", null, new { id = "WeeklyPeriodId", @class = "form-control myval drpcls" })
+            <input name="DailyChartDate" type="text" value="11-26-2021" maxlength="100" id="DailyChartDate" placeholder="From" class="datepicker form-control" onkeydown="return false" style="display:none;">
+        </div>
+        <div class="top-widget-row">
+            <div>
+                <span id="AllVoidsAmt">$ @Model.AllVoidsAmt</span>
+                <span>All Voids</span>
+                <div class="badge" id="AllVoids">@Model.AllVoids</div>
+
+            </div>
+
+            <div>
+                <span id="ItemCorrectsAmt">$ @Model.ItemCorrectsAmt</span>
+                <span>Item Corrects</span>
+                <div class="badge" id="ItemCorrects">@Model.ItemCorrects</div>
+            </div>
+
+            <div>
+                <span id="ItemReturnsAmt">$ @Model.ItemReturnsAmt</span>
+                <span>Returns</span>
+                <div class="badge" id="ItemReturns">@Model.ItemReturns</div>
+            </div>
+
+            <div>
+                <span id="CashPayout">$ @Model.CashPayout</span>
+                <span>Cash Payouts</span>
+            </div>
+            <div class="overShort">
+                <span id="Over">$ @Model.Over</span>
+                <span>Over / Short</span>
+            </div>
+
+        </div>
+        <div class="middle-widget-row">
+            @*<div class="bulletChartContainer">
+                    <div class="WeeklyComparsion">
+                        <span>Weekly Comparison</span><div>
+                            <label><input type="radio" value="5" name="radio1" class="clsRadioWC" id="RW1" style="position: initial;display: inline;opacity:unset" checked="checked"> Sales</label>
+                            <label><input type="radio" value="6" name="radio1" class="clsRadioWC" id="RW2" style="position: initial;display: inline;opacity:unset"> Customer Count</label>
+                            <label><input type="radio" value="7" name="radio1" class="clsRadioWC" id="RW3" style="position: initial;display: inline;opacity:unset"> Average Sale</label>
+                        </div>
+                    </div>
+                    <div class="weekGraphPlaceHolder">
+                        <canvas id="bar-chartcanvasH2"></canvas>
+
+                    </div>
+                </div>*@
+
+
+            @*<div class="middle-widget-oneB smallerWidgetContainer">
+
+
+                    <div class="weeklyGrowth">
+                        <span>Weekly Comparision</span>
+                        <div class="graphOptions">
+
+                            <input type="radio" id="RW1" name='radio1' value="5" class="clsRadioWC" checked="checked">
+                            <label for="RW1">Sales</label><br>
+                            <input type="radio" id="RW2" name="radio1" value="6" class="clsRadioWC">
+                            <label for="RW2">Customer Count</label><br>
+                            <input type="radio" id="RW3" name="radio1" value="7" class="clsRadioWC">
+                            <label for="RW3">Average Sales</label>
+                        </div>
+                        <div class="weeklyComparisionWidgets">
+                            <div class="nutralBrighterCell">
+                                <div class="widgetTitle">
+                                    <h2>Current Week</h2>
+                                </div><span class="ValueDown" id="WCCurWeekAmt">$0</span>
+                                <div id="clsvalup" class="valueUpCell">
+                                    <span id="WCCurWeekPer">0%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+
+                            <div class="nutralBrighterCell">
+                                <div class="widgetTitle">
+                                    <h2>Last Year Current Week</h2>
+                                </div><span class="ValueDown" id="WCLYearCurWeekAmt">$0</span>
+                                <div id="clsvalup1" class="valueUpCell">
+                                    <span id="WCLYearCurWeekPer">0%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+
+                            <div class="nutralBrighterCell">
+                                <div class="widgetTitle">
+                                    <h2>Average Week This Year</h2>
+                                </div><span class="ValueDown" id="WCAWeekThisYearAmt">$0</span>
+                                <div id="clsvalup2" class="valueUpCell">
+                                    <span id="WCAWeekThisYearPer">%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>*@
+
+            <div class="middle-widget-oneB">
+
+                <div class="weeklyGrowth">
+                    <span>Weekly Comparison</span>
+
+                    <div class="weeklyComparisionWidgets">
+                        <div class="nutralBrighterCell flexible">
+                            <div class="widgetTitle">
+                                <h2>Sales</h2>
+                            </div><span id="WCSalesAmt">$0.00</span>
+                            <div class="lastYearSameWeek">
+                                <span>Last Week</span>
+                                <span id="WCLastWeekAmt">0.00</span>
+                                <div id="clsvalup0" class="valueUpCell valueCellSmaller">
+                                    <span id="WCLastWeekPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                            <div class="lastYearSameWeek">
+                                <span>Same Week Last Year</span>
+                                <span id="WCSameWeekLastYearAmt">0.00</span>
+                                <div id="clsvalup1" class="valueUpCell valueCellSmaller">
+                                    <span id="WCSalesSameWKLYearPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                            <div class="lastYearAverage">
+                                <span>Current Year Average</span>
+                                <span id="WCCurrentYearAvergaeAmt">0.00</span>
+                                <div id="clsvalup2" class="valueDownCell valueCellSmaller">
+                                    <span id="WCSalesCurYearPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="nutralBrighterCell flexible">
+                            <div class="widgetTitle">
+                                <h2>Customer Count</h2>
+                            </div><span id="WCCCount">0</span>
+                            <div class="lastYearSameWeek">
+                                <span>Last Week</span>
+                                <span id="WCCCountLastWeekAmt">0</span>
+                                <div id="clsvalup01" class="valueUpCell valueCellSmaller">
+                                    <span id="WCCCountLastWeekPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                            <div class="lastYearSameWeek">
+                                <span>Same Week Last Year</span>
+                                <span id="WCCCountSameWeekLastYearAmt">0</span>
+                                <div id="clsvalup3" class="valueUpCell valueCellSmaller">
+                                    <span id="WCCCountSameWKLYearPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+
+                            <div class="lastYearAverage">
+                                <span>Current Year Average</span>
+                                <span id="WCCCountCurrentYearAvergaeAmt">0</span>
+                                <div id="clsvalup4" class="valueDownCell valueCellSmaller">
+                                    <span id="WCCCountCurYearPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nutralBrighterCell flexible">
+                            <div class="widgetTitle">
+                                <h2>Average Sales</h2>
+                            </div><span id="WCAverageAmt">$ 0.00</span>
+                            <div class="lastYearSameWeek">
+                                <span>Last Week</span>
+                                <span id="WCAverageLastWeekAmt">0.00</span>
+                                <div id="clsvalupAvg0" class="valueUpCell valueCellSmaller">
+                                    <span id="WCAverageLastWeekPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                            <div class="lastYearSameWeek">
+                                <span>Same Week Last Year</span>
+                                <span id="WCAverageSameWKLYearAmt">0.00</span>
+                                <div id="clsvalup5" class="valueUpCell valueCellSmaller">
+                                    <span id="WCAverageSameWKLYearPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+
+                            <div class="lastYearAverage">
+                                <span>Current Year Average</span>
+                                <span id="WCAverageCurYearAmt">0.00</span>
+                                <div id="clsvalup6" class="valueDownCell valueCellSmaller">
+                                    <span id="WCAverageCurYearPer">0.00%</span><img src="/Content/Admin/images/Dashboard/fast-forward-double-right-arrows-symbol.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="smallWidgetContainer">
+                <div class="middle-widget-two">
+                    <div class="middle-widget-two-Offline">
+
+                        <div class="offlineStoreDiv">
+
+                            <img src="/Content/Admin/images/Dashboard/offline-store.png">
+                            <span>In-Store</span>
+                            <span id="Offline">@Model.Offline%</span>
+                        </div>
+
+                    </div>
+                    <div class="vs"><span>Vs</span></div>
+                    <div class="middle-widget-two-online">
+                        <div class="offlineStoreDiv">
+
+                            <img src="/Content/Admin/images/Dashboard/online-store.png">
+                            <span>Online</span>
+                            <span id="Online">@Model.Online%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoices">
+
+                    <span>Invoices</span>
+                    <div class="added">
+                        @*<img src="/Content/Admin/images/Dashboard/added-invoices.png">*@
+                        <span>Added</span>
+                        <span id="InvoicesAdded">@Model.InvoicesAdded</span>
+                    </div>
+
+                    <div class="approved">
+                        @*<img src="/Content/Admin/images/Dashboard/approved-invoices.png">*@
+                        <span>Approved</span>
+                        <span id="InvoicesApproved">@Model.InvoicesApproved</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span id="graphtitle">Daily Sales Graph</span>
+                <div class="totals">
+                    <span id="graphTotal"></span>
+                    <div class="total-values" data-toolTip="totalsData">
+                        <div class="StoreValues" id="dvTotalStore">
+                            @*<h2>Stores</h2>*@
+                            @*<span class="store74-84">$ 0.00</span>
+                                <span class="store2589">$ 0.00</span>
+                                <span class="store14Street">$ 0.00</span>
+                                <span class="storeMayWood">$ 0.00</span>
+                                <span class="store2840">$ 35,000.00</span>
+                                <span class="store1407">$ 35,000.00</span>
+                                <span class="store180">$ 35,000.00</span>
+                                <span class="store170">$ 35,000.00</span>*@
+
+                        </div>
+                        <div class="DepartmentValues" id="dvTotalDepartment">
+                            @*<h2>Departments</h2>*@
+                            @*<span> <strong>Bakery</strong> : $ 135,000.00</span>
+                                <span> <strong>Dairy</strong> : $ 432,000.00</span>
+                                <span> <strong>Meat</strong> : $ 35,000.00</span>
+                                <span> <strong>Cheese</strong> : $ 35,000.00</span>*@
+
+                        </div>
+                    </div>
+                </div>
+                <div class="graphOptions">
+                    @*<label><input type='radio' value="1" name='radio' class="clsRadio" id='R1' style="position: initial;display: inline;opacity:unset" checked="checked"> Sales</label>
+                        <label><input type="radio" value="2" name="radio" class="clsRadio" id='R2' style="position: initial;display: inline;opacity:unset" /> Customer Count</label>
+                        <label><input type="radio" value="3" name="radio" class="clsRadio" style="position: initial;display: inline;opacity:unset" /> Average Sale</label>*@
+                    <input type="radio" id="sales" name='radio' value="1" class="clsRadio" checked="checked">
+                    <label for="sales">Sales</label><br>
+                    <input type="radio" id="customers" name="radio" value="2" class="clsRadio">
+                    <label for="customers">Customer Count</label><br>
+                    <input type="radio" id="averageSales" name="radio" value="3" class="clsRadio">
+                    <label for="averageSales">Average Sales</label>
+                </div>
+
+            </div>
+            <div class="graphPlaceHolder">
+                <canvas id="bar-chartcanvas"></canvas>
+
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+                @*<span>Refine</span>*@
+                @*<div class="filterStore">*@
+                <h2>Stores</h2>
+                <div class="storeList">
+
+                    @foreach (var item in Model.StoreList)
+                    {
+
+                        @*if (StoreId == 0 && item.Id != 0)
+                            {
+                                <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores" disabled><label for="@item.Id">@item.Text</label></li>
+                            }
+                            else
+                            {*@
+                        <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores"><label for="@item.Id">@item.Text</label></li>
+                        @*}*@
+                        @*<li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores"><label for="@item.Id">@item.Text</label></li>*@
+                    }
+
+
+                </div>
+                @*</div>*@
+
+                @*<div class="filterDepartment">*@
+                <h2>Departments</h2>
+                <div class="departmentList">
+
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" class="clsdailychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+
+                </div>
+                @*</div>*@
+            </div>
+        </div>
+
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+
+                <span>Sales Hourly Report</span>
+                <div class="totals">
+                    <span id="graphTotal2"></span>
+                    <div class="total-values" data-toolTip="totalsData">
+                        <div class="DepartmentValues" id="dvTotalStore2">
+                            @*<h2>Stores</h2>*@
+                            @*<span class="store74-84">$ 0.00</span>
+                                <span class="store2589">$ 0.00</span>
+                                <span class="store14Street">$ 0.00</span>
+                                <span class="storeMayWood">$ 0.00</span>
+                                <span class="store2840">$ 35,000.00</span>
+                                <span class="store1407">$ 35,000.00</span>
+                                <span class="store180">$ 35,000.00</span>
+                                <span class="store170">$ 35,000.00</span>*@
+
+                        </div>
+                        <div class="DepartmentValues" id="dvTotalDepartment2">
+                            @*<h2>Departments</h2>*@
+                            @*<span> <strong>Bakery</strong> : $ 135,000.00</span>
+                                <span> <strong>Dairy</strong> : $ 432,000.00</span>
+                                <span> <strong>Meat</strong> : $ 35,000.00</span>
+                                <span> <strong>Cheese</strong> : $ 35,000.00</span>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graphPlaceHolder small">
+                <div class="pie-chart-holder">
+
+                    <div class="pie-chart">
+                        <span class="pieChartTitle">Purchase to Sales %</span>
+
+                        <div>
+                            <div>
+                                @*<span class="pieChartTitle" id="PurchaseToSales" style="margin: 5px;font-size: 12px !important;"></span>*@
+                                <span id="PurchaseToSales"></span>
+                                <span id="PurchaseToSales2" style="display:none"></span>
+                            </div>
+                            @*<span class="piePercentage01">25.33%</span><span class="piePercentage02">24.73%</span><img src="images/pie-chart-01.png" />*@
+                            <span id="Doughnut">
+                                <canvas id="bar-chartcanvasDoughnut"></canvas>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="pie-chart">
+                        <span class="pieChartTitle">Payroll to Sales %</span>
+
+                        <div>
+                            <div>
+                                @*<span class="pieChartTitle" id="PayrollToToSales" style="margin: 5px;font-size: 12px !important;"></span>*@
+                                <span id="PayrollToToSales"></span>
+                                <span id="PayrollToToSales2" style="display:none"></span>
+                            </div>
+                            @*<span class="piePercentage01">25.33%</span><span class="piePercentage02">24.73%</span><img src="images/pie-chart-02.png" />*@
+                            @*<canvas id="bar-chartcanvasbar"></canvas>*@
+                            <span id="Doughnut2">
+                                <canvas id="bar-chartcanvasDoughnut2"></canvas>
+                            </span>
+                        </div>
+                    </div>
+                    @*<div class="pie-chart">
+                            <span class="pieChartTitle">Net Profit to Sales %</span>
+                            <div>
+                                <canvas id="bar-chartcanvasDoughnut3"></canvas>
+                            </div>
+                        </div>*@
+
+                </div>
+            </div>
+            <div class="grossPayrollContainer">
+                <div class="grossPayroll">
+                    <span class="grossPayrollTitle"> % of Gross Payroll </span>
+                    <div class="grossPayrollWidgetContainer">
+                        <div><span>Regular Pay</span><span id="PayrollRegularPay">@Model.PayrollRegularPay%</span></div>
+                        <div><span>Overtime</span><span id="PayrollOverTime">@Model.PayrollOverTime%</span></div>
+                        <div><span>Sick Pay</span><span id="PayrollSickPay">@Model.PayrollSickPay%</span></div>
+                        <div><span>Vacation</span><span id="PayrollVacation">@Model.PayrollVacation%</span></div>
+                        <div><span>Holidays</span><span id="PayrollVacation">@Model.PayrollVacation%</span></div>
+                        <div><span>Bonus</span><span id="PayrollBonus">@Model.PayrollBonus%</span></div>
+                    </div>
+                </div>
+
+
+                <div class="grossPayroll">
+                    <span class="grossPayrollTitle"> % of Sales </span>
+                    <div class="grossPayrollWidgetContainer">
+                        <div><span>Regular Pay</span><span id="SalesRegularPay">@Model.SalesRegularPay%</span></div>
+                        <div><span>Overtime</span><span id="SalesOverTime">@Model.SalesOverTime%</span></div>
+                        <div><span>Salary</span><span id="SalesSalary">@Model.SalesSalary%</span></div>
+                        <div><span>Other Pay</span><span id="SalesOtherpay">@Model.SalesOtherpay%</span></div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+                @*<span>Refine</span>*@
+                @*<div class="filterStore">
+                        <span>Store</span>
+                        <div class="storeList">
+                            @foreach (var item in Model.StoreList)
+                            {
+                                <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores1"><label for="@item.Id">@item.Text</label></li>
+                            }
+
+                        </div>
+                    </div>*@
+
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" class="clsdailychartdepartments1"><label for="@item.Id">@item.Text</label></li>
+                        @*<li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" class="clsdailychartdepartments1" disabled><label for="@item.Id">@item.Text</label></li>*@
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer">
+                <span>Sales per hour worked</span>
+                @*<div>
+                        <label><input type="radio" name="radio" />Sales</label>
+                        <label><input type="radio" name="radio" />Customer Count</label>
+                        <label><input type="radio" name="radio" />Average Basket</label>
+                    </div>*@
+                @*<div class="graphPlaceHolder">*@
+
+            </div>
+            <div class="graphPlaceHolder small">
+                <canvas id="bar-chartcanvas2"></canvas>
+            </div>
+
+            <div class="departmentWiseSales">
+                <span>Department sales per 1 Hour Worked</span>
+                <div class="departmentWiseSalesWidgets">
+                    @*<div><span>74-84</span><span>$ 2,324.00</span></div>
+                        <div><span>2840</span><span>$ 2,324.00</span></div>
+                        <div><span>180</span><span>$ 2,324.00</span></div>
+                        <div><span>170</span><span>$ 2,324.00</span></div>
+                        <div><span>14th Street</span><span>$ 2,324.00</span></div>
+                        <div><span>1407</span><span>$ 2,324.00</span></div>
+                        <div><span>2589</span><span>$ 2,324.00</span></div>*@
+
+
+                </div>
+            </div>
+            <div class="refineMenu"><input type="checkbox"></div>
+            <div class=refineContainer>
+                @*<span>Refine</span>*@
+                @*<div class="filterStore">
+                        <span>Store</span>
+                        <div class="storeList">
+                            @foreach (var item in Model.StoreList)
+                            {
+                                <li><input type="checkbox" id="@item.Id" name="dailychartstores" value="@item.Id" class="clsdailychartstores"><label for="@item.Id">@item.Text</label></li>
+                            }
+                        </div>
+                    </div>*@
+
+                <h2>Departments</h2>
+                <div class="departmentList">
+
+                    @foreach (var item in Model.PayrollDepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="hourlychartdepartments" value="@item.Text" class="clshourlychartdepartments"><label for="@item.Id">@item.Text</label></li>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</body>
+<script>
+    var Startdate = '@ViewBag.Startdate';
+</script>
+
+<script src="~/Form_JS/Weekly_0702_Dashboard.js"></script>

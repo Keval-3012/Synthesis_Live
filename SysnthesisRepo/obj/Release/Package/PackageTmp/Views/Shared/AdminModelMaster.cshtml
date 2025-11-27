@@ -1,0 +1,599 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head id="Head1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page title -->
+
+    <title id="pagetitle">Synthesis</title>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--Basic Styles-->
+    <!--Basic Styles-->
+
+    <link href="~/Content/Common.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/weather-icons.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/css/select2.min.css" rel="stylesheet" />
+    <!--Beyond styles-->
+    <link href="~/Content/Admin/assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/css/loader.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/style.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/printstyle.css" rel="stylesheet" media="print" />
+    <script type="text/javascript" src='~/Content/Admin/vendor/jquery/dist/jquery.min.js'></script>
+
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css'>
+
+    <script>
+        $('.overlaytransparent').hide();
+
+    </script>
+</head>
+
+<body class="">
+    <!-- Simple splash screen-->
+    <div class="loading-container" style="display:none;">
+        <div class="loader"></div>
+    </div>
+
+
+    <script type="text/javascript" src="~/Content/Admin/assets/js/toastr/toastr.min.js"></script>
+    <script>
+        function MyfunSuccessChangePassword() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+            toastr.success('Password has been change successfully.');
+        }
+        function MyfunSuccessChangePasswordError() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Your current password is not correct');
+        }
+        function MyfunNoItem() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.info('Your search didn’t return any results.');
+        }
+
+        function MyfunNoRights() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.info('You have no rights to see result..');
+        }
+        function MyfunNoDataInFiles() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.info('Your File is blank.');
+        }
+        function MyfunError() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Transaction Failed.');
+        }
+        function MyfunErrorforproject() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Project Name or CLCNo already exists.');
+        }
+        function MyfunExists() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Record with this name already exists.');
+        }
+        function showpopupnew() {
+            $(document).ready(function () {
+                $('#popupExists').show();
+            });
+        }
+        function showpopupExist() {
+            $(document).ready(function () {
+                $('#popupcheckExistsagain').show();
+            });
+        }
+        function showpopupEdit() {
+            $(document).ready(function () {
+                $('#popupExists').show();
+            });
+        }
+        function showDuplicateInvoicepopup() {
+            $(document).ready(function () {
+                $('#popupDisplayduplicateinvoice').show();
+            });
+        }
+        function showChangePasswordPopup() {
+            $(document).ready(function () {
+                $('#popupchangepassword').show();
+            });
+        }
+
+        function PopUpSelectStore() {
+            $(document).ready(function () {
+                $('#popupStoreAlert').show();
+            });
+        }
+
+        function PopUpSelectStoreRights() {
+            $(document).ready(function () {
+                $('#popupRightsAlert').show();
+            });
+        }
+        function MyfunNicknameExists() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Record with this nick name already exists.');
+        }
+        function MyfunExistsInvoice() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Record with this Invoice already exists.');
+        }
+        function MyfunExistsEngineeringHours() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Record with this name and project code already exists.');
+        }
+        function MyfunExistsEmpcode() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('This invoice has already been in the system. Please check again.');
+        }
+        function MyfunNumExists() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Record with this number already exists.');
+        }
+        function MyfunExistsSal() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Record with this time period already exists.');
+        }
+        function MyfunSuccess() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Record Updated!');
+        }
+        function MyCustomToster(Message) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success(Message);
+        }
+        function MyCustomAlert(Message, Id) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            if (Id == 1) {
+                toastr.success(Message);
+            }
+            else {
+                toastr.error(Message);
+            }
+        }
+        function MyfunSuccess1() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+
+            toastr.success('The invoice was created successfully and it was sent for approval.');
+
+
+        }
+        function MyfunError1() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-left",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Transaction Failed.');
+        }
+        function InvalidPDFSize() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-left",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.error('Invalid PDF Size.');
+        }
+
+        function NoRecoedFound() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.error('No Record Found.');
+        }
+    </script>
+
+
+    @RenderBody()
+
+    <div class="overlaybox" style="display: none;"></div>
+    <script type="text/javascript" src='~/Content/Scripts/jquery-ui-1.8.24.min.js'></script>
+    <script type="text/javascript" src='~/Content/Scripts/jquery.validate.min.js'></script>
+    @*<script type="text/javascript" src="~/Content/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+    <script type="text/javascript" src='~/Content/Scripts/jquery.validate.unobtrusive.min.js'></script>
+    @* <script type="text/javascript" src="~/Content/Scripts/modernizr-2.6.2.js"></script>
+        <script type="text/javascript" src='~/Content/Admin/assets/js/skins.min.js'></script>*@
+    <script type="text/javascript" src='~/Content/Admin/assets/js/bootstrap.min.js'></script>
+    <script type="text/javascript" src='~/Content/Admin/js/bootstrap.file-input.js'></script>
+    @* <script type="text/javascript" src='~/Content/Admin/js/app.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/metisMenu/dist/metisMenu.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/sparkline/index.js'></script>*@
+    <script type="text/javascript" src='~/Content/Admin/vendor/moment/moment.js'></script>
+    @*<script type="text/javascript" src='~/Content/Admin/vendor/xeditable/bootstrap3-editable/js/bootstrap-editable.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/jquery.flot.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/jquery.flot.tooltip.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/vendor/jquery-flot/jquery.flot.resize.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/globalize.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/app.plugin.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/js/perfect-scrollbar.js'></script>
+
+        <script type="text/javascript" src='~/Content/Admin/js/sweet-alert.min.js'></script>
+        <script type="text/javascript" src='~/Content/Admin/assets/js/slimscroll/jquery.slimscroll.min.js'></script>*@
+    <script type="text/javascript" src='~/Content/Admin/js/custom.js'></script>
+    <script type="text/javascript" src='~/Content/Admin/assets/js/select2/select2.js'></script>
+    <script type="text/javascript" src='~/Content/Admin/assets/js/select2/select2.full.js'></script>
+    @*<script type="text/javascript" src='~/Content/Admin/assets/js/beyond.js'></script>*@
+    <script src="~/Content/Admin/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/Admin/assets/js/bootbox/bootbox.js"></script>
+    <script src="~/Content/Admin/assets/js/fileupload.js"></script>
+    <script src='https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js'></script>
+    <section id="secloader" class="pace pace-active1">
+        <div class="pace-progress" style="width: 100%;" data-progress-text="100%" data-progress="99">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </section>
+    <div class="overlaytransparent" style="display: none;"></div>
+
+    @*<script>
+
+        $(".myval").select2({
+            width: "50%",
+        });
+        $(".myval1").select2({
+            minimumResultsForSearch: -1
+        });
+
+    </script>*@
+    <script>
+        $('.stop-propagation').on('click', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+
+</body>
+
+</html>

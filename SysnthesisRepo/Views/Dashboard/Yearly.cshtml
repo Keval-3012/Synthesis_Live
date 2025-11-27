@@ -1,0 +1,191 @@
+@model EntityModels.Models.YearlySales
+@{ Layout = "~/Views/Shared/AdminMaster.cshtml";
+                var StoreId = ViewBag.Storeidvalue;
+                var period = ViewBag.Period; }
+@using Utility
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link href="~/Content/Admin/assets/css/dashboard.css" rel="stylesheet" />
+<script src="~/Content/Admin/js/DashboardChart/bar-multicolor.js"></script>
+<script src="~/Content/Admin/js/DashboardChart/Chart.min.js"></script>
+
+<body>
+
+    <div class="synthesisdashboardcontainer">
+        <div class="top-dshbosrd-year top-dshboyer w-100">
+            @if (Convert.ToString(StoreId) == "0")
+            {
+                <div class="stdate-y clshide">
+                    @Html.DropDownList("StateId", null, "ALL", new { id = "StateId", @class = "form-control myval drpcls", @onchange = "GetYearlySales();" })
+                </div>
+            }
+            <div class="year-y">
+                @Html.DropDownList("Year", null, new { id = "Year", @class = "form-control myval drpcls", @onchange = "GetYearlySales();" })
+            </div>
+            <div class="period-y clshide">
+                <span id="lblPeriod">Period : @period</span>
+            </div>
+
+
+        </div>
+        <div class="middle-widget-row yearlyDB spaceBetween">
+            <div class="yearlySalesData">
+                <ul class="yearlySalesDataHeader">
+                    <li><span class="yearlyTitle">Yearly Sales</span></li>
+                    <li><span class="yearlyTitle" id="Fys">Full Year Sales</span></li>
+                    <li><span class="yearlyTitle" id="Lyy">Last Year YTD</span></li>
+                    <li><span class="yearlyTitle" id="Cy">Current Year</span></li>
+                </ul>
+                <ul>
+                    <li>Gross Sales with Tax</li>
+                    <li id="SalesAmountL">$ --</li>
+                    <li id="SalesAmountYTD">$ --</li>
+                    <li class="high"><p style="margin: 0px;" id="SalesAmount">$ --</p><span class="high" id="SalesPercent">0%</span></li>
+                </ul>
+                <ul>
+                    <li>(-) COGS</li>
+                    <li id="CogsAmountL">$ --</li>
+                    <li id="CogsAmountYTD">$ --</li>
+                    <li class="high"><p style="margin: 0px;" id="CogsAmount">$ --</p> <span class="low" id="CogsPercent">0%</span></li>
+                </ul>
+                <ul>
+                    <li>Gross Margin</li>
+                    <li id="GrossMarginL">$ --</li>
+                    <li id="GrossMarginYTD">$ --</li>
+                    <li class="high"><p style="margin: 0px;" id="GrossMargin">$ --</p><span class="high" id="GrossMarginPercent">0%</span></li>
+                </ul>
+                <ul>
+                    <li>Payroll</li>
+                    <li id="PayrollAmountL">$ --</li>
+                    <li id="PayrollAmountYTD">$ --</li>
+                    <li class="low"><p style="margin: 0px" id="PayrollAmount">$ --</p><span class="low" id="PayrollPercent">0%</span></li>
+                </ul>
+                <ul>
+                    <li>Profit After Payroll</li>
+                    <li id="ProfitAfterPayrollAmountL">$ --</li>
+                    <li id="ProfitAfterPayrollAmountYTD">$ --</li>
+                    <li class="low"><p style="margin: 0px;" id="ProfitAfterPayrollAmount">$ --</p><span class="low" id="ProfitAfterPayrollPercent">0%</span></li>
+                </ul>
+                <ul>
+                    <li>(-) Expenses</li>
+                    <li id="ExpensesAmountL">$ --</li>
+                    <li id="ExpensesAmountYTD">$ --</li>
+                    <li class="high"><p style="margin: 0px;" id="ExpensesAmount">$ --</p><span class="high" id="ExpensesPercent">0%</span></li>
+                </ul>
+                <ul>
+                    <li>Net Profit</li>
+                    <li id="NetProfitAmountL">$ --</li>
+                    <li id="NetProfitAmountYTD">$ --</li>
+                    <li class="high"><p style="margin: 0px;" id="NetProfitAmount">$ --</p><span class="high" id="NetProfitPercent">0%</span></li>
+                </ul>
+            </div>
+
+            <div class="yearlyGrowth">
+                <span class="yearlyTitle">Yearly Growth</span>
+                <div class="container01">
+                    <div class="tblheader best">
+                        <li>Top Sales Weeks</li>
+                        <li><span id="LastY">Last Year</span></li>
+                        <li><span id="CureyearS">Current Year Sales</span></li>
+                    </div>
+                    <div class="tblrow best" id="Up">
+                    </div>
+
+                </div>
+
+                <div class="container02">
+                    <div class="tblheader worst">
+                        <li>Low Sales Weeks</li>
+                        <li><span id="Lasty1">Last Year</span></li>
+                        <li><span id="CureYearS1">Current Year Sales</span></li>
+                    </div>
+                    <div class="tblrow worst" id="Down">
+                    </div>
+                </div>
+            </div>
+
+            <div class="refineContainer yearlyRefine" id="refineContainer">
+
+                <h2>Departments</h2>
+                <div class="departmentList">
+                    @foreach (var item in Model.DepartmentList)
+                    {
+                        <li><input type="checkbox" id="@item.Id" name="dailychartdepartments" value="@item.Text" class="YearlyDashboardDepartment"><label for="@item.Id">@item.Text</label></li>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="graphContainer">
+            <div class="graphInnerContainer fullWidthGraph">
+                <span id="graphtitle">Purchase to Sales %</span>
+            </div>
+            <div class="graphPlaceHolder fullWidthGraph">
+                <div id="loading" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+        @*<div class="graphContainer">
+            <div class="graphInnerContainer fullWidthGraph">
+                <span id="graphtitle">Purchase to Sales %</span>
+            </div>
+            <div class="graphPlaceHolder fullWidthGraph">
+                <div id="loading" class="loaderdetail">
+                    <img src="~/Content/Admin/images/ZZ5H.gif" class="LoaderImage" />
+                </div>
+                <canvas id="myChart3"></canvas>
+            </div>
+        </div>*@
+    </div>
+</body>
+
+@*<div>
+    <script type="text/javascript">
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First Dataset',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
+        var ctx2 = document.getElementById('myChart3').getContext('2d');
+        myChart = new Chart(ctx2, {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+        })
+        $("#loading").hide();
+    </script>
+</div>*@
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+<script src="~/Form_JS/Yearly_Dashboard.js"></script>

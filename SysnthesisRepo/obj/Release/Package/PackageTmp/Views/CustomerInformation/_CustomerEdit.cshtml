@@ -1,0 +1,41 @@
+@using Syncfusion.EJ2
+@model EntityModels.Models.CustomersReceiveablesManagement
+@Html.HiddenFor(x=> x.CompanyNameId)
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="e-float-input e-control-wrapper">
+            <label>Company Name <span style="color:red">*</span> </label>
+            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", placeholder = "Company Name" })
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="e-float-input e-control-wrapper">
+            <label>Contact Person Name </label>
+            @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control", placeholder = "Contact Person Name" })
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="e-float-input e-control-wrapper">
+            <label>Email Address <span style="color:red">*</span> </label>
+            @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", placeholder = "Email Address" })
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="e-float-input e-control-wrapper">
+            @Html.EJS().MaskedTextBoxFor(model => model.PhoneNumber).Mask("(000) 000-0000").Placeholder("Phone Number").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <div class="e-float-input e-control-wrapper">
+            <label>Address </label>
+            @Html.TextAreaFor(model => model.Address, new { @class = "form-control", placeholder = "Address" })
+        </div>
+    </div>
+</div>
+@Html.EJS().ScriptManager()

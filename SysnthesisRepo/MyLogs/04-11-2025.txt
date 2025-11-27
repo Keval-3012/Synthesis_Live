@@ -1,0 +1,15 @@
+2025-04-11 10:51:44.5639|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/11/2025 10:51:44 AM
+2025-04-11 10:52:08.4797|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/11/2025 10:52:08 AM - An error occurred while sending the request.
+2025-04-11 10:52:21.4486|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 10:52:21 AM
+2025-04-11 10:52:27.2319|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 10:52:27 AM
+2025-04-11 10:52:32.2337|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 10:52:32 AM
+2025-04-11 10:52:36.0058|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 10:52:36 AM
+2025-04-11 10:53:19.3819|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 10:53:19 AM
+2025-04-11 10:53:38.8556|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 10:53:38 AM
+2025-04-11 11:28:45.2212|INFO|SysnthesisRepo.Controllers.HREmployeeController|HREmployeeController - Create - 4/11/2025 11:28:45 AM
+2025-04-11 11:28:45.2696|INFO|Repository.HREmployeeRepository|HREmployeeRepository - GetHREthnicityList - 4/11/2025 11:28:45 AM
+2025-04-11 11:28:48.6250|INFO|SysnthesisRepo.Controllers.HREmployeeController|HREmployeeController - InitialChildFormValue - 4/11/2025 11:28:48 AM
+2025-04-11 11:28:48.6584|INFO|Repository.HRDepartmentRepository|HRDepartmentRepository - GetHRDepartmentList - 4/11/2025 11:28:48 AM
+2025-04-11 11:28:53.6784|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 11:28:53 AM
+2025-04-11 11:29:13.5354|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 11:29:13 AM
+2025-04-11 11:30:18.0158|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 4/11/2025 11:30:18 AM

@@ -1,0 +1,265 @@
+﻿@model IEnumerable<EntityModels.Models.LineItemsLookUp>
+@using Utility
+<style>
+    .look-un-link {
+        padding: 5px 15px;
+        background: transparent;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .look-un-link:hover {
+            background: #198754;
+        }
+
+        .look-un-link svg {
+            width: 30px;
+            height: 24px;
+        }
+
+            .look-un-link svg path {
+                stroke: #198754;
+            }
+
+        .look-un-link:hover svg path {
+            stroke: #fff;
+        }
+</style>
+<div class="datagrid">
+    <div class="table-responsive" id="test">
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Store</th>
+                    <th>Invoice#</th>
+                    <th>Item</th>
+                    <th>Date</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Vendor Name</th>
+                    @if (Convert.ToInt32(Session["UserId"].ToString()) == 1089)
+                    {
+                        <th>UnLink</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="even" style="font-family: 'Muli', sans-serif;">
+                            <td>
+                                @item.StoreName
+                            </td>
+                            <td class="fntlight" style="width:5%" id="invoicenumberid">
+                                <a href="@Url.Action("Details", "Invoices", new { Id = item.InvoiceId })" target="_blank">@Html.Raw(item.InvoiceNumber)</a>
+                            </td>
+                            <td>
+                                @item.ItemName
+                            </td>
+                            <td>
+                                @item.InvoiceDate
+                            </td>
+                            <td>
+                                @item.Qty
+                            </td>
+                            <td>
+                                @item.UnitPrice
+                            </td>
+                            <td>
+                                @item.VendorName
+                            </td>
+                            @if (Convert.ToInt32(Session["UserId"].ToString()) == 1089)
+                            {
+                                <td>
+                                    <a class="look-un-link" onclick="selectunlinklook('@item.ItemName')">
+
+                                        <svg width="1231" height="1117" viewBox="0 0 1231 1117" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M337.445 844.274C314.956 844.274 293.056 841.824 272.012 837.186C140.887 808.273 43 694.317 43 558.146C43 402.778 170.43 276.334 329.265 272.124" stroke="black" stroke-width="85.8796" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M691.013 422.841C660.52 371.431 614.025 327.542 558.277 300.583" stroke="black" stroke-width="85.8796" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M893.614 272.012C916.104 272.012 938.003 274.462 959.049 279.102C1090.18 308.016 1188.06 421.97 1188.06 558.141C1188.06 716.165 1056.24 844.269 893.614 844.269C877.807 844.269 814.634 844.269 795.471 844.269C633.68 844.269 501.024 700.798 501.024 558.141C501.024 558.141 501.024 501.025 529.651 472.399" stroke="black" stroke-width="85.8796" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M100.253 43L1130.81 1073.56" stroke="black" stroke-width="85.8796" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*<div id="popupUnlinkAlert" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer " style="text-align:center">
+                <a class="btn btn-danger" onclick="unlinkItem()">Next</a>
+                <a class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+            </div>
+        </div>
+    </div>*@
+<div id="popupUnlinkAlertNext" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-body unlinkfont"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" onclick="unlinkItemNext()">Next</a>
+            <a class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+        </div>
+    </div>
+    <input type="hidden" id="hdnitemname" />
+</div>
+
+<div id="popupUnlinkAlert" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-body unlinkfont-alert"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" onclick="unlinkItem()">Yes</a>
+            <a class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+    });
+
+    //function selectunlinklook() {
+    //    var productId = $("#ProductId").val();
+    //    $.ajax({
+    //        url: ROOTURL + 'LineItem/GetInvoiceProductName',
+    //        type: "POST",
+    //        data: JSON.stringify({ productId: productId }),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (itemname) {
+    //            if (itemname != "") {
+    //                var confirmationMessage = "are you sure you want to unlink this item " + itemname +" and want to proceed for the next step"
+    //                $("#popupUnlinkAlert .modal-body").text(confirmationMessage);
+    //                $("#popupUnlinkAlert").show();
+    //            }
+    //        },
+    //        error: function (invoicecount) {
+    //            toastr.error('Error Unlinking');
+    //        }
+    //    });
+
+    //}
+
+    //function unlinkItem() {
+
+    //    var productId = $("#ProductId").val();
+    //    $("#popupUnlinkAlert").hide();
+    //    $.ajax({
+    //        url: ROOTURL + 'LineItem/UnlinkitemLookup',
+    //        type: "POST",
+    //        data: JSON.stringify({ productId: productId }),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //            if (response == "Success") {
+    //                toastr.success('Unlinked successfully');
+    //                LineItemsLookup();
+    //            }
+    //        },
+    //        error: function (response) {
+    //            toastr.error('Error Unlinking');
+    //        }
+    //    });
+    //}
+
+    //function closemodal() {
+    //    $("#popupUnlinkAlert").hide();
+    //}
+
+    function selectunlinklook(itemname) {
+        
+        $('#hdnitemname').val(itemname);
+        $.ajax({
+            url: ROOTURL + 'LineItem/GetInvoiceProductName',
+            type: "POST",
+            data: JSON.stringify({ itemname: itemname }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result.ItemName != "") {
+                    var confirmationMessage = "Are you sure, You want to Unlink. The item <b>" + result.ItemName + "</b> ? If Yes, please proceed further with the next step.<br/><br/><span style='color: red;'><b>NOTE:</b> Once confimred, this item <b>" + result.ItemName + "</b> will be unlinked from all the previous items as well.</span>"
+                    $("#popupUnlinkAlertNext .modal-body").html(confirmationMessage);
+                    $("#popupUnlinkAlertNext").show();
+                }
+            },
+            error: function (invoicecount) {
+                toastr.error('Error Unlinking');
+            }
+        });
+
+    }
+
+    function unlinkItemNext() {
+        debugger
+        var itemname = $("#hdnitemname").val();
+        $("#popupUnlinkAlertNext").hide();
+        $.ajax({
+            url: ROOTURL + 'LineItem/GetInvoiceProductName',
+            type: "POST",
+            data: JSON.stringify({ itemname: itemname }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                if (result.ItemName != "") {
+                    var confirmationMessage = "If you click on YES, The item <b>" + result.ItemName + "</b> which is associated with " + result.InvoiceCount + " invoices, All line items in these invoices will get unlinked and you need to link them again.<br/><br/>Please confirm if you still want to proceed with this."
+                    $("#popupUnlinkAlert .modal-body").html(confirmationMessage);
+                    $("#popupUnlinkAlert").show();
+                }
+            },
+            error: function (invoicecount) {
+                toastr.error('Error Unlinking');
+            }
+        });
+
+    }
+
+    function unlinkItem() {
+        debugger
+        var itemname = $("#hdnitemname").val();
+        $("#popupUnlinkAlert").hide();
+        $.ajax({
+            url: ROOTURL + 'LineItem/UnlinkitemLookup',
+            type: "POST",
+            data: JSON.stringify({ itemname: itemname }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response == "Success") {
+                    toastr.success('Unlinked successfully');
+                    LineItemsLookup();
+                }
+            },
+            error: function (response) {
+                toastr.error('Error Unlinking');
+            }
+        });
+    }
+
+    function closemodal() {
+        $("#popupUnlinkAlertNext").hide();
+        $("#popupUnlinkAlert").hide();
+    }
+
+</script>

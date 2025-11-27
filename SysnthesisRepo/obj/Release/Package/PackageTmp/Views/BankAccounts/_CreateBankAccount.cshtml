@@ -1,0 +1,35 @@
+﻿@model EntityModels.Models.BankAccountSettingModel
+
+<div id="globalTabContent">
+    <div id="PanAddUpdate">
+        <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+            <div class="datagrid martop15">
+                <div class="formmain">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group" style="margin-left: 1%;">
+                                <label>
+                                    Item ID<span class="highlight">*</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.ItemID, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ItemID, "", new { @class = "highlight1 ItemIDError" })
+                                &nbsp;<span id="requ" style="color: red;"></span>
+                            </div>
+                            <div class="form-group" style="margin-left: 1%;">
+                                <label>
+                                    Access Token <span class="highlight">*</span>
+                                </label>
+                                @Html.TextBoxFor(model => model.AccessToken, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.AccessToken, "", new { @class = "highlight1 AccessTokenError" })
+                            </div>
+                           
+                        </div>
+                        <div class="col-md-8">
+                            <iframe src="https://documents.wsmanagementnyc.com/" id="file" width="100%" height="800" title="Iframe Example"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

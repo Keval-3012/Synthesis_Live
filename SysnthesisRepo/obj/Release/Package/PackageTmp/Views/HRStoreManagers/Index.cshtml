@@ -1,0 +1,73 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HRDepartment.css" rel="stylesheet" />
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;padding:0px;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Mobile App User </h3>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("HRStoreManager").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("StoreId").IsPrimaryKey(true).HeaderText("Store Id").Visible(false).Add();
+           col.Field("StoreManageId").HeaderText("StoreManage Id").Visible(false).Add();
+           col.Field("FirstName").HeaderText("Name").Width("250").Add();
+           col.Field("UserName").HeaderText("UserName").Width("250").Add();
+           col.Field("StoreName").HeaderText("Store Name").Width("250").Add();
+           col.Field("IsActive").HeaderText("Status").EditType("booleanedit").DefaultValue(true).Width("100").AllowFiltering(false).Template("#toggleSwitchTemplate").Add();
+           col.Field("Status").HeaderText("Action").Visible(false).Add();
+       }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Search" }).Render()
+        </div>
+    </div>
+</div>
+@*@Html.EJS().Dialog("ajax_dialog1").IsModal(true).Created("created").CssClass("come-from-modal right").Header("Add").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="dialogTempData">
+</div>).Width("1000px").Target("body").Render()*@
+<script type="text/x-template" id="toggleSwitchTemplate">
+    <div class="toggle-switch">
+        ${if(Status != "Inactive")}
+        <input type="checkbox" id="${StoreId}^${StoreName}" checked class="toggle-input" onclick="javascript:toggle(this);" style="display:none" value="on" />
+        ${else}
+        <input type="checkbox" id="${StoreId}^${StoreName}" class="toggle-input" onclick="javascript:toggle(this);" style="display:none" value="off" />
+        ${/if}
+        <label for="${StoreId}^${StoreName}" class="toggle-label"></label>
+    </div>
+</script>
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+<script>
+    var scrollVal = 0;
+    document.title = '@ViewBag.Title';
+</script>
+<script src="~/Content/HRJs/HRStoreManager.js"></script>
+@Html.EJS().ScriptManager()

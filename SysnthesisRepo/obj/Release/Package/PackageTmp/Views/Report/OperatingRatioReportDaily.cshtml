@@ -1,0 +1,226 @@
+﻿@model EntityModels.Models.OperatingRatioReport
+
+@using Utility
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+@if (Convert.ToString(ViewBag.storeid) != "0")
+{
+    @*<div class="animate-panelmessesgarea padbtmzero">
+            @if (ViewBag.StatusMessage.ToString() == "NoItem")
+            {
+                <script>
+                    MyfunNoItem();
+                </script>
+            }
+        </div>*@
+}
+<style type="text/css">
+    body {
+        overflow: hidden;
+    }
+
+    .lnkA {
+        color: #3c7be5 !important;
+        cursor: pointer !important;
+    }
+
+    .invoicetotalcountbox1 td {
+        padding: 0px 0px !important;
+        background: #fafaee;
+    }
+
+    .clsbutton {
+        /*font-weight: bold;
+        color: black;
+        font-size: 16px;*/
+        font-weight: bold;
+        color: black;
+        font-size: 16px;
+        background: #eaeaea !important;
+        /* padding: 10px !important;*/
+        border-radius: 5px !important;
+        width: 24px !important;
+        height: 24px !important;
+        display: inline-block;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+        border: 1px solid rgba(0,0,0,0.2);
+    }
+    /*.childtd {
+        background-color: #f1efef !important;
+    }*/
+    .table-responsive {
+        overflow-x: scroll !important;
+        overflow-y: scroll !important;
+        max-height: calc(105vh - 350px) !important;
+    }
+    /*table.tablesorter tbody td:nth-child(even) {
+        background-color: #ddd !important;
+    }*/
+    /*tr:nth-child(even) {
+        background-color: #ddd;
+    }*/
+</style>
+
+<div class="header-small special_bg reportlinehight" style="background-color: #247d4f;">
+    <h3 style="color:white">
+        Operating Ratios Daily Report
+        @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ExportOperatingRatioDailyReport"))
+        {
+            <div style="float:right;">
+                <a href="#" onclick="printData();">
+                    <img src="@Url.Content("~/Content/Admin/images/icon_print.png")" alt="" />
+                </a>
+                <a href="#" onclick="javascript:ExportPDFData();"><img src="~/Content/Admin/images/icon_pdf.png" alt="" /></a>
+                <a href="#" onclick="javascript:ExportExcelData();"><img src="~/Content/Admin/images/icon_excel.png" alt="" /></a>
+            </div>
+        }
+    </h3>
+    <div class="clear">
+    </div>
+</div>
+<div>
+    @if (Convert.ToString(ViewBag.storeid) == "0")
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupNoRecordAlert" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Records Found</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="searchfinal martopzero">
+        <div class="widget-body shadownone brdrgray">
+
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <div class="dataTables_filter">
+                    <form id="form">
+                        <table border="0" cellspacing="0" width="100%" style="text-align: right; margin-bottom: 0px;" cellpadding="0">
+                            <tr>
+                                @*<td></td>*@
+                                <td width="157">
+                                    <input name="value_from_start_date" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" style="cursor: text;margin-left:10px;" readonly="readonly" data-datepicker="separateRange" id="txtstartdate" placeholder="From" class="datepicker form-control" value="@ViewBag.startdate">
+                                </td>
+                                <td width="10"></td>
+                                <td width="157">
+                                    <input name="value_from_end_date" data-val="true" data-val-date="The field Startdate must be a date." style="cursor: text;" data-datepicker="separateRange" type="text" maxlength="100" id="txtenddate" placeholder="To" class="datepicker form-control sa" value="@ViewBag.enddate">
+                                </td>
+                                <td width="10"></td>
+                                <td width="220" style="display:none"></td>
+                                <td width="10"></td>
+                                @*<td width="170">
+                                        @Html.EnumDropDownListFor(model => model.ShiftId, "All Shift", new { @class = "myval form-control", Style = "width: 150px;" })
+                                    </td>*@
+                                <td width="10"></td>
+                                <td width="1500" style="text-align:left">
+                                    <div class="input-group">
+                                        <input type="button" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:getRatioList();" class="buttonbox btnsubmit btn_spcial" />
+                                        <a class="lnkA" onclick="avascript:ManageQuarterlyData(1);">Q1</a>&nbsp;
+                                        <a class="lnkA" onclick="avascript:ManageQuarterlyData(2);">Q2</a>&nbsp;
+                                        <a class="lnkA" onclick="avascript:ManageQuarterlyData(3);">Q3</a>&nbsp;
+                                        <a class="lnkA" onclick="avascript:ManageQuarterlyData(4);">Q4</a>&nbsp;
+                                        <a class="lnkA" onclick="avascript:ManageQuarterlyData('YTD');">YTD</a>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="tabs" class="w3-bar w3-black">
+    @{
+        int i = 1;
+        foreach (var item in Model.ReportStoreLists)
+        {
+            if (i == 1)
+            {
+                <button class="w3-bar-item w3-button tablink w3-red" value="@item.StoreId" onclick="getRatioList(this,@item.StoreId)">@item.StoreName</button>
+            }
+            else
+            {
+                <button class="w3-bar-item w3-button tablink" value="@item.StoreId" onclick="getRatioList(this,@item.StoreId)">@item.StoreName</button>
+            }
+            i += 1;
+            @*<button class="w3-bar-item w3-button tablink" onclick="openCity(event,'Paris')">Paris</button>
+                <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'Tokyo')">Tokyo</button>*@
+        }
+        if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("AllTabOperatingRatioDailyReport"))
+        {
+            <button class="w3-bar-item w3-button tablink" value="0" onclick="getRatioList(this,0)">All</button>
+        }
+    }
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="datagrid martop15">
+            @{if (Model.OperatingRatioLists != null)
+                {
+                    <div id="dvBody" class="table-responsive">
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<link href="~/daterange/daterangepicker.min.css" rel="stylesheet" />
+<script src="~/daterange/moment.min.js"></script>
+<script src="~/daterange/daterangepicker.min.js"></script>
+<script src="~/Content/Admin/js/NewDatepicker.js"></script>
+<link href="~/Content/Admin/assets/css/w3.css" rel="stylesheet" />
+<link href="~/Content/Admin/tablesorter/themes/blue/style.css" rel="stylesheet" />
+<script src="~/Content/Admin/tablesorter/jquery.tablesorter.mod.js"></script>
+<script>
+    var ShiftName = '@ViewBag.ShiftName'
+    function ExportExcelData() {
+    var tablinks = document.getElementsByClassName("w3-red");
+    var StoreId = 0;
+    for (i = 0; i < tablinks.length; i++) {
+        StoreId = tablinks[i].value;
+    }
+    var element_txtstartdate = document.getElementById('txtstartdate').value;
+    var element_txtenddate = document.getElementById('txtenddate').value;
+    if (element_txtstartdate != "" || element_txtenddate != "") {
+        let a = document.createElement('a');
+        a.target = '_blank';
+        a.href = '@AdminSiteConfiguration.GetURL()/Report/ExportExcelDailyData?StartDate=' + element_txtstartdate + '&EndDate=' + element_txtenddate + '&StoreId=' + StoreId ;
+        a.click();
+    }
+}
+
+    function ExportPDFData() {
+         var tablinks = document.getElementsByClassName("w3-red");
+    var StoreId = 0;
+    for (i = 0; i < tablinks.length; i++) {
+        StoreId = tablinks[i].value;
+    }
+    var element_txtstartdate = document.getElementById('txtstartdate').value;
+    var element_txtenddate = document.getElementById('txtenddate').value;
+    if (element_txtstartdate != "" || element_txtenddate != "") {
+        let a = document.createElement('a');
+        a.target = '_blank';
+        a.href = '@AdminSiteConfiguration.GetURL()/Report/ExportPDFDailyData?StartDate=' + element_txtstartdate + '&EndDate=' + element_txtenddate + '&StoreId=' + StoreId ;
+        a.click();
+    }
+    }
+</script>
+<script src="~/Form_JS/OperatingRatioReportDaily.js"></script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SynthesisViewModal.HRViewModel.ConsentStatusListModel>
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+<link href="~/Content/HRCss/HRConsent.css" rel="stylesheet" />
+<style>
+    .e-grid .e-toolbar {
+        top: 189px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 245px !important;
+    }
+</style>
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+@{
+    List<object> toolbarItems = new List<object>();
+    toolbarItems.Add(new { text = "PdfExport" });
+    toolbarItems.Add(new { text = "ExcelExport" });
+    toolbarItems.Add(new { text = "Search" });
+    toolbarItems.Add(new { id = "gridCount" });
+}
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("HRConsentStatusList").AllowSorting().AllowFiltering().AllowExcelExport().AllowPdfExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("EmployeeId").Visible(false).Add();
+           col.Field("EmployeeName").HeaderText("Employee Name").Width("150").Add();
+           col.Field("DepartmentName").HeaderText("Designation").Width("100").Add();
+           col.Field("CreatedDate").HeaderText("Signed Date").Width("100").Add();
+           col.Field("FileName").HeaderText("Docs").Width("100").Template("#FileDocDown").Add();
+       }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(toolbarItems).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+
+<script type="text/x-jsrender" id="FileDocDown">
+    ${ConsentFileDownload(data)}
+</script>
+<script src="~/Content/HRJs/HRConsentStatusList.js"></script>
+@Html.EJS().ScriptManager()

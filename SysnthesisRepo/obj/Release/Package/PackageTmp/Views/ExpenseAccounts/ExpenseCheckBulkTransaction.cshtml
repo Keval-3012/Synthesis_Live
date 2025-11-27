@@ -1,0 +1,898 @@
+﻿
+@using Syncfusion.EJ2
+@using EntityModels.Models;
+@using Utility;
+@using System.Configuration;
+
+@{
+
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+
+@{
+    string storeid = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+}
+@{
+    var Payee = new Syncfusion.EJ2.DropDowns.DropDownList() { DataSource = ViewBag.PayeeName, Query = "new ej.data.Query()", Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "Text", Text = "Text" }, AllowFiltering = true, FilterType = Syncfusion.EJ2.DropDowns.FilterType.Contains };
+    var BankAccount = new Syncfusion.EJ2.DropDowns.DropDownList() { DataSource = ViewBag.AccountName, Query = "new ej.data.Query()", Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "Text", Text = "Text" }, AllowFiltering = true, FilterType = Syncfusion.EJ2.DropDowns.FilterType.Contains };
+    var Department = new Syncfusion.EJ2.DropDowns.DropDownList() { DataSource = ViewBag.DepartmentName, Query = "new ej.data.Query()", Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "Text", Text = "Text" }, AllowFiltering = true, FilterType = Syncfusion.EJ2.DropDowns.FilterType.Contains };
+
+}
+@{
+    List<object> toolbarItems = new List<object>();
+
+    if (storeid != "0")
+    {
+        toolbarItems.Add(new { text = "Add" });
+        toolbarItems.Add(new { text = "Edit" });
+        toolbarItems.Add(new { text = "Update" });
+        toolbarItems.Add(new { text = "Delete" });
+        toolbarItems.Add(new { text = "Cancel" });
+    }
+    toolbarItems.Add(new { text = "Search" });
+
+}
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<style>
+    .bulktra-right {
+        display: flex;
+        gap: 20px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .bulktra-right1 {
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .bankac {
+        width: 400px;
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+    }
+
+        .bankac label {
+            width: 120px;
+            display: flex;
+            align-items: center;
+        }
+
+    .payment-date {
+        width: 245px;
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+    }
+
+        .payment-date label {
+            width: 160px;
+            display: flex;
+            align-items: center;
+        }
+
+    #BulkCheckQbSync {
+        font-size: 15px;
+    }
+
+    .bulk-checkbox {
+        display: flex;
+        flex-direction: row;
+        margin: 10px 20px 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .dis-qb-btn {
+        opacity: 0.5;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 198px !important;
+    }
+
+    .e-sticky#BulkTransactionGrid_toolbarItems {
+        top: 142px !important;
+    }
+
+    #IModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+</style>
+<div>
+    @if (storeid == "0")
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Add Bulk Checks</h3>
+        </div>
+        @if (storeid != "0")
+        {
+            <div class="col-md-6">
+                <div class="bulktra-right">
+                    <div class="bankac">
+                        <label>Bank Account<span style="color:red">*</span></label>
+                        @Html.EJS().DropDownList("BankAccountId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.AccountName).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Index(0).Render()
+                    </div>
+                    <div class="payment-date">
+                        <label for="" class="form-label">Payment Date<span style="color:red">*</span></label>
+                        @Html.EJS().DatePicker("TxnDate").Value(DateTime.Now).Format("MM-dd-yyyy").Render()
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="bulktra-right1">
+                    <a href="#" class="btn-addinvoice dis-qb-btn" id="checkqbconfirmbtn" onclick="ShowConfirmQbPopup()">Sync With QB</a>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("BulkTransactionGrid").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("QBType").HeaderText("QBType").Visible(false).Add();
+           col.Field("ViewDocFlg").HeaderText("ViewDocFlg").Width("50").Visible(false).Add();
+           col.Field("ExpenseCheckDetailId").HeaderText("ExpenseCheckDetailId").Visible(false).Add();
+           col.Field("ExpenseCheckId").IsPrimaryKey(true).HeaderText("ExpenseCheckId").Visible(false).Add();
+
+           col.Type("checkbox").Width("20").Add();
+           col.Field("VendorName").HeaderText("Name").EditType("dropdownedit").Edit(new { @params = Payee }).ValidationRules(new { required = true }).Width("170").Add();
+           //col.Field("PaymentAccountName").HeaderText("Bank Account").EditType("dropdownedit").Edit(new { @params = BankAccount }).AllowEditing(false).Width("100").Add();
+           //col.Field("VendorName").HeaderText("Name").Edit(new { create = "createpayee", read = "readpayee", destroy = "destroypayee", write = "writepayee" }).ValidationRules(new { required = true }).Width("100").Add();
+           //col.Field("PaymentAccountName").HeaderText("Bank Account").Edit(new { create = "createbank", read = "readbank", destroy = "destroybank", write = "writebank" }).Width("100").AllowEditing(false).Add();
+           //col.Field("InvoiceDate").HeaderText("Date").Format("MM-dd-yyyy").EditType("datepickeredit").Edit(new { @params = new { format = "MM-dd-yyyy" } }).AllowEditing(false).Width("60").Add();
+           col.Field("AmountString").HeaderText("Amount").Width("70").EditType("numericedit").Edit(new { @params = new { min = 0.01, step = 0.01, format = "n2" } }).ValidationRules(new { required = true }).AllowSorting(false).Add();
+           col.Field("Department").HeaderText("Department").EditType("dropdownedit").Edit(new { @params = Department }).ValidationRules(new { required = true }).Width("130").Add();
+           //col.Field("Department").HeaderText("Department").Edit(new { create = "createdepartment", read = "readdepartment", destroy = "destroydepartment", write = "writedepartment" }).ValidationRules(new { required = true }).Width("100").Add();
+           col.Field("Memo").HeaderText("Memo").Width("70").Add();
+           col.Field("PrintLater").HeaderText("Print Later").EditType("booleanedit").Type("boolean").DisplayAsCheckBox(true).Width("60").Add();
+           col.Field("DocNumber").HeaderText("Check No").EditType("stringedit").Width("60").Add();
+           col.HeaderText("Docs").Width("60").Template("#DocsTemplate").AllowSorting(false).AllowFiltering(false).AllowEditing(false).Add();
+       }).DataBound("dataBound").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Toolbar(toolbarItems).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+
+<div id="BulkCheckQbSync" class="divIDClass modal-popup modal-danger modal-message min_with" style="position: fixed;  left:45%; width:400px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">Ready for QB sync</div>
+        <div class="modal-body ">Please ensure you have reviewed all the details for the selected checks before syncing them with QuickBooks.</div>
+        <div class="bulk-checkbox">
+            <input type="checkbox" id="bulkiconfirm" onclick="bulkiconfirmbtn()" style="cursor:pointer;" />
+            <span>I confirm that all records are accurate and are ready for syncing with QuickBooks.</span>
+        </div>
+        <div class="modal-footer" style="text-align:center">
+            <a class="btn btn-danger" id="bulkokconfirm" onclick="SelectedCheckSyncQB()" style="display:none;">Ok </a>
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="IModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Expense/Check Document</h4>
+            </div>
+            <div class="modal-body">
+                <div id="frmUserType" class="form-horizontal">
+                    @Html.Editor("ExpenseId", new { htmlAttributes = new { @class = "form-control", style = "display:none" } })
+
+                    <div class="form-group">
+                        <label style="font-weight:bold;font-size:medium">&nbsp;&nbsp; Upload Document :</label>
+                        <span style="width:500px;">
+                            <input type="file" name="postedFile" id="fileinput" class="fileut" /> @*<input type="submit" id="UploadPDF" value="Import Excel" class="btn btn-success" />*@
+                            @*<input class="form-control" type="file" name="importFile" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="padding: 3px;" />*@
+                        </span>
+                    </div>
+                    @*@{ Html.RenderAction("AddUserType", new EntityModels.Models.UserTypeMaster()); }*@
+                </div>
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <input form="UpLedger" type="button" class="buttonbox btnsubmit" detail="Recent Expenses/Checks Upload Docs -" value="Save" onclick="AddDocument();" />
+                @*<input  type="submit" class="buttonbox btnsubmit" value="Save"/>*@
+                <button type="button" class="buttonbox btncancel" detail="Recent Expenses/Checks Upload Docs -" data-dismiss="modal">Close</button>
+            </div>
+            @*}*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ViewFile" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="margin-top:14%;">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Document List</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    @using (Html.BeginForm("IncludeExpense", "ExpenseAccounts", FormMethod.Post, new { id = "frmMain" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @*<h4 class="modal-title">Excluded List</h4>
+                            <hr />*@
+
+                        <table class="table table-striped table-bordered" id="tblUploadFile" style="width:100%;max-height:200px;">
+                            <thead>
+                                <tr>
+                                    <th>Document Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="UploadDocumentFile"></tbody>
+
+                        </table>
+                        <hr />
+                    }
+                </div>
+                <div class="modal-footer modal-delete-footer">
+                    @*<input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Add" onclick="AssignProduct();" />*@
+                    @*<input type="submit" value="Include" form="frmMain" class="buttonbox btnsubmit" />*@
+                    <button type="button" class="buttonbox btncancel" detail="Recent Expenses/Checks View Docs -" data-dismiss="modal">Close</button>
+                </div>
+                @*<div id="frmUserType" class="form-horizontal">*@
+                @*@{ Html.RenderAction("AddUserType", new EntityModels.Models.UserTypeMaster()); }*@
+                @*</div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="ModelPopup">
+
+</div>
+
+
+<script type="text/x-jsrender" id="DocsTemplate">
+    <a href="javascript:AddDocPopup(${InvoiceId});" Detail="Recent Expenses/Checks Upload Docs" class="modl" id="modl">
+        <img src="/Content/Admin/images/cloud-upload (1).png" alt="" style="width:22px;" />
+    </a>
+    ${if(ViewDocFlg > 0)}
+    &nbsp;&nbsp;
+    <a href="javascript:UploadFile(${InvoiceId});" Detail="Recent Expenses/Checks View Docs" class="UploadFile" id="UploadFile">
+        <img src="/Content/Admin/images/share.png" alt="" style="width:18px;" />
+    </a>
+    ${/if}
+</script>
+<script type="text/javascript">
+    document.title = '@ViewBag.Title';
+    var Expensestoreid = '@ViewBag.Storeidvalue';
+</script>
+<script>
+    function dataBound(e) {
+
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+        bindCheckboxEvents();
+
+    }
+
+    function actionComplete(args) {
+        if (args.requestType === "add" || args.requestType === "beginEdit") {
+            bindCheckboxEvents();
+        }
+    }
+
+    function refreshGrid() {
+        var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+        if (grid) {
+            grid.refresh();
+        }
+    }
+
+    //function created(args) {
+
+    //    // extending the default UrlAdaptor
+    //    var toastObj = document.getElementById('toast_type').ej2_instances[0];
+    //    class CustomAdaptor extends ej.data.UrlAdaptor {
+    //        processResponse(data, ds, query, xhr, request, changes) {
+    //            if (!ej.base.isNullOrUndefined(data.success)) {
+    //                //window.location.href = ROOTURL + "ExpenseAccounts/ExpenseCheckIndexNew";
+    //                toastObj.content = data.success;
+    //                toastObj.target = document.body;
+    //                toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+    //            }
+    //            if (!ej.base.isNullOrUndefined(data.Error)) {
+
+    //                toastObj.content = data.Error;
+    //                toastObj.target = document.body;
+    //                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+    //            }
+    //            if (!ej.base.isNullOrUndefined(data.data))
+    //                return data.data;
+    //            else
+    //                return data;
+    //        }
+    //    }
+    //    var grid = document.querySelector('#BulkTransactionGrid').ej2_instances[0];
+    //    var bankDropdown = document.getElementById("BankAccountId").ej2_instances[0];
+    //    var paymentdate = document.getElementById("TxnDate").ej2_instances[0];
+    //    var selectedDate = new Date(paymentdate.value).toISOString().split("T")[0];
+    //    grid.dataSource = new ej.data.DataManager({
+    //        url: "/ExpenseAccounts/BulkUrlDatasourceExpense",
+    //        insertUrl: "/ExpenseAccounts/InsertBulkTransaction?bankid=" + bankDropdown.value + "&paymentdate=" + selectedDate,
+    //        updateUrl: "/ExpenseAccounts/UpdateBulkTransaction?bankid=" + bankDropdown.value + "&paymentdate=" + selectedDate,
+    //        removeUrl: "/ExpenseAccounts/DeleteBulkTransaction",
+    //        adaptor: new CustomAdaptor()
+    //    });
+    //};
+
+    function created(args) {
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                    refreshGrid();
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    refreshGrid();
+                }
+                return ej.base.isNullOrUndefined(data.data) ? data : data.data;
+            }
+        }
+
+        var grid = document.querySelector('#BulkTransactionGrid').ej2_instances[0];
+        var bankDropdown = document.getElementById("BankAccountId").ej2_instances[0];
+        var paymentDatePicker = document.getElementById("TxnDate").ej2_instances[0];
+
+        function updateGridDataSource() {
+            var selectedBankId = bankDropdown.value;
+            var selectedDate = new Date(paymentDatePicker.value).toISOString().split("T")[0];
+
+            // Update the grid's data source dynamically
+            grid.dataSource = new ej.data.DataManager({
+                url: "/ExpenseAccounts/BulkUrlDatasourceCheck",
+                insertUrl: `/ExpenseAccounts/InsertBulkTransaction?bankid=${selectedBankId}&paymentdate=${selectedDate}`,
+                updateUrl: `/ExpenseAccounts/UpdateBulkTransaction?bankid=${selectedBankId}&paymentdate=${selectedDate}`,
+                removeUrl: "/ExpenseAccounts/DeleteBulkTransaction",
+                adaptor: new CustomAdaptor()
+            });
+
+            // Refresh the grid after updating data source
+            grid.refresh();
+        }
+
+        // Attach event listeners to detect changes in bank account or payment date
+        bankDropdown.change = updateGridDataSource;
+        paymentDatePicker.change = updateGridDataSource;
+
+        // Set initial data source
+        updateGridDataSource();
+    }
+
+
+
+    @*var payeeElem, payeeObj, bankElem, bankObj,departmentElem, departmentObj;
+
+    //for payee bind dropdown start
+    function createpayee() {
+        payeeElem = document.createElement('input');
+        return payeeElem;
+    }
+
+    function readpayee() {
+        return payeeObj.value;
+    }
+
+    function destroypayee() {
+        payeeObj.destroy();
+    }
+
+    function writepayee() {
+        payeeObj = new ej.dropdowns.DropDownList({
+            dataSource: @Html.Raw(Json.Encode(ViewBag.PayeeName)),
+            fields: { value: 'Value', text: 'Text' },
+            placeholder: 'Select a Payee',
+            floatLabelType: 'Never',
+        });
+        payeeObj.appendTo(payeeElem);
+    }
+
+    //for payee bind dropdown End
+
+    //for Bank bind dropdown Start
+    function createbank() {
+        bankElem = document.createElement('input');
+        return bankElem;
+    }
+
+    function readbank() {
+        return bankObj.value;
+    }
+
+    function destroybank() {
+        bankObj.destroy();
+    }
+
+    function writebank() {
+        bankObj = new ej.dropdowns.DropDownList({
+            dataSource: @Html.Raw(Json.Encode(ViewBag.AccountName)),
+            fields: { value: 'Value', text: 'Text' },
+            placeholder: 'Select a Bank Account',
+            floatLabelType: 'Never',
+        });
+        bankObj.appendTo(bankElem);
+    }
+    //for Bank bind dropdown End
+
+    //for Department bind dropdown Start
+    function createdepartment() {
+        departmentElem = document.createElement('input');
+        return departmentElem;
+    }
+
+    function readdepartment() {
+        return departmentObj.value;
+    }
+
+    function destroydepartment() {
+        departmentObj.destroy();
+    }
+
+    function writedepartment() {
+        departmentObj = new ej.dropdowns.DropDownList({
+            dataSource: @Html.Raw(Json.Encode(ViewBag.DepartmentName)),
+            fields: { value: 'Value', text: 'Text' },
+            placeholder: 'Select a Department',
+            floatLabelType: 'Never',
+        });
+        departmentObj.appendTo(departmentElem);
+    }*@
+
+    //for Department bind dropdown End
+
+    function toolbarClick(args) {
+        var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+        if (args.item.id === "BulkTransactionGrid_update") {
+
+            // Get the BankAccountId dropdown value
+            var bankDropdown = document.getElementById("BankAccountId").ej2_instances[0];
+            var bankValue = bankDropdown.value;
+
+            // Get the TxnDate value
+            var paymentdatePicker = document.getElementById("TxnDate").ej2_instances[0];
+            var paymentdate = paymentdatePicker.value;
+
+            // Reference the Toast component
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+
+            // Validation: Check if bank account or date is missing
+            if (!bankValue || bankValue === "0" || !paymentdate) {
+                var errorMessage = "";
+
+                if (!bankValue || bankValue === "0") {
+                    errorMessage += "Please select a Bank Account.";
+                }
+                if (!paymentdate) {
+                    errorMessage += "Please select a Payment Date.";
+                }
+
+                // Show Toast notification
+                toastObj.content = errorMessage;
+                toastObj.target = document.body;
+                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+
+                // Prevent the update operation
+                args.cancel = true;
+            }
+        }
+        else if (args.item.id === "BulkTransactionGrid_add") {
+
+            //for default printlater checkbox checked
+            setTimeout(() => {
+                // Get the PrintLater checkbox and DocNumber field
+                var printLaterCheckbox = document.querySelector('[name="PrintLater"]');
+                var docNumberField = document.querySelector('[name="DocNumber"]');
+
+                if (printLaterCheckbox && docNumberField) {
+                    // Set PrintLater checkbox to checked by default
+                    printLaterCheckbox.ej2_instances[0].checked = true;
+                    printLaterCheckbox.ej2_instances[0].refresh();
+
+                    // Disable DocNumber input
+                    docNumberField.disabled = true;
+                    docNumberField.value = "";
+
+                    // Attach event listener to handle enable/disable behavior
+                    printLaterCheckbox.ej2_instances[0].change = function (e) {
+                        if (e.checked) {
+                            docNumberField.disabled = true;
+                            docNumberField.value = "";
+                        } else {
+                            docNumberField.disabled = false;
+                        }
+                    };
+                }
+            }, 100);
+
+            // Get the BankAccountId dropdown value
+            var bankDropdown = document.getElementById("BankAccountId").ej2_instances[0];
+            var bankValue = bankDropdown.value;
+
+            // Get the TxnDate value
+            var paymentdatePicker = document.getElementById("TxnDate").ej2_instances[0];
+            var paymentdate = paymentdatePicker.value;
+
+            // Reference the Toast component
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+
+            // Validation: Check if bank account or date is missing
+            if (!bankValue || bankValue === "0" || !paymentdate) {
+                var errorMessage = "";
+
+                if (!bankValue || bankValue === "0") {
+                    errorMessage += "Please select a Bank Account.";
+                }
+                if (!paymentdate) {
+                    errorMessage += "Please select a Payment Date.";
+                }
+
+                // Show Toast notification
+                toastObj.content = errorMessage;
+                toastObj.target = document.body;
+                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+
+                // Prevent the update operation
+                args.cancel = true;
+            }
+        }
+        else if (args.item.id === "BulkTransactionGrid_edit") {
+            // Get the BankAccountId dropdown value
+            var bankDropdown = document.getElementById("BankAccountId").ej2_instances[0];
+            var bankValue = bankDropdown.value;
+
+            // Get the TxnDate value
+            var paymentdatePicker = document.getElementById("TxnDate").ej2_instances[0];
+            var paymentdate = paymentdatePicker.value;
+
+            // Reference the Toast component
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+
+            // Validation: Check if bank account or date is missing
+            if (!bankValue || bankValue === "0" || !paymentdate) {
+                var errorMessage = "";
+
+                if (!bankValue || bankValue === "0") {
+                    errorMessage += "Please select a Bank Account.";
+                }
+                if (!paymentdate) {
+                    errorMessage += "Please select a Payment Date.";
+                }
+
+                // Show Toast notification
+                toastObj.content = errorMessage;
+                toastObj.target = document.body;
+                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+
+                // Prevent the update operation
+                args.cancel = true;
+            }
+        }
+        //else if (args.item.id === "BulkTransactionGrid_edit") {
+        //    // Make PaymentAccountName and InvoiceDate editable when adding a new record
+        //    var column = grid.getColumnByField("PaymentAccountName");
+        //    column.allowEditing = true;
+        //    column = grid.getColumnByField("InvoiceDate");
+        //    column.allowEditing = true;
+
+        //    //grid.refreshColumns();
+        //}
+    };
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+
+        grid.rowSelected = function () {
+            toggleSyncButton(grid);
+        };
+
+        grid.rowDeselected = function () {
+            toggleSyncButton(grid);
+        };
+
+        dataBound();
+        actionComplete(grid.args);
+
+    });
+
+    function bindCheckboxEvents() {
+        setTimeout(() => {
+            var checkboxes = document.querySelectorAll('[name="PrintLater"]');
+
+            checkboxes.forEach((checkbox) => {
+                var docNumberField = checkbox.closest("tr").querySelector('[name="DocNumber"]');
+
+                if (checkbox.ej2_instances) {
+                    checkbox.ej2_instances[0].change = function (e) {
+                        if (e.checked) {
+                            docNumberField.disabled = true;
+                            docNumberField.value = "";
+                        } else {
+                            docNumberField.disabled = false;
+                        }
+                    };
+
+                    // Ensure correct initial state when row is added or edited
+                    if (checkbox.ej2_instances[0].checked) {
+                        docNumberField.disabled = true;
+                        docNumberField.value = "";
+                    } else {
+                        docNumberField.disabled = false;
+                    }
+                }
+            });
+        }, 100);
+    }
+
+
+    function ShowConfirmQbPopup() {
+        var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+        var selectedRecords = grid.getSelectedRecords();
+        if (selectedRecords.length === 0) {
+            return;
+        }
+        $('#BulkCheckQbSync').show();
+    }
+
+    function SelectedCheckSyncQB() {
+        $('#bulkokconfirm').hide();
+        $('#BulkCheckQbSync').hide();
+        $('#bulkiconfirm').prop('checked', false);
+        var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+        var selectedRecords = grid.getSelectedRecords();
+        var selectedExpenseCheckIds = [];
+        selectedRecords.forEach(function (record) {
+            selectedExpenseCheckIds.push(record.ExpenseCheckId);
+        });
+        var selectedIdsString = selectedExpenseCheckIds.join(',');
+        $.ajax({
+            url: ROOTURL + "ExpenseAccounts/BulkCheckSyncWithQB",
+            type: 'POST',
+            data: { ExpenseCheckIds: selectedIdsString },
+            success: function (response) {
+                var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                if (response.message == "Success") {
+                    toastObj.content = "Bulk Import Sync Successfully";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                else {
+                    toastObj.content = "Bulk Import Sync UnSuccessfully";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+                grid.refresh();
+                grid.clearSelection();
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function bulkiconfirmbtn() {
+        var checkbox = document.getElementById("bulkiconfirm");
+        var okButton = document.getElementById("bulkokconfirm");
+
+        if (checkbox.checked) {
+            okButton.style.display = "inline-block";
+        } else {
+            okButton.style.display = "none";
+        }
+    }
+
+    function toggleSyncButton(grid) {
+        var selectedRecords = grid.getSelectedRecords();
+        var syncButton = document.getElementById("checkqbconfirmbtn");
+
+        if (selectedRecords.length > 0) {
+            syncButton.classList.remove("dis-qb-btn"); // Enable button
+        } else {
+            syncButton.classList.add("dis-qb-btn"); // Disable button
+        }
+    }
+
+    function AddDocPopup(iii) {
+        //$("#IModal").show();
+        $('#IModal').modal('show');
+        $('.modal-backdrop').hide();
+        //$(".fileut").text('');
+        $(".file-input-name").text('');
+        $(".fileut").val('');
+        $("#ExpenseId").val(iii)
+    };
+
+    function UploadFile(iii) {
+        var id = iii;
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExcludedExpenseListDocument',
+            data: { ExpenseCheckID: id },
+            async: false,
+            success: function (response) {
+
+                if (response.list.length > 0) {
+                    var htmls = "";
+                    var htmlModel = "";
+                    $.each(response.list, function (index, value) {
+                        // Extract file name from the complete path
+                        var fileName = value.DocumentName.split('\\').pop();
+                        htmls += "<tr>";
+                        htmls += "<td> <a href='/UserFiles/ExpenseDocuments/" + value.DocumentName + "' style='padding-left: 14px;' target = '_blank' >" + fileName + "</a></td>";
+                        if (response.type == 1 || response.id == value.CreatedBy) {
+                            htmls += "<td> <a href='#' onclick='return ErrorPopup(" + value.ExpenseCheckDocumentId + ");' data-toggle='tooltip' data-placement='top' data-original-title='Delete'><img src='../Content/Admin/images/trash-2.svg' alt=''/> </a></td>";
+                        }
+                        else {
+                            htmls += "<td></td>"
+                        }
+                        htmls += "</tr>";
+                        if (response.type == 1 || response.id == value.CreatedBy) {
+                            htmlModel += "<div id='" + value.ExpenseCheckDocumentId + "' class='divIDClass modal-popup modal-danger modal-message' style='position: fixed;  left:45%; width:300px; top: 10px; display:none'>";
+                            htmlModel += "<div class='modal-content '>";
+                            htmlModel += "<div class='modal-header text-center'>";
+                            htmlModel += "<i class='glyphicon glyphicon-trash'></i>";
+                            htmlModel += "</div>";
+                            htmlModel += "<div class='modal-title'>Message</div>";
+                            htmlModel += "<div class='modal-body '>Are you sure you want to remove this Document?</div>";
+                            htmlModel += "<div class='modal-footer' style='text-align:center'>";
+                            htmlModel += "<a class='btn btn-danger' onclick='Delete(" + value.ExpenseCheckDocumentId + ")'>Yes </a>";
+                            htmlModel += "<a class='btn' data-dismiss='modal' onclick='closemodal()'>No</a>";
+                            htmlModel += "</div>";
+                            htmlModel += "</div>";
+                            htmlModel += "</div>";
+                            $("#ModelPopup").html("");
+                            $("#ModelPopup").append(htmlModel);
+                        }
+                    });
+                    $("#UploadDocumentFile").html("");
+                    $("#UploadDocumentFile").append(htmls);
+                }
+                else {
+                    $("#UploadDocumentFile").html("");
+                }
+                $('#ViewFile').modal('show');
+                $('.modal-backdrop').hide();
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    }
+
+    function AddDocument() {
+        var ExpenseId = $('#ExpenseId').val();
+        var files = $("#fileinput").get(0).files;
+        var ExpenseId = $("#ExpenseId").val();
+
+        var formData = new FormData();
+        formData.append('fileinput', files[0]);
+        formData.append('ExpenseId', ExpenseId);
+        $.ajax({
+            url: '/ExpenseAccounts/SaveExpenseDocument',
+            type: "post",
+            data: formData,
+            contentType: false,
+            processData: false,
+            beforeSend: function () { Loader(1); },
+            success: function (states) {
+                if (states == "OK") {
+                    $("#fileinput").text("");
+                    $('#IModal').modal('hide');
+                    var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                    toastObj.content = "Document Save Successfully.";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+
+                    var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+                    grid.refresh();
+                    grid.clearSelection();
+
+                }
+                Loader(0);
+            }
+        });
+    }
+
+    function ErrorPopup(ID) {
+
+        var DivId = ID;
+        $("#" + DivId).show();
+    }
+
+    function Delete(ID) {
+        $('.modal-backdrop').hide();
+        $.ajax({
+            url: '/ExpenseAccounts/delete',
+            data: { Id: ID },
+            async: false,
+            success: function (response) {
+                //window.location.reload();
+                var grid = document.getElementById("BulkTransactionGrid").ej2_instances[0];
+                grid.refresh();
+                $('#ViewFile').modal('hide');
+                closemodal();
+                var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                toastObj.content = "File Deleted Successfully.";
+                toastObj.target = document.body;
+                toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                return true;
+            },
+            error: function () {
+                return false;
+            }
+        });
+    }
+
+</script>
+@Html.EJS().ScriptManager()

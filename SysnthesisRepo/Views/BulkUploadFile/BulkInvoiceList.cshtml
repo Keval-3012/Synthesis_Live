@@ -1,0 +1,430 @@
+﻿@model IEnumerable<EntityModels.Models.UploadFile>
+@using EntityModels.Models
+@using System.Configuration;
+@using Utility
+@using Syncfusion.EJ2
+@{
+    Layout = null;
+}
+<link href="~/Content/Admin/assets/css/beyond.min.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/demo.min.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/jquery.mCustomScrollbar.css" rel="stylesheet" />
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .control_wrapper {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .e-upload {
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+    }
+
+    .control_wrapper .e-upload .e-upload-drag-hover {
+        margin: 0;
+    }
+
+    #productpopupid {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+</style>
+<style>
+    #header-fixed {
+        position: fixed;
+        top: 0px;
+        display: none;
+        background-color: white;
+    }
+
+    .page-sidebar.sidebar-fixed {
+        position: fixed;
+    }
+
+    body {
+        color: #787878;
+    }
+
+    .page-header-main .searchinvoicebox input[type="text"] {
+        width: 85% !important;
+        border: 0px;
+        height: unset !important;
+        height: -1px !important;
+    }
+
+    .datagrid table tr td {
+        color: #787878;
+    }
+
+    .datagrid a i {
+        color: unset;
+        font-size: 12px !important;
+    }
+
+    .fixed {
+        top: 124px !important;
+    }
+</style>
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .e-icons.e-file-delete-btn {
+        display: none !important;
+    }
+</style>
+<div id="grddata">
+    <input type="hidden" id="hdnpagevalue" value="0" />
+    <input type="hidden" id="storeids" value="@ViewBag.Storeidvalue" />
+    <div class="page-body headertopbox bulk-inv-top">
+        <div class="page-header-main position-relative topBar">
+            <ul class="tabBar">
+                <li class="tbs active " id="tab1"><a href="javascript:void(0);">Invoices for Review <span id="InvoicesRevi">@ViewBag.InvoicesRevi</span></a></li>
+            </ul>
+            <ul class="topRightBar">
+                <li>
+                    @if (@ViewBag.ShowMyInvoice == true)
+                    {
+                        @Html.CheckBox("ShowMyInvoiceDetail", true)
+                    }
+                    else
+                    {
+                        @Html.CheckBox("ShowMyInvoiceDetail", false)
+                    }
+
+                    <label for="ShowMyInvoice">Show only my Invoices</label>
+                </li>
+                @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateBulkUploadFile"))
+                {
+                    <li>
+                        <a href="javascript:void(0)" class="btn btn-info btn-lg" onclick="OpenPopupUploadFileModel();"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Upload Files</a>
+
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="page-header-main position-relative" hidden>
+
+            <span class="searchinvoicebox" id="stab1">
+                <a href="#" class="searchbtn"></a>
+                <input type="text" id="search-box" class="form-control inputvendorname" placeholder="Search by Name" style="height:-1px !important;top: 3px;font-size: 15px;" />
+            </span>
+            <span class="searchinvoicebox hidden" id="stab2">
+                <a href="#" class="searchbtn"></a>
+                <input type="text" id="search-box1" class="form-control inputvendorname1" placeholder="Search by Name" style="height:-1px !important;top: 3px;font-size: 15px;" />
+            </span>
+            <span class="searchinvoicebox hidden" id="stab3">
+                <a href="#" class="searchbtn"></a>
+                <input type="text" id="search-box2" class="form-control inputvendorname2" placeholder="Search by Name" style="height:-1px !important;top: 3px;font-size: 15px;" />
+            </span>
+            <span class="pull-right dropdown actionMenu">
+            </span>
+        </div>
+        <div class="datagrid tab2">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="table-1">
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Amount</th>
+                            <th>Invoice Date</th>
+                            <th>PDF Name</th>
+                            <th>Store</th>
+                            <th>Uploaded On</th>
+                            <th>Analysis Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="getfileuploaddata"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="datagrid tab1">
+            <div class="table-responsive" id="test">
+                @if (Convert.ToInt32(Session["StoreId"]) != 0 && !string.IsNullOrEmpty(Session["StoreId"].ToString()))
+                {
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Document Name</th>
+                                @*<th>Store</th>*@
+                                <th>Received At</th>
+                                <th>Uploaded By</th>
+                                @if ((Roles.IsUserInRole("Administrator")) || Roles.IsUserInRole("CreateBulkUploadFile"))
+                                {
+                                    <th>Action</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+
+                                    <tr class="even" style="font-family: 'Muli', sans-serif;">
+                                        <td><a href="~/UserFiles/BulkUploadFile/@item.FileName" target="_blank">  @Html.Raw(item.FileName)</a></td>
+                                        <td>@Html.Raw(item.CreatedDates)</td>
+                                        <td>@Html.Raw(item.CreatedName)</td>
+
+                                        @if ((Roles.IsUserInRole("Administrator")) || Roles.IsUserInRole("CreateBulkUploadFile"))
+                                        {
+                                            <td style="vertical-align:middle;text-align:center;width:5%" class="printarea img_with img_color" id="editdeleteid">
+
+                                                @{
+                                                    var UserIdD = item.UploadPdfId + "D";
+                                                }
+                                                @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")))
+                                                {
+
+                                                    <a href="@Url.Action("Create", "Invoices", new { val = item.UploadPdfId })" data-toggle="tooltip" data-placement="top" data-original-title="Create"><img src="~/Content/Admin/images/file-plus.svg" alt="" /></a>
+                                                }
+                                                @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice")))
+                                                {
+                                                    <a href="#" onclick="return ComfirmDelete(@item.UploadPdfId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                                }
+
+                                                <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure you want to delete this file?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" onclick="Delete(@item.UploadPdfId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="11" class="text-center">No Data Available</td></tr>
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+                }
+                else
+                {
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Document Name</th>
+                                <th>Store</th>
+                                <th>Received At</th>
+                                <th>Uploaded By</th>
+                                @if ((Roles.IsUserInRole("Administrator")) || Roles.IsUserInRole("CreateBulkUploadFile"))
+                                {
+                                    <th>Action</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+
+                                    <tr class="even" style="font-family: 'Muli', sans-serif;">
+                                        <td><a href="~/UserFiles/BulkUploadFile/@item.FileName" target="_blank">  @Html.Raw(item.FileName)</a></td>
+                                        @if (string.IsNullOrEmpty(item.StoreName))
+                                        {
+                                            <td>
+                                                All Store
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @Html.Raw(item.StoreName)
+                                            </td>
+                                        }
+
+                                        <td>@Html.Raw(item.CreatedDates)</td>
+                                        <td>@Html.Raw(item.CreatedName)</td>
+
+                                        @if ((Roles.IsUserInRole("Administrator")) || Roles.IsUserInRole("CreateBulkUploadFile"))
+                                        {
+                                            <td style="vertical-align:middle;text-align:center;width:5%" class="printarea img_with img_color" id="editdeleteid">
+
+                                                @{
+                                                    var UserIdD = item.UploadPdfId + "D";
+                                                }
+                                                @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")))
+                                                {
+
+                                                    <a href="@Url.Action("Create", "Invoices", new { val = item.UploadPdfId })" data-toggle="tooltip" data-placement="top" data-original-title="Create"><img src="~/Content/Admin/images/file-plus.svg" alt="" /></a>
+                                                }
+                                                @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice")))
+                                                {
+                                                    <a href="#" onclick="return ComfirmDelete(@item.UploadPdfId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                                }
+
+                                                <div id="@UserIdD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure you want to delete this file?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" onclick="Delete(@item.UploadPdfId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="11" class="text-center">No Data Available</td></tr>
+                            }
+
+
+
+                        </tbody>
+
+                    </table>
+                }
+            </div>
+        </div>
+        <div class="datagrid tab3">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="table-2">
+                    <thead>
+                        <tr>
+                            <th>Invoice #</th>
+                            <th>Amount</th>
+                            <th>Invoice Date</th>
+                            <th>PDF Name</th>
+                            <th>Store</th>
+                            <th>Uploaded On</th>
+                            <th>Error</th>
+                        </tr>
+                    </thead>
+                    <tbody id="getErroruploaddata"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="fileUploadBox">
+            <div class="dragdropdownBox">
+                <div class="uploadBox">
+                    <div class="dropBox">
+                        <img src="~/Content/Admin/images/icons/upload.svg" alt="" class="downloadIcon" />
+                        <p>Upload Invoices</p>
+                        <span>Drag and drop your invoices here</span>
+                        <div class="buttonsBar">
+                            <input type="file" class="selectFiles" name="DocFiles" multiple="multiple" id="DocFiles" accept=".xls,.xlsx,.Doc,Docx,.Pdf,.jpg,.png,.bmps" data-val="true" data-val-required="File is required" required />
+                            <a href="#" class="closebtn btnCancel">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gridtablebox">
+                <div class="flexRow">
+                    <p>PDF Files</p>
+                    <div class="buttonsBar">
+                        <a href="#" class="closebtn btnCancel">Cancel</a>
+                        <a href="#" class="closebtn greenBtn">Done</a>
+                    </div>
+                </div>
+                <div class="gridtable mCustomScrollbar">
+                    <table id="daafile">
+                        <tbody id="getexcel">
+                            <tr>
+                                <td><img src="~/Content/Admin/images/icons/icon_pdf.png" alt="" /> [PDF file name of Invoice PDF].pdf</td>
+
+                                <td>
+
+                                    <div class="box">
+                                        <div class="loader-05"></div>
+                                    </div>
+                                    <a href="#" class="trash"><img src="~/Content/Admin/images/icons/trash.svg" alt="" class="checkicon" /></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="productpopupid" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="margin-top:14%;width:200%;right:40%;">
+            <div class="modal-header text-center">
+                <button type="button" onclick="reloadpage()" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Invoices</h4>
+            </div>
+            <div class="modal-body">
+                <div class="control-section">
+                    <div class="control_wrapper">
+                        @Html.EJS().Uploader("UploadFiles").DropArea(".control-fluid").Removing("onFileRemove").AllowedExtensions(".pdf").SequentialUpload(true).AutoUpload(true).AsyncSettings(new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("~/BulkUploadFile/Save"), RemoveUrl = @Url.Content("~/BulkUploadFile/Remove") }).Render()
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="reloadpage()" class="buttonbox btnsubmit" data-dismiss="modal">Done</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src='~/Content/Admin/assets/js/slimscroll/jquery.slimscroll.min.js'></script>
+<script type="text/javascript" src='~/Content/Admin/assets/js/select2/select2.js'></script>
+<script type="text/javascript" src='~/Content/Admin/assets/js/select2/select2.full.js'></script>
+<script src="~/Content/Admin/assets/js/bootbox/bootbox.js"></script>
+<script type="text/javascript" src='~/Content/Admin/assets/js/jquery.mCustomScrollbar.js'></script>
+
+<script>
+    var payment = '@ViewBag.payment';
+    var searchdashbord = '@ViewBag.searchdashbord';
+    var OrderByVal = '@ViewBag.OrderByVal';
+    var IsAscVal = '@ViewBag.IsAscVal';
+    var SearchRecords = '@ViewBag.SearchRecords';
+    var Alpha = '@ViewBag.Alpha';
+    var PageSize = '@ViewBag.PageSize';
+    var deptname = '@ViewBag.deptname';
+    var startdate = '@ViewBag.startdate';
+    var enddate = '@ViewBag.enddate';
+    var Store_val = '@ViewBag.Store_val';
+    var AmtMaximum = '@ViewBag.AmtMaximum';
+    var AmtMinimum = '@ViewBag.AmtMinimum';
+    var CurrentPageIndex = '@ViewBag.CurrentPageIndex';
+    var enddate = '@ViewBag.enddate';
+</script>
+<script src="~/Form_JS/BulkInvoice.js"></script>
+@Html.EJS().ScriptManager()

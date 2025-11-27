@@ -1,0 +1,507 @@
+@using Syncfusion.EJ2
+@model EntityModels.Models.InvoiceSelect
+@using Utility;
+@{
+    Layout = null;
+}
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/datagrid.css" rel="stylesheet" />
+<style>
+    .tooltipContainer {
+        display: none;
+    }
+
+    .e-toolbar .e-toolbar-items.e-tbar-pos .e-toolbar-right {
+        right: inherit;
+        left: 15px;
+    }
+
+    .main-container .page-content {
+        min-height: 900px;
+    }
+
+    #InlineInvoiceEditing_toolbarItems.e-toolbar .e-toolbar-items.e-tbar-pos .e-toolbar-left {
+        left: 375px;
+    }
+
+    #departmentDropdownContainer .form-control.select2 {
+        width: 300px;
+    }
+
+    .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv {
+        padding: 0 0 0 18px;
+    }
+
+    .e-content .e-table .e-rowcell[aria-label="#amountTemplate is template cell column header Amount"] {
+        padding-right: 15px;
+        text-align: center !important;
+    }
+
+    .e-content .e-table .e-rowcell[aria-label="Invoice column header Invoice Type"] {
+        padding-right: 25px;
+    }
+
+    .tooltipContainer ul {
+        padding: 0 0 0 14px;
+        margin: 0;
+    }
+
+    .e-grid .e-content {
+        height: 80vh !important;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    #QbPaidModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    #QbPaidModal p {
+        font-size: 14px;
+    }
+
+    #QbPaidModal .modal-body {
+        padding: 10px 15px;
+    }
+
+    #QbPaidModal .modal-footer {
+        padding: 5px 15px;
+    }
+    .invpayment-entry {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .invpayment-entry:last-child {
+            border-bottom: none;
+        }
+
+</style>
+
+<div id="loadbox"></div>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+
+        @if (ViewBag.StatusMessage.ToString() == "SuccessEdit")
+        {
+            <script>
+                import { Script } from "vm";
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateUpdate');
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateInApprove');
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+
+                toastr.success('@ViewBag.CreateIn');
+            </script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+        {
+            <script></script>
+        }
+        @if (Convert.ToString(ViewBag.StatusMessage) == "Success1")
+        {
+            <script></script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Delete")
+        {
+            <script></script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Edit")
+        {
+            <script></script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Error")
+        {
+            <script></script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "NoItem")
+        {
+            <script></script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "Exists")
+        {
+            <script></script>
+        }
+    </div>
+
+    @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+    <div class="addinvoice">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body invoice-body">
+            <div class="page-header-main position-relative ">
+                <h2>Recent Invoices</h2>
+                @*<div style="margin-left: 10px;">
+                        <button type="button" class="pdfUnclearExportBtn" style="background-color:red" id="pdf" onclick="toolbarClick(this)"><img src="~/Content/Admin/images/icon_pdf.png" alt=""></button>
+                        &nbsp;&nbsp;
+                        <button type="button" style="background-color:green" class="exlUnclearExportBtn" id="excel" onclick="toolbarClick(this)"><img src="~/Content/Admin/images/icon_excel.png" alt=""></button>
+                    </div>*@
+                <span class="btn-group-right-invoice">
+                    @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateInvoice"))
+                    {
+                        <a href="@Url.Action("Create", "Invoices")" class="btn-addinvoice"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon-plus.svg" /> Add Invoice</a>
+
+                        <a href="#" class="btn-reset" onclick="undofilters();"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/icon-reset.svg" /> Reset</a>
+                    }
+                </span>
+
+            </div>
+            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewInvoice"))
+            {
+                <div class="control-section" id="control-sec">
+                    @*<div class="control-sec-header">
+                            <div class="form-group">
+                                @if (ViewBag.departmentId != null)
+                                {
+                                    @Html.DropDownList("departmentId", null, "Select Department", htmlAttributes: new { @class = "myval", onchange = "getInvoiceData();" })
+
+                                }
+                            </div>
+                        </div>*@
+
+                    @Html.EJS().Grid("InlineInvoiceEditing").AllowSorting().AllowFiltering().EnableStickyHeader(true).Height("700").FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/Invoices/UrlDatasourceInvoice").Adaptor("UrlAdaptor")).Query("getQuery()").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorID").HeaderText("Vendor ID").Width("150").Visible(false).Add();
+                   col.Field("InvoiceId").HeaderText("InvoiceId").Width("150").Visible(false).Add();
+
+                   col.Field("InvoiceTypeId").HeaderText("InvoiceTypeId").Width("150").Visible(false).Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("InvoiceType").HeaderText("Invoice Type").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("80").Add();
+                   col.Field("InvoiceNumber").HeaderText("Invoice #").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("90").Template("#InvoiceNoTemplate").Add();
+                    if (Roles.IsUserInRole("Administrator") || (Roles.IsUserInRole("PaymentStatusInvoice") && (int)ViewBag.Storeidvalue != 0))
+                    {
+                        col.Field("IsPaid").HeaderText("Payment Status").Width("90").Template("#IsPaidTemplate").Filter(new { type = "CheckBox", itemTemplate = "#PaidStatusFilter" }).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+                    }
+                   if ((int)ViewBag.Storeidvalue == 0)
+                   {
+                       col.Field("StoreName").HeaderText("Store Name").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("80").Template("#StoreTemplate").Add();
+                   }
+                   col.Field("InvoiceDate").HeaderText("Invoice Date").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Format("MM-dd-yyyy").Filter(new { type = "Excel" }).Width("60").Add();
+                   col.Field("TotalAmount").HeaderText("Amount").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Template("#amountTemplate").Filter(new { type = "Excel" }).Width("60").Add();
+
+                   col.Field("UploadInvoice").HeaderText("Docs").Width("30").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).AllowFiltering(false).AllowSorting(false).Template("#UploadTemplate").Add();
+                   col.Field("StatusValue").HeaderText("Status").Width("60").Template("#statusvalueTemplate").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+                   if ((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DispQBStatusInvoice") || Roles.IsUserInRole("ForceQBSyncInvoice")))
+                   {
+                       col.Field("IsQbStatus").HeaderText("QB Status").Width("70").Template("#QBStatusTemplate").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+                   }
+                   col.Field("Note").HeaderText("Notes").Width("50").Template("#NoteTemplate").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+                   col.Field("PaymentType").HeaderText("Payment Method").Width("80").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+                   col.HeaderText("Action").Width("60").Template("#EditTemplate").Add();
+
+               }).DataBound("dataBound").ActionBegin("actionBegin").Load("onLoad").EnableInfiniteScrolling(true).InfiniteScrollSettings(settings => { settings.InitialBlocks(1); }).PageSettings(page => page.PageSize(50)).QueryCellInfo("querycellinfo").Toolbar(new List<object>() { "Search", new { template = "<div id='departmentDropdownContainer'></div>" } }).Render()
+
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<div id="departmentDropdownTemplate" style="display:none;">
+    @if (ViewBag.departmentId != null)
+    {
+        @Html.DropDownListFor(x => x.departmentid, null, "Select Department", new { @class = "form-control select2", @onchange = "getInvoiceData();" })
+        <input type="hidden" id="getselectdeptvalue" />
+    }
+</div>
+
+<div class="modal fade" id="QbPaidModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Payment Status</h4>
+            </div>
+            <div class="modal-body">
+                @*<p><strong>Payment Date:</strong> <span class="qbpaydatebnd"></span></p>
+                <p><strong>Invoice Amount:</strong> <span class="qbamountbnd"></span></p>
+                <p><strong>Paid From:</strong> <span class="qbaccountnamebnd"></span></p>
+                <p><strong>Paid Amount:</strong> <span class="qbcheckamountbnd"></span></p>
+                <p><strong>Payment Method:</strong> <span class="qbpaymentbnd"></span></p>*@
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <button type="button" class="buttonbox btncancel" detail="Recent Invoice -" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/x-jsrender" id="EditTemplate">
+    ${if(IsDelete != "0")}
+    @if (((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice"))))
+    {
+        <a detail="Recent Invoices Delete InvoiceId - ${InvoiceId}" href="javascript:ComfirmDelete(${InvoiceId});" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/icon-trash.svg" alt="" /> </a>
+    }
+    ${/if}
+
+    ${if(IsEdit != "0")}
+    @if (((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice"))))
+    {
+        <a detail="Recent Invoices Edit InvoiceId - ${InvoiceId}" href="/Invoices/Edit/${InvoiceId}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" target="_blank"><img src="~/Content/Admin/images/icon-edit.svg" alt="" /></a>
+    }
+    ${/if}
+
+    <div id="${InvoiceId}" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="modal-title">Message</div>
+            <div class="modal-body"><p id="deleModalbody"> Are you sure you want to delete this Invoice?</p></div>
+            <div class="modal-footer" style="text-align:center">
+                <a class="btn btn-danger" detail="Recent Invoices Delete Confirm -" href="javascript:Delete(${InvoiceId});">Ok </a>
+                <a class="btn" data-dismiss="modal" detail="Recent Invoices Delete Confirm -" onclick="closemodal()">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+</script>
+<script type="text/x-jsrender" id="InvoiceNoTemplate">
+    @*<a detail="Recent Invoices InvoiceNumber - ${InvoiceNumber}" onclick="Setvalues();" href="/Invoices/Details/${InvoiceId}" style="color:#3c7be5">${InvoiceNumber}</a>*@
+    <a detail="Recent Invoices InvoiceNumber - ${InvoiceNumber}" onclick="Setvalues(${InvoiceId});" style="color:#3c7be5">${InvoiceNumber}</a>
+</script>
+<script type="text/x-jsrender" id="UploadTemplate">
+    <a href="/UserFiles/Invoices/${UploadInvoice}" detail="Recent Invoices Docs InvoiceId - ${InvoiceId}" target="_blank">
+        <img src="/Content/Admin/images/pdf.png" />
+    </a>
+</script>
+
+<script type="text/x-jsrender" id="StoreTemplate">
+    <div id="status" class="statustemp">
+        ${if(storeid == "0" || storeid == null)}
+        <span class="fntlight text-align-center" id="tdstorename">${StoreName}</span>
+        ${/if}
+    </div>
+</script>
+<script type="text/x-jsrender" id="amountTemplate">
+    <div id="status" class="statustemp">
+        ${if(InvoiceTypeId == "2")}
+        <span style="color:red;text-align:center" onclick="ShowDetailsInfo($InvoiceId)">-@Html.Raw("$ ")${TotalAmount}</span>
+        ${else}
+        <span style="text-align: center">@Html.Raw("$ ")${TotalAmount}</span>
+        ${/if}
+        ${{if InvoiceTypeId == 2}}
+        <span class="tooltipTD" id="TotalAmount_{{:InvoiceId}}">
+
+        </span>
+        ${{/if}}
+    </div>
+</script>
+<script type="text/x-jsrender" id="statusvalueTemplate">
+    <div id="status" class="statustemp">
+        ${if(StatusValue == "2")}
+        <span class="btn btn-success btn-xs clsstatus"><i class="fa fa-check"></i> Approved</span>
+        ${else if(StatusValue == "3")}
+        <span class="btn btn-danger btn-xs clsstatus"><i class="fa fa-times"></i> Rejected</span>
+        ${else if(StatusValue == "4")}
+        <span class="btn btn-warning btn-xs btndisable clsstatus"><i class="glyphicon glyphicon-pause" aria-hidden="true"></i> On Hold</span>
+        ${else}
+        <span title="" class="btn btn-warning btn-xs btnpending clsstatus"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>
+        ${/if}
+    </div>
+</script>
+<script type="text/x-jsrender" id="NoteTemplate">
+    <div id="status" class="statustemp">
+        ${if(Note != "" && Note != null)}
+        <img id="ok" src="/Content/Admin/images/icon-note.svg" title="${Note}" />
+        ${/if}
+    </div>
+</script>
+<script type="text/x-jsrender" id="QBStatusTemplate">
+    <div id="status" class="statustemp">
+        @if ((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("DispQBStatusInvoice")))
+        {
+            <td class="qbsynctd">
+                ${if(IsQbStatus != "0")}
+                ${if(IsSync == "1")}
+                <img src="~/QBImages/synced.png" style="height: 100%;" />
+                ${else}
+                ${if(QBTransfer == "0")}
+                <img src="~/QBImages/pendingqbsync.png" style="height: 100%;width:75px;" />
+                ${else}
+                <img src="~/QBImages/qb-no-qb.png" style="height: 100%;" />
+                ${/if}
+                ${/if}
+                ${/if}
+            </td>
+        }
+    </div>
+</script>
+<script type="text/x-jsrender" id="PaidStatusFilter">
+    ${PaidStatusFilterCheck(data)}
+</script>
+<script type="text/x-jsrender" id="IsPaidTemplate">
+    <div id="status" class="statustemp">
+        <td>
+            ${if(IsPaid == "1")}
+            <a href="javascript:ShowQbPaidPopup(${InvoiceId});" Detail="Paid Message" class="modl" id="modl" style="color: #1a6feb;">Paid
+                @*<img src="/QBImages/manaul-sync.png" style="height: 100%;width:35px;" />*@
+            </a>
+            ${else}
+            @*<img src="/QBImages/not-synced.png" style="height: 140%;width: 70px;" />*@
+            <span style="color: #e53939;">UnPaid</span>
+            ${/if}
+
+        </td>
+    </div>
+</script>
+
+<script>
+    var StoreId = '@ViewBag.Store';
+    var selectdstoreid = '@Session["storeid"]';
+    //getDepartmentList();
+    //function getDepartmentList() {
+    //    var storeid = StoreId;
+    //    if (StoreId != "") {
+    //        $.ajax({
+    //            url: '/Invoices/getDepartmentList',
+    //            type: "GET",
+    //            dataType: "JSON",
+    //            data: { StoreId: storeid },
+    //            success: function (states) {
+    //                $("#departmentId").html("");
+    //                $.each(states, function (data, value) {
+
+    //                    $("#departmentId").append(
+    //                        $('<option></option>').val(value.DepartmentId).html(value.DepartmentName));
+    //                });
+    //            }
+    //        });
+    //    }
+    //    else {
+    //        $("#departmentId").html('<option value="">Select Department</option>');
+    //    }
+    //}
+
+</script>
+
+<script>
+    function onLoad() {
+        ej.data.DataUtil.serverTimezoneOffset = 0;
+    }
+    $(document).ready(function () {
+        /*new ej.parseDateInUTC = true;*/
+        var departmentId = document.getElementById("departmentid")?.value || localStorage.getItem('getdeptid') || '';
+        if (departmentId) {
+            $("#departmentid").val(departmentId);
+        }
+        setTimeout(() => {
+            localStorage.setItem('getdeptid', "");
+        }, 5000);
+        //localStorage.setItem('getdeptid', "");
+        //var ajax = new ej.base.Ajax({ // used our ajax to send the retrive the persistData from server
+        //    url: "/Invoices/InvoiceGridRestore",
+        //    type: "POST",
+        //    contentType: "application/json; charset=utf-8"
+        //});
+        //ajax.send();
+        //ajax.onSuccess = function (result) {
+        var result = JSON.parse(localStorage.getItem("SelectedPersistData"));
+        if (result != null) {
+            var grid = document.getElementById("InlineInvoiceEditing").ej2_instances[0];
+            var gridColumnsState = Object.assign([], grid.getColumns());
+            var state = JSON.parse(result.persistData);
+            //for (var i = 0; i < state.columns.length; i++) {
+            //    state.columns[i].headerText = state.columns[i].backupHeader; //restore headerText
+            //}
+            state.columns.forEach(function (col) {
+
+                var originalColumn = gridColumnsState.find(function (colColumnsState) { return colColumnsState.field === col.field; })
+                if (originalColumn !== undefined) {
+                    // Header Text
+                    colHeaderText = originalColumn['headerText'];
+
+                    if (colHeaderText !== undefined) {
+                        col.headerText = colHeaderText;
+                    }
+
+                    // Template
+                    var colTemplate = originalColumn['template'];
+
+                    if (colTemplate !== undefined) {
+                        col.template = colTemplate;
+                    }
+
+                    // Header Template
+                    var colHeaderTemplate = originalColumn['headerTemplate'];
+
+                    if (colHeaderTemplate !== undefined) {
+                        col.headerTemplate = colHeaderTemplate;
+                    }
+                }
+            });
+
+            grid.setProperties(state);
+
+            grid.refreshHeader();
+            grid.refresh();
+            localStorage.removeItem("SelectedPersistData");
+        }
+    });
+</script>
+<script src="~/Form_JS/InvoiceGrid2.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+@Html.EJS().ScriptManager()

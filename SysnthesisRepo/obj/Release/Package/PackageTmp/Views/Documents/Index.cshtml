@@ -1,0 +1,60 @@
+﻿
+@{
+
+    if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+    if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+    {
+        Layout = "~/Views/Shared/AdminMAster.cshtml";
+        <script src="~/Content/Admin/assets/js/jquery.min.js"></script>
+    }
+    else
+    {
+        Html.RenderAction("Grid");
+    }
+}
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<div id="popupRightsAlert" class="divIDClass1 modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">You have no access of selected store</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closeRightsmodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    function closeRightsmodal() {
+        $(".divIDClass1").hide();
+    }
+</script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+
+

@@ -1,0 +1,983 @@
+﻿@model IEnumerable<EntityModels.Models.ExpenseCheckSelect>
+@*@using wwwroot.Areas.Admin.Models
+    @using wwwroot.Class*@
+@*@using EntityModels.Class*@
+@using EntityModels.Models;
+@using Utility;
+@using System.Configuration;
+@{
+
+    Layout = null;
+}
+
+<style>
+    
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .modal-header {
+        border-bottom: 3px solid #a52f2f;
+    }
+
+    .header-small {
+        margin-top: 0px !important;
+    }
+
+    #IModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+    #popupid {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    .wraptd {
+        white-space: normal !important;
+    }
+</style>
+
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+    
+</style>
+<style>
+    .show-read-more .more-text {
+        display: none;
+    }
+    #modl {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+</style>
+<div id="loadbox"></div>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+    </div>
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body headertopbox special_bg">
+            <div class="page-header-main position-relative ">
+                <h2>Recent Expenses/Checks</h2>
+
+                <span class="searchinvoicebox ">
+                    <a href="#" class="searchbtn" id="searchicon"></a>
+                    <input id="search-box" type="text" class="form-control inputvendorname" placeholder="Search by Name,Amount or Department" />
+                    <a href="#" class="search_close" onclick="cleartextsearch();">x</a>
+                </span>
+
+
+                <span class="pull-right btnburgermenu dropdown">
+                    <a herf="#" class="dropdown-toggle align_left_svg" data-toggle="dropdown" role="button" aria-expanded="false"><img src="~/Content/Admin/images/align-left.svg" alt="" /> </a>
+                    <div class="dropdown-menu form-login stop-propagation" role="menu">
+                        @using (Html.BeginForm("ExpenseCheckIndexGrid", "ExpenseAccounts", FormMethod.Post, new { enctype = "multipart/form-data", id = "frmid" }))
+                        {
+                        <h3>Filter by Expense Type</h3>
+                            <div class="formgroup">
+                                <table>
+                                    <td class="pad10">
+                                        <input class="chk" id="radio1" type="checkbox" name="radio" value="Expense">
+                                        <label for="radio1">Expenses</label>
+                                    </td>
+                                    <td>
+                                        <input class="chk" id="radio2" type="checkbox" name="radio" value="Check/ACH">
+                                        <label for="radio2">Check</label>
+                                    </td>
+                                </table>
+                            </div>
+                            <div class="formgroup">
+                                <h3>Filter By Amount</h3>
+                                <ul>
+                                    <li>
+                                        @*<input class="form-control " data-val="true" data-val-date="The field Startdate must be a date." data-val-required=" " id="datepicker" name="Startdate1" placeholder="From Date" type="text" value="" />*@
+                                        <input name="AmtMinimum" type="text" maxlength="18" id="AmtMinimum" @*onchange="Minimum()"*@ placeholder="Min" class="form-control decimalOnly">
+
+                                    </li>
+                                    <li>
+                                        @*<input class="form-control " data-val="true" data-val-date="The field Startdate must be a date." data-val-required=" " id="datepicker1" name="Startdate1" placeholder="To Date" type="text" value="" />*@
+                                        <input name="AmtMaximum" type="text" maxlength="18" id="AmtMaximum" @*onchange="Maximum()"*@ placeholder="Max" class="form-control decimalOnly">
+                                    </li>
+                                </ul>
+                                @*<div class="highlight" id="Validation">Select Valid Amount</div>*@
+                            </div>
+                            <div class="clear"></div>
+                            <div class="formgroup">
+                                <h3>Filter By Date</h3>
+                                <ul>
+                                    <li>
+                                        <input name="txtstartdate" type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                                    </li>
+                                    <li>
+                                        <input name="txtenddate" type="text" maxlength="100" id="txtenddate" placeholder="To" class="datepicker form-control" onkeydown="return false">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="formgroup martop20">
+                                <h3>Filter By Department</h3>
+                                @Html.DropDownList("DrpLstdept", null, "Select Department", new { @class = "myval" })
+                            </div>
+                            @*<div class="formgroup">
+                        <h3>Filter By Store</h3>
+                        @Html.DropDownList("ECLstStore", null, "Select Store", new { @class = "myval" })
+                    </div>
+                            *@
+                            <div class="clear martop20"></div>
+                            <input type="hidden" id="ClearFilter" />
+                            <button type="submit" class="btn btn-danger btn-block" onclick="setitems()"><strong> Filter</strong></button>
+                        }
+                    </div>
+
+                </span>
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <span class="pull-right">
+                        <input type="button" class="buttonbox btn-info" onclick="ExcludedExpenseList();" value="Include" />&nbsp;&nbsp;
+                    </span>
+                }
+            </div>
+
+            @if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("ViewExpenseCheck"))
+            {
+                if (Model.Count() > 0)
+                {
+                    <div class="datagrid">
+                        <div class="table-responsive" id="test">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%;"><a class="textred" onclick="javascript:FunSortData('VendorName');" style="color:#fff; text-decoration:none; cursor:pointer;">Name</a></th>
+                                        @{
+                                            string storeid = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+                                        }
+                                        @if (storeid == "0" || storeid == null)
+                                        {
+                                            <th style="width:10%;text-align:center">Store</th>
+                                        }
+                                        <th style="width:10%;text-align:center"><a class="textred" onclick="javascript:FunSortData('Type');" style="color:#fff; text-decoration:none; cursor:pointer;">Type</a></th>
+                                        @*<th><a class="textred" onclick="javascript:FunSortData('InvoiceNumber');" style="color:#fff; text-decoration:none; cursor:pointer;">Invoice #</a></th>*@
+                                        <th style="width:10%;text-align:center"><a class="textred" onclick="javascript:FunSortData('TXnDate');" style="color:#fff; text-decoration:none; cursor:pointer;">Date</a></th>
+                                        <th style="width:10%;text-align:center">No#</th>
+                                        @*<th style="width:10%;text-align:center">Modify Date</th>*@
+                                        <th style="width:10%;text-align:center"><a class="textred" onclick="javascript:FunSortData('Amount');" style="color:#fff; text-decoration:none; cursor:pointer;">Amount</a></th>
+                                        <th style="width:15%;text-align:center"><a class="textred" onclick="javascript:FunSortData('Department');" style="color:#fff; text-decoration:none; cursor:pointer;">Department</a></th>
+                                        <th style="width:20%;text-align:center">Memo</th>
+                                        <th style="width:5%;text-align:center">Docs</th>
+                                        @if (Roles.IsUserInRole("Administrator"))
+                                        {
+                                            <th style="width:5%;text-align:center">Action</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr class="even">
+                                        <td class="fntlight" style="width:15%"><a href="javascript:void(0)" class="clsvendorname text-align-center" id="Vendorid" onclick="GetVendorData(this);">@Html.Raw(item.VendorName)</a></td>
+                                        @{
+                                            string storeid1 = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+                                        }
+                                        @if (storeid1 == "0" || storeid1 == null)
+                                        {
+                                            <td style="width:10%;text-align:center">
+                                                <span>
+                                                    @Html.Raw(item.StoreName)
+                                                </span>
+                                            </td>
+                                        }
+                                        <td style="width:10%;text-align:center">
+                                            <span>
+                                                @Html.Raw(item.Type)
+                                            </span>
+                                        </td>
+                                        <td style="width:10%" class="text-align-center">
+                                            @item.InvoiceDate.ToString("MM-dd-yyyy")
+                                        </td>
+                                        @*<td style="width:10%" class="text-align-center">
+            @item.ModifyDate.ToString("MM-dd-yyyy")
+        </td>*@
+                                        <td style="width:15%;text-align:center">
+    <span>
+        @Html.Raw(item.DocNumber)
+    </span>
+</td>
+                                        <td style="width:10%;text-align:center">
+                                            <span>
+                                                @Html.Raw("$ " + AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.Amount)))
+                                            </span>
+
+                                        </td>
+                                        <td style="width:15%;text-align:left" id="invoiceamt" class="wraptd">
+                                            <span>
+                                                @Html.Raw(item.Department)
+                                            </span>
+                                        </td>
+                                        <td style="width:20%;text-align:left" class="wraptd" id="tdmemo">
+
+                                            <p class="show-read-more">
+                                                @Html.Raw(item.Memo)
+                                            </p>
+
+
+                                        </td>
+                                        <td style="width:5%;text-align:center" id="uploaddocs">
+
+                                            @*<button type="button" id="modl" value="@item.InvoiceId" data-toggle="modal" data-target="#IModal" class="btn btn-danger" style="margin-right:4px;padding-top:2px;float:right;">+</button>*@
+                                            <button type="button" id="modl" value="@item.InvoiceId" class="modl">
+                                                <img src="~/Content/Admin/images/btnadd_row.png" />
+                                            </button>
+                                        </td>
+                                        @if (Roles.IsUserInRole("Administrator"))
+                                        {
+                                            <td style="width:5%;text-align:center" id="exclude">
+                                                <button type="button" id="btnExclude" class="btn btn-danger" style="margin-right:4px;padding-top:2px;float:right;" onclick="ExcludeDocument(@item.ExpenseCheckDetailId);">Exclude</button>
+                                            </td>
+                                        }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="IModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Expense Document</h4>
+            </div>
+            @*@using (Html.BeginForm("SaveExpenseDocument", "ExpenseAccounts", FormMethod.Post, new { id = "frmExpense" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)*@
+                <div class="modal-body">
+                    <div id="frmUserType" class="form-horizontal">
+                        @Html.Editor("ExpenseId", new { htmlAttributes = new { @class = "form-control", style = "display:none" } })
+
+                        <div class="form-group">
+                            <label style="font-weight:bold;font-size:medium">&nbsp;&nbsp; Upload Document :</label>
+                            <span style="width:500px;">
+                                <input type="file" name="postedFile" id="fileinput" class="fileut" /> @*<input type="submit" id="UploadPDF" value="Import Excel" class="btn btn-success" />*@
+                                @*<input class="form-control" type="file" name="importFile" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="padding: 3px;" />*@
+                            </span>
+                        </div>
+                        @*@{ Html.RenderAction("AddUserType", new EntityModels.Models.UserTypeMaster()); }*@
+                    </div>
+                </div>
+                <div class="modal-footer modal-delete-footer">
+                    <input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Save" onclick="AddDocument();" />
+                    @*<input  type="submit" class="buttonbox btnsubmit" value="Save"/>*@
+                    <button type="button" class="buttonbox btncancel" data-dismiss="modal">Close</button>
+                </div>
+                @*}*@
+            </div>
+    </div>
+</div>
+
+<div class="modal fade" id="popupid" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="margin-top:14%;width:200%;right:40%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Excluded Expense List</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    @using (Html.BeginForm("IncludeExpense", "ExpenseAccounts", FormMethod.Post, new { id = "frmMain" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @*<h4 class="modal-title">Excluded List</h4>
+                        <hr />*@
+
+                        <table class="table table-striped table-bordered" id="tblProducts" style="width:100%;max-height:200px;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Store</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Department</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dvproductsbdy"></tbody>
+
+                        </table>
+                        <hr />
+                    }
+                </div>
+                <div class="modal-footer modal-delete-footer">
+                    @*<input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Add" onclick="AssignProduct();" />*@
+                    <input type="submit" value="Include" form="frmMain" class="buttonbox btnsubmit" />
+                    <button type="button" class="buttonbox btncancel" data-dismiss="modal">Close</button>
+                </div>
+                @*<div id="frmUserType" class="form-horizontal">*@
+                @*@{ Html.RenderAction("AddUserType", new EntityModels.Models.UserTypeMaster()); }*@
+                @*</div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    function AddDocument() {
+        var ExpenseId = $('#ExpenseId').val();
+        var files = $("#fileinput").get(0).files;
+        var ExpenseId = $("#ExpenseId").val();
+
+        var formData = new FormData();
+        formData.append('fileinput', files[0]);
+        formData.append('ExpenseId', ExpenseId);
+        $.ajax({
+            url: '/ExpenseAccounts/SaveExpenseDocument',
+            type: "post",
+            data: formData,
+            contentType: false,
+            processData: false,
+            beforeSend: function () { Loader(1); },
+            success: function (states) {
+                if (states == "OK") {
+                    $("#fileinput").text("");
+                    $('#IModal').modal('hide');
+                    toastr.success('Document Save Successfully.');
+                }
+                Loader(0);
+            }
+        });
+    }
+    function ExcludeDocument(iii) {
+        
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExcludeExpense',
+            data: { ExpenseId: iii},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (states) {
+                if (states == "OK") {
+                    toastr.success('Expense Excluded Successfully.');
+                    window.location.href ='@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExpenseCheckIndex';
+                }
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+    //function ExcludeDocument(iii) {
+        
+    //    $.ajax({
+    //        url: '/ExpenseAccounts/ExcludeExpense',
+    //        type: "post",
+    //        data: { ExpenseId: iii },
+    //        contentType: false,
+    //        processData: false,
+    //        beforeSend: function () { Loader(1); },
+    //        success: function (states) {
+    //            if (states == "OK") {
+    //                toastr.success('Document Save Successfully.');
+    //            }
+    //            Loader(0);
+    //        }
+    //    });
+    //}
+
+    $(".modl").click(function () {
+        //$("#IModal").show();
+        $('#IModal').modal('show');
+        //$(".fileut").text('');
+        $(".file-input-name").text('');
+        $(".fileut").val('');
+        $("#ExpenseId").val(this.value)
+    })
+    $(document).ready(function () {
+        
+        var maxLength = 50;
+        $(".show-read-more").each(function () {
+            
+            var myStr = $(this).text();
+            if ($.trim(myStr).length > maxLength) {
+                var newStr = $.trim(myStr).substring(0, maxLength);
+                var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                $(this).empty().html(newStr);
+                $(this).append(' <a href="javascript:void(0);" class="read-more">read more...</a>');
+                $(this).append('<span class="more-text">' + removedStr + '</span>');
+            }
+        });
+        $(".read-more").click(function () {
+            $(this).siblings(".more-text").contents().unwrap();
+            $(this).remove();
+        });
+    });
+</script>
+<script>
+    function Setvalues() {
+        localStorage.setItem("FromInvoicePage", "");
+    }
+
+    function setitems() {
+        var Min = document.getElementById('AmtMinimum').value;
+        var Max = document.getElementById('AmtMaximum').value;
+        var startdate = document.getElementById('txtstartdate').value;
+        var enddate = document.getElementById('txtenddate').value;
+        var payment = $("#radio1").prop("checked");
+        var payment1 = $("#radio2").prop("checked");
+        var Dept = document.getElementById('DrpLstdept').value;
+        //var Store = document.getElementById('ECLstStore').value;
+        localStorage.setItem("ECheckFilter_AmtMinimum", Min);
+        localStorage.setItem("ECheckFilter_AmtMaximum", Max);
+        localStorage.setItem("ECheckFilter_StartDate", startdate);
+        localStorage.setItem("ECheckFilter_EndDate", enddate);
+        if (payment == true) {
+            payment = $("#radio1").val();
+        }
+        else {
+            payment = null;
+        }
+        if (payment1 == true) {
+            payment1 = $("#radio2").val();
+        }
+        else {
+            payment1 = null;
+        }
+        localStorage.setItem("ECheckFilter_Payment1", payment);
+        localStorage.setItem("ECheckFilter_Payment2", payment1);
+        localStorage.setItem("ECheckFilter_Department", Dept);
+        //localStorage.setItem("ECheckFilter_Store", Store);
+    }
+
+    $(".decimalOnly").bind('keypress', function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46)
+            return false;
+
+        return true;
+    });
+    $(".decimalOnly").bind("paste", function (e) {
+        e.preventDefault();
+    });
+
+    $(document).ready(function () {
+        $('#txtstartdate').attr('autocomplete', 'off');
+        $('#txtenddate').attr('autocomplete', 'off');
+        $("#search-box").attr('autocomplete', 'off');
+        $("#search-box").focus();
+        Loader(0);
+        $('#txtstartdate').datetimepicker({
+            format: 'MM-DD-YYYY',
+            useCurrent: false
+        });
+        $('#txtenddate').datetimepicker({
+            format: 'MM-DD-YYYY',
+            useCurrent: false
+        });
+
+        $('#txtstartdate').on("dp.change", function (e) {
+            $('#txtenddate').data("DateTimePicker").minDate(e.date);
+        });
+        $('#txtenddate').click("dp.change", function (e) {
+            $('#txtenddate').data("DateTimePicker").minDate($('#txtstartdate').val());
+        });
+
+        var searchval = '';
+        if (searchval != null) {
+            document.getElementById('search-box').value = (searchval).replace(/&amp;/g, '&');
+            $("#search-box").val((searchval).replace(/&amp;/g, '&'));
+        }
+
+        bind();
+    });
+
+    function cleartextsearch()
+    {
+        var searchdashbord_val = '';
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExpenseCheckIndexGrid',
+            data: {
+                IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: '@ViewBag.IsAscVal', PageSize: 50, SearchRecords: '@ViewBag.SearchRecords', Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', Store_val: '', searchdashbord: 'Clear', SearchFlg: '' },
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                localStorage.removeItem("ECheckFilter_SearchVendor");
+                localStorage.removeItem("ECheckFilter_SearchFlg");
+                $('#search-box').val("");
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    function GetVendorData(obj) {
+        var setvendorname = obj.innerHTML; //$(this).text();
+        $(".inputvendorname").val(setvendorname);
+        var SearchFlg = "V";
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExpenseCheckIndexGrid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: '@ViewBag.IsAscVal', PageSize: 50, SearchRecords: '@ViewBag.SearchRecords', Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', Store_val: '', searchdashbord: setvendorname,  SearchFlg: SearchFlg },
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                document.getElementById('search-box').value = setvendorname;
+                localStorage.setItem("ECheckFilter_SearchVendor", setvendorname);
+                localStorage.setItem("ECheckFilter_SearchFlg", SearchFlg);
+                $('#search-box').val(setvendorname);
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $(".loading-container").attr("style", "display:block;")
+        }
+        else {
+            $(".loading-container").attr("style", "display:none;")
+        }
+        bind();
+    }
+
+    $("#searchicon").change(function () {
+        var searchdashbord_val = document.getElementById('search-box').value;
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExpenseCheckIndexGrid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: '@ViewBag.IsAscVal', PageSize: 50, SearchRecords: '@ViewBag.SearchRecords', Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', Store_val: '', searchdashbord: $(this).val(),  SearchFlg: SearchFlg },
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    });
+
+    $("#search-box").change(function () {
+        searchEvent();
+    });
+
+    function searchEvent()
+    {
+        var SearchFlg = 'S';
+        var searchdashbord_val = document.getElementById('search-box').value;
+        if (searchdashbord_val == "" || searchdashbord_val == undefined) {
+            searchdashbord_val = "Clear";
+            SearchFlg = '';
+        }
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExpenseCheckIndexGrid',
+            data: { IsBindData: 1, currentPageIndex: 1, orderby: '@ViewBag.OrderByVal', IsAsc: '@ViewBag.IsAscVal', PageSize: 50, SearchRecords: '@ViewBag.SearchRecords', Alpha: '@ViewBag.Alpha', deptname: '', startdate: '', enddate: '', Store_val: '', searchdashbord: searchdashbord_val, SearchFlg: SearchFlg },
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                $('#grddata').empty();
+                $('#grddata').append(response);
+                if (searchdashbord_val == "Clear") {
+                    searchdashbord_val = "";
+                }
+                Loader(0);
+                $('#search-box').val(searchdashbord_val);
+                if (searchdashbord_val == null || searchdashbord_val == '' || searchdashbord_val == "" || searchdashbord_val == undefined) {
+                    localStorage.removeItem("ECheckFilter_SearchVendor");
+                    document.getElementById('search-box').value = "";
+                }
+                else {
+                    document.getElementById('search-box').value = searchdashbord_val;
+                    localStorage.setItem("ECheckFilter_SearchVendor", searchdashbord_val);
+                }
+                localStorage.setItem("ECheckFilter_SearchFlg", SearchFlg);
+
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    }
+
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@Session["ECLstStore"]','@Session["ECstartdate"]','@Session["ECenddate"]','@ViewBag.SearchFlg');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+        
+        GetData(1,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@Session["ECLstStore"]','@Session["ECstartdate"]','@Session["ECenddate"]','@ViewBag.SearchFlg');
+        //myCustomFn();
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@Session["ECLstStore"]','@Session["ECstartdate"]','@Session["ECenddate"]','@ViewBag.SearchFlg');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'@Session["ECLstStore"]','@Session["ECstartdate"]','@Session["ECenddate"]','@ViewBag.SearchFlg');
+    }
+
+    function GetData(IsBindData_val, PageIndex, orderby_val, isAsc_val, PageSize_val, alpha_val, SearchRecords_val, dept_val, startdate_val, enddate_val, payment_val, Store_val, Maximum_val, Minimum_val, SearchFlg)
+    {
+        var StartDate = localStorage.getItem("ECheckFilterStartDate");
+        var EndDate = localStorage.getItem("ECheckFilter_EndDate");
+        var Store = localStorage.getItem("ECheckFilter_Store");
+        var SrchTypeFlg = localStorage.getItem("ECheckFilter_SearchFlg");
+        if (StartDate != null) {
+            startdate_val = StartDate;
+        }
+        if (EndDate != null) {
+            enddate_val = EndDate;
+        }
+        if (Store != null) {
+            dept_val = Store;
+        }
+        if (SrchTypeFlg != null) {
+            SearchFlg = SrchTypeFlg;
+        }
+
+        var Data = '@Session["ECsearchdashbord"]'; @*'@ViewBag.searchdashbord';*@
+        //if (Vendor != null) {
+        //    Data = Vendor;
+        //}
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExpenseCheckIndexGrid',
+
+            data: { IsBindData: IsBindData_val, currentPageIndex: PageIndex, orderby: orderby_val.trim(), IsAsc: isAsc_val, PageSize: 50, SearchRecords: SearchRecords_val, Alpha: alpha_val, deptname: dept_val, startdate: startdate_val, enddate: enddate_val, Store_val: Store_val, searchdashbord: Data, SearchFlg: SearchFlg},
+            beforeSend: function () { Loader(1); },
+            success: function (response) {
+
+                if (response != null) {
+                    $('#grddata').empty();
+                    Loader(0);
+                    $('#grddata').append(response);
+
+                }
+                if (Data != null && Data != "" & Data != undefined) {
+                    $(".inputvendorname").val(Data);
+                }
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+
+    }
+
+    function bind() {
+
+        $(".myval").select2({
+            allowclear: true,
+        });
+        var AmtMinimum = localStorage.getItem("ECheckFilter_AmtMinimum");
+        var AmtMaximum = localStorage.getItem("ECheckFilter_AmtMaximum");
+        var StartDate = localStorage.getItem("ECheckFilter_StartDate");
+        var EndDate = localStorage.getItem("ECheckFilter_EndDate");
+        var Payment = localStorage.getItem("ECheckFilter_Payment1");
+        var Payment1 = localStorage.getItem("ECheckFilter_Payment2");
+        var Department = localStorage.getItem("ECheckFilter_Department");
+        //var Store = localStorage.getItem("ECheckFilter_Store");
+        var Vendor = localStorage.getItem("ECheckFilter_SearchVendor");
+        var SrchTypeFlg = localStorage.getItem("ECheckFilter_SearchFlg");
+
+
+         if (Payment=="Expense")
+        {
+            $( "#radio1").prop('checked', true);
+        }
+        else if (Payment1=="Check/ACH")
+        {
+            $( "#radio2").prop('checked', true);
+        }
+        else if('@ViewBag.IsFilter'=="1"){
+
+            $( "#radio1").prop('checked', true);
+            $( "#radio2").prop('checked', true);
+        }
+
+        if (Payment == "Expense" && Payment1 == "Check/ACH") {
+            $("#radio1").prop('checked', true);
+            $("#radio2").prop('checked', true);
+        }
+        else if (Payment == null && Payment1 == null){
+            $("#radio1").prop('checked', false);
+            $("#radio2").prop('checked', false);
+        }
+       
+        $(".select2-container").remove();
+
+        var dept = Department; @*@ViewBag.deptname;*@
+        if (dept != '0' && dept != null && dept != '') {
+            if (document.getElementById("DrpLstdept")) {
+                document.getElementById('DrpLstdept').value = Department;
+            }
+        }
+        @*var dept = Store;
+        if (dept != '0' && dept != null) {
+            document.getElementById('ECLstStore').value = Store;
+        }*@
+        if (StartDate != null) {
+            if (document.getElementById("txtstartdate")) {
+                document.getElementById('txtstartdate').value = StartDate;
+            }
+        }
+        if (EndDate != null) {
+            if (document.getElementById("txtenddate")) {
+                document.getElementById('txtenddate').value = EndDate;
+            }
+        }
+        if (AmtMinimum != null) {
+            if (document.getElementById('AmtMinimum')) {
+                document.getElementById('AmtMinimum').value = AmtMinimum;
+            }
+        }
+        if (AmtMaximum != null) {
+            if (document.getElementById('AmtMaximum')) {
+                document.getElementById('AmtMaximum').value = AmtMaximum;
+            }
+        }
+        if (Vendor != null) {
+            $(".inputvendorname").val(Vendor);
+        }
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+    }
+</script>
+<script>
+
+    var pageSize = 50;
+    var pageIndex = 1;
+    var pageCount =@ViewBag.TotalDataCount!= null ?@ViewBag.TotalDataCount: 0;
+    $(function () {
+        var $win = $(window);
+
+        $win.scroll(function () {
+            if ($win.height() + $win.scrollTop()
+                == $(document).height()) {
+                myCustomFn();
+            }
+        });
+    });
+
+    function getDocHeight() {	// $(document).height() value depends on browser
+       var D = document;
+       return Math.max(
+           D.body.scrollHeight, D.documentElement.scrollHeight,
+           D.body.offsetHeight, D.documentElement.offsetHeight,
+           D.body.clientHeight, D.documentElement.clientHeight
+       );
+    }
+    function myCustomFn() {
+        var page_loadsize = parseInt(@ViewBag.PageSize) + parseInt(50);
+        document.getElementById('hdnpagevalue').value = page_loadsize;
+        $("#hdnpagevalue").val(page_loadsize);
+    }
+
+    function ExportExcelData() {
+        var datval = $("#txtstartdate").val();
+        var datendval = $("#txtenddate").val();
+        var deptnm = 0;
+        if ($("#ECLstStore").val() != "undefined" && $("#ECLstStore").val() != "") {
+
+            deptnm = $("#ECLstStore").val();
+        }
+        if (deptnm == null) {
+            deptnm = 0;
+        }
+        var vendornm = 0;
+
+        var searchdashbord_val = $("#search-box").val();
+            let a = document.createElement('a');
+            a.target = '_blank';
+             a.href = '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExportExpenseCheckData?StartDate=' + datval + '&EndDate=' + datendval + '&StoreId=' + deptnm + '&searchdashbord=' + searchdashbord_val;
+            a.click();
+    }
+
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 50) {
+            $(".page-header-main").addClass("stikyheader");
+        } else {
+            $(".page-header-main").removeClass("stikyheader");
+        }
+    });
+
+    $(document).ready(function () {
+        (function ($) {
+            $.fn.fixMe = function () {
+                return this.each(function () {
+                    var $this = $(this),
+                        $t_fixed;
+                    function init() {
+                        $this.wrap('<div class="" />');
+                        $t_fixed = $this.clone();
+                        $t_fixed.find("tbody").remove().end().addClass("fixed").insertBefore($this);
+                        resizeFixed();
+                    }
+                    function resizeFixed() {
+                        $t_fixed.find("th").each(function (index) {
+                            $(this).css("width", $this.find("th").eq(index).outerWidth() + "px");
+                        });
+                    }
+                    function scrollFixed() {
+                        var offset = $(this).scrollTop(),
+                            tableOffsetTop = $this.offset().top,
+                            tableOffsetBottom = tableOffsetTop + $this.height() - $this.find("thead").height();
+                        if (offset < tableOffsetTop || offset > tableOffsetBottom)
+                            $t_fixed.hide();
+                        else if (offset >= tableOffsetTop && offset <= tableOffsetBottom && $t_fixed.is(":hidden"))
+                            $t_fixed.show();
+                    }
+                    $(window).resize(resizeFixed);
+                    $(window).scroll(scrollFixed);
+                    init();
+                });
+            };
+        })(jQuery);
+
+        $(document).ready(function () {
+            $("table").fixMe();
+
+        });
+    });
+
+    function ExcludedExpenseList() {
+
+       
+
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ExpenseAccounts/ExcludedExpenseList',
+          
+            async: false,
+            success: function (response) {
+                
+                //$.noConflict();
+                if (response.length > 0) {
+                    //var table1 = $('#tblPr').DataTable();
+                    //table1.clear().draw();
+                    //myJsonData = response;
+                    //populateDataTable(myJsonData);
+                    //$('#tblPr').DataTable();
+                    var htmls = "";
+                    $.each(response, function (index, value) {
+                        
+                        htmls += "<tr>";
+                        htmls += "<td> <input type='checkbox' value=" + value.ExpenseCheckDetailId + " name='selectedval'  id='selectedval' class='Remember' style='margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;'></td>";
+                        htmls += "<td>" + (value.VendorName == null ? "" : value.VendorName) + "</td>";
+                        htmls += "<td>" + (value.StoreName == null ? "" : value.StoreName) + "</td>";
+                        htmls += "<td>" + (value.Type == null ? "" : value.Type) + "</td>";
+                        htmls += "<td>" + (value.Date == null ? "" : value.Date) + "</td>";
+                        htmls += "<td>" + value.Amount + "</td>";
+                        htmls += "<td>" + (value.Department == null ? "" : value.Department) + "</td>";
+                        //htmls += "<td>" + (value.Departments == null ? "" : value.Departments )+"</td>";
+                        htmls += "</tr>";
+                    });
+                    $("#dvproductsbdy").html("");
+                    $("#dvproductsbdy").html(htmls);
+                    $("#dvsearchproduct").html("");
+                }
+                else {
+                    $("#dvproductsbdy").html("");
+                    $("#dvsearchproduct").html("");
+                }
+                $('#popupid').modal('show');
+                //var htmls = "<tr>";
+                //htmls += "<td>d</td>";
+                //htmls += "<td>d</td>";
+                //htmls += "<td>b</td>";
+                //htmls += "<td>gf</td>";
+                //htmls += "<td>u</td>";
+                //htmls += "</tr>";
+
+                //$("#testddddd").html("");
+                //$("#testddddd").html(htmls);
+                //$("#popupid").show();
+            },
+            error: function () {
+                Loader(0);
+            }
+        });
+    }
+</script>
+

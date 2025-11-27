@@ -1,0 +1,108 @@
+E:\Dhruv\Synthesis_New\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+E:\Dhruv\Synthesis_New\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+E:\Dhruv\Synthesis_New\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+E:\Dhruv\Synthesis_New\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+E:\Dhruv\Synthesis_New\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+E:\Dhruv\Synthesis_New\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\RestSharp.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\Newtonsoft.Json.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\EntityFramework.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\Utility.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.pdb
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.dll.config
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\EntityFramework.xml
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\bin\Debug\Utility.pdb
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CopyComplete
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\RestSharp.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\Newtonsoft.Json.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\EntityFramework.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\Utility.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.dll.config
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\EntityFramework.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\bin\Debug\Utility.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CopyComplete
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\EntityFramework.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\RestSharp.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\Newtonsoft.Json.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\Utility.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\EntityModels.dll.config
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\EntityFramework.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\bin\Debug\Utility.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CopyComplete
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\obj\Debug\Synthesi.B39D3DE9.Up2Date
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\obj\Debug\Synthesi.B39D3DE9.Up2Date
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\SynthesisViewModal.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityModels.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityFramework.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\RestSharp.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\Utility.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityModels.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityModels.dll.config
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\EntityFramework.xml
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\bin\Debug\Utility.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\obj\Debug\Synthesi.B39D3DE9.Up2Date
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisViewModal\obj\Debug\SynthesisViewModal.pdb

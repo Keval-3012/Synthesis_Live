@@ -1,0 +1,1029 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+<style>
+    #ajax_dialog1_dialog-header {
+        padding: 12px 14px 12px 12px !important;
+    }
+
+    .heading {
+        color: white;
+        font-size: 26px;
+        background-color: black;
+        margin-left: 21px;
+        width: 100%;
+    }
+</style>
+
+<style type="text/css">
+    #loading {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        margin: -50px 0px 0px -50px;
+    }
+</style>
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<div id="loading" style="display:none">
+    <img id="loading-image" src="~/Content/image/loading.gif" alt="loading">
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="heading">
+            <label>&nbsp;&nbsp;74-84</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster1").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList1).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata1();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList1").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList1).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add1();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore1").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore1").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate1").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="heading">
+            <label>&nbsp;&nbsp;Maywood</label>
+        </div>
+
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster2").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList2).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata2();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList2").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList2).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add2();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore2").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore2").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="heading">
+            <label>&nbsp;&nbsp;1407</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster3").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList3).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata3();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList3").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList3).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add3();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore3").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore3").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-6">
+
+        <div class="heading">
+            <label>&nbsp;&nbsp;180</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster4").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList4).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata4();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList4").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList4).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add4();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore4").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore4").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <div class="heading">
+            <label>&nbsp;&nbsp;2589</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster5").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList5).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata5();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList5").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList5).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add5();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore5").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore5").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="heading">
+            <label>&nbsp;&nbsp;14th street</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster6").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList6).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata6();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList6").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList6).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add6();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore6").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore6").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <div class="heading">
+            <label>&nbsp;&nbsp;2840</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster7").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList7).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata7();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList7").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList7).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add7();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore7").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore7").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="heading">
+            <label>&nbsp;&nbsp;170</label>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Master Vendor</label>
+                    @Html.EJS().DropDownList("VendorListmaster9").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList9).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:mergedata9();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Merge Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 10px 10px;">
+            <div class="col-md-10">
+                <div class="col-md-4">
+                    <label for="VendorList">Select Vendor for Merge Invoice</label>
+                    @Html.EJS().DropDownList("VendorList9").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList9).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorId" }).Render()
+                </div>
+                <div class="col-sm-1">
+                    <a href="javascript:add9();" class="btn btn-info" data-toggle="tooltip" data-placement="top" style="margin-top:25px;width:100px;">Add Vendor</a>
+                </div>
+            </div>
+        </div>
+        <div class="page-body headertopbox special_bg">
+            <div class="control-section">
+                <div class="row" style="width:80%;margin-left:10px;">
+                    @Html.EJS().Grid("grdStore9").DataSource(dm => dm.Url("/VendorMasters/AddVendorlistStore9").Adaptor("UrlAdaptor")).SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+               {
+                   col.Field("VendorId").HeaderText("VendorId").Visible(false).Width("150").Add();
+                   col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+                   col.Field("Status").HeaderText("Status").Width("150").Add();
+                   //col.HeaderText("Action").Width("60").Template("#EditTemplate2").Add();
+               }).PageSettings(page => page.PageSize(500)).Render()
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+<br />
+
+<script type="text/x-jsrender" id="EditTemplate1">
+    <a href="javascript:RemoveStore1(${VendorId});" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="/Content/Admin/images/trash-2.svg" alt="" /> </a>
+</script>
+
+
+<script>
+      function RemoveStore1 (iii)
+    {
+        
+         $.ajax({
+                 url: '@Url.Action("RemoveMergeVendor1", "VendorMasters")',
+                 type: "POST",
+             data: JSON.stringify({ vendorid: iii}),
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 success: function (response) {
+                     
+                     if (response == "success") {
+                         
+                         var grid = document.getElementById("grdStore1").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore1",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         toastr.success('Remove Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+
+                 },
+                 error: function (response) {
+                 }
+             });
+    }
+</script>
+<script>
+
+
+    function add1() {
+        
+        var data = document.getElementById("VendorList1").ej2_instances[0];
+        var item = data.itemData;
+        //var store1 = document.getElementById("store1");
+        //
+        //var row = store1.insertRow(store1.rows.length);
+        //var cell1 = row.insertCell(0);
+        //var cell2 = row.insertCell(1);
+        //cell1.innerHTML = item.VendorId;
+        //cell2.innerHTML = item.VendorName;
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore1").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore1?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+
+    }
+
+    function mergedata1() {
+        var data = document.getElementById("VendorListmaster1").ej2_instances[0];
+        var item = data.itemData;
+
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+                $.ajax({
+                    url: '@Url.Action("UpdateMergeVendorStore1", "VendorMasters")',
+                    type: "POST",
+                    data: JSON.stringify({ mastervendorid: item.VendorId }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('#loading').css('display', 'block');
+                    },
+                    success: function (response) {
+                        
+                        if (response.message == "success") {
+                            
+                            var grid = document.getElementById("grdStore1").ej2_instances[0];
+                            grid.dataSource = new ej.data.DataManager({
+                                url: "/VendorMasters/AddVendorlistStore1",
+                                adaptor: new ej.data.UrlAdaptor()
+                            });
+                            
+                            var drp = document.getElementById("VendorListmaster1").ej2_instances[0];
+                            drp.dataSource = response.obj;
+                            drp.dataBind();
+                            drp.clear();
+
+                            var drp1 = document.getElementById("VendorList1").ej2_instances[0];
+                            drp1.dataSource = response.obj;
+                            drp1.dataBind();
+                            drp1.clear();
+                            toastr.success('Vendor Merge Successfully.');
+                        }
+                        else {
+                            toastObj.content = "Something went wrong!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                        }
+                        $('#loading').css('display', 'none');
+                    },
+                    error: function (response) {
+                    }
+                }).done(function () {
+                    $('#loading').css('display', 'none');
+                });
+
+        }
+    }
+
+    function add2() {
+        
+        var data = document.getElementById("VendorList2").ej2_instances[0];
+        var item = data.itemData;
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore2").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore2?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata2() {
+        var data = document.getElementById("VendorListmaster2").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore2", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore2").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore2",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster2").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList2").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+    function add3() {
+        
+        var data = document.getElementById("VendorList3").ej2_instances[0];
+        var item = data.itemData;
+
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore3").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore3?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata3() {
+        var data = document.getElementById("VendorListmaster3").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore3", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore3").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore3",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster3").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList3").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+    function add4() {
+        
+        var data = document.getElementById("VendorList4").ej2_instances[0];
+        var item = data.itemData;
+
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore4").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore4?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata4() {
+        var data = document.getElementById("VendorListmaster4").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore4", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore4").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore4",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster4").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList4").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+    function add5() {
+        
+        var data = document.getElementById("VendorList5").ej2_instances[0];
+        var item = data.itemData;
+
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore5").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore5?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata5() {
+        var data = document.getElementById("VendorListmaster5").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore5", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore5").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore5",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster5").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList5").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+    function add6() {
+        
+        var data = document.getElementById("VendorList6").ej2_instances[0];
+        var item = data.itemData;
+
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore6").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore6?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata6() {
+        var data = document.getElementById("VendorListmaster6").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore6", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore6").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore6",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster6").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList6").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+    function add7() {
+        
+        var data = document.getElementById("VendorList7").ej2_instances[0];
+        var item = data.itemData;
+
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore7").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore7?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata7() {
+        var data = document.getElementById("VendorListmaster7").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore7", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore7").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore7",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster7").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList7").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+    function add9() {
+        
+        var data = document.getElementById("VendorList9").ej2_instances[0];
+        var item = data.itemData;
+
+        if (item === undefined) {
+            alert("Please select Vendor..!");
+        }
+        else {
+            var ven = item.VendorName;
+            ven = ven.replace('&', '^');
+            var grid = document.getElementById("grdStore9").ej2_instances[0];
+            grid.dataSource = new ej.data.DataManager({
+                url: "/VendorMasters/AddVendorlistStore9?vendorid=" + item.VendorId + "&vendorname=" + ven,
+                adaptor: new ej.data.UrlAdaptor()
+            });
+        }
+    }
+
+    function mergedata9() {
+        var data = document.getElementById("VendorListmaster9").ej2_instances[0];
+        var item = data.itemData;
+
+        
+        if (item === undefined) {
+            alert("Please select Master Vendor first..!!!");
+        }
+        else {
+            
+            $.ajax({
+                 url: '@Url.Action("UpdateMergeVendorStore9", "VendorMasters")',
+                 type: "POST",
+                data: JSON.stringify({ mastervendorid: item.VendorId}),
+                 contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                beforeSend: function () {
+                    $('#loading').css('display', 'block');
+                },
+                 success: function (response) {
+                     
+                     if (response.message == "success") {
+                         
+                         var grid = document.getElementById("grdStore9").ej2_instances[0];
+                         grid.dataSource = new ej.data.DataManager({
+                             url: "/VendorMasters/AddVendorlistStore9",
+                             adaptor: new ej.data.UrlAdaptor()
+                         });
+                         var drp = document.getElementById("VendorListmaster9").ej2_instances[0];
+                         drp.dataSource = response.obj;
+                         drp.dataBind();
+                         drp.clear();
+                         var drp1 = document.getElementById("VendorList9").ej2_instances[0];
+                         drp1.dataSource = response.obj;
+                         drp1.dataBind();
+                         drp1.clear();
+                         toastr.success('Vendor Merge Successfully.');
+                     }
+                     else {
+                         toastObj.content = "Something went wrong!";
+                         toastObj.target = document.body;
+                         toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                     }
+                     $('#loading').css('display', 'none');
+                 },
+                 error: function (response) {
+                 }
+            }).done(function () {
+                $('#loading').css('display', 'none');
+            });
+        }
+    }
+
+</script>
+@Html.EJS().ScriptManager()

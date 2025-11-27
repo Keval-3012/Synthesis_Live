@@ -1,0 +1,161 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .change {
+        color: black !important;
+        text-decoration: unset;
+    }
+
+    .tooltipTop {
+        display: inline-block;
+        position: relative;
+        border-bottom: 1px dotted #666;
+        text-align: left;
+    }
+
+        .tooltipTop .top {
+            min-width: 100px;
+            transform: translate(-50%, -100%);
+            padding: 10px 20px;
+            color: #444444;
+            background-color: #EEEEEE;
+            font-weight: normal;
+            font-size: 13px;
+            border-radius: 8px;
+            position: fixed;
+            z-index: 99999;
+            box-sizing: border-box;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .tooltipTop:hover .top {
+            display: block;
+        }
+
+        .tooltipTop .top i {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -12px;
+            width: 24px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+            .tooltipTop .top i::after {
+                content: '';
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                left: 50%;
+                transform: translate(-50%,-50%) rotate(45deg);
+                background-color: #EEEEEE;
+                box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            }
+    .e-control.e-toolbar.e-lib.e-keyboard.e-sticky {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 134px !important;
+    }
+    .e-content {
+        overflow-y: inherit !important;
+        overflow-x: visible!important;
+    }
+    .e-grid .e-gridcontent {
+        overflow:inherit!important;
+    }
+    #gridvaluechange_content_table tr td:last-child p {
+        width: 110px;
+        word-wrap: break-word;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+
+    .pdfstyle{
+        width: 10px;
+        background: yellow;
+
+    }
+
+</style>
+<div class="synthesisdashboardcontainer">
+    <div class="heading-w-line">
+        <h1>Price Comparison</h1>
+    </div>
+    <div class="d-flex w-100">
+        <div class="pp-radiobtn-sec">
+            @Html.EJS().RadioButton("radio1").Label("Show All").Name("payment").Value("0").Checked(true).Change("OnChange").Render()
+            @Html.EJS().RadioButton("radio2").Label("Show Link & Approve").Name("payment").Value("1").Change("OnChange").Render()
+        </div>
+    </div>
+    <div class="d-flex w-100 pp-filter">
+        <div class="pp-box pp-box-1">
+            @Html.EJS().DateRangePicker("daterangepicker").StartDate(ViewBag.StartDate).EndDate(ViewBag.EndDate).Change("OnChange").Max(DateTime.Now).Render()
+        </div>
+        <div class="pp-box pp-box-2">
+
+            @Html.EJS().DropDownList("Vendor").DataSource(
+                         (IEnumerable<Object>)ViewBag.Vendor).Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorName" }).Value("All Vendors").Change("OnChangeVendor").AllowFiltering(true).Filtering("onfilteringvendor").Render()
+        </div>
+        <div class="pp-box pp-box-3">
+            @Html.EJS().DropDownList("Department").Placeholder("Select a Department").DataSource(
+                        (IEnumerable<Object>)ViewBag.Department).Fields(new DropDownListFieldSettings { Text = "DepartmentName", Value = "DepartmentName" }).AllowFiltering(true).Filtering("onfiltering").Enabled(false).Render()
+        </div>
+
+        <div class="pp-box pp-box-4">
+
+            @Html.EJS().CheckBox("checkedgreen02").Checked(false).Change("Getdatabycolor").CssClass("Green02box").Value("0").Render()
+            @Html.EJS().CheckBox("checkedgreen01").Checked(false).Change("Getdatabycolor").CssClass("Green01box").Value("1").Render()
+
+            @Html.EJS().CheckBox("checkedgrey").Checked(false).Change("Getdatabycolor").CssClass("greybox").Value("2").Render()
+            @Html.EJS().CheckBox("checkedRed01").Checked(false).Change("Getdatabycolor").CssClass("Red01box").Value("3").Render()
+            @Html.EJS().CheckBox("checkedRed02").Checked(false).Change("Getdatabycolor").CssClass("Red02box").Value("4").Render()
+
+        </div>
+        <div class="pp-box reset-btn-sec">
+            <button type="button" class="btnadddocument" onclick="undofilters();">Reset</button>
+        </div>
+
+    </div>
+    <div id="gridvaluechange"></div>
+</div>
+<script id="template" type="text/x-template">
+    <div>
+        <section class="itenInfoContainer">
+            <ul class="gridProductInfo">
+                <li><span>${UPC}</span></li>
+                ${if(Brand != null)}
+                <li> <a href="/LineItem/ProductDetailLineItem?UPC=${UPC}" target="_blank" style="font-weight: 800;">${Descritpion}</a></li>
+                ${else}
+                <li style="display:none"><span>${Brand}</span></li>
+                ${/if}
+            </ul>
+            <span style="font-size:10px;">${Brand}</span>
+        </section>
+    </div>
+</script>
+<script id="boxItem" type="text/x-template">
+    ${statusDetail(data)}
+</script>
+
+<script>
+    function undofilters() {
+    localStorage.removeItem("Colorvalue");
+    window.location.href = "@Url.RouteUrl(new { Controller = "ProductPrice", Action = "ProductPrice" })";
+}
+</script>
+<script src="~/Form_JS/ProductPrice.js"></script>
+@Html.EJS().ScriptManager()
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

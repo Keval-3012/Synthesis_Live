@@ -1,0 +1,100 @@
+2025-04-10 12:53:15.2687|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/10/2025 12:53:15 PM
+2025-04-10 12:53:40.0346|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/10/2025 12:53:40 PM - An error occurred while sending the request.
+2025-04-10 12:53:56.6579|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 12:53:56 PM
+2025-04-10 12:54:23.1334|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 12:54:23 PM
+2025-04-10 12:54:25.6846|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 12:54:25 PM
+2025-04-10 13:01:23.7481|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 1:01:23 PM
+2025-04-10 13:01:55.8927|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNewData - {"ExpenseCheckId":0,"BankAccountId":2694,"DepartmentMasters":null,"PaymentType":0,"VendorId":null,"StoreId":null,"StoreMasters":null,"TotalAmt":10.0,"TXNId":null,"SyncToken":null,"CreateTime":null,"LastUpdatedTime":null,"CreateOn":"0001-01-01T00:00:00","DocNumber":null,"TxnDate":"2025-04-10T00:00:00","Memo":"Hi I am test","QBType":null,"RefType":null,"CreatedBy":null,"UpdatedBy":null,"UpdatedDate":null,"Isdeleted":false,"PrintLater":false,"MailingAddress":null,"IsSync":false,"PaymentMethodId":392,"PaymentDate":null,"QBErrorMessage":null,"LastModifiedOn":null,"FileName":null,"VendorIdstr":"20220-V","SavebtnName":"SaveAndNew","PaymentTypeId":null,"ExpenseCheckDetails":[{"ExpenseCheckDetailId":0,"ExpenseCheckId":0,"ExpenseCheck":null,"DepartmentId":2694,"DepartmentMasters":null,"Amount":10.00,"CustomerId":null,"CustomerMaster":null,"Description":"Test","Flag":false,"IncludeBySetting":false}],"expenseCheckDocuments":null}4/10/2025 1:01:55 PM
+2025-04-10 13:01:55.8927|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 1:01:55 PM
+2025-04-10 13:01:55.9002|INFO|Repository.ExpenseAccountsRepository|ExpenseAccountsRepository - InsertExpenseData - 4/10/2025 1:01:55 PM
+2025-04-10 13:01:55.9665|INFO|Repository.QBRepository|QBRepository - QBSyncExpense Start  with this data - {"ExpenseCheckId":74831,"BankAccountId":2694,"DepartmentMasters":null,"PaymentType":0,"VendorId":20220,"StoreId":13,"StoreMasters":null,"TotalAmt":10.0,"TXNId":null,"SyncToken":null,"CreateTime":null,"LastUpdatedTime":null,"CreateOn":"0001-01-01T00:00:00","DocNumber":null,"TxnDate":"2025-04-10T00:00:00","Memo":"Hi I am test","QBType":null,"RefType":"V","CreatedBy":1089,"UpdatedBy":null,"UpdatedDate":null,"Isdeleted":false,"PrintLater":false,"MailingAddress":null,"IsSync":false,"PaymentMethodId":392,"PaymentDate":null,"QBErrorMessage":null,"LastModifiedOn":null,"FileName":null,"VendorIdstr":"20220","SavebtnName":"SaveAndNew","PaymentTypeId":2,"ExpenseCheckDetails":[{"ExpenseCheckDetailId":0,"ExpenseCheckId":0,"ExpenseCheck":null,"DepartmentId":2694,"DepartmentMasters":null,"Amount":10.00,"CustomerId":null,"CustomerMaster":null,"Description":"Test","Flag":false,"IncludeBySetting":false}],"expenseCheckDocuments":null}4/10/2025 1:01:55 PM
+2025-04-10 13:01:56.0470|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense Start - 4/10/2025 1:01:56 PM
+2025-04-10 13:01:56.0470|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - GenerateXmlRequest_Expense Start - 4/10/2025 1:01:56 PM
+2025-04-10 13:01:56.0504|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - GenerateXmlRequest_Expense End - <Purchase xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><AccountRef>7</AccountRef><EntityRef type="Vendor">19</EntityRef><TxnDate>2025-04-10</TxnDate><PrivateNote>Hi I am test</PrivateNote><TotalAmt>10</TotalAmt><PaymentType>Cash</PaymentType><PaymentMethodRef>1</PaymentMethodRef><Line><Description>Test</Description><Amount>10.00</Amount><DetailType>AccountBasedExpenseLineDetail</DetailType><AccountBasedExpenseLineDetail><AccountRef>7</AccountRef></AccountBasedExpenseLineDetail></Line></Purchase>4/10/2025 1:01:56 PM
+2025-04-10 13:02:05.9427|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Get Xmlresponse in Create_Expense - Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-04-10T00:31:58.046-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+2025-04-10 13:02:05.9427|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense Error xmlResonse - Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-04-10T00:31:58.046-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+2025-04-10 13:02:05.9427|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense End - 4/10/2025 1:02:05 PM
+2025-04-10 13:02:07.3227|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew return QBSyncData - Falseref Message objResponseSynthesisQBOnline.BAL.QBResponse4/10/2025 1:02:07 PM
+2025-04-10 13:02:07.3227|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew InsertExpenseCheckErrorSyncId - False4/10/2025 1:02:07 PM
+2025-04-10 13:02:07.3313|INFO|Repository.ExpenseAccountsRepository|ExpenseAccountsRepository - InsertExpenseDetailsData - 4/10/2025 1:02:07 PM
+2025-04-10 13:02:07.4230|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 1:02:07 PM
+2025-04-10 13:02:08.5299|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 1:02:08 PM
+2025-04-10 13:03:03.7926|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNewData - {"ExpenseCheckId":0,"BankAccountId":2694,"DepartmentMasters":null,"PaymentType":0,"VendorId":null,"StoreId":null,"StoreMasters":null,"TotalAmt":20.0,"TXNId":null,"SyncToken":null,"CreateTime":null,"LastUpdatedTime":null,"CreateOn":"0001-01-01T00:00:00","DocNumber":"1234656789","TxnDate":"2025-04-10T00:00:00","Memo":null,"QBType":null,"RefType":null,"CreatedBy":null,"UpdatedBy":null,"UpdatedDate":null,"Isdeleted":false,"PrintLater":false,"MailingAddress":null,"IsSync":false,"PaymentMethodId":392,"PaymentDate":null,"QBErrorMessage":null,"LastModifiedOn":null,"FileName":null,"VendorIdstr":"20221-V","SavebtnName":"Save","PaymentTypeId":null,"ExpenseCheckDetails":[{"ExpenseCheckDetailId":0,"ExpenseCheckId":0,"ExpenseCheck":null,"DepartmentId":2694,"DepartmentMasters":null,"Amount":20.00,"CustomerId":null,"CustomerMaster":null,"Description":"Hi I am test 2","Flag":false,"IncludeBySetting":false}],"expenseCheckDocuments":null}4/10/2025 1:03:03 PM
+2025-04-10 13:03:03.7926|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 1:03:03 PM
+2025-04-10 13:03:03.8013|INFO|Repository.ExpenseAccountsRepository|ExpenseAccountsRepository - InsertExpenseData - 4/10/2025 1:03:03 PM
+2025-04-10 13:03:03.8013|INFO|Repository.QBRepository|QBRepository - QBSyncExpense Start  with this data - {"ExpenseCheckId":74832,"BankAccountId":2694,"DepartmentMasters":null,"PaymentType":0,"VendorId":20221,"StoreId":13,"StoreMasters":null,"TotalAmt":20.0,"TXNId":null,"SyncToken":null,"CreateTime":null,"LastUpdatedTime":null,"CreateOn":"0001-01-01T00:00:00","DocNumber":"1234656789","TxnDate":"2025-04-10T00:00:00","Memo":null,"QBType":null,"RefType":"V","CreatedBy":1089,"UpdatedBy":null,"UpdatedDate":null,"Isdeleted":false,"PrintLater":false,"MailingAddress":null,"IsSync":false,"PaymentMethodId":392,"PaymentDate":null,"QBErrorMessage":null,"LastModifiedOn":null,"FileName":null,"VendorIdstr":"20221","SavebtnName":"Save","PaymentTypeId":2,"ExpenseCheckDetails":[{"ExpenseCheckDetailId":0,"ExpenseCheckId":0,"ExpenseCheck":null,"DepartmentId":2694,"DepartmentMasters":null,"Amount":20.00,"CustomerId":null,"CustomerMaster":null,"Description":"Hi I am test 2","Flag":false,"IncludeBySetting":false}],"expenseCheckDocuments":null}4/10/2025 1:03:03 PM
+2025-04-10 13:03:03.8224|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense Start - 4/10/2025 1:03:03 PM
+2025-04-10 13:03:03.8224|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - GenerateXmlRequest_Expense Start - 4/10/2025 1:03:03 PM
+2025-04-10 13:03:03.8224|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - GenerateXmlRequest_Expense End - <Purchase xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><AccountRef>7</AccountRef><EntityRef type="Vendor">20</EntityRef><TxnDate>2025-04-10</TxnDate><DocNumber>1234656789</DocNumber><TotalAmt>20</TotalAmt><PaymentType>Cash</PaymentType><PaymentMethodRef>1</PaymentMethodRef><Line><Description>Hi I am test 2</Description><Amount>20.00</Amount><DetailType>AccountBasedExpenseLineDetail</DetailType><AccountBasedExpenseLineDetail><AccountRef>7</AccountRef></AccountBasedExpenseLineDetail></Line></Purchase>4/10/2025 1:03:03 PM
+2025-04-10 13:03:06.0765|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Get Xmlresponse in Create_Expense - Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-04-10T00:33:04.873-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+2025-04-10 13:03:06.0765|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense Error xmlResonse - Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-04-10T00:33:04.873-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+2025-04-10 13:03:06.0765|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense End - 4/10/2025 1:03:06 PM
+2025-04-10 13:03:06.6730|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew return QBSyncData - Falseref Message objResponseSynthesisQBOnline.BAL.QBResponse4/10/2025 1:03:06 PM
+2025-04-10 13:03:06.6730|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew InsertExpenseCheckErrorSyncId - False4/10/2025 1:03:06 PM
+2025-04-10 13:03:06.6789|INFO|Repository.ExpenseAccountsRepository|ExpenseAccountsRepository - InsertExpenseDetailsData - 4/10/2025 1:03:06 PM
+2025-04-10 13:03:42.8013|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - CheckAddNew - 4/10/2025 1:03:42 PM
+2025-04-10 13:04:06.0824|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - CheckAddNewData - {"ExpenseCheckId":0,"BankAccountId":2694,"DepartmentMasters":null,"PaymentType":0,"VendorId":null,"StoreId":null,"StoreMasters":null,"TotalAmt":10.0,"TXNId":null,"SyncToken":null,"CreateTime":null,"LastUpdatedTime":null,"CreateOn":"0001-01-01T00:00:00","DocNumber":null,"TxnDate":"2025-04-10T00:00:00","Memo":null,"QBType":null,"RefType":null,"CreatedBy":null,"UpdatedBy":null,"UpdatedDate":null,"Isdeleted":false,"PrintLater":true,"MailingAddress":", ,  ","IsSync":false,"PaymentMethodId":null,"PaymentDate":null,"QBErrorMessage":null,"LastModifiedOn":null,"FileName":null,"VendorIdstr":"20220-V","SavebtnName":"Save","PaymentTypeId":null,"ExpenseCheckDetails":[{"ExpenseCheckDetailId":0,"ExpenseCheckId":0,"ExpenseCheck":null,"DepartmentId":2694,"DepartmentMasters":null,"Amount":10.00,"CustomerId":null,"CustomerMaster":null,"Description":"Happy birthday","Flag":false,"IncludeBySetting":false}],"expenseCheckDocuments":null}4/10/2025 1:04:06 PM
+2025-04-10 13:04:06.0824|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - CheckAddNew - 4/10/2025 1:04:06 PM
+2025-04-10 13:04:06.0824|INFO|Repository.ExpenseAccountsRepository|ExpenseAccountsRepository - InsertExpenseData - 4/10/2025 1:04:06 PM
+2025-04-10 13:04:06.0970|INFO|Repository.QBRepository|QBRepository - QBSyncExpense Start  with this data - {"ExpenseCheckId":74833,"BankAccountId":2694,"DepartmentMasters":null,"PaymentType":0,"VendorId":20220,"StoreId":13,"StoreMasters":null,"TotalAmt":10.0,"TXNId":null,"SyncToken":null,"CreateTime":null,"LastUpdatedTime":null,"CreateOn":"0001-01-01T00:00:00","DocNumber":null,"TxnDate":"2025-04-10T00:00:00","Memo":null,"QBType":null,"RefType":"V","CreatedBy":1089,"UpdatedBy":null,"UpdatedDate":null,"Isdeleted":false,"PrintLater":true,"MailingAddress":", ,  ","IsSync":false,"PaymentMethodId":393,"PaymentDate":null,"QBErrorMessage":null,"LastModifiedOn":null,"FileName":null,"VendorIdstr":"20220","SavebtnName":"Save","PaymentTypeId":1,"ExpenseCheckDetails":[{"ExpenseCheckDetailId":0,"ExpenseCheckId":0,"ExpenseCheck":null,"DepartmentId":2694,"DepartmentMasters":null,"Amount":10.00,"CustomerId":null,"CustomerMaster":null,"Description":"Happy birthday","Flag":false,"IncludeBySetting":false}],"expenseCheckDocuments":null}4/10/2025 1:04:06 PM
+2025-04-10 13:04:06.0970|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense Start - 4/10/2025 1:04:06 PM
+2025-04-10 13:04:06.0970|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - GenerateXmlRequest_Expense Start - 4/10/2025 1:04:06 PM
+2025-04-10 13:04:06.0970|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - GenerateXmlRequest_Expense End - <Purchase xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><AccountRef>7</AccountRef><EntityRef type="Vendor">19</EntityRef><TxnDate>2025-04-10</TxnDate><TotalAmt>10</TotalAmt><PrintStatus>NeedToPrint</PrintStatus><PaymentType>Check</PaymentType><PaymentMethodRef>2</PaymentMethodRef><Line><Description>Happy birthday</Description><Amount>10.00</Amount><DetailType>AccountBasedExpenseLineDetail</DetailType><AccountBasedExpenseLineDetail><AccountRef>7</AccountRef></AccountBasedExpenseLineDetail></Line></Purchase>4/10/2025 1:04:06 PM
+2025-04-10 13:04:08.1826|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Get Xmlresponse in Create_Expense - Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-04-10T00:34:07.153-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+2025-04-10 13:04:08.1826|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense Error xmlResonse - Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-04-10T00:34:07.153-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+2025-04-10 13:04:08.1826|INFO|SynthesisQBOnline.QBClass.QBExpense|QBExpense - Create_Expense End - 4/10/2025 1:04:08 PM
+2025-04-10 13:04:08.7685|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - CheckAddNew return QBSyncData - Falseref Message objResponseSynthesisQBOnline.BAL.QBResponse4/10/2025 1:04:08 PM
+2025-04-10 13:04:08.7685|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - CheckAddNew InsertExpenseCheckErrorSyncId - False4/10/2025 1:04:08 PM
+2025-04-10 13:04:08.7685|INFO|Repository.ExpenseAccountsRepository|ExpenseAccountsRepository - InsertExpenseDetailsData - 4/10/2025 1:04:08 PM
+2025-04-10 15:32:50.5113|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/10/2025 3:32:50 PM
+2025-04-10 15:33:22.9389|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/10/2025 3:33:22 PM - An error occurred while sending the request.
+2025-04-10 16:30:59.6413|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 4:30:59 PM
+2025-04-10 16:31:08.3293|INFO|SysnthesisRepo.Controllers.ExpenseAccountsController|ExpenseAccountsController - ExpenseAddNew - 4/10/2025 4:31:08 PM

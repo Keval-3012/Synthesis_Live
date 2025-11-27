@@ -1,0 +1,1438 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Popups
+
+@using Syncfusion.EJ2.DropDowns
+@using EntityModels.Controllers
+
+@{
+
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/lineitempopup.css" rel="stylesheet" />
+<style>
+    .header {
+        color: black;
+        font-size: 35px;
+        margin: 0px;
+    }
+
+    .e-spinner-pane {
+        height: 100vh !important;
+        position: relative !important;
+    }
+</style>
+<style>
+
+
+    .itemDetailsSection {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        background: #e0e0e0;
+        width: 100%;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        height: 180px;
+        padding: 2em;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+        .itemDetailsSection .storeNameforPopup {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            position: absolute;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: auto;
+            font-weight: bold;
+            top: 0px;
+            left: calc(50% - 60px);
+            background: white;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding: 8px 0px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 9px;
+        }
+
+        .itemDetailsSection .itemArea {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+            .itemDetailsSection .itemArea .itemSectionTitle {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            .itemDetailsSection .itemArea .itemSectionName {
+                font-size: 25px;
+            }
+
+        .itemDetailsSection .storeVendorArea {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: end;
+            -ms-flex-align: end;
+            align-items: flex-end;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+            .itemDetailsSection .storeVendorArea span.vendorTitle {
+                font-size: 15px;
+                font-weight: bold;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+            .itemDetailsSection .storeVendorArea span.vendorNameTitle {
+                font-size: 25px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+    .e-dlg-overlay {
+        background-color: rgba(0,0,0,0.7);
+        backdrop-filter: blur(5px);
+    }
+
+    div#lineItemPDFContainer {
+        position: fixed;
+        left: 60%;
+    }
+
+    #lineItemPDFContainer {
+        left: 51% !important;
+        width: 49%;
+    }
+
+    div#lineItemPDFContainer {
+        left: 51% !important;
+        width: 49%;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+
+    .e-btn .e-btn-icon {
+        font-size: 24px;
+    }
+    /*.e-link-remove:before {
+        content: '\e73c';
+    }
+    .e-medium{
+        font-size:16px;
+    }*/
+    .dot {
+        height: 12px;
+        width: 12px;
+        background-color: #17e130;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 7px;
+        margin-top: 6px;
+    }
+
+    .dotnull {
+        height: 12px;
+        width: 12px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 7px;
+        margin-top: 6px;
+    }
+</style>
+<style>
+
+    .below-95 {
+        border: 1px solid #F28705 !important;
+        color: #F28705 !important;
+    }
+
+        .below-95 > a {
+            color: #F28705;
+        }
+
+        .below-95 > span.abc {
+            color: #F28705;
+        }
+
+    /*.below-85 {
+        border: 1px solid black !important;
+        color: black !important;
+    }
+
+        .below-85 > a {
+            color: black;
+        }
+
+        .below-85 > span.abc {
+            color: black;
+        }*/
+
+
+    .above-95 {
+        border-bottom: 2px solid #09aadc !important;
+    }
+
+
+    /*.cm-toggle {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        position: relative;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        margin: 10px;
+    }*/
+
+
+    /* To create surface of toggle button */
+    /*.cm-toggle:after {
+            content: '';
+            width: 40px;
+            height: 18px;
+            display: inline-block;
+            background: rgba(196, 195, 195, 0.55);
+            border-radius: 18px;
+            clear: both;
+        }*/
+
+
+    /* Contents before checkbox to create toggle handle */
+    /*.cm-toggle:before {
+            content: '';
+            width: 22px;
+            height: 22px;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: -3px;
+            border-radius: 50%;
+            background: rgb(255, 255, 255);
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }*/
+
+
+    /* Shift the handle to left on check event */
+    /*.cm-toggle:checked:before {
+            left: 22px;
+            box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
+        }*/
+    /* Background color when toggle button will be active */
+    /*.cm-toggle:checked:after {
+            background: #16a085;
+        }
+        .cm-toggle,
+        .cm-toggle:before,
+        .cm-toggle:after,
+        .cm-toggle:checked:before,
+        .cm-toggle:checked:after {
+            transition: ease .3s;
+            -webkit-transition: ease .3s;
+            -moz-transition: ease .3s;
+            -o-transition: ease .3s;
+        }*/
+
+    .wrapword {
+        white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        white-space: pre-wrap; /* css-3 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+        word-break: break-all;
+        white-space: normal;
+    }
+
+    #ajax_dialog {
+        position: inherit !important;
+        z-index: 99999999 !important;
+    }
+
+    .e-spinner-pane .e-spinner-inner {
+        z-index: 99999999 !important;
+    }
+
+    #ajax_dialog2 {
+        position: inherit !important;
+    }
+</style>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+
+<input type="text" id="VendorID" class="form-control" style="display:none;">
+<input type="text" id="InvoiceDateValue" class="form-control" style="display:none;">
+<input type="text" id="VendorName" class="form-control" style="display:none;">
+<input type="text" id="InvoiceProductId" class="form-control" style="display:none;">
+<div class="row" style="padding: 25px 25px;">
+    <div class="col-md-9">
+        <div class="col-md-2" style="padding:0px;">
+            <h1 class="header">Line Items</h1>
+        </div>
+        <div class="col-md-2" style="padding:0px;" hidden>
+            @Html.EJS().CheckBox("checked").Label("Unmapped LineItems").Checked(false).Change("GetUnmappedvalue").Render()
+        </div>
+
+        <div class="col-md-4">
+            @Html.EJS().DropDownList("VendorList").Placeholder("Select Vendors").FilterBarPlaceholder("Search").AllowFiltering(true).DataSource((IEnumerable<object>)ViewBag.VendorList).Value("All Vendors").Fields(new DropDownListFieldSettings { Text = "VendorName", Value = "VendorName" }).Change("GetGridValue").Render()
+        </div>
+        <div class="col-md-2" hidden>
+            @Html.EJS().DatePicker("InvoiceDate").Format("MM-dd-yyyy").Change("GetValueUsingDate").Render()
+        </div>
+        <div class="col-md-2">
+            <a href="javascript:refreshgrid();" class="btn btn-info" data-toggle="tooltip" data-placement="top">Refresh</a>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div id="GridValue"></div>
+</div>
+<div class="col-md-5 lineItemPDFContainer" id="lineItemPDFContainer">
+    <iframe frameborder="0" width="100%" height="1000" id="file"></iframe>
+</div>
+@{
+    List<DialogDialogButton> buttonsdata = new List<DialogDialogButton>() { };
+    buttonsdata.Add(new DialogDialogButton() { Click = "RemoveButtonClick", ButtonModel = new DefaultButtonModels() { content = "Remove Linked", isPrimary = true } });
+    buttonsdata.Add(new DialogDialogButton() { Click = "LinkedCancelBouttonClick", ButtonModel = new DefaultButtonModels() { content = "Cancel" } });
+}
+
+@Html.EJS().Dialog("ajax_dialog").IsModal(true).Visible(false).Created("created").ShowCloseIcon(false).CloseOnEscape(false).ContentTemplate(@<div id="dialogTemp">
+</div>).Target("body").Render()
+
+@Html.EJS().Dialog("ajax_dialog1").IsModal(true).Visible(false).Created("created1").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="dialogTempData">
+    @*.Header("Linked Product")*@
+</div>).Buttons(buttonsdata).Width("1000px").Target("body").Render()
+
+@Html.EJS().Dialog("ajax_dialog2").IsModal(true).Visible(false).Created("created2").ShowCloseIcon(true).CloseOnEscape(false).ContentTemplate(@<div id="dialogaddLibrary">
+    @*.Header("Linked Product")*@
+</div>).Target("body").Render()
+
+
+@*<script id="template2" type="text/x-template">
+        <div class="link">
+          ${if(ApproveStatus == '1')}
+            <span class="dot lineItemCompletedStatus"></span><a href="#" onclick='getfile(this);' id="${InvoiceId}">${InvoiceNumber}</a>
+           <span id="hdnstatus" hidden>${ApproveStatus}</span>
+          ${else}
+            <span class="dotnull liteItemPendingStatus"></span>  <a href="#" onclick='getfile(this);' id="${InvoiceId}">${InvoiceNumber}</a>
+          <span id="hdnstatus" hidden>${ApproveStatus}</span>
+          ${/if}
+        </div>
+    </script>*@
+
+<script id="template" type="text/x-template">
+    ${if(ProductId != null)}
+    <span class="dot"></span>
+    <a href="/LineItem/ProductDetailLineItem/${ProductId}" target="_blank" class="wrapword">${Description}</a>
+    ${else}
+    <span class="dotnull"></span>
+    <span class="abc wrapword">${Description}</span>
+    ${/if}
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var dialog = document.getElementById("ajax_dialog").ej2_instances[0]
+        dialog.hide();
+
+        var dialog = document.getElementById("ajax_dialog1").ej2_instances[0]
+        dialog.hide();
+
+        var dialog = document.getElementById("ajax_dialog2").ej2_instances[0]
+        dialog.hide();
+
+        //$('#ajax_dialog1').modal('hide');
+    });
+</script>
+
+@*liteItemPendingStatus
+    lineItemCompletedStatus*@
+
+
+
+<!--<script type="text/x-jsrender" id="toggleTemplate">
+    <div id="status" class="statustemp">
+
+        @Html.EJS().Switch("Approve").Checked(true).Render()
+
+        @*   @Html.EJS().Switch("unchecked").Render()*@
+
+    <!--</div>
+</script>-->
+
+<script>
+
+    //function beforeDataBound(args) {
+    //    
+    //    if (args.count > 0) {                                 // check the record in database
+    //        
+    //        var data = this.toolbar.indexOf('Add');           // get the Add button indexof value
+    //        this.toolbarModule.toolbar.showItem(data, true);  // pass the value into the hideitem method as parameter and set to true
+    //    }
+
+    //}
+    var Oldview = "";
+
+    function refreshgrid() {
+        
+        var grid = document.getElementById("InlineEditingValue").ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/LineItem/UrlDatasourceValue",
+            adaptor: new ej.data.UrlAdaptor()
+        });
+        }
+    function dataBound(e) {
+
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+
+    $("body").on("click", "#InlineEditing2_searchbutton", function () {
+        
+        var grid = document.getElementById('InlineEditing2').ej2_instances[0];
+        var value = document.getElementById("InlineEditing2_searchbar").value;
+        grid.search(value);
+    });
+
+    $("body").on("click", "#InlineEditing1_searchbutton", function () {
+        
+        var grid = document.getElementById('InlineEditing1').ej2_instances[0];
+        var value = document.getElementById("InlineEditing1_searchbar").value;
+        grid.search(value);
+    });
+
+    //$("body").on("click", ".e-icons e-dtdiagonaldown e-icon-gdownarrow", function () {
+    //    
+    //    var grid = document.getElementById('InlineEditingValue').ej2_instances[0];
+    //    var row = new ej.base.closest(event.target, '.e-row');
+    //    var index = row.getAttribute('aria-rowindex');
+    //    grid.detailRowModule.collapseAll();
+    //    grid.detailRowModule.expand(index);
+    //});
+
+    function customiseCell(args) {
+
+
+
+        if (args.column.headerText === 'Item') {
+            if (args.data['Approved'] == false) {
+                if (args.data['Description_Accuracy'] != null) {
+                    if (args.data['Description_Accuracy'] < 85) {
+                        args.cell.classList.add('below-85');
+                    } else if (args.data['Description_Accuracy'] > 85 && args.data['Description_Accuracy'] < 95) {
+                        args.cell.classList.add('below-95');
+                    } else if (args.data['Description_Accuracy'] > 95) {
+                        args.cell.classList.add('above-95');
+                    }
+                }
+            }
+            else {
+                args.cell.classList.add('above-95');
+            }
+        }
+        else if (args.column.field === 'Qty') {
+            if (args.data['Approved'] == false) {
+                if (args.data['Qty_Accuracy'] != null) {
+                    if (args.data['Qty_Accuracy'] < 85) {
+                        args.cell.classList.add('below-85');
+                    } else if (args.data['Qty_Accuracy'] > 85 && args.data['Qty_Accuracy'] < 95) {
+                        args.cell.classList.add('below-95');
+                    } else if (args.data['Qty_Accuracy'] > 95) {
+                        args.cell.classList.add('above-95');
+                    }
+                }
+            }
+            else {
+                args.cell.classList.add('above-95');
+            }
+        }
+        else if (args.column.field === 'Total') {
+            if (args.data['Approved'] == false) {
+                if (args.data['Total_Accuracy'] != null) {
+                    if (args.data['Total_Accuracy'] < 85) {
+                        args.cell.classList.add('below-85');
+                    } else if (args.data['Total_Accuracy'] > 85 && args.data['Total_Accuracy'] < 95) {
+                        args.cell.classList.add('below-95');
+                    } else if (args.data['Total_Accuracy'] > 95) {
+                        args.cell.classList.add('above-95');
+                    }
+                }
+            }
+            else {
+                args.cell.classList.add('above-95');
+            }
+        }
+        else if (args.column.field === 'UnitPrice') {
+            if (args.data['Approved'] == false) {
+                if (args.data['UnitPrice_Accuracy'] != null) {
+                    if (args.data['UnitPrice_Accuracy'] < 85) {
+                        args.cell.classList.add('below-85');
+                    } else if (args.data['UnitPrice_Accuracy'] > 85 && args.data['UnitPrice_Accuracy'] < 95) {
+                        args.cell.classList.add('below-95');
+                    } else if (args.data['UnitPrice_Accuracy'] > 95) {
+                        args.cell.classList.add('above-95');
+                    }
+                }
+            }
+            else {
+                args.cell.classList.add('above-95');
+            }
+        }
+
+    }
+    var scrollVal = 0;
+    function getfile(args) {
+
+        var id = args.id;
+        $.ajax({
+            url: '@Url.Action("GetInvoiceFilePath", "LineItem")',
+            type: "POST",
+            data: JSON.stringify({ id: id }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+
+                $('#file').attr('src', response);
+            },
+            error: function (response) {
+            }
+        });
+    }
+    var dialogObj;
+    var dialogObj1;
+    var dialogObj2;
+    var grid4;
+    function created() {
+
+        dialogObj = this;
+        dialogObj.hide();
+    }
+    function created1() {
+
+        dialogObj1 = this;
+        dialogObj1.hide();
+    }
+    function created2() {
+
+        dialogObj2 = this;
+        dialogObj2.hide();
+    }
+    function dlgButtonClick(args) {
+        
+        if (args.action != "enter") {
+            var grid1 = document.getElementById("InlineEditing1");
+            var selectedrowindex1;
+            var selectedrecords1;
+            var datalist = 0;
+            if (grid1 != null) {
+                datalist = 1;
+                grid1 = grid1.ej2_instances[0];
+                selectedrowindex1 = grid1.getSelectedRowIndexes();
+                selectedrecords1 = grid1.getSelectedRecords();
+            }
+
+            var grid2 = document.getElementById("InlineEditing2").ej2_instances[0];
+            var selectedrowindex2 = grid2.getSelectedRowIndexes();// get the selected row indexes.
+            var selectedrecords2 = grid2.getSelectedRecords();
+
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+            //var vendorname = $("#VendorN").val();
+            //var grid3 = document.getElementById('InlineEditingValue').ej2_instances[0];
+            if (datalist != 0) {
+                if (selectedrowindex1.length != 0) {
+                    var ajax = new ej.base.Ajax({
+                        url: "@Url.Action("AssignProduct", "LineItem")", //render the partial view
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ value: selectedrecords1 })
+                    });
+                    ajax.send().then(function (data) {
+                        if (data == "\"Success\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Successfully Mapped!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                        }
+                        if (data == "\"Error\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Something went wrong!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                        }
+                        grid4.refresh();
+                        $(window).scrollTop(scrollVal);
+                        scrollVal = 0;
+                    });
+                }
+            }
+            else if (datalist == 0) {
+                if (selectedrowindex2.length != 0) {
+                    var ajax = new ej.base.Ajax({
+                        url: "@Url.Action("AssignProduct", "LineItem")", //render the partial view
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ value: selectedrecords2 })
+                    });
+                    ajax.send().then(function (data) {
+                        if (data == "\"Success\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Successfully Mapped!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                        }
+                        if (data == "\"Error\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Something went wrong!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                        }
+                        grid4.refresh();
+                        $(window).scrollTop(scrollVal);
+                        scrollVal = 0;
+                    });
+                }
+            }
+            else {
+                dialogObj.hide();
+            }
+        }
+    }
+    function CancelBouttonClick(args) {
+
+        if (args.action != "enter") {
+            dialogObj.hide();
+        }
+    }
+    function actionBegin(args) {
+        
+
+        if (args.requestType == "save") {
+            if (args.data.InvoiceId == null) {
+                args.data.InvoiceId = this.parentDetails.parentRowData.InvoiceId
+            }
+        }
+        if (args.requestType == "beginEdit" || args.requestType == "add" ) {
+            var id = new ej.base.closest(event.target, '.e-detailcell').firstChild.id
+            var grid = document.getElementById(id).ej2_instances[0];
+            grid.columns[3].visible = false;
+            grid.columns[4].visible = true;
+
+            for (var i = 0; i < this.columns.length; i++) {
+                
+                if (this.columns[i].field == "Approved") {
+                    
+                    this.columns[i].visible = false;
+                }
+            }
+
+        }
+
+    }
+
+       @*function createtoogle(args) {
+        
+        elemDate = document.createElement('input');
+        elemDate.type = "date";
+        elemDate.min = new Date(Date.parse('@ViewBag.StartDate')).toISOString().split("T")[0];
+        elemDate.max = new Date(Date.parse('@ViewBag.EndDate')).toISOString().split("T")[0];
+        if (args.type === "beginEdit") {
+            
+            //elemDate.style.visibility = "hidden";
+            elemDate.value = new Date(Date.parse(args.value)).toString("yyyy-MM-dd");
+            elemDate.disabled = true;
+            //elemDate.setAttribute('display', 'disable');
+        }
+
+        return elemDate;
+    }*@
+
+    function actionComplete(args) {
+        
+        //if (args.action == 'edit' && args.requestType == 'save') {
+        //    
+        //    var grid = document.getElementById("InlineEditingValue").ej2_instances[0];
+        //    grid.dataSource = new ej.data.DataManager({
+        //        url: "/LineItem/UrlDatasourceValue",
+        //        adaptor: new ej.data.UrlAdaptor()
+        //    });
+        //}
+
+    }
+
+
+
+    //function createdse(args) {
+    //    
+
+    //    //var grid = document.getElementById('InlineEditingValue').ej2_instances[0];
+    //    //var row = new ej.base.closest(event.target, '.e-row');
+    //    //var index = row.getAttribute('aria-rowindex');
+    //    //grid.detailRowModule.collapseAll();
+    //    //grid.detailRowModule.expand(index);
+
+    //    let tgt = args.target;
+    //    if (tgt.closest('.e-grid').getAttribute('id') !== this.grid.element.getAttribute('id')) {
+    //        // for child grid
+    //        if (tgt.classList.contains('e-dtdiagonalright') || tgt.classList.contains('e-detailrowcollapse')) {
+    //            var inst = tgt.closest('.e-grid').ej2_instances[0];
+    //            console.log(inst.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')))
+    //            inst.detailRowModule.collapseAll();
+    //        } else if (tgt.classList.contains('e-dtdiagonaldown') || tgt.classList.contains('e-detailrowexpand')) {
+    //            var inst = tgt.closest('.e-grid').ej2_instances[0];
+    //            console.log(inst.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')));
+    //        }
+    //    } else if (tgt.classList.contains('e-dtdiagonalright') || tgt.classList.contains('e-detailrowcollapse')) {
+    //        console.log(this.grid.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')));
+    //        // for Parent Grid Alone
+    //        this.grid.detailRowModule.collapseAll();
+    //    } else if (tgt.classList.contains('e-dtdiagonaldown') || tgt.classList.contains('e-detailrowexpand')) {
+    //        console.log(this.grid.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')));
+    //    }
+
+
+    //}
+
+    function collapseAll(args) {
+        
+        var grid = document.getElementById('InlineEditingValue').ej2_instances[0];
+        var tgt = event.target;
+        //let tgt = args.target;
+        if (tgt.closest('.e-grid').getAttribute('id') !== grid.element.getAttribute('id')) {
+            // for child grid
+            if (tgt.classList.contains('e-dtdiagonalright') || tgt.classList.contains('e-detailrowcollapse')) {
+                var inst = tgt.closest('.e-grid').ej2_instances[0];
+                console.log(inst.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')))
+                inst.detailRowModule.collapseAll();
+            } else if (tgt.classList.contains('e-dtdiagonaldown') || tgt.classList.contains('e-detailrowexpand')) {
+                var inst = tgt.closest('.e-grid').ej2_instances[0];
+                console.log(inst.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')));
+            }
+        } else if (tgt.classList.contains('e-dtdiagonalright') || tgt.classList.contains('e-detailrowcollapse')) {
+            console.log(this.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')));
+            // for Parent Grid Alone
+            grid.detailRowModule.collapseAll();
+        } else if (tgt.classList.contains('e-dtdiagonaldown') || tgt.classList.contains('e-detailrowexpand')) {
+            console.log(this.getRowObjectFromUID(tgt.closest('.e-row').getAttribute('data-uid')));
+        }
+    }
+    function OnLoad() {
+        
+        this.element.addEventListener(
+            'click',
+            collapseAll.bind(this),
+            true
+        );
+
+    }
+
+    function AddtoLibrary()
+    {
+        //dialogObj2.show()
+        var spinnerTarget = document.getElementById('ajax_dialog')
+        ej.popups.createSpinner({
+            target: spinnerTarget
+        });
+        ej.popups.showSpinner(spinnerTarget);
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("GetAddLibrary", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ InvoiceProductId: $("#hdnInvoiceProductId").val(), Description: $("#Description").val(), UPCCode: $("#upccode").val(), ItemNo: $("#itemno").val() })
+        });
+        ajax.send().then((data) => {
+            Oldview = $("#MapContent").html();
+            $("#MapContent").html(data);
+            $("#MapContent").removeClass("itemsGridPlaceHolder");
+            $("#MapContent").addClass("addItemToLibrary");
+        });
+        ej.popups.hideSpinner(spinnerTarget);
+    }
+
+    function changethetab()
+    {
+        $("#MapContent").html(Oldview);
+        $("#MapContent").removeClass("addItemToLibrary");
+        $("#MapContent").addClass("itemsGridPlaceHolder");
+    }
+
+    function load(args) {
+
+        
+
+        this.columns[10].commands[0].buttonOption.click = function (args) {
+            scrollVal = $(window).scrollTop();
+            var row = new ej.base.closest(event.target, '.e-row'); // get row element
+            var index = row.getAttribute('aria-rowindex')
+            var id = new ej.base.closest(event.target, '.e-detailcell').firstChild.id
+            grid4 = document.getElementById(id).ej2_instances[0];
+            var rowData = grid4.currentViewData[index];
+            //$("#txtid").val(rowData.ProductVendorId);
+            dialogObj.show()
+            $(".e-dlg-overlay").remove();
+            var spinnerTarget = document.getElementById('ajax_dialog')
+            ej.popups.createSpinner({
+                target: spinnerTarget
+            });
+            ej.popups.showSpinner(spinnerTarget);
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("GetInvoiceProductData", "LineItem")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: rowData, VendorName: $("#VendorList_hidden").val() })
+            });
+            ajax.send().then((data) => {
+
+                $("#dialogTemp").html(data);
+
+                @*$.ajax({
+                    url: '@Url.Action("SetPopupHeader", "LineItem")',
+                    type: "POST",
+                    data: JSON.stringify({ value: rowData }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+
+
+                        var html = "<span class='storeNameforPopup'>" + response.store +"</span>" +
+                            "<div class='itemArea'>" +
+                            "<span class='itemSectionTitle'>Mapping Item</span>" +
+                            "<span class='itemSectionName'>" + response.Item + "</span>" +
+                            (response.upc == null ? "<span class='itemSectionName' style='font-size:15px'>" + (response.itemno == null ? "" : "Item No : " + response.itemno) + "</span>"
+                            : "<span class='itemSectionName' style='font-size:15px'>" + (response.upc == null ? "" : "UPC Code : " + response.upc) + "</span>") +
+                            "</div>" +
+                            "<div class='storeVendorArea'>" +
+                            "<span class='vendorTitle'>Vendor</span>" +
+                                "<span class='vendorNameTitle 7484Store'>" + response.vendorname +"</span>" +
+                            "</div>";
+                        $(".itemDetailsSection").html(html);
+                    },
+                    error: function (response) {
+                    }
+                });*@
+
+            });
+            ej.popups.hideSpinner(spinnerTarget);
+        }
+
+        this.columns[10].commands[1].buttonOption.click = function (args) {
+            scrollVal = $(window).scrollTop();
+            var row = new ej.base.closest(event.target, '.e-row'); // get row element
+            var index = row.getAttribute('aria-rowindex')
+            var id = new ej.base.closest(event.target, '.e-detailcell').firstChild.id
+            grid4 = document.getElementById(id).ej2_instances[0];
+            var rowData = grid4.currentViewData[index];
+            $("#InvoiceProductId").val(rowData.InvoiceProductId);
+            //dialogObj1.show()
+            var spinnerTarget = document.getElementById('ajax_dialog1')
+            ej.popups.createSpinner({
+                target: spinnerTarget
+            });
+            ej.popups.showSpinner(spinnerTarget);
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("Unlinkitem", "LineItem")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: rowData })
+            });
+            ajax.send().then((data) => {
+                var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                if (data == "\"Success\"")
+                {
+                    toastObj.content = "Item Successfully Unlinked!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (data == "\"Error\"") {
+                    toastObj.content = "Something went wrong!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                grid4.refresh();
+
+                //$("#dialogTempData").html(data);
+            });
+            ej.popups.hideSpinner(spinnerTarget);
+        }
+
+        this.columns[10].commands[2].buttonOption.click = function (args) {
+            
+            scrollVal = $(window).scrollTop();
+            var row = new ej.base.closest(event.target, '.e-row'); // get row element
+            var index = row.getAttribute('aria-rowindex')
+            var id = new ej.base.closest(event.target, '.e-detailcell').firstChild.id
+            grid4 = document.getElementById(id).ej2_instances[0];
+            var rowData = grid4.currentViewData[index];
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+
+            $.ajax({
+                url: '@Url.Action("AddVendorLineItem", "LineItem")',
+                type: "POST",
+                data: JSON.stringify({ value: rowData }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response == "Success") {
+                        toastObj.content = "Successfully add vendor item!";
+                        toastObj.target = document.body;
+                        toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                    }
+                    if (response == "Error") {
+                        toastObj.content = "Something went wrong!";
+                        toastObj.target = document.body;
+                        toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    }
+
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+
+    }
+
+    function rowDataBound(args) {
+
+        
+        args.row.querySelector('[title="Add to vendor library"]').classList.add('e-hide')
+
+        //check the condition
+        if (!ej.base.isNullOrUndefined(args.data.ProductId)) {
+            args.row.querySelector('[title="Linked"]').classList.add('e-success')
+            args.row.querySelector('[title="Link"]').classList.add('e-hide')
+        }
+        else {
+            args.row.querySelector('[title="Linked"]').classList.add('e-hide')
+            args.row.querySelector('[title="Link"]').classList.add('e-primary')
+        }
+
+        
+           var id = args.data.InvoiceId;
+            $.ajax({
+                url: '@Url.Action("GetInvoiceFilePath", "LineItem")',
+                type: "POST",
+                data: JSON.stringify({ id: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+
+                    $('#file').attr('src', response);
+                },
+                error: function (response) {
+                }
+            });
+
+
+    }
+
+
+
+    function rowselected(args) {
+        
+
+        if (args.target.id != 'btnapproveall' && args.target.id != 'imgReset')
+            {
+            var id = args.data.InvoiceId;
+            $.ajax({
+                url: '@Url.Action("GetInvoiceFilePath", "LineItem")',
+                type: "POST",
+                data: JSON.stringify({ id: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+
+                    $('#file').attr('src', response);
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+    }
+
+    $(document).ready(function () {
+
+        //var dialog = document.getElementById("ajax_dialog").ej2_instances[0]
+        //dialog.hide();
+
+
+        //var dialog = document.getElementById("ajax_dialog1").ej2_instances[0]
+        //dialog.hide();
+
+
+        var vendorId = document.getElementById('VendorList').value;
+        var InvoiceDate = new Date($("#InvoiceDateValue").val());
+        var checked = document.getElementById('checked').ej2_instances[0];
+        var checkvalue = checked.checked;
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("GetList", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ vendorname: vendorId, Date: InvoiceDate, checkvalue: checkvalue  })
+        });
+        ajax.send().then((data) => {
+            $("#GridValue").html(data);
+
+        });
+    });
+    function FillSearchItemData() {
+        
+        var spinnerTarget = document.getElementById('ajax_dialog')
+        ej.popups.createSpinner({
+            target: spinnerTarget
+        });
+        ej.popups.showSpinner(spinnerTarget);
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("GetInvoiceProductDatawithDesc", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ InvoiceProductId: $("#hdnInvoiceProductId").val(), Description: $("#Description").val(), UPCCode: $("#upccode").val(), ItemNo: $("#itemno").val(), search: $("#search").val(), InvoiceId: $("#hdnInvoiceId").val()  })
+        });
+        ajax.send().then((data) => {
+            $("#dialogTemp").html(data);
+
+        });
+        @*$.ajax({
+            url: '@Url.Action("GetInvoiceProductDatawithDesc", "LineItem")',
+            type: "POST",
+            data: $("form").serialize(),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $("#dialogTemp").html(response);
+            }
+        });*@
+        ej.popups.hideSpinner(spinnerTarget);
+    }
+    function GetUnmappedvalue(args) {
+        
+        //$("#VendorN").val(args.value);
+        var VendorName = document.getElementById('VendorList').ej2_instances[0].itemData.VendorName;
+        var checked = document.getElementById('checked').ej2_instances[0];
+        var checkvalue = checked.checked;
+        var InvoiceDate = new Date($("#InvoiceDateValue").val());
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("GetList", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ vendorname: VendorName, Date: InvoiceDate, checkvalue: checkvalue  })
+        });
+        ajax.send().then((data) => {
+            $("#GridValue").html(data);
+        });
+        
+    }
+    function GetGridValue(args) {
+        
+        //$("#VendorN").val(args.value);
+        var InvoiceDate = new Date($("#InvoiceDateValue").val());
+        var checked = document.getElementById('checked').ej2_instances[0];
+        var checkvalue = checked.checked;
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("GetList", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ vendorname: args.value, Date: InvoiceDate, checkvalue: checkvalue })
+        });
+        ajax.send().then((data) => {
+            $("#GridValue").html(data);
+        });
+        
+    }
+    function GetValueUsingDate(args) {
+        
+        $("#InvoiceDateValue").val(args.value);
+        var checked = document.getElementById('checked').ej2_instances[0];
+        var checkvalue = checked.checked;
+        var VendorName = document.getElementById('VendorList').ej2_instances[0].itemData.VendorName;
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("GetList", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ vendorname: VendorName, Date: args.value, checkvalue: checkvalue })
+        });
+        ajax.send().then((data) => {
+            $("#GridValue").html(data);
+        });
+        
+    }
+    function LinkedCancelBouttonClick(args) {
+
+        if (args.action != "enter") {
+            dialogObj1.hide();
+        }
+    }
+    function RemoveButtonClick(args) {
+
+        if (args.action != "enter") {
+            var InvoiceProductId = $("#InvoiceProductId").val();
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("RemoveProductMapping", "LineItem")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ InvoiceProductId: InvoiceProductId})
+            });
+            ajax.send().then(function (data) {
+                if (data == "\"Success\"") {
+                    dialogObj1.hide();
+                    toastObj.content = "Successfully Removed Mapping!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (data == "\"Error\"") {
+                    dialogObj1.hide();
+                    toastObj.content = "Something went wrong!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                grid4.refresh();
+                $(window).scrollTop(scrollVal);
+                scrollVal = 0;
+            });
+        }
+        
+    }
+
+    function AssignProduct()
+    {
+        var hdnddlProductID = $("#hdnddlProductID").val();
+        var hdnddlProductVendorID = $("#hdnddlProductVendorID").val();
+        if (hdnddlProductID != null && hdnddlProductID != "" && hdnddlProductID != undefined && hdnddlProductVendorID != null && hdnddlProductVendorID != "" && hdnddlProductVendorID != undefined) {
+
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+            var spinnerTarget = document.getElementById('ajax_dialog')
+            ej.popups.createSpinner({
+                target: spinnerTarget
+            });
+            ej.popups.showSpinner(spinnerTarget);
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("AssignProduct", "LineItem")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ InvoiceProductId: $("#hdnInvoiceProductId").val(), Description: $("#Description").val(), UPCCode: $("#upccode").val(), ItemNo: $("#itemno").val(), search: $("#search").val(), InvoiceId: $("#hdnInvoiceId").val(), ProductId: hdnddlProductID, ProductVendorId: hdnddlProductVendorID  })
+            });
+            ajax.send().then(function (data) {
+                if (data == "\"Success\"") {
+                    dialogObj.hide();
+                    toastObj.content = "Successfully Mapped!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                    ej.popups.hideSpinner(spinnerTarget);
+                }
+                if (data == "\"Error\"") {
+                    dialogObj.hide();
+                    toastObj.content = "Something went wrong!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    ej.popups.hideSpinner(spinnerTarget);
+                }
+                grid4.refresh();
+                $(window).scrollTop(scrollVal);
+                scrollVal = 0;
+            });
+            grid4.refresh();
+        }
+        else {
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+            toastObj.content = "Please select Both Item!";
+            toastObj.target = document.body;
+            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+        }
+    }
+
+    function MapandsyncItem(ProductId, Type)
+    {
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        var spinnerTarget = document.getElementById('ajax_dialog')
+        ej.popups.createSpinner({
+            target: spinnerTarget
+        });
+        ej.popups.showSpinner(spinnerTarget);
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("syncLineItem", "LineItem")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ InvoiceProductId: $("#hdnInvoiceProductId").val(), Description: $("#Description").val(), UPCCode: $("#upccode").val(), ItemNo: $("#itemno").val(), search: $("#search").val(), InvoiceId: $("#hdnInvoiceId").val(), ProductId: ProductId, Type: Type, VendorName: $("#VendorList_hidden").val() })
+        });
+        ajax.send().then(function (data) {
+            if (data.split('|')[0] == "\"Success") {
+                var ajax2 = new ej.base.Ajax({
+                    url: "@Url.Action("AssignProduct", "LineItem")", //render the partial view
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ InvoiceProductId: $("#hdnInvoiceProductId").val(), Description: $("#Description").val(), UPCCode: $("#upccode").val(), ItemNo: $("#itemno").val(), search: $("#search").val(), InvoiceId: $("#hdnInvoiceId").val(), ProductId: data.split('|')[1].replace('"', "") })
+                });
+                ajax2.send().then(function (data2) {
+                    if (data2 == "\"Success\"") {
+                        dialogObj.hide();
+                        toastObj.content = "Successfully Mapped!";
+                        toastObj.target = document.body;
+                        toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                        ej.popups.hideSpinner(spinnerTarget);
+                    }
+                    if (data2 == "\"Error\"") {
+                        dialogObj.hide();
+                        toastObj.content = "Something went wrong!";
+                        toastObj.target = document.body;
+                        toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                        ej.popups.hideSpinner(spinnerTarget);
+                    }
+                    grid4.refresh();
+                    $(window).scrollTop(scrollVal);
+                    scrollVal = 0;
+                });
+            }
+            if (data == "\"Error\"") {
+                dialogObj.hide();
+                toastObj.content = "Something went wrong!";
+                toastObj.target = document.body;
+                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                ej.popups.hideSpinner(spinnerTarget);
+            }
+            grid4.refresh();
+            $(window).scrollTop(scrollVal);
+            scrollVal = 0;
+        });
+        grid4.refresh();
+    }
+
+    function AddAndMapBtn()
+    {
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        var spinnerTarget = document.getElementById('ajax_dialog')
+        ej.popups.createSpinner({
+            target: spinnerTarget
+        });
+        ej.popups.showSpinner(spinnerTarget);
+        var AddDescription = $("#AddDescription").val()
+        if (AddDescription != "" && AddDescription != undefined && AddDescription != null) {
+
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("syncLineItem", "LineItem")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ InvoiceProductId: $("#AddInvoiceProductId").val(), Description: $("#AddDescription").val(), UPCCode: $("#AddUPCCode").val(), ItemNo: $("#AddItemNo").val(), search: "", InvoiceId: 0, ProductId: 0, Type: 1, Brand: $("#AddBrand").val(), Size: $("#AddSize").val(), VendorName: $("#VendorList_hidden").val() })
+            });
+            ajax.send().then(function (data) {
+                if (data.split('|')[0] == "\"Success") {
+
+                    if ($("#addtoVendorLibrary").prop("checked")) {
+                        var ajax3 = new ej.base.Ajax({
+                            url: "@Url.Action("syncLineItem", "LineItem")", //render the partial view
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify({ InvoiceProductId: $("#AddInvoiceProductId").val(), Description: $("#AddDescription").val(), UPCCode: $("#AddUPCCode").val(), ItemNo: $("#AddItemNo").val(), search: "", InvoiceId: 0, ProductId: data.split('|')[1].replace('"', ""), Type: 0, Brand: $("#AddBrand").val(), Size: $("#AddSize").val(), VendorName: $("#VendorList_hidden").val() })
+                        });
+                        ajax3.send().then(function (data3) {
+
+                            if (data3.split('|')[0] == "\"Success") {
+                                dialogObj.hide();
+                                toastObj.content = "Successfully Mapped!";
+                                toastObj.target = document.body;
+                                toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                            }
+                            if (data3 == "\"Error\"") {
+                                dialogObj.hide();
+                                toastObj.content = "Something went wrong!";
+                                toastObj.target = document.body;
+                                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                            }
+                            grid4.refresh();
+                            $(window).scrollTop(scrollVal);
+                            scrollVal = 0;
+                            ej.popups.hideSpinner(spinnerTarget);
+                        });
+                        grid4.refresh();
+                    }
+                    var ajax2 = new ej.base.Ajax({
+                        url: "@Url.Action("AssignProduct", "LineItem")", //render the partial view
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ InvoiceProductId: $("#AddInvoiceProductId").val(), Description: $("#AddDescription").val(), UPCCode: $("#AddUPCCode").val(), ItemNo: $("#AddItemNo").val(), search: "", InvoiceId: 0, ProductId: data.split('|')[1].replace('"', "") })
+                    });
+                    ajax2.send().then(function (data2) {
+                        if (data2 == "\"Success\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Successfully Mapped!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                        }
+                        if (data2 == "\"Error\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Something went wrong!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                        }
+                        grid4.refresh();
+                        $(window).scrollTop(scrollVal);
+                        scrollVal = 0;
+                        ej.popups.hideSpinner(spinnerTarget);
+                    });
+                }
+                if (data == "\"Error\"") {
+                    dialogObj.hide();
+                    toastObj.content = "Something went wrong!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    ej.popups.hideSpinner(spinnerTarget);
+                }
+                grid4.refresh();
+                $(window).scrollTop(scrollVal);
+                scrollVal = 0;
+            });
+            grid4.refresh();
+        }
+        else {
+            toastObj.content = "Please enter Item Name!";
+            toastObj.target = document.body;
+            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+            ej.popups.hideSpinner(spinnerTarget);
+        }
+        grid4.refresh();
+    }
+    function FNselectProduct(ProductID, VendorProductID, type) {
+        if (type == 0) {
+            $(".TempProduct").removeAttr("selectedrow");
+            $("#recommendedItemlst_" + ProductID).attr("selectedrow", "yes");
+            $("#hdnddlProductID").val(ProductID);
+
+            $(".TempVendorProduct").removeAttr("selectedrow");
+            $("#recommendedVendorItemlst_" + VendorProductID).attr("selectedrow", "yes");
+            $("#hdnddlProductVendorID").val(VendorProductID);
+        }
+        else {
+            $(".TempVendorProduct").removeAttr("selectedrow");
+            $("#recommendedVendorItemlst_" + VendorProductID).attr("selectedrow", "yes");
+            $("#hdnddlProductVendorID").val(VendorProductID);
+
+            $(".TempProduct").removeAttr("selectedrow");
+            $("#recommendedItemlst_" + ProductID).attr("selectedrow", "yes");
+            $("#hdnddlProductID").val(ProductID);
+        }
+    }
+</script>
+
+
+@Html.EJS().ScriptManager()
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "SysnthesisRepo\\SysnthesisRepo.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "SyntesisApi\\SyntesisApi\\SyntesisApi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

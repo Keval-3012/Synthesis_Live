@@ -1,0 +1,217 @@
+﻿@model IEnumerable<EntityModels.Models.PayrollFileList>
+@{
+    Layout = null;
+}
+@using Utility
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+</style>
+<div id="grddata">
+    <div class="animate-panelmessesgarea padbtmzero">
+        @if (ViewBag.StatusMessage.ToString() == "Error")
+        {
+            <script>
+                MyfunError();
+            </script>
+        }
+        @if (ViewBag.StatusMessage.ToString() == "NoItem")
+        {
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "3000",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "10000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr.success('No Record found.');
+            </script>
+        }
+
+    </div>
+    <div class="datagrid">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th><a class="textred" onclick="javascript:FunSortData('FileName');" style="color:#fff; text-decoration:none; cursor:pointer;">File Name</a></th>
+                        <th><a class="textred" onclick="javascript:FunSortData('UploadDate');" style="color:#fff; text-decoration:none; cursor:pointer;">Upload Date</a></th>
+                        @if (Model.Count() > 0 && Model.First().StoreID != 9)
+                        {
+                            <th><a class="textred" onclick="javascript:FunSortData('StartDate');" style="color:#fff; text-decoration:none; cursor:pointer;">Start Date</a></th>
+                        }
+                        <th><a class="textred" onclick="javascript:FunSortData('EndDate');" style="color:#fff; text-decoration:none; cursor:pointer;">End Date</a></th>
+                        <th><a class="textred" onclick="javascript:FunSortData('EndCheckDate');" style="color:#fff; text-decoration:none; cursor:pointer;">End Check Date</a></th>
+                        <th class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><a style="color: #337ab7;" href="@Url.Action("DownloadFile", "PDFRead", new { @filePath = item.FileName })" target="_blank" class="" title="PDF Download" data-toggle="tooltip" data-placement="top" data-original-title="PDF Download"> @Html.Raw(item.FileName)</a></td>
+                                    <td>
+                                        @Html.Raw(item.UploadDate)
+                                    </td>
+                                    @if (item.StoreID != 9)
+                                    {
+                                        <td>
+                                            @Html.Raw(item.StartDate)
+                                        </td>
+                                    }
+                                    <td>
+                                        @Html.Raw(item.EndDate)
+                                    </td>
+                                    <td>
+                                        @Html.Raw(item.EndCheckDate)
+                                    </td>
+                                    <td>
+                                        <a style="margin-right:10px" href="@Url.Action("GetDetail", "PDFRead", new { @FileName = item.FileName, @PayrollReportId = item.PayrollReportID })" class="" title="Detail" data-toggle="tooltip" data-placement="top" data-original-title="Detail"><img src="/Content/Admin/images/file-text.svg" alt="" /></a>
+                                        <a href="#" class="" title="Delete" onclick="return ErrorPopup(@item.PayrollReportID)" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /></a>
+                                    </td>
+                                </tr>
+                                var DivId = item.PayrollReportID;
+                                <div id="@DivId" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                    <div class="modal-content ">
+                                        <div class="modal-header text-center">
+                                            <i class="glyphicon glyphicon-trash"></i>
+                                        </div>
+                                        <div class="modal-title">Message</div>
+                                        <div class="modal-body ">Are you sure you want to delete this Payroll data?</div>
+                                        <div class="modal-footer" style="text-align:center">
+                                            <a class="btn btn-danger" onclick="Delete('@item.PayrollReportID')">Yes </a>
+                                            <a class="btn" data-dismiss="modal" onclick="closemodal()">No</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <tr class="paginationGrid">
+                                <td class="left-text dataTables_length showdata" colspan="2" style="padding-top: 0px!important;">
+                                    <div class="recordbox">
+                                        <span class="selectbox">
+                                            @{
+                                                List<SelectListItem> listItem_Records = new List<SelectListItem>();
+                                                string[] Records = AdminSiteConfiguration.GetArrayForRecord().ToString().Split(',');
+                                                foreach (string word in Records)
+                                                {
+                                                    listItem_Records.Add(new SelectListItem
+                                                    {
+                                                        Text = word.Split(':')[0],
+                                                        Value = word.Split(':')[1]
+                                                    });
+                                                }
+
+                                                @Html.DropDownList("SelectRecords", listItem_Records, new { @class = "myval", @onchange = "javascript:FunPageRecord(this.value);" })
+                                            }
+                                        </span><span class="text_record">Records</span>
+                                    </div>
+                                    <div class="showdatabox">
+                                        <span style="float:left">Showing @ViewBag.startIndex to @ViewBag.endIndex of @ViewBag.TotalDataCount entries</span>
+                                    </div>
+
+                                </td>
+                                <td colspan="4">
+
+                                    <div class="pagination">
+                                        @if (ViewBag.LastPageIndex > 1)
+                                        {
+                                            if (ViewBag.CurrentPageIndex != 1)
+                                            {
+                                                <a id="btnPageFirst" style="cursor:pointer" onclick="javascript:FunPageIndex(1);" class=" Linkbutton firstpage nextbtn">First</a>
+                                                <a id="btnPagePrevious" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    -1);" class=" Linkbutton Linkbutton prebtn">Previous</a>
+                                            }
+                                            int PageIndex = 3;
+                                            int StartPageIndex = ViewBag.CurrentPageIndex - PageIndex;//10-3=7
+                                            int EndPageIndex = ViewBag.CurrentPageIndex + PageIndex;//10+3=13
+
+                                            if (StartPageIndex < 1)
+                                            {
+                                                EndPageIndex = EndPageIndex - StartPageIndex;
+                                            }
+
+                                            if (EndPageIndex > ViewBag.LastPageIndex)
+                                            {
+                                                StartPageIndex = (StartPageIndex - (EndPageIndex - ViewBag.LastPageIndex)) + 1;
+                                            }
+
+                                            for (int i = 1; i <= @ViewBag.LastPageIndex; i++)
+                                            {
+
+                                                if ((StartPageIndex < i && EndPageIndex > i))
+                                                {
+                                                    if (ViewBag.CurrentPageIndex == i)
+                                                    {
+                                                        <span Style="min-width: 25px; display: inline-block;">@i          </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a id="btnnum" style="cursor:pointer" onclick="javascript:FunPageIndex(@i);">@i</a>
+                                                    }
+                                                }
+                                            }
+                                            if (ViewBag.CurrentPageIndex != @ViewBag.LastPageIndex)
+                                            {
+                                                <a id="btnPageNext" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    +1);" class=" Linkbutton nextbtn">Next</a>
+                                                <a id="btnPageLast" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.LastPageIndex);" class=" Linkbutton lastpage nextbtn">Last</a>
+                                            }
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    No Data Available
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+
+        GetData(0,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.SearchTitle');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'');
+    }
+    var OrderByVal = '@ViewBag.OrderByVal';
+    var IsAscVal = '@ViewBag.IsAscVal';
+    var PageSize = '@ViewBag.PageSize';
+</script>
+<script src="~/Form_JS/PDFRead.js"></script>

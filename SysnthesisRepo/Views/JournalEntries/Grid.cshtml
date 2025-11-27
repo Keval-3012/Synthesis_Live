@@ -1,0 +1,358 @@
+﻿@model IEnumerable<EntityModels.Models.SalesGeneralEntries>
+@using Utility
+@using EntityModels.Models
+@{ Layout = null;
+    DBContext db = new DBContext(); }
+
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (ViewBag.StatusMessage.ToString() == "Delete")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.Delete');
+        </script>
+    }
+
+    @if (ViewBag.StatusMessage.ToString() == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Approved")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('@ViewBag.Approve');
+        </script>
+    }
+
+
+</div>
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice">
+        <div class="datagrid martop15">
+            <div class="table-responsive" style="position:relative; min-height: 300px;">
+                <table class="marginbtm15">
+                    <tr>
+                        <td>
+                            <div class="div_flex">
+                                <input name="txtstartdate" type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                                <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="javascript:FunSearchRecord();" class=".searchfinal .btnsearchicon marginleft10" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-striped table-hover tablecolor">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;width:1%">Date</th>
+                            @{
+                                string storeid = (Session["storeid"] == null ? "0" : Session["storeid"].ToString());
+                            }
+                            @if (storeid == "0" || storeid == null)
+                            {
+                                <th style="text-align:left;width:15%">Store</th>
+                            }
+                            <th style="text-align:center; width:10%">No# of Pos</th>
+                            <th style="text-align:right; width:10%">Total Amount</th>
+                            <th class="text-align-center">Status</th>
+                            <th class="text-align-center">QB Status</th>
+                            <th style="text-align:center; width:10%">Action</th>
+                        </tr>
+                    </thead>
+                    @{
+                        if (Model.Count() > 0)
+                        {
+                            <tbody>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        var ItemD = item.SalesGeneralId + "D";
+                                        <tr class="even">
+                                            <td style="vertical-align:middle;text-align:left;width:10%">
+                                                <a onclick="setItems()" href="@Url.Action("Detail", "JournalEntries", new { Id = item.SalesGeneralId })" class="" title="Detail">
+                                                    @AdminSiteConfiguration.GetDate(Convert.ToString(Html.Raw(item.SalesDate)))
+                                                </a>
+                                                @*@Html.Raw(item.Status)*@
+                                            </td>
+                                            @if (storeid == "0" || storeid == null)
+                                            {
+                                                <td style="vertical-align:middle;text-align:left">
+                                                    @{
+                                                        var aa = db.StoreMasters.Find(item.StoreId).NickName;
+                                                        @Html.Raw(aa);
+                                                    }
+                                                </td>
+                                            }
+                                            <td style="vertical-align:middle;text-align:center;width:10%">@Html.Raw(item.NoOfPos)</td>
+                                            <td style="vertical-align:middle;text-align:right;width:10%">$ @Html.Raw(AdminSiteConfiguration.PriceWithComma(Convert.ToString(item.TotalAmount)))</td>
+                                            @if (item.IsSync == 1)
+                                            {
+                                                <td style="vertical-align:middle;text-align:center;width:10%">
+                                                    <span class="btn btn-success btn-xs clsstatus"><i class="fa fa-check"></i> Approved</span>
+                                                </td>
+                                                <td style="vertical-align:middle;text-align:center;width:10%"><img src="~/QBImages/synced.png" style="height: 100%;" /></td>
+                                            }
+                                            else
+                                            {
+                                                <td style="vertical-align:middle;text-align:center;width:10%">
+                                                    <span class="btn btn-warning btn-xs btnpending clsstatus"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>
+                                                </td>
+                                                <td style="vertical-align:middle;text-align:center;width:10%"><img src="~/QBImages/not-synced.png" style="height: 100%;" /></td>
+                                            }
+                                            <td style="text-align:center; width:10%">
+                                                <a onclick="setItems()" detail="@AdminSiteConfiguration.GetDate(Convert.ToString(Html.Raw(item.SalesDate))) - Edit" href="@Url.Action("Detail", "JournalEntries", new { Id = item.SalesGeneralId })" class="" title="Edit"><img src="../../Content/Admin/images/edit-2.svg" alt="" /> </a>
+                                                <a href="#" onclick="return ComfirmDelete(@item.SalesGeneralId);" detail="@AdminSiteConfiguration.GetDate(Convert.ToString(Html.Raw(item.SalesDate))) - Delete" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><img src="~/Content/Admin/images/trash-2.svg" alt="" /> </a>
+                                                <div id="@ItemD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                                    <div class="modal-content ">
+                                                        <div class="modal-header text-center">
+                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                        </div>
+                                                        <div class="modal-title">Message</div>
+                                                        <div class="modal-body ">Are you sure want to delete this Entry?</div>
+                                                        <div class="modal-footer" style="text-align:center">
+                                                            <a class="btn btn-danger" detail="Delete -" onclick="Delete(@item.SalesGeneralId);">Ok </a>
+                                                            <a class="btn" data-dismiss="modal" detail="Delete -" onclick="closemodal()">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                                <tr class="paginationGrid">
+                                    <td class="left-text dataTables_length showdata" style="padding-top: 0px!important;">
+                                        <div class="recordbox showingrecords">
+                                            <span class="selectbox">
+                                                @{
+                                                    List<SelectListItem> listItem_Records = new List<SelectListItem>();
+                                                    string[] Records = AdminSiteConfiguration.GetArrayForRecord().ToString().Split(',');
+                                                    foreach (string word in Records)
+                                                    {
+                                                        listItem_Records.Add(new SelectListItem
+                                                        {
+                                                            Text = word.Split(':')[0],
+                                                            Value = word.Split(':')[1]
+                                                        });
+                                                    }
+                                                    @Html.DropDownList("SelectRecords", listItem_Records, new { @class = "myval", @onchange = "javascript:FunPageRecord(this.value);" })
+                                                }
+                                            </span><span class="text_record">Records</span>
+                                        </div>
+                                        <div class="showdatabox showdataboxrecord">
+                                            <span style="float:left">Showing @ViewBag.startIndex to @ViewBag.endIndex of @ViewBag.TotalDataCount entries</span>
+                                        </div>
+                                    </td>
+                                    <td colspan="6">
+                                        <div class="pagination">
+                                            @if (ViewBag.LastPageIndex > 1)
+                                            {
+                                                if (ViewBag.CurrentPageIndex != 1)
+                                                {
+                                                    <a id="btnPageFirst" style="cursor:pointer" onclick="javascript:FunPageIndex(1);" class=" Linkbutton firstpage nextbtn">First</a>
+                                                    <a id="btnPagePrevious" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    -1);" class=" Linkbutton Linkbutton prebtn">Previous</a>
+                                                }
+                                                int PageIndex = 3;
+                                                int StartPageIndex = ViewBag.CurrentPageIndex - PageIndex;//10-3=7
+                                                int EndPageIndex = ViewBag.CurrentPageIndex + PageIndex;//10+3=13
+
+                                                if (StartPageIndex < 1)
+                                                {
+                                                    EndPageIndex = EndPageIndex - StartPageIndex;
+                                                }
+
+                                                if (EndPageIndex > ViewBag.LastPageIndex)
+                                                {
+                                                    StartPageIndex = (StartPageIndex - (EndPageIndex - ViewBag.LastPageIndex)) + 1;
+                                                }
+
+                                                for (int i = 1; i <= @ViewBag.LastPageIndex; i++)
+                                                {
+
+                                                    if ((StartPageIndex < i && EndPageIndex > i))
+                                                    {
+                                                        if (ViewBag.CurrentPageIndex == i)
+                                                        {
+                                                            <span Style="min-width: 25px; display: inline-block;">@i          </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="btnnum" style="cursor:pointer" onclick="javascript:FunPageIndex(@i);">@i</a>
+                                                        }
+                                                    }
+                                                }
+                                                if (ViewBag.CurrentPageIndex != @ViewBag.LastPageIndex)
+                                                {
+                                                    <a id="btnPageNext" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.CurrentPageIndex    +1);" class=" Linkbutton nextbtn">Next</a>
+                                                    <a id="btnPageLast" style="cursor:pointer" onclick="javascript:FunPageIndex(@ViewBag.LastPageIndex);" class=" Linkbutton lastpage nextbtn">Last</a>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function FunSearchRecord()
+    {
+        var element_txtSearchTitle = document.getElementById('txtstartdate').value;
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'','',element_txtSearchTitle);
+    }
+
+    function FunPageIndex(pageindex)//grid pagination
+    {
+        GetData(0,pageindex, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val');
+    }
+
+    function FunSortData(SortData)//Grid header sorting
+    {
+        GetData(0,@ViewBag.CurrentPageIndex, SortData,@ViewBag.AscVal,@ViewBag.PageSize,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val');
+        myCustomFn();
+    }
+
+    function FunPageRecord(PageRecord)//Grid Page per record
+    {
+        GetData(0,1, '@ViewBag.OrderByVal',@ViewBag.IsAscVal,PageRecord,'@ViewBag.Alpha',@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val');
+    }
+
+    function FunAlphaSearchRecord(alpha)//Alpha Search
+    {
+        GetData(1,1,'@ViewBag.OrderByVal',@ViewBag.IsAscVal,@ViewBag.PageSize,alpha,@ViewBag.SearchRecords,'@ViewBag.deptname','@ViewBag.startdate','@ViewBag.enddate','@ViewBag.payment','@ViewBag.Store_val');
+    }
+
+    $(document).ready(function () {
+        $("#txtstartdate").autocomplete(false);
+        if (SearchTitle != "") {
+            $("#txtstartdate").val(SearchTitle);
+        }
+
+        $('#txtstartdate').datetimepicker({
+            format: 'MMM-YYYY',
+            useCurrent: false,
+            daysOfWeekDisabled: [0, 6]
+
+        });
+
+        if (SearchTitle != "") {
+            $("#txtstartdate").val(SearchTitle);
+        }
+
+        var sDate = localStorage.getItem("JournalEntry_Date");
+        localStorage.removeItem("JournalEntry_Date");
+        if (sDate != null) {
+            $("#txtstartdate").val(sDate);
+            FunSearchRecord();
+        }
+    });
+
+    function bind() {
+        if ('@ViewBag.SearchTitle' != "") {
+            $("#txtstartdate").val('@ViewBag.SearchTitle');
+        }
+
+        $(".myval").select2({
+            allowclear: true,
+        });
+
+        if (document.getElementById('SelectRecords') != null) {
+            document.getElementById('SelectRecords').value = @ViewBag.PageSize;
+        }
+
+        $(".select2-container").remove();
+        $("select").select2({
+            width: "100%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+        if (document.getElementById('SelectRecords') != null) {
+            document.getElementById('SelectRecords').value = @ViewBag.PageSize;
+        }
+    }
+
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $("#secloader").removeClass('pace-active1');
+            $("#secloader").addClass('pace-active');
+            $("#dvloader").removeClass('bak1');
+            $("#dvloader").addClass('bak');
+            $("#globalFooter").addClass('LoaderFooter');
+            top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        }
+        else {
+            $("#secloader").removeClass('pace-active');
+            $("#secloader").addClass('pace-active1');
+            $("#dvloader").removeClass('bak');
+            $("#dvloader").addClass('bak1');
+            $("#globalFooter").removeClass('LoaderFooter');
+            doc.scrollTop = top;
+        }
+        bind();
+    }
+
+    var SearchTitle = '@ViewBag.SearchTitle';
+    var PageSize = '@ViewBag.PageSize';
+    var CurrentPageIndex = '@ViewBag.CurrentPageIndex';
+    var OrderByVal = '@ViewBag.OrderByVal';
+    var IsAscVal = '@ViewBag.IsAscVal';
+    var SearchRecords = '@ViewBag.SearchRecords';
+    var Alpha = '@ViewBag.Alpha';
+</script>
+<script src="~/Form_JS/JournalEntries.js"></script>

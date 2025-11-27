@@ -1,0 +1,40 @@
+2025-04-03 13:05:29.1095|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/3/2025 1:05:29 PM
+2025-04-03 13:06:20.7662|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/3/2025 1:06:20 PM - An error occurred while sending the request.
+2025-04-03 14:31:56.6636|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 2:31:56 PM
+2025-04-03 15:56:04.5225|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/3/2025 3:56:04 PM
+2025-04-03 15:59:53.0048|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/3/2025 3:59:53 PM - An error occurred while sending the request.
+2025-04-03 16:00:08.6602|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:00:08 PM
+2025-04-03 16:00:17.3486|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 4/3/2025 4:00:17 PM
+2025-04-03 16:00:18.8761|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/3/2025 4:00:18 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-04-03 16:01:10.9261|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:01:10 PM
+2025-04-03 16:01:13.0965|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:01:13 PM
+2025-04-03 16:01:18.3756|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 4/3/2025 4:01:18 PM
+2025-04-03 16:01:19.3881|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/3/2025 4:01:19 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-04-03 16:01:45.4678|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:01:45 PM
+2025-04-03 16:01:46.9026|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 4/3/2025 4:01:46 PM
+2025-04-03 16:01:47.9173|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/3/2025 4:01:47 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-04-03 16:02:20.5546|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:02:20 PM
+2025-04-03 16:02:22.0887|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 4/3/2025 4:02:22 PM
+2025-04-03 16:02:23.6151|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/3/2025 4:02:23 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-04-03 16:03:19.9998|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:03:19 PM
+2025-04-03 16:03:21.9535|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 4/3/2025 4:03:21 PM
+2025-04-03 16:03:22.9711|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/3/2025 4:03:22 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-04-03 16:04:05.8574|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:04:05 PM
+2025-04-03 16:04:07.0686|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - AddPartial - 4/3/2025 4:04:07 PM
+2025-04-03 16:04:08.5944|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/3/2025 4:04:08 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<span class="e-btn-i...").
+2025-04-03 16:07:41.7614|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - InsertUserManager - 4/3/2025 4:07:41 PM
+2025-04-03 16:08:18.7714|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:08:18 PM
+2025-04-03 16:08:19.3110|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:08:19 PM
+2025-04-03 16:08:25.0890|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:08:25 PM
+2025-04-03 16:08:35.3081|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 4/3/2025 4:08:35 PM
+2025-04-03 16:09:08.1524|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:09:08 PM
+2025-04-03 16:09:13.5825|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:09:13 PM
+2025-04-03 16:09:15.0996|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 4/3/2025 4:09:15 PM
+2025-04-03 16:10:22.1851|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:10:22 PM
+2025-04-03 16:10:25.7173|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:10:25 PM
+2025-04-03 16:10:32.3613|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 4/3/2025 4:10:32 PM
+2025-04-03 16:11:11.5069|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 4/3/2025 4:11:11 PM
+2025-04-03 16:13:18.7956|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:13:18 PM
+2025-04-03 16:13:22.8338|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - EditPartial - 4/3/2025 4:13:22 PM
+2025-04-03 16:13:33.7840|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UpdateUserManager - 4/3/2025 4:13:33 PM
+2025-04-03 16:13:34.3274|INFO|SysnthesisRepo.Controllers.UserMastersController|UserMastersController - UrlDatasource - 4/3/2025 4:13:34 PM

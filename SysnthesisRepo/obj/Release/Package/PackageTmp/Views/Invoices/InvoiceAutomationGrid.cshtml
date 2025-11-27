@@ -1,0 +1,379 @@
+﻿@model IEnumerable<EntityModels.Models.UploadPDFAutomationList>
+@using EntityModels.Models
+@using System.Configuration;
+@using Utility
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+
+<style>
+    .control_wrapper {
+        max-width: 100%;
+        margin:0;
+    }
+
+    .e-upload {
+        width: 100%;
+        position: relative;
+        margin-top: 15px;
+    }
+
+    .control_wrapper .e-upload .e-upload-drag-hover {
+        margin: 0;
+    }
+
+    #productpopupid {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+
+    .radio-buttons-upload {
+        max-width: 100%;
+        margin: 10px 15px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .file-input-name {
+        opacity: 0;
+        display: none;
+    }
+
+    .toast.toast-error {
+        background: #e53939;
+        font-size: 14px;
+    }
+</style>
+<style>
+    #header-fixed {
+        position: fixed;
+        top: 0px;
+        display: none;
+        background-color: white;
+    }
+
+    .page-sidebar.sidebar-fixed {
+        position: fixed;
+    }
+
+    body {
+        color: #787878;
+    }
+
+    .page-header-main .searchinvoicebox input[type="text"] {
+        width: 85% !important;
+        border: 0px;
+        height: unset !important;
+        height: -1px !important;
+    }
+
+    .datagrid table tr td {
+        color: #787878;
+    }
+
+    .datagrid a i {
+        color: unset;
+        font-size: 12px !important;
+    }
+
+    .fixed {
+        top: 124px !important;
+    }
+
+    h1.title {
+        color: #000;
+        background: #fff;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .sub-title {
+        font-size: 1.8rem;
+    }
+
+    /*.e-grid .e-gridcontent tr.e-row .e-rowcell span.approved,
+    .e-grid.e-gridhover tr[role='row']:not(.e-editedrow):not(.e-detailrow):hover span.approved {
+       color: green !important;*/
+    .approved {
+        color: white;
+        background: green;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.2rem;
+        font-weight: 600;
+        border: 0.1rem solid rgba(2, 85, 2, 1);
+        box-shadow: 0px 2px 6px rgba(0, 200, 0, 0.4);
+        user-select: none;
+    }
+
+    .autoprocess {
+        color: white;
+        background: rgb(210, 107, 28);
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.2rem;
+        font-weight: 600;
+        border: 0.1rem solid rgb(161, 72, 13);
+        box-shadow: 0px 2px 6px rgba(248, 120, 0, 0.4);
+        user-select: none;
+    }
+
+    .readingerror {
+        color: white;
+        background: red;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.2rem;
+        font-weight: 600;
+        border: 0.1rem solid #ab0000;
+        box-shadow: 0px 2px 6px rgba(233, 55, 55, 0.6);
+        user-select: none;
+    }
+</style>
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .e-icons.e-file-delete-btn {
+        display: none !important;
+    }
+</style>
+<style>
+    .e-sticky#InvoiceBulkAutomation_toolbarItems {
+        top: 120px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 127px !important;
+    }
+
+    .headertopbox .topBar.inv-autogrid-header {
+        padding: 5px !important;
+        justify-content: space-between !important;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #InvoiceBulkAutomation_toolbarItems {
+        display: none;
+    }
+
+    .headertopbox .topBar.inv-autogrid-header .sub-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .headertopbox .topBar ul.tabBar li.active a {
+        color: #000 !important;
+        background: none !important;
+    }
+
+        .headertopbox .topBar ul.tabBar li.active a span {
+            color: #fff !important;
+            background: #000 !important;
+        }
+
+    .headertopbox .topBar ul.tabBar li a span {
+        padding: 4px 9px;
+        margin-left: 10px;
+        border-radius: 100px;
+    }
+
+    .modal-up-scroll {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .btn-info,
+    .btn-info:focus {
+        background-color: #3C7BE5 !important;
+        border-color: #3C7BE5;
+        color: #FFFFFF;
+    }
+</style>
+<div>
+    @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+    {
+        <script>
+            PopUpSelectStore()
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="storeids" value="@ViewBag.Storeidvalue" />
+<div class="page-body headertopbox bulk-inv-top">
+    <h1 class="title">Add Invoice(s)</h1>
+    @if (@ViewBag.Storeidvalue != 0)
+    {
+        <div class="page-header-main position-relative topBar inv-autogrid-header">
+
+            <div class="sub-header">
+                @*<div class="sub-title">Invoices for Review</div>*@
+                <ul class="tabBar">
+                    <li class="tbs active" id="tab1"><a href="javascript:void(0);">Invoices for Review <span>@ViewBag.InvoicesReviCount</span></a></li>
+                </ul>
+                <ul class="topRightBar">
+                    <li>
+                        <input type="checkbox" id="showMyInvoices" onclick="filterSelfGrid()" checked />
+                        <label for="showMyInvoices">Show Only My Invoices</label>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" class="btn btn-info btn-lg" onclick="MainDriveopen();"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Upload Files</a>
+
+                    </li>
+                    @*<li>
+                            <a href="javascript:void(0)" class="btn btn-info btn-lg" onclick="OpenPopupUploadFileModel();"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Upload Files</a>
+
+                        </li>*@
+                </ul>
+            </div>
+        </div>
+    }
+</div>
+<div id="grddata">
+    @Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+    @{
+        List<object> toolbarItems = new List<object>();
+        //toolbarItems.Add(new { text = "Search" });
+        toolbarItems.Add(new { id = "invoicegridCount" });
+    }
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("InvoiceBulkAutomation").AllowSorting().AllowFiltering().EnableStickyHeader().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+            {
+            col.Field("UploadPdfAutomationId ").HeaderText("UploadPdfAutomationId ").Visible(false).Add();
+            col.Field("Synthesis_Live_InvID").HeaderText("Synthesis_Live_InvID").Visible(false).Add();
+            col.Field("Is_Processing_Enabled ").HeaderText("Is_Processing_Enabled ").Visible(false).Add();
+            col.Field("FileName").HeaderText("File Name").Template("#Filenamelink").Width("150").Add();
+            col.Field("StoreName").HeaderText("Store Name").Width("100").Add();
+            col.Field("CreatedDate").HeaderText("Received On").AllowFiltering(false).Width("100").Format("MM/dd/yyyy HH:mm:ss").Add();
+            col.Field("UserName").HeaderText("Uploaded By").Width("100").Add();
+            col.Field("IsProcess").HeaderText("Status").Template("#StatusCheck").Width("100").Add();
+            col.HeaderText("Action").Width("100").Template("#ActionEditAdd").Add();
+            }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(toolbarItems).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+<div id="AutomationUserIdD" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed; left:45%; width:300px; top: 10px; display:none">
+    <input type="hidden" id="UploadPdfAutomationIddlt" />
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-trash"></i>
+        </div>
+        <div class="modal-title">Message</div>
+        <div class="modal-body ">Are you sure you want to delete this file?</div>
+        <div class="modal-footer" style="text-align:center">
+            <a class="btn btn-danger" onclick="Delete();">Ok </a>
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="uploadContainer">
+    <div class="uploadFiles">
+        <div class="uploadHeader">
+            <h2>Upload Files</h2>
+            <div class="actionButtons">
+                <a class="toggleUploadBtn" href="#">
+                    <img src="~/Content/Admin/images/icons/up.svg" onclick="Driveopen()" width="20" class="upbutton" />
+                    <img src="~/Content/Admin/images/icons/down.svg" onclick="Driveclose()" width="20" class="downbutton" />
+                </a>
+                <a href="#"><img src="~/Content/Admin/images/icons/upload-close.svg" width="20" onclick="reloadpage()" /></a>
+            </div>
+        </div>
+        <div class="uploadHeaderStatus">
+            <div><span id="uploadProgress">0</span> out of <span id="totalFiles">0</span> files uploaded</div>
+            <a href="#" onclick="reloadpage()">Cancel</a>
+        </div>
+        <div class="upload-section">
+            <div class="radio-buttons-upload">
+                <label><input type="radio" name="enabledmode" value="Automatic" onclick="ProcessStatusCheck()" checked> <b>Automatic Processing</b></label>
+                <label><input type="radio" name="enabledmode" value="Manually" onclick="ProcessStatusCheck()"> <b>Manually Processing</b></label>
+            </div>
+            <span style="width: 100%;text-align: center;margin: 0px 0px 10px;font-size: 14px;">
+                <b>Only 150 files can be uploaded at a time.</b>
+            </span>
+            <div class="control-section">
+                <div class="control_wrapper">
+                    @Html.EJS().Uploader("UploadFiles").AllowedExtensions(".pdf").SequentialUpload(true).Multiple(true).AsyncSettings(new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("~/Invoices/Save"), RemoveUrl = @Url.Content("~/Invoices/Remove") }).Success("onImageUploadSuccess").AutoUpload(true).Render()
+                </div>
+            </div>
+            <input type="hidden" id="FileNameInvoice" />
+        </div>
+    </div>
+    @*<div class="upload-footer">
+        <button type="button" onclick="SaveUploadedFile()" class="buttonbox btnsubmit" data-dismiss="modal">Done</button>
+    </div>*@
+</div>
+<script src="~/Form_JS/UploadAutomationFile.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+<script type="text/x-jsrender" id="ActionEditAdd">
+    ${ActionEditAddCheck(data)}
+</script>
+<script type="text/x-jsrender" id="StatusCheck">
+    ${StatusCheck(data)}
+</script>
+<script type="text/x-jsrender" id="Filenamelink">
+    ${Filenamelinkcheck(data)}
+</script>
+<script>
+    function OpenPopupUploadFileModel() {
+        $('#productpopupid').modal({
+            backdrop: 'static',
+            keyboard: true,
+            show: true
+        });
+
+    }
+    function onFileRemove(args) {
+        args.postRawFile = false;
+    }
+    function reloadpage() {
+        $("#productpopupid").hide();
+        $('#FileNameInvoice').val('');
+        $('input[name="enabledmode"][value="Automatic"]').prop('checked', true);
+
+        // Clear the file uploader component
+        var uploader = document.getElementById('UploadFiles').ej2_instances[0];
+        if (uploader) {
+            uploader.clearAll();
+        }
+        window.location.href = ROOTURL + "Invoices/InvoiceAutomationGrid";
+    }
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 50) {
+            $(".page-header-main").addClass("stikyheader");
+        } else {
+            $(".page-header-main").removeClass("stikyheader");
+        }
+    });
+</script>
+@Html.EJS().ScriptManager()

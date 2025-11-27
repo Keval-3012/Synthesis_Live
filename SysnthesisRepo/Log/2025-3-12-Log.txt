@@ -1,0 +1,19 @@
+3/12/2025 10:28:54 AM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+3/12/2025 10:28:58 AM  <Vendor xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><DisplayName>A &amp; J  PRODUCE</DisplayName><PrintOnCheckName>A &amp; J PRODUCE CORP.</PrintOnCheckName><CompanyName>A &amp; J PRODUCE CORP.</CompanyName><Mobile><FreeFormNumber></FreeFormNumber></Mobile><PrimaryEmailAddr><Address>mverrico@ajproduce.com</Address></PrimaryEmailAddr><Active>true</Active><BillAddr><Line1>140A  NYC TERM.MKT</Line1><City>BRONX</City><Country></Country><CountrySubDivisionCode>NY</CountrySubDivisionCode><PostalCode>10474</PostalCode></BillAddr></Vendor>
+3/12/2025 10:28:58 AM  Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntuitResponse time="2025-03-11T21:58:56.363-07:00" xmlns="http://schema.intuit.com/finance/v3">
+    <Fault type="AUTHENTICATION">
+        <Error code="3200">
+            <Message>message=AuthenticationFailed; errorCode=003200; statusCode=401</Message>
+        </Error>
+    </Fault>
+</IntuitResponse>
+
+3/12/2025 10:51:53 AM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+3/12/2025 10:51:58 AM  <Vendor xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><DisplayName>2001 FARM, LLC.</DisplayName><PrintOnCheckName>2001 FARM, LLC.</PrintOnCheckName><CompanyName>2001 FARM, LLC.</CompanyName><Mobile><FreeFormNumber></FreeFormNumber></Mobile><PrimaryEmailAddr><Address>2001FARMLLC@GMAIL.COM</Address></PrimaryEmailAddr><Active>true</Active><BillAddr><Line1>52-09  99TH ST APT 80</Line1><City>CORONA</City><Country></Country><CountrySubDivisionCode>NY</CountrySubDivisionCode><PostalCode>11368</PostalCode></BillAddr></Vendor>
+3/12/2025 10:51:58 AM  OK_<?xml version="1.0" encoding="UTF-8" standalone="yes"?><IntuitResponse xmlns="http://schema.intuit.com/finance/v3" time="2025-03-11T22:21:55.355-07:00"><Vendor domain="QBO" sparse="false"><Id>2169</Id><SyncToken>0</SyncToken><MetaData><CreateTime>2025-03-11T22:21:55-07:00</CreateTime><LastUpdatedTime>2025-03-11T22:21:55-07:00</LastUpdatedTime></MetaData><CompanyName>2001 FARM, LLC.</CompanyName><DisplayName>2001 FARM, LLC.</DisplayName><PrintOnCheckName>2001 FARM, LLC.</PrintOnCheckName><Active>true</Active><PrimaryEmailAddr><Address>2001FARMLLC@GMAIL.COM</Address></PrimaryEmailAddr><BillAddr><Id>1569</Id><Line1>52-09  99TH ST APT 80</Line1><City>CORONA</City><CountrySubDivisionCode>NY</CountrySubDivisionCode><PostalCode>11368</PostalCode></BillAddr><Balance>0</Balance><Vendor1099>false</Vendor1099></Vendor></IntuitResponse>
+3/12/2025 12:35:02 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+3/12/2025 12:35:12 PM  <Vendor xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><DisplayName>74-84 WESTSIDE HOLDINGS LLC</DisplayName><PrintOnCheckName>74-84 WESTSIDE HOLDINGS LLC</PrintOnCheckName><CompanyName>74-84 WESTSIDE HOLDINGS LLC</CompanyName><Active>true</Active><BillAddr></BillAddr></Vendor>
+3/12/2025 12:35:13 PM  Error:<?xml version="1.0" encoding="UTF-8" standalone="yes"?><IntuitResponse xmlns="http://schema.intuit.com/finance/v3" time="2025-03-12T00:05:04.359-07:00"><Fault type="ValidationFault"><Error code="6240"><Message>Duplicate Name Exists Error</Message><Detail>The name supplied already exists. : Id=2170</Detail></Error></Fault></IntuitResponse>
+3/12/2025 12:35:26 PM  Create Vendor Request: <Vendor xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><DisplayName>74-84 WESTSIDE HOLDINGS LLC</DisplayName><PrintOnCheckName>74-84 WESTSIDE HOLDINGS LLC</PrintOnCheckName><CompanyName>74-84 WESTSIDE HOLDINGS LLC</CompanyName><Active>true</Active><BillAddr></BillAddr></Vendor>
+3/12/2025 12:35:26 PM  Create Vendor Message:Duplicate Name Exists Error

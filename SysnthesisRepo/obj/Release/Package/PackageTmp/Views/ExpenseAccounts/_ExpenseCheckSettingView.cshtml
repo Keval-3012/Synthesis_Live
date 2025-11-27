@@ -1,0 +1,109 @@
+﻿@*@{
+        ViewBag.Title = "_ExpenseCheckSettingView";
+    }*@
+@model EntityModels.Models.ExpenseCheck_Setting
+@using Utility
+
+@{ int i = 1; }
+@*<div class="animate-panelmessesgarea padbtmzero">
+        @if (Convert.ToString(ViewBag.StatusMessage) == "NoStoreSelected")
+        {
+            <script>
+                PopUpSelectStore();
+            </script>
+        }
+    </div>*@
+
+<div id="popupStoreAlertValue" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer" style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-condensed tablesorter" id="ratioTbl">
+    <thead>
+        <tr>
+            <th style="width:20%"><a style="color:#fff; text-decoration:none; cursor:pointer;">Department</a> </th>
+            <th style="width:70%"><a style="color:#fff; text-decoration:none; cursor:pointer;">Exclude Account</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ExpenseCheck_SettingList != null)
+        {
+            foreach (var item in Model.ExpenseCheck_SettingList)
+            {
+                if (item.ExcludeList != "")
+                {
+                    var Class = "row" + i;
+                <tr class="@Class">
+                    <td style="width:20%">@Html.Raw(item.DepartmentName)</td>
+                    <td class="whiteBlock" style="width:70%">
+                        @Html.DropDownList("DeptExcludeList", new SelectList(item.DeptExcludeList, "Id", "Name"), "Select Account", new { @class = "myval abc synthesisMultipleSelect", name = i + "DeptExcludeList", @multiple = "multiple" })
+                    </td>
+                    @Html.Hidden("Deptid", item.DepartmentId)
+                    @Html.Hidden("Type", item.Type)
+                    @Html.Hidden("StoreID", item.StoreId)
+                    @Html.Hidden("DeptList" + i, item.ExcludeList)
+                </tr>
+                    i = i + 1;
+
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+    $(".abc").select2({
+        //maximumSelectionLength: 2
+    });
+    $(document).ready(function () {
+        //$("#ratioTbl tbody").find('tr').each(function (i, el)         {
+        //    var $tds = $(this).find('td'),
+        //        productId = $tds.eq(0).text(),
+        //        product = $tds.eq(1).text(),
+        //        Quantity = $tds.eq(2).text();
+        //    
+        //    // do something with productId, product, Quantity
+        //});
+        
+        //$('#ratioTbl tbody td:first').attr('readonly', 'readonly');
+        //  $('.two').prop('disabled', true);
+        //document.getElementById("ratioTbl").disabled = true;
+        var StoreID = @ViewBag.StoreIDValue;
+        if (StoreID == 0) {
+            $('#popupStoreAlertValue').show();
+        }
+
+        $(".synthesisMultipleSelect").attr('disabled', 'disabled');
+
+        var iCount = 0;
+        $("#ratioTbl tbody tr").each(function (index, obj) {
+            iCount++;
+            
+            if ($(obj).find("#DeptList" + iCount).val() != null) {
+                var aa = $(obj).find("#DeptList" + iCount).val().split(",");
+                var el = $(obj).find(".abc")[0];
+                for (var j = 0; j < aa.length; j++) {
+                    
+                    for (var i = 1; i < el.options.length; i++) {
+                        if (el.options[i].value == aa[j].trim()) {
+                            
+                            el[i].selected = true;
+                        }
+                    }
+                    $(obj).find(".abc").trigger('change.select2');
+                }
+
+            }
+        });
+
+    });
+</script>

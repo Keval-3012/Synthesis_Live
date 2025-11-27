@@ -1,0 +1,26 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+
+<div class="header-small special_bg">
+    <h3>Manager Users <a href="@Url.Action("Create", "UserMasters")" class="pull-right addstore" data-toggle="tooltip" data-placement="bottom" data-original-title="Add"><img src="~/Content/Admin/images/plus.svg" alt="" /></a></h3>
+
+</div>
+
+@{
+    Html.RenderAction("Grid");
+}
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

@@ -1,0 +1,16 @@
+﻿@using Utility
+@{ Layout = "~/Views/Shared/AdminMaster.cshtml"; }
+<div class="header-small special_bg">
+    <h3>Payroll Expenses </h3>
+</div>
+@{ Html.RenderAction("PayrollExpenseGrid"); }
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>

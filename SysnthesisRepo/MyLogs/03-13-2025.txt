@@ -1,0 +1,9 @@
+2025-03-13 11:28:07.1333|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 3/13/2025 11:28:07 AM
+2025-03-13 11:28:27.1604|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 3/13/2025 11:28:27 AM - An error occurred while sending the request.
+2025-03-13 11:29:00.0748|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:29:00 AM
+2025-03-13 11:29:05.0827|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:29:05 AM
+2025-03-13 11:29:21.4487|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:29:21 AM
+2025-03-13 11:29:31.8280|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:29:31 AM
+2025-03-13 11:29:52.9839|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:29:52 AM
+2025-03-13 11:30:35.0723|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:30:35 AM
+2025-03-13 11:41:26.0793|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 3/13/2025 11:41:26 AM

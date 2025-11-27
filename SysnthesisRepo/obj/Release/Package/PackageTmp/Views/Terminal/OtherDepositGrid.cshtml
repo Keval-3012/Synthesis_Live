@@ -1,0 +1,254 @@
+﻿@model EntityModels.Models.Terminal_Select
+@using EntityModels.Models;
+@using Utility;
+@{
+    Layout = null;
+    DBContext db = new DBContext();
+}
+<div class="datagrid mt-5">
+    @if (Convert.ToString(ViewBag.StatusMessage) == "InvalidPDFSize")
+    {
+        <script>
+            InvalidPDFSize();
+        </script>
+    }
+    <p><h3 style="color:black;">Other Deposits for - <strong> @ViewBag.TerminalName </strong></h3></p>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover buletable" id="data_tabletwo">
+            <thead>
+                <tr>
+                    <th width="150" style="display:none;">Terminal <span class="highlight" id="">*</span></th>
+                    <th width="150" style="display:none;">Shift <span class="highlight" id="">*</span></th>
+                    <th width="150">Type <span class="highlight" id="">*</span></th>
+                    <th width="200" id="thvendorid">Vendor <span class="highlight" id="VendorNameN">*</span></th>
+                    <th width="200" id="thDeptid">Department <span class="highlight" id="DeptNameN">*</span></th>
+                    <th>Details</th>
+                    <th width="250" id="thpayid">Payment Method <span class="highlight" id="PaymentMethodN">*</span></th>
+                    <th width="200">Amount <span class="highlight" id="">*</span></th>
+                    <th width="100">Document</th>
+                    @*<th width="200" id="thother">Oher</th>*@
+                    <th width="100" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model.OtherDepositList != null)
+                    {
+                        if (Model.OtherDepositList.Count > 0)
+                        {
+                            for (int i = 0; i < Model.OtherDepositList.Count; i++)
+                            {
+                                <tr data-id="@Model.OtherDepositList[i].Id" data-shiftname="@Model.OtherDepositList[i].ShiftName" data-optionsname="@Model.OtherDepositList[i].options"
+                                    data-Vendorname="@Model.OtherDepositList[i].Vendor" data-details="@Model.OtherDepositList[i].name"
+                                    data-Deptname="@Model.OtherDepositList[i].Department"
+                                    data-paymentMethod="@Model.OtherDepositList[i].payment" data-amount="@Model.OtherDepositList[i].amount">
+                                    <td style="display:none;">@Model.OtherDepositList[i].TerminalName</td>
+                                    <td style="display:none;">@Model.OtherDepositList[i].ShiftName</td>
+                                    <td>@Model.OtherDepositList[i].options</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(@Model.OtherDepositList[i].Vendor) && @Model.OtherDepositList[i].Vendor != "null")
+                                        {
+                                            @Model.OtherDepositList[i].Vendor
+                                        }
+                                        else
+                                        {<span>N/A</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(@Model.OtherDepositList[i].Department) && @Model.OtherDepositList[i].Department != "null")
+                                        {
+                                            @Model.OtherDepositList[i].Department
+                                        }
+                                        else
+                                        {<span>N/A</span>
+                                        }
+                                    </td>
+                                    <td>@Model.OtherDepositList[i].name</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(@Model.OtherDepositList[i].payment))
+                                        {@Model.OtherDepositList[i].payment}
+                                    else
+                                    {<span>NA</span>
+                                    }
+                                    </td>
+                                    <td>
+                                        @Utility.AdminSiteConfiguration.PriceWithComma(Convert.ToString(@Model.OtherDepositList[i].amount))
+                                    </td>
+                                    <td>
+
+                                        @if (Model.OtherDepositList[i].UploadDocument != "")
+                                        {
+                                            <a href="#" data-toggle="tooltip" title="@Model.OtherDepositList[i].UploadDocument" id="btnDeleteFile" onclick="ConfirmDeleteFile('@Model.OtherDepositList[i].Id')"><img src="~/Content/Admin/images/trash-2.svg" alt="" /></a>
+                                            <a href="@Url.Action("DownloadOtherFile", "Terminal",new { @filePath=@Model.OtherDepositList[i].UploadDocument})" target="_blank" class="" title='@Model.OtherDepositList[i].UploadDocument' data-toggle="tooltip" data-placement="top" data-original-title="Detail"> <img src="/Content/Admin/images/1pdf-files.png" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a id="btnSelectFile1_@Model.OtherDepositList[i].Id" onclick="openFiledlg('@Model.OtherDepositList[i].Id')" href='#'><img src='/Content/Admin/images/file-plus.svg' alt='' style='height:25px;width:22px' /></a>
+                                            <input type="file" id="UploadFile2_@Model.OtherDepositList[i].Id" onchange="ChangeFileName('@Model.OtherDepositList[i].Id')" disabled="disabled" style="display:none" accept="application/pdf,application/vnd.ms-excel,application/msword">
+                                            <label id="file-name1_@Model.OtherDepositList[i].Id"></label>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <a id="btnSubOtherEdit" href="#"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                                        <a onclick="ConfirmDelete('@Model.OtherDepositList[i].Id')" href="#"><img src="~/Content/Admin/images/trash-2.svg" alt="" /></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+                <tr>
+                    <td style="display:none;">
+                        @Html.TextBox("iTerminalId")
+                    </td>
+                    <td style="display:none;">
+                        @if (Model.ShiftNameList.FirstOrDefault(i => i.Text == "Shift#") == null)
+                        {
+                            @Html.DropDownListFor(model => Model.ShiftId, new SelectList(Model.ShiftNameList, "Value", "Text"), "Shift#", new { id = "SelectShifts_", @class = "myval Width" })<span class="highlight" id="ShiftIsReq">Shift Is Required</span>
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => Model.ShiftId, new SelectList(Model.ShiftNameList, "Value", "Text"), new { id = "SelectShifts_", @class = "myval Width" })<span class="highlight" id="ShiftIsReq">Shift Is Required</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.Optionid, new SelectList(Model.SelectOptionList, "Value", "Text"), "Select Type", new { @class = "", @onchange = "getpayment(this.value,this.id)" })<span class="highlight" id="OptionsIsReq">Type Is Required</span>
+                    </td>
+                    <td id="tdvendorid">
+                        <div id="VendorNameNA">
+                            <span>N/A</span>
+                        </div>
+                        <div id="VendorName">
+                            @Html.DropDownListFor(model => model.vendorid, new SelectList(Model.SelectVendorList, "Value", "Text"), "Select Vendor", new { @class = "myval drpcls", @onchange = "CheckOtherDepositeValue()" })<span class="highlight" id="VendorIsReq">Vendor Is Required</span>
+                        </div>
+                    </td>
+                    <td id="tdDeptid">
+                        <div id="DeptNameNA">
+                            <span>N/A</span>
+                        </div>
+                        <div id="DeptName">
+                            @Html.DropDownListFor(model => model.DepartmentId, new SelectList(Model.SelectDepartmentList, "Value", "Text"), "Select Department", new { @class = "form-control", @onchange = "CheckOtherDepositeValue()" })<span class="highlight" id="DeptIsReq">Department Is Required</span>
+                        </div>
+                    </td>
+                    <td><input type="text" id="new_name" onchange="CheckOtherDepositeValue()" class="form-control" maxlength="40">@*<span class="highlight" id="NameIsReq">Name Is Required</span>*@</td>
+
+                    <td id="tdPayid">
+                        <div id="PaymentMethodNA">
+                            <span>NA</span>
+                        </div>
+                        <div id="PaymentMethod">
+                            @Html.DropDownListFor(model => model.Payid, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"), "Select Paymant Method", new { @class = " form-control", @onchange = "CheckOtherDepositeValue()" })<span class="highlight" id="MethodIsReq">Payment Method Is Required</span>
+                        </div>
+                    </td>
+                    <td><input type="text" onchange="CheckOtherDepositeValue()" id="new_country" maxlength="18" class="form-control decimalOnly"><span class="highlight" id="AmountIsReq">Amount Is Required</span></td>
+                    <td style="text-align:center;">
+                        <a id='btnSelectFile' href='#'><img src='/Content/Admin/images/file-plus.svg' alt='' style='height:25px;width:22px' /></a>
+                        <input type="file" id="UploadFile" style="display:none" accept="application/pdf,application/vnd.ms-excel,application/msword">
+                        <label id="file-name"></label>
+                    </td>
+                    <td class="text-center">
+                        <input type="button" id="btnotherdepositsubmit" class="addvalue" onclick="SaveOtherdeposit()" value="Add">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="PopDeleteOtherDeposit" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none; z-index:999999999999!important;">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-trash"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body ">
+            <p id="deleModalbody">
+                Are you sure you want to delete this Entry?
+            </p>
+            <input type="hidden" id="DepositId" name="DepositId" />
+        </div>
+        <div class="modal-footer" style="text-align:center">
+            <a class="btn btn-danger" onclick="delete_Other_Deposite()">Yes </a>
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">No</a>
+        </div>
+    </div>
+</div>
+<div id="PopDeleteOtherDepositFile" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none; z-index:999999999999!important;">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-trash"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body ">
+            Are you sure you want to delete this File?
+            <input type="hidden" id="FileDepositId" name="FileDepositId" />
+        </div>
+        <div class="modal-footer" style="text-align:center">
+            <a class="btn btn-danger" onclick="delete_Other_Deposite_File()">Yes </a>
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">No</a>
+        </div>
+    </div>
+</div>
+<div id="popupSize" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">Invalid PDF Size</div>
+        <div class="modal-body ">File Size is too Big.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function docReady(fn) {
+    // see if DOM is already available
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        // call on next available tick
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+}   
+    docReady(function () {
+        $("#PaymentMethod").hide();
+        $("#PaymentMethodN").hide();
+        $("#VendorName").hide();
+        $("#VendorNameN").hide();
+
+        $("#DeptName").hide();
+        $("#DeptNameN").hide();
+        $("#TerminalIsReq").hide();
+        $("#ShiftIsReq").hide();
+        document.getElementById("vendorid").disabled = true;
+        document.getElementById("DepartmentId").disabled = true;
+        document.getElementById("Payid").disabled = true;
+
+        if (@ViewBag.DepositeCount > 0) {
+            document.getElementById("spanotherdeposit").innerHTML = '@ViewBag.DepositeCount';
+        }
+        else {
+            document.getElementById("spanotherdeposit").innerHTML = '0';
+        }
+
+        $("#AmountIsReq").hide();
+        $("#MethodIsReq").hide();
+        $("#OptionsIsReq").hide();
+        $("#VendorIsReq").hide();
+        $("#DeptIsReq").hide();
+        var ss = $("#SelectedShift").val();
+        setSelectedValue1(document.getElementById("SelectShifts_"), String(ss).toLowerCase());
+    });
+
+    $("#Optionid").change(function () {
+        CheckOtherDepositeValue();
+    });
+
+    var ShiftNameList = @Html.Raw(Json.Encode(Model.ShiftNameList));
+    var iteSelectOptionListm = @Html.Raw(Json.Encode(Model.SelectOptionList));
+    var SelectVendorList = @Html.Raw(Json.Encode(Model.SelectVendorList));
+    var SelectDepartmentList = @Html.Raw(Json.Encode(Model.SelectDepartmentList));
+</script>
+<script src="~/Form_JS/TerminalOtherDepositGrid.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>

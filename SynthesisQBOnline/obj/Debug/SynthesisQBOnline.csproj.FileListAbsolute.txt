@@ -1,0 +1,358 @@
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\bin\Debug\System.ComponentModel.Annotations.dll
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.xml
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CopyComplete
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+D:\Kirtan GIt\JP\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\bin\Debug\System.ComponentModel.Annotations.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.xml
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CopyComplete
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+D:\Kirtan\Project\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\bin\Debug\System.ComponentModel.Annotations.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CopyComplete
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Working\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\bin\Debug\System.ComponentModel.Annotations.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.xml
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CopyComplete
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+E:\Keval Projects\Jitenduri Puri\Synthesis_Live_Merge_HR\Synthesis-new\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\Microsoft.Win32.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\netstandard.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.AppContext.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Collections.Concurrent.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Collections.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Collections.NonGeneric.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Collections.Specialized.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.ComponentModel.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.ComponentModel.EventBasedAsync.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.ComponentModel.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.ComponentModel.TypeConverter.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Console.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Data.Common.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.Contracts.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.Debug.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.FileVersionInfo.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.Process.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.StackTrace.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.TextWriterTraceListener.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.Tools.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.TraceSource.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Diagnostics.Tracing.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Drawing.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Dynamic.Runtime.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Globalization.Calendars.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Globalization.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Globalization.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.Compression.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.Compression.ZipFile.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.DriveInfo.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.Watcher.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.IsolatedStorage.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.MemoryMappedFiles.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.Pipes.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.IO.UnmanagedMemoryStream.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Linq.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Linq.Expressions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Linq.Parallel.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Linq.Queryable.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.Http.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.NameResolution.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.NetworkInformation.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.Ping.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.Requests.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.Security.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.Sockets.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.WebHeaderCollection.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.WebSockets.Client.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Net.WebSockets.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.ObjectModel.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Reflection.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Reflection.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Reflection.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Resources.Reader.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Resources.ResourceManager.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Resources.Writer.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.CompilerServices.VisualC.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Handles.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.InteropServices.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Numerics.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Formatters.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Json.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Xml.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Claims.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Algorithms.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Csp.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Encoding.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.Principal.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Security.SecureString.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Text.Encoding.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Text.Encoding.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Text.RegularExpressions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.Overlapped.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.Tasks.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.Tasks.Parallel.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.Thread.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.ThreadPool.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Threading.Timer.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.ValueTuple.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Xml.ReaderWriter.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Xml.XDocument.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Xml.XmlDocument.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Xml.XmlSerializer.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Xml.XPath.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\System.Xml.XPath.XDocument.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\obj\Debug\Synthesi.D241D93F.Up2Date
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\AA_Synthesis_Live_Merge_HR_Working\SynthesisLive_HR_Merge\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\Microsoft.Win32.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\netstandard.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.AppContext.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.Concurrent.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.NonGeneric.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.Specialized.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.EventBasedAsync.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.TypeConverter.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Console.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Data.Common.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Contracts.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Debug.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.FileVersionInfo.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Process.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.StackTrace.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.TextWriterTraceListener.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Tools.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.TraceSource.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Tracing.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Drawing.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Dynamic.Runtime.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Globalization.Calendars.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Globalization.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Globalization.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.Compression.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.Compression.ZipFile.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.DriveInfo.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.Watcher.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.IsolatedStorage.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.MemoryMappedFiles.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.Pipes.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.UnmanagedMemoryStream.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.Expressions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.Parallel.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.Queryable.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Http.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.NameResolution.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.NetworkInformation.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Ping.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Requests.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Security.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Sockets.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.WebHeaderCollection.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.WebSockets.Client.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.WebSockets.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ObjectModel.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Reflection.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Reflection.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Reflection.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Resources.Reader.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Resources.ResourceManager.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Resources.Writer.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.CompilerServices.VisualC.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Handles.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.InteropServices.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Numerics.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Formatters.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Json.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Xml.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Claims.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Algorithms.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Csp.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Encoding.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Principal.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.SecureString.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Text.Encoding.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Text.Encoding.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Text.RegularExpressions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Overlapped.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Tasks.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Tasks.Parallel.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Thread.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.ThreadPool.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Timer.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ValueTuple.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.ReaderWriter.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XDocument.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XmlDocument.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XmlSerializer.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XPath.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XPath.XDocument.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\Synthesi.D241D93F.Up2Date
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\SynthesisQBOnline.pdb
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\Microsoft.Win32.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\netstandard.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.AppContext.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.Concurrent.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.NonGeneric.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Collections.Specialized.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.EventBasedAsync.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ComponentModel.TypeConverter.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Console.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Data.Common.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Contracts.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Debug.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.FileVersionInfo.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Process.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.StackTrace.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.TextWriterTraceListener.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Tools.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.TraceSource.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Diagnostics.Tracing.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Drawing.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Dynamic.Runtime.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Globalization.Calendars.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Globalization.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Globalization.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.Compression.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.Compression.ZipFile.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.DriveInfo.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.FileSystem.Watcher.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.IsolatedStorage.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.MemoryMappedFiles.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.Pipes.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.IO.UnmanagedMemoryStream.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.Expressions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.Parallel.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Linq.Queryable.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Http.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.NameResolution.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.NetworkInformation.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Ping.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Requests.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Security.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.Sockets.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.WebHeaderCollection.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.WebSockets.Client.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Net.WebSockets.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ObjectModel.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Reflection.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Reflection.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Reflection.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Resources.Reader.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Resources.ResourceManager.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Resources.Writer.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.CompilerServices.VisualC.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Handles.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.InteropServices.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Numerics.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Formatters.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Json.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Runtime.Serialization.Xml.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Claims.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Algorithms.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Csp.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Encoding.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.Primitives.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.Principal.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Security.SecureString.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Text.Encoding.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Text.Encoding.Extensions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Text.RegularExpressions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Overlapped.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Tasks.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Tasks.Parallel.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Thread.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.ThreadPool.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Threading.Timer.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.ValueTuple.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.ReaderWriter.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XDocument.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XmlDocument.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XmlSerializer.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XPath.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\System.Xml.XPath.XDocument.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\Newtonsoft.Json.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\bin\Debug\NLog.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.AssemblyReference.cache
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.csproj.CoreCompileInputs.cache
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\Synthesi.D241D93F.Up2Date
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.dll
+D:\Keval Projects\Jitenduri Puri\Running Code\A_Synthesis_Web_Live\SynthesisQBOnline\obj\Debug\SynthesisQBOnline.pdb

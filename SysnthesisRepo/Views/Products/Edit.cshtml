@@ -1,0 +1,137 @@
+﻿@model EntityModels.Models.Products
+
+<script src='@AdminSiteConfiguration.GetURL()Content/Admin/assets/js/datetime/bootstrap-datepicker.js'></script>
+
+
+<div id="globalTabContent">   
+    <div id="PanAddUpdate">
+        <div class="header-small special_bg">
+            <h3>Edit Product </h3>
+        </div>
+        @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { id = "frmuser" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ProductId)
+            
+
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        UPC Code<span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.UPCCode, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UPCCode, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Synthesis Product Id<span class="highlight">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(model => model.SynthesisId, new { maxlength = 100, @class = "form-control", @readonly = true })
+                                    @Html.ValidationMessageFor(model => model.UPCCode, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Item No
+                                    </label>
+                                    @Html.TextBoxFor(model => model.ItemNo, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ItemNo, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Description
+                                    </label>
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                          
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Vendors
+                                    </label>
+                                    @Html.ListBox("MultiVendorId", null, htmlAttributes: new { @class = "form-control multi-select MultiVendorId" })
+                                    @Html.ValidationMessageFor(model => model.Vendor, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>
+                                        Department
+                                    </label>
+                                    @Html.ListBox("MultiDepartmentId", null, htmlAttributes: new { @class = "form-control multi-select MultiDepartmentId" })
+                                    @Html.ValidationMessageFor(model => model.Departments, "", new { @class = "highlight1" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="from-group row">
+                            <div class="col-sm-8 ">
+                                <input type="submit" value="Update"
+                                       class="buttonbox btnsubmit" />
+                                @Html.ActionLink("cancel", "ImportProductExcel", "ProductMappings", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                            </div>
+                        </div>
+                    </div>
+                        </div><br /><br />
+                    </div>
+                @*</div>
+            </div>*@
+            @*<div class="clear">
+            </div>*@
+        }
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#frmuser').attr('autocomplete', 'off');
+    });
+
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        if (val == 1) {
+
+            $("#secloader").removeClass('pace-active1');
+            $("#secloader").addClass('pace-active');
+            $("#dvloader").removeClass('bak1');
+            $("#dvloader").addClass('bak');
+            $("#globalFooter").addClass('LoaderFooter');
+            top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        }
+        else {
+            $("#secloader").removeClass('pace-active');
+            $("#secloader").addClass('pace-active1');
+            $("#dvloader").removeClass('bak');
+            $("#dvloader").addClass('bak1');
+            $("#globalFooter").removeClass('LoaderFooter');
+            doc.scrollTop = top;
+        }
+    }
+    $(document).ready(function () {
+
+        $(".multi-select").select2({ multiple: true });
+      
+    });
+</script>
+

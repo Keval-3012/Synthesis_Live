@@ -1,0 +1,5 @@
+2025-04-25 02:47:04.6214|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/25/2025 2:47:04 AM
+2025-04-25 02:50:04.2326|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/25/2025 2:50:04 AM - An error occurred while sending the request.
+2025-04-25 12:56:50.9467|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 4/25/2025 12:56:50 PM - The controller for path '/signalr/abort' was not found or does not implement IController.
+2025-04-25 12:57:52.0258|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 4/25/2025 12:57:52 PM
+2025-04-25 12:58:14.1050|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 4/25/2025 12:58:14 PM - An error occurred while sending the request.

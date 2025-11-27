@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Synthesis</title>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Content/Admin/assets/js/jquery.min.js"></script>
+    <script src="~/Content/Scripts/jquery.validate.js"></script>
+    <script src="~/Content/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+
+    <link href="~/Content/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--Fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
+    <link href="~/Content/Admin/assets/css/beyond.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/assets/css/style.css" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Page title -->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+    <!--Fonts-->
+</head>
+<body class="lgoinpage">
+    <div class="animated fadeInDown">
+        <div class="loginbox">
+
+            <!--###################### -->
+            @RenderBody()
+            <!--###################### -->
+            <div class="clear"></div>
+        </div> 
+    </div>
+
+    <div class="text-center copyright">&copy; @DateTime.Now.Year Supermarket Management Group LLC. All rights reserved.</div>
+    <div id="midAreaBot"><span id="midBotRight"></span><span id="midBotLeft"></span></div>
+    <!--Basic Scripts-->
+
+    <script src="~/Content/Admin/assets/js/bootstrap.min.js"></script>
+    <script src="~/Content/Admin/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Content/Admin/assets/js/skins.min.js"></script>
+    <!--Beyond Scripts-->
+    <script src="~/Content/Admin/assets/js/beyond.js"></script>
+    @RenderSection("FooterScript")
+
+    @*<script>
+        $(".myval").select2({
+            width: "50%",
+            formatResult: function (state) {
+                if (!state.id) return state.text;
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            },
+            formatSelection: function (state) {
+                if ($(state.element).data('active') == "0") {
+                    return state.text + "<i class='fa fa-dot-circle-o'></i>";
+                } else {
+                    return state.text;
+                }
+            }
+        });
+        $(".myval1").select2({
+            minimumResultsForSearch: -1
+        });
+
+    </script>*@
+
+</body>
+</html>

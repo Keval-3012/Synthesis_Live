@@ -1,0 +1,47 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.Models.GroupWiseStateStore
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>
+                    Group Name<span class="highlight">*</span>
+                </label>
+                <div class="input-box">
+                    @Html.TextBoxFor(model => model.GroupName, new { maxlength = 100, @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "highlight1" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>
+                    Store Name<span class="highlight">*</span>
+                </label>
+                <div class="input-box">
+                    @Html.EJS().MultiSelect("MuiltiStoreAccess").Placeholder("--Select Store--").DataSource((IEnumerable<object>)ViewBag.MultipleStorer).Width("350").Mode(Syncfusion.EJ2.DropDowns.VisualMode.Box).Fields(new Syncfusion.EJ2.DropDowns.MultiSelectFieldSettings { Text = "Text", Value = "Value" }).Render()
+                    @Html.ValidationMessageFor(model => model.MuiltiStoreAccess, "", new { @class = "highlight1" })
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>
+                    User Name<span class="highlight">*</span>
+                </label>
+                <div class="input-box">
+                    @Html.DropDownList("UserId", null, "-- Select --", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "highlight1" })
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+@Html.EJS().ScriptManager()

@@ -1,0 +1,131 @@
+﻿@model IEnumerable<EntityModels.Models.MessageMaster>
+@{
+    ViewData["Title"] = "MessageList";
+}
+<div class="msg-accordion">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        @foreach (var moduleName in ViewBag.disinctmodule)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading_@moduleName">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_@moduleName" aria-expanded="true" aria-controls="collapse_@moduleName">
+                            @moduleName
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_@moduleName" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_@moduleName">
+                    <div class="panel-body">
+                        <div class="card">
+                            <div class="card-content collapse show">
+                                <div class="card-body card-dashboard dataTables_wrapper dt-bootstrap">
+                                    <div class="table-responsive">
+                                        <table id="tblUser" class="table table-striped table-bordered">
+                                            <tbody>
+                                                @if (Model.Count() > 0)
+                                                {
+                                                    foreach (var item in Model)
+                                                    {
+                                                        if (@moduleName == item.ModuleName)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.TextBoxFor(model => item.KeyNum, new { @class = "form-control", @id = $"KeyNumup_{item.MessageId}" })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.TextBoxFor(model => item.ValueStr, new { @class = "form-control", @id = $"ValueStrup_{item.MessageId}" })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.TextBoxFor(model => item.Description, new { @class = "form-control", @id = $"Descriptionup_{item.MessageId}" })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.TextBoxFor(model => item.ModuleName, new { @class = "form-control", @id = $"ModuleNameup_{item.MessageId}" })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.HiddenFor(Model => item.MessageId, new { @id = $"MessageIdUp_{item.MessageId}" })
+                                                                    <button onclick="UpdateMessageData(@item.MessageId)" class="btn-update-msg">Update</button>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="msg-mod">
+    <input type="hidden" id="MessageIdSave" />
+    <table>
+        <thead>
+            <tr>
+                <th><label for="Key">Key</label></th>
+                <th><label for="Value">Value</label></th>
+                <th><label for="Description">Description</label></th>
+                <th><label for="ModuleName">Module Name</label></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="Keystr" name="Key" maxlength="6"></td>
+                <td> <textarea id="ValueText" name="Value" rows="4" cols="50"></textarea></td>
+                <td><textarea id="Description" name="Description" rows="4" cols="50"></textarea></td>
+                <td><input type="text" id="ModuleName" name="ModuleName"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="msg-btn-add-new"><button onclick="SaveMessageData()" class="add-new-btn">Add New</button></div>
+</div>
+
+<script>
+    function SaveMessageData() {
+        
+        var keystr = $("#Keystr").val();
+        var valueText = $("#ValueText").val();
+        var description = $("#Description").val();
+        var moduleName = $("#ModuleName").val();
+
+        $.ajax({
+            url: '/MessageMaster/SaveMessageMaster',
+            method: 'POST',
+            data: { messageid: 0, keystr: keystr, valueText: valueText, description: description, moduleName: moduleName },
+            success: function (response) {
+                console.log('Data saved successfully:', response);
+                window.location.href = "/MessageMaster/MessageMasterList";
+            },
+            error: function (error) {
+                console.error('Error saving data:', error);
+            }
+        });
+    }
+
+    function UpdateMessageData(e) {
+        
+        var messageid = e;
+        var keystr = $("#KeyNumup_" + messageid).val();
+        var valueText = $("#ValueStrup_" + messageid).val();
+        var description = $("#Descriptionup_" + messageid).val();
+        var moduleName = $("#ModuleNameup_" + messageid).val();
+
+        $.ajax({
+            url: '/MessageMaster/SaveMessageMaster',
+            method: 'POST',
+            data: { messageid: messageid, keystr: keystr, valueText: valueText, description: description, moduleName: moduleName },
+            success: function (response) {
+                console.log('Data saved successfully:', response);
+                window.location.href = "/MessageMaster/MessageMasterList";
+            },
+            error: function (error) {
+                console.error('Error saving data:', error);
+            }
+        });
+    }
+</script>

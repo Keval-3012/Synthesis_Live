@@ -1,0 +1,246 @@
+﻿@model List<EntityModels.Models.ProductsList>
+@{
+    Layout = null;
+}
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="/Content/Admin/assets/css/datagrid.css" rel="stylesheet" />
+<style>
+
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+
+    #modl {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .Edit {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+
+    .fixeds {
+        top: 248px;
+        position: fixed;
+        width: auto;
+        z-index: 999;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 134px !important;
+    }
+
+    .abc {
+        color: blue;
+    }
+</style>
+<div id="loadbox"></div>
+@{
+    var DropDownList = new MultiSelect() { DataSource = ViewBag.datavalue, Fields = new MultiSelectFieldSettings() { Value = "KeyWord", Text = "KeyWord" }, AllowCustomValue = true, Mode = VisualMode.Box, Value = (string[])ViewBag.path };
+    var Department = new Syncfusion.EJ2.DropDowns.DropDownList() { DataSource = ViewBag.Department, Query = "new ej.data.Query()", Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "DepartmentName", Text = "DepartmentName" }, AllowFiltering = true };
+
+}
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div id="grddata">
+    <div class="addinvoice">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body headertopbox special_bg imp-pro-exc">
+            <div class="page-header-main position-relative gridPageHeader">
+                <div class="gridHeaderContainer1">
+                    <span class="gridTitle">Item Library</span>
+                    <label class="l-items">
+                        @Html.EJS().CheckBox("checkedLinked").Label("Linked Items").Change("GetLinkedItems").Checked(false).Render()
+
+                    </label>
+                </div>
+
+                <div class="gridHeaderContainer2">
+                    <input type="file" name="postedFile" id="fileinput" />
+                    <button type="button" id="UploadPDF" detail="Upload Excel File" class="uploadExcelButton margin10Px" onclick="fileupload();">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19">
+                            <path id="Union_1" data-name="Union 1"
+                                  d="M-1705.865-315a4.139,4.139,0,0,1-4.135-4.135v-3.638a.864.864,0,0,1,.864-.864.863.863,0,0,1,.863.864v3.638a2.41,2.41,0,0,0,2.407,2.408h10.732a2.409,2.409,0,0,0,2.406-2.408v-3.638a.864.864,0,0,1,.864-.864.863.863,0,0,1,.863.864v3.638a4.138,4.138,0,0,1-4.134,4.135Zm4.5-5.182v-10.869l-3.707,3.707a.863.863,0,0,1-1.221,0,.863.863,0,0,1,0-1.221l5.181-5.181a.863.863,0,0,1,1.221,0l5.182,5.181a.863.863,0,0,1,0,1.221.863.863,0,0,1-1.221,0l-3.708-3.707v10.869a.863.863,0,0,1-.863.864A.864.864,0,0,1-1701.364-320.182Z"
+                                  transform="translate(1710 334)" fill="#fff" />
+                        </svg>
+
+                        Upload Excel File
+                    </button>
+
+                    <a href="~/UserFiles/SampleFiles/ProductsSample.xlsx" class="dow-sample">Download Sample</a>
+                </div>
+            </div>
+            @*<div class="gridHeaderContainer2" style="margin-left: 10px;">
+                <button type="button" class="pdfUnclearExportBtn" style="background-color:red" id="pdf" onclick="toolbarClick(this)"><img src="~/Content/Admin/images/icon_pdf.png" alt=""></button>
+                    &nbsp;&nbsp;
+                <button type="button" style="background-color:green" class="exlUnclearExportBtn" id="excel" onclick="toolbarClick(this)"><img src="~/Content/Admin/images/icon_excel.png" alt=""></button>
+            </div>*@
+        </div>
+        <div class="control-section">
+            @Html.EJS().Grid("InlineEditing").AllowSorting().SortSettings(sort => sort.AllowUnsort(false)).AllowFiltering().AllowExcelExport().AllowPdfExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("AddEditRemove").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).Columns(col =>
+       {
+           col.Type("checkbox").Width("50").Add();
+           col.Field("ProductId").IsPrimaryKey(true).HeaderText("Product ID").Visible(false).Add();
+           col.Field("FlagValue").HeaderText("FlagValue").Visible(false).Add();
+           col.Field("UPCCode").HeaderText("UPC Code").Width("130").Add();
+           col.Field("ItemNo").HeaderText("Item No").Width("100").Add();
+           col.Field("SynthesisId").HeaderText("Synthesis Id").Width("150").Template("#template").AllowEditing(false).Add();
+           col.Field("Description").HeaderText("Name").ValidationRules(new { required = "true" }).Width("250").Add();
+           col.Field("Brand").HeaderText("Brand").Width("150").Add();
+           col.Field("Size").HeaderText("Size").Width("150").Add();
+           col.Field("Departments").HeaderText("Department").EditType("dropdownedit").Edit(new { @params = Department }).Width("180").Add();
+           col.Field("DepartmentNumber").HeaderText("Department No").Width("160").Add();
+           col.Field("DateCreated").HeaderText("Created Date").Format("MM/dd/yyyy").Width("150").AllowEditing(false).Add();
+           col.Field("UpdatedDate").HeaderText("Updated Date").Format("MM/dd/yyyy").Width("150").AllowEditing(false).Add();
+           col.Field("KeyWord").HeaderText("Key Word").Edit(new { create = "create", read = "read", destroy = "destroy", write = "write" }).Width("300").Add();
+       }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search", "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+<script id="template" type="text/x-template">
+    <a href="/LineItem/ProductDetailLineItem/${ProductId}" target="_blank" class="abc">${SynthesisId}</a>
+</script>
+<style>
+    #typeddl {
+        min-width: 100px;
+    }
+</style>
+<script>
+    function toolbarClickLine(args) {
+
+        var gridObj = document.getElementById("InlineEditingValue").ej2_instances[0];
+        if (args.item.id === 'InlineEditingValue_pdfexport') {
+
+            gridObj.pdfExport();
+        }
+        else if (args.item.id === 'InlineEditingValue_excelexport') {
+            gridObj.excelExport();
+        }
+
+    }
+    function AddEditRemove(args) {
+        // extending the default UrlAdaptor
+
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.data))
+                    return data.data;
+                else
+                    return data;
+            }
+        }
+        var grid = document.querySelector('#InlineEditing').ej2_instances[0];
+        var checkvalue = localStorage.getItem("checkvalue");
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ProductMappings/UrlDatasource?LinkedItem=" + checkvalue,
+            insertUrl: "/ProductMappings/Insert",
+            updateUrl: "/ProductMappings/Update",
+            removeUrl: "/ProductMappings/Remove",
+            adaptor: new CustomAdaptor()
+        });
+    };
+</script>
+<script src="~/Form_JS/ProductMapping.js"></script>
+@Html.EJS().ScriptManager()

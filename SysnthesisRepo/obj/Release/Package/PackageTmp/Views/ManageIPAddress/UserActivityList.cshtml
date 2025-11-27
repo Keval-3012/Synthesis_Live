@@ -1,0 +1,49 @@
+﻿@using Syncfusion.EJ2
+<style>
+    .highlightColor {
+        background-color: darkgrey;
+    }
+</style>
+
+<div style="display:flex;">
+
+    <div class="payCardgridContainer01">
+        <div class="control-section ">
+            @Html.EJS().Grid("InlineEditingValue").EnableHover().AllowSorting().AllowFiltering().AllowExcelExport().AllowPdfExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.Excel); }).DataSource(dm => dm.Url("/ManageIPAddress/UrlDatasourceValue").Adaptor("UrlAdaptor")).Columns(col =>
+       {
+           col.Field("UserId").HeaderText("User Id").Visible(false).Add();
+           col.Field("FirstName").HeaderText("Employee Name").Width("130").Add();
+           col.Field("TotalHoursWorked").HeaderText("Total Hours Worked").Width("110").Add();
+           col.Field("Regular").HeaderText("Regular").Width("80").Add();
+           col.Field("OverTime").HeaderText("Overtime").Width("90").Add();
+           col.Field("OfficeHours").HeaderText("OfficeWork").Width("110").Add();
+           col.Field("RemoteHours").HeaderText("RemoteWork").Width("110").Add();
+           col.HeaderText("Action").Template("#emailTemplate").Width("55").Add();
+           col.HeaderText("").Template("#icon").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("10").Visible(false).Add();
+       }).ActionComplete("actionComplete").AllowPaging().PageSettings(page => page.PageCount(5)).RowSelected("rowSelected").Toolbar(new List<string>
+                 () { "Print", "ExcelExport", "PdfExport" }).ToolbarClick("toolbarClickLine").Aggregates(agg =>
+                 {
+                     agg.Columns(new List<Syncfusion.EJ2.Grids.GridAggregateColumn>() { new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "TotalHoursWorked", Format = "0.00", Type = "Sum", FooterTemplate = "Total Hours Worked: ${Sum}" },
+           new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "Regular", Format = "0.00", Type = "Sum", FooterTemplate = "Regular: ${Sum}" },
+           new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "OverTime", Format = "0.00", Type = "Sum", FooterTemplate = "Overtime: ${Sum}" }}).Add();
+                 }).Render()
+        </div>
+    </div>
+    <div class="payCardgridContainer02">
+        <div id="GridValue"></div>
+    </div>
+</div>
+
+<script type="text/x-jsrender" id="icon">
+    <span class="e-icons e-arrow-right e-hide" id="RowIcon"></span>
+</script>
+<script type="text/x-jsrender" id="emailTemplate">
+
+    <img src="/Content/Admin/images/icons/mail.png" />
+
+</script>
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+@Html.EJS().ScriptManager()
+

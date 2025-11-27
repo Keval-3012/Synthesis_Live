@@ -1,0 +1,170 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/Admin/assets/css/style_new.css" rel="stylesheet" />
+<style>
+    .je-date {
+        display: flex;
+        width: 252px;
+        margin: 0 0 0 auto;
+    }
+</style>
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Payroll Expenses</h3>
+        </div>
+        @*        <div class="col-md-3">
+            </div>*@
+        <div class="col-md-6">
+            <div class="je-date">
+                <input name="txtstartdate" type="text" maxlength="100" id="txtstartdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="PayExpanseSearchRecord();" class=".searchfinal .btnsearchicon marginleft10" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+
+<div id="grddata">
+    <div class="page-body headertopbox" style="padding-top:0px!important;">
+        <div class="control-section">
+            <div id="customDialog"></div>
+            @Html.EJS().Grid("PayrollExpenseGrid").AllowSorting().AllowFiltering().AllowPdfExport().AllowExcelExport().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("Payrollid").IsPrimaryKey(true).HeaderText("Payrollid").Visible(false).Add();
+           col.Field("EndCheckDate").HeaderText("Date").Width("10%").Template("#PayrollDateTemplate").Add();
+           if ((int)ViewBag.Storeidvalue == 0)
+           {
+               col.Field("Storename").HeaderText("Store").Width("10%").Add();
+           }
+           col.Field("TotalAmount").HeaderText("Total Amount").Width("10%").Template("#TotalAmountTemplate").Add();
+           col.Field("IsSync").HeaderText("Status").Width("10%").Template("#SyncTemplate").Filter(new { type = "CheckBox", itemTemplate = "#PayExpenseStatus" }).Add();
+           col.Field("ApproveDate").HeaderText("Approved Date").Width("10%").Template("#ApproveDateTemplate").Filter(new { type = "CheckBox", itemTemplate = "#ApproveDateStatus" }).Add();
+           col.HeaderText("QB Status").Width("10%").Template("#QBTemplate").Add();
+           col.HeaderText("Action").Width("10%").Template("#EditTemplate").Add();
+       }).DataBound("dataBound").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(new List<string>() { "Search" }).Render()
+        </div>
+    </div>
+</div>
+<script type="text/x-jsrender" id="PayrollDateTemplate">
+    <div id="statuss" class="statustemps">
+        <td>
+            <a detail="Recent Entry Edit Payrollid - ${Payrollid}" href="/Report/PayrollExpenseDetail/${Payrollid}?payrolldate=${SaleformatDate(EndCheckDate)}" data-toggle="tooltip" data-placement="top" data-original-title="Edit" style="color: #385585;">${SaleformatDate(EndCheckDate)}</a>
+        </td>
+    </div>
+</script>
+<script>
+    function SaleformatDate(dateString) {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+
+        const [month, day, year] = formattedDate.split(' ');
+        return `${month} ${day.replace(',', '')}, ${year}`;
+    }
+</script>
+<script type="text/x-jsrender" id="TotalAmountTemplate">
+    <td>
+        ${formatCurrency(TotalAmount)}
+    </td>
+</script>
+<script>
+    function formatCurrency(value) {
+        if (value === null || value === undefined || isNaN(value)) {
+            return '';
+        }
+
+        return '$ ' + parseFloat(value).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+</script>
+<script type="text/x-jsrender" id="SyncTemplate">
+    <div id="status" class="statustemp">
+        <td>
+            ${if(IsSync == "1")}
+            <span class="btn btn-success btn-xs clsstatus"><i class="fa fa-check"></i> Approved</span>
+            ${else}
+            <span class="btn btn-warning btn-xs btnpending clsstatus" style="width:80px;"><i class="fa fa-minus" aria-hidden="true"></i> Pending</span>
+            ${/if}
+        </td>
+    </div>
+</script>
+<script type="text/x-jsrender" id="QBTemplate">
+    <div id="statuss" class="statustemps">
+        <td>
+            ${if(IsSync == "1")}
+            <img src="/QBImages/synced.png" style="height: 100%;" />
+            ${else}
+            <img src="/QBImages/not-synced.png" style="height: 100%;width:75px;" />
+            ${/if}
+        </td>
+    </div>
+</script>
+<script type="text/x-jsrender" id="EditTemplate">
+    <a detail="Recent Entry Edit Payrollid - ${Payrollid}" href="/Report/PayrollExpenseDetail/${Payrollid}" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="/Content/Admin/images/icon-edit.svg" alt="" /></a>
+</script>
+<script type="text/x-template" id="ApproveDateTemplate">
+    <span>
+        ${formatAMPM(new Date(data.ApproveDate))}
+    </span>
+</script>
+<script>
+    function formatAMPM(date) {
+        var parsedDate = new Date(date);
+        if (!date || parsedDate.getTime() === new Date("1970-01-01T00:00:00Z").getTime()) {
+            return '';
+        }
+        var year = parsedDate.getFullYear();
+        var month = (parsedDate.getMonth() + 1).toString().padStart(2, '0');
+        var day = parsedDate.getDate().toString().padStart(2, '0');
+        var formattedDate = `${year}-${month}-${day}`;
+
+        var hours = parsedDate.getHours();
+        var minutes = parsedDate.getMinutes().toString().padStart(2, '0');
+        var seconds = parsedDate.getSeconds().toString().padStart(2, '0');
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        var formattedTime = `${hours.toString().padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+
+        return `${formattedDate} ${formattedTime}`;
+    }
+</script>
+<script type="text/x-jsrender" id="PayExpenseStatus">
+    ${PayExpenseStatusDetails(data)}
+</script>
+<script type="text/x-jsrender" id="ApproveDateStatus">
+    ${ApproveDateStatusDetails(data)}
+</script>
+<script>
+    var scrollVal = 0;
+    document.title = '@ViewBag.Title';
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#txtstartdate').datetimepicker({
+            format: 'MMM-YYYY',
+            useCurrent: false,
+            daysOfWeekDisabled: [0, 6]
+        });
+        var startDateInput = $("#txtstartdate").val().trim();
+        if (!startDateInput) {
+            var now = new Date();
+            var currentMonth = now.toLocaleString('en-US', { month: 'short' });
+            var currentYear = now.getFullYear();
+            var formattedDate = `${currentMonth}-${currentYear}`;
+            $("#txtstartdate").val(formattedDate);
+        }
+    });
+</script>
+<script src="~/Form_JS/PayrollExpenseGrid.js"></script>
+@Html.EJS().ScriptManager()

@@ -1,0 +1,217 @@
+﻿@model EntityModels.Models.Terminal_Select
+@using EntityModels.Models;
+@using Utility;
+@{
+    DBContext db = new DBContext();
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<link href="~/Content/Admin/assets/css/newpage.css" rel="stylesheet" />
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (Convert.ToString(ViewBag.storeid) == "0")
+    {
+        <script>
+            PopUpSelectStore();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.CheckRights) == "NoRights")
+    {
+        <script>
+            PopUpSelectStoreRights();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.ErrorMessage) == "NoItemFound")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+</div>
+<div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title">No Store Selected</div>
+        <div class="modal-body ">Please Select Store.</div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+        </div>
+    </div>
+</div>
+@if (Convert.ToString(ViewBag.storeid) != "0" && Convert.ToString(ViewBag.CheckRights) != "NoRights")
+{
+    <div class="header-small header_invoicedetail">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="dateboxhd">
+                    <ul class="set_calss3">
+                        <li class="set_class4">
+                            <div>
+                                <input name="Startdate" type="text" maxlength="100" id="Startdate" placeholder="From" class="datepicker form-control" onkeydown="return false">
+                            </div>
+                            <div>
+                                <a class="openotherbox">Other Deposits <strong><span id="spanotherdeposit"></span></strong></a>
+                                <a class="openotherbox_red" id="BtnCloseout" onclick="ConfirmDayClose()">Day Close Out</a>
+                                @Html.Hidden("txtSettlementDone")
+                                @if (Model.DaycloseOutFile != null)
+                                {
+                                    <a href="@Url.Action("DownloadFile", "Report",new { @filePath=@Model.DaycloseOutFile})" target="_blank" style="font-size: 20px;color: #000;font-weight: 300;" title="Detail"><img src="/Content/Admin/images/1pdf-files.png" /></a>
+                                }
+                                @if (Model.NotConfigureAccount != null)
+                                {
+                                    if (Model.NotConfigureAccount != "")
+                                    {
+                                        <div class="warning">
+                                            <span data-toggle="tooltip" data-placement="bottom" title="@Model.NotConfigureAccount.ToString()">One or more tender account(s) are not configured in settings. </span>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </li>
+                        <li class="set_calss2" style="display: flex;flex-direction: row !important;">
+                            <div style="display: flex;flex-direction: column;text-align: left;justify-content: left;color: black !important;text-align: center!important;margin-right:25px !Important">
+                                <span style="margin-right: 0px !important;">Customer Count </span>
+                                <span style="font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblCustCount">@Model.Coustomercount</span>
+                            </div>
+                            <div style="display: flex;flex-direction: column;text-align: left;justify-content: left;color: black !important;text-align: center!important;margin-right:20px !Important;">
+                                <span style="margin-right: 0px !important;">Total Sales</span>
+                                <span style="font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalSaleAmt">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalsalesamount))</span>
+                            </div>
+                            <div style="display: flex;flex-direction: column;text-align: left;justify-content: left;color: black !important;text-align: center!important;margin-right:20px !Important;">
+                                <span style="margin-right: 0px !important;">Average Sale</span>
+                                <span style="font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalAvgSale">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalavgsales))</span>
+                            </div>
+                            <div style="display: flex;flex-direction: column;text-align: left;justify-content: left;color: black !important;text-align: center!important;margin-right:20px !Important;">
+                                <span style="margin-right: 0px !important;">Total Cash</span>
+                                <span style="font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalCash">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalcash))</span>
+                            </div>
+                            <div style="display: flex;flex-direction: column;text-align: left;justify-content: left;color: black !important;text-align: center!important;margin-right:20px !Important;">
+                                <span style="margin-right: 0px !important;">Total Over/Short</span>
+                                @{
+                                    if (Model.totalOverShort != null)
+                                    {
+                                        if (Convert.ToDecimal(AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalOverShort))) == 0)
+                                        {
+                                            <span style="color:grey;font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalOverShort">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalOverShort))</span>
+                                        }
+                                        else if (Convert.ToDecimal(AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalOverShort))) < 0)
+                                        {
+                                            <span style="color:red;font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalOverShort">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalOverShort))</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color:green;font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalOverShort">$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Model.totalOverShort))</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span style="color:black;font-size: 28px !important;line-height: 24px !important;font-weight: 500;" id="lblTotalOverShort">0</span>
+                                    }
+                                }
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="other-deposite" id="divother">
+        @{
+            Html.RenderAction("OtherDepositGrid");
+        }
+    </div>
+    <div id="getdata">
+    </div>
+}
+<div id="ConfirmDayClose" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none;">
+    <div class="modal-content" style="padding:0px 30px 0px 30px;max-width:max-content;">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"><b><label id="DisplayMessage"></label></b></div>
+        <div class="modal-body "></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" onclick="DayCloseoutfun()">Yes </a>
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">No </a>
+        </div>
+    </div>
+</div>
+<div id="PaidAmountAdjust" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none;">
+    <div class="modal-content" style="padding:0px 30px 0px 30px;max-width:max-content;">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"><b><label id="DisplayMessage" class="NoshiftFilter">Please Adjust paid out amount.</label></b></div>
+        <div class="modal-body "></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn" data-dismiss="modal" onclick="closemodal()">Ok</a>
+        </div>
+    </div>
+</div>
+<div id="PreviousDayCheckOutPopup" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none;">
+    <div class="modal-content" style="padding:0px 30px 0px 30px;max-width:max-content;">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"><b><label id="PreviousDisplayMessage"></label></b></div>
+        <div class="modal-body "></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn" data-dismiss="modal" onclick="DayCloseoutPrevious()">Ok</a>
+        </div>
+    </div>
+</div>
+<script>
+    var Startdate = '@ViewBag.Startdate';
+    var terminalidval = '@ViewBag.terminalidval';
+    var Shiftdataid = '@ViewBag.Shiftdataid';
+    var storeid = '@ViewBag.storeid';
+    function docReady(fn) {
+        
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }    
+    docReady(function () {
+        var currentDate = new Date();
+        var startdates = '@ViewBag.Startdate';
+        $('#Startdate').val(startdates);
+        GetData(startdates);
+
+        $(".openotherbox").click(function () {
+            $(".other-deposite").slideToggle("slow");
+        });
+
+        $('#Startdate').datetimepicker({
+            format: 'MM-DD-YYYY',
+            useCurrent: true,
+            maxDate: currentDate
+        });
+
+        $('#Startdate').attr('autocomplete', 'off');
+    });
+
+    $(function () {
+        var currentDate = new Date();
+        $('#Startdate').datetimepicker({
+            format: 'MM-DD-YYYY',
+            useCurrent: true,
+            maxDate: currentDate
+        });
+
+        $('#Startdate').on('dp.change', function (e) {
+            var id = $(this).val();
+            GetData(id);
+            $(".other-deposite").hide();
+        });
+    });
+</script>
+<script src="~/Form_JS/TerminalIndex.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

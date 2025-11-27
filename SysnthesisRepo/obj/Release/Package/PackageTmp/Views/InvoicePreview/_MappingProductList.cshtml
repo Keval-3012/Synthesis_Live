@@ -1,0 +1,117 @@
+﻿@using Syncfusion.EJ2
+<style>
+    #ajax_dialog_dialog-header {
+        padding: 0px !important;
+    }
+
+    .e-dialog .e-dlg-header {
+        width: 100%;
+    }
+
+    .heading {
+        color: white;
+        font-size: 16px;
+    }
+</style>
+
+@{
+    /* Custom toolbar item */
+    List<object> toolbarItems = new List<object>();
+    /* The template id is set to the custom toolbar item’s template property */
+    toolbarItems.Add(new { template = "#searchPreviewTemplate" });
+
+    List<object> toolbarrecItems = new List<object>();
+    /* The template id is set to the custom toolbar item’s template property */
+    toolbarrecItems.Add(new { template = "#recommendPreviewTemplate" });
+}
+
+@if (ViewBag.Count != 0)
+{
+    <div id="SystemList">
+        @*<h4 class="modal-title">Recommended Items</h4>*@
+        <hr />
+        <div class="control-section recommendinvoicegrid">
+            @Html.EJS().Grid("InlineEditing1").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/InvoicePreview/UrlDatasourceSearchListGetList?Id=" + ViewBag.ProductVendorId).Adaptor("UrlAdaptor")).AllowTextWrap().Columns(col =>
+       {
+           col.Field("ProductVendorId").IsPrimaryKey(true).HeaderText("Product Vendor ID").Visible(false).Add();
+           col.Field("ProductId").HeaderText("Product Id").Visible(false).Add();
+           col.Field("UPCCode").HeaderText("UPC Code").Width("150").Add();
+           col.Field("ItemNo").HeaderText("Item No").Width("100").Add();
+           col.Field("GenericID").HeaderText("Generic ID").Width("100").Add();
+           col.Field("Brand").HeaderText("Brand").Width("150").Add();
+           col.Field("Size").HeaderText("Size").Width("100").Add();
+           col.Field("Description").HeaderText("Description").Width("300").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+       }).DataBound("dataBound01").Toolbar(toolbarrecItems).Render()
+        </div>
+        <hr />
+    </div>
+}
+<div>
+    @*<h4 class="modal-title">Search Items</h4>*@
+    <hr />
+    <div class="control-section searchginvoicerid">
+        @Html.EJS().Grid("InlineEditing2").HeaderCellInfo("headerCellInfo").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/InvoicePreview/UrlDatasourceSearchListGet?Id=" + ViewBag.ProductVendorId).Adaptor("UrlAdaptor")).AllowTextWrap().Columns(col =>
+   {
+       col.Field("ProductVendorId").IsPrimaryKey(true).HeaderText("Product Vendor ID").Visible(false).Add();
+       col.Field("ProductId").HeaderText("Product Id").Visible(false).Add();
+       col.Field("UPCCode").HeaderText("UPC Code").Width("150").Add();
+       col.Field("ItemNo").HeaderText("Item No").Width("100").Add();
+       col.Field("GenericID").HeaderText("Generic ID").Width("100").Add();
+       col.Field("Brand").HeaderText("Brand").Width("150").Add();
+       col.Field("Size").HeaderText("Size").Width("100").Add();
+       col.Field("Description").HeaderText("Description").Width("300").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+   }).DataBound("dataBound").Toolbar(toolbarItems).Render()
+    </div>
+</div>
+
+<div id='searchPreviewTemplate' class="searchPreviewTemplate" style="display:none">
+    <div class="e-toolbar-items e-tbar-pos serc">
+        <div class="e-toolbar-left">
+            <div class="e-toolbar-item" aria-disabled="false">
+                <label class="heading">Search Items</label>
+            </div>
+        </div>
+
+        <div class="e-toolbar-right">
+            <div class="e-toolbar-item e-search-wrapper" aria-disabled="false" title="Search">
+                <div class="e-input-group e-search clear" role="search">
+                    <input id="InlineEditing2_searchbar" class="e-input" name="input" type="search" placeholder="Search">
+                    <span id="InlineEditing2_searchbutton" class="e-input-group-icon e-search-icon e-icons" tabindex="-1" title="Search" aria-label="search" style="display:none"></span>
+                    <span class="e-clear-icon" id="InlineEditing2_searchcancelbutton"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id='recommendPreviewTemplate' class="recommendPreviewTemplate" style="display:none">
+    <div class="e-toolbar-items e-tbar-pos rec">
+        <div class="e-toolbar-left">
+            <div class="e-toolbar-item" aria-disabled="false">
+                <label class="heading">Recommended Items</label>
+            </div>
+        </div>
+
+        <div class="e-toolbar-right" style="visibility:hidden;display:none;">
+            <div class="e-toolbar-item e-search-wrapper" aria-disabled="false" title="Search">
+                <div class="e-input-group e-search clear" role="search">
+                    <input id="InlineEditing1_searchbar" class="e-input" name="input" type="search" placeholder="Search">
+                    <span id="InlineEditing1_searchbutton" class="e-input-group-icon e-search-icon e-icons" tabindex="-1" title="Search" aria-label="search" style="display:none"></span>
+                    <span class="e-clear-icon" id="InlineEditing1_searchcancelbutton"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@*{ text: "Search Items", tooltipText: "Search Items" }*@
+<script>
+    var Count = '@ViewBag.Count';
+    localStorage.setItem("Count", Count);
+</script>
+<script src="~/Form_JS/InvoicePreviewMapping.js"></script>
+@Html.EJS().ScriptManager()

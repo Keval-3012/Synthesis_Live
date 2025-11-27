@@ -1,0 +1,35 @@
+2025-10-10 10:07:36.9804|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/10/2025 10:07:36 AM - Object reference not set to an instance of an object.
+2025-10-10 10:07:49.2017|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/10/2025 10:07:49 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-10 10:07:49.2591|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/10/2025 10:07:49 AM - Object reference not set to an instance of an object.
+2025-10-10 10:07:50.8612|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/10/2025 10:07:50 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-10 10:07:50.9139|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/10/2025 10:07:50 AM - Object reference not set to an instance of an object.
+2025-10-10 10:07:52.4980|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/10/2025 10:07:52 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-10 10:07:52.5650|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/10/2025 10:07:52 AM - Object reference not set to an instance of an object.
+2025-10-10 10:07:54.8136|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/10/2025 10:07:54 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-10 10:07:54.8636|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/10/2025 10:07:54 AM - Object reference not set to an instance of an object.
+2025-10-10 10:07:55.9750|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 10/10/2025 10:07:55 AM - Error executing child request for handler 'System.Web.Mvc.HttpHandlerUtil+ServerExecuteHttpHandlerAsyncWrapper'.
+2025-10-10 10:07:56.0311|ERROR|SysnthesisRepo.Controllers.AdminIncludeController|AdminIncludeController - Header - 10/10/2025 10:07:56 AM - Object reference not set to an instance of an object.
+2025-10-10 10:08:50.3906|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/10/2025 10:08:50 AM
+2025-10-10 10:09:06.2589|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/10/2025 10:09:06 AM - An error occurred while sending the request.
+2025-10-10 10:09:13.8789|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 10:09:13 AM
+2025-10-10 10:09:21.1215|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 10:09:21 AM
+2025-10-10 10:13:50.4969|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 10:13:50 AM
+2025-10-10 10:14:19.9771|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 10:14:19 AM
+2025-10-10 10:15:52.5304|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 10:15:52 AM
+2025-10-10 16:29:25.4946|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/10/2025 4:29:25 PM
+2025-10-10 16:30:22.5819|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/10/2025 4:30:22 PM - An error occurred while sending the request.
+2025-10-10 16:33:48.4145|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 4:33:48 PM
+2025-10-10 16:33:53.2283|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 4:33:53 PM
+2025-10-10 16:34:16.1078|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 4:34:16 PM
+2025-10-10 16:34:34.1612|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 4:34:34 PM
+2025-10-10 17:05:02.0538|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:05:02 PM
+2025-10-10 17:05:06.9336|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:05:06 PM
+2025-10-10 17:05:59.2733|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:05:59 PM
+2025-10-10 17:07:15.5405|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:07:15 PM
+2025-10-10 17:22:06.9078|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:22:06 PM
+2025-10-10 17:23:13.5992|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:23:13 PM
+2025-10-10 17:23:20.9127|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 5:23:20 PM
+2025-10-10 20:26:51.3601|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 8:26:51 PM
+2025-10-10 20:27:01.0301|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 8:27:01 PM
+2025-10-10 20:27:47.5083|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 8:27:47 PM
+2025-10-10 20:28:28.5370|INFO|SysnthesisRepo.Controllers.PDFReadController|PDFReadController - UrlDatasource - 10/10/2025 8:28:28 PM

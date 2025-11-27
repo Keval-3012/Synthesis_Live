@@ -1,0 +1,112 @@
+﻿@using Syncfusion.EJ2
+
+@model List<EntityModels.Models.PayPeriodSettings>
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="header-small special_bg">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Pay Period Settings </h3>
+        </div>
+
+
+        <div class="col-md-3" style="text-align:end" id="divAdddept">
+            @if (Model.Count < 1)
+            {
+                <a href="@Url.Action("AddPayPeriodSettings", "ManageIPAddress")" class="buttonbox btnsubmit" id="btnAddPayPeriod">Add Pay Period</a>
+            }
+        </div>
+    </div>
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+
+        <div class="datagrid martop15">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:90%"><a class="textred" onclick="javascript:FunSortData('DepartmentName');" style="color:#fff; text-decoration:none; cursor:pointer;">Day</a></th>
+
+                            <th style="width:10%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adta">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@item.Day</td>
+                                    <td width="8%">
+                                        <div class="d-flex">
+                                            <a href='@Url.Action("EditPayPeriodSettings", "ManageIPAddress", new { Id = item.PayPeriodSettingId })' class="btn btn-success shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                            @*<a href='@Url.Action("Delete", "UserMaster", new { Id = item.UserID })' onclick="return confirm('Are you sure you want to delete this record?');" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>*@
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="grdmail">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+
+        <div class="datagrid martop15">
+            <div class="table-responsive">
+                <div class="d-flex">
+                    <input type="checkbox" id="chkemail" name="chkemail" checked="@ViewBag.ismail">
+                    <label for="chkemail" style="font-size:16px;">After Completion of payroll week, Send every employees their timecards.</label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+<script>
+    $('#chkemail').change(function () {
+        var a = $(this).is(':checked');
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+
+        if (confirm("Are you sure?") == true) {
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("IsMailSendAllow", "ManageIPAddress")",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: a })
+            });
+            ajax.send().then(function (data) {
+
+                if (data == "\"Success\"") {
+                    toastObj.content = '@ViewBag.EmailSuccess';
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (data == "\"Error\"") {
+                    toastObj.content = "Something went wrong!";
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+            });
+        }
+    });
+</script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+
+@Html.EJS().ScriptManager()

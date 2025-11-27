@@ -1,0 +1,196 @@
+﻿@model IEnumerable<EntityModels.Models.Payroll_Setting_Select>
+@{
+    Layout = null;
+}
+@using Utility
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+</style>
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (ViewBag.StatusMessage.ToString() == "Success")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('Bank Account Created Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Delete")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Bank Account Deleted Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Edit")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr.success('Bank Account Updated Successfully');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Exists")
+    {
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "3000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "10000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success('Bank Account Is Already Exists.');
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "Error")
+    {
+        <script>
+            MyfunError();
+        </script>
+    }
+    @if (ViewBag.StatusMessage.ToString() == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+</div>
+<div id="grddata1">
+    <div class="page-body headertopbox addinvoice" style="padding-top:18px!important;">
+        <div class="datagrid">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover select_set1" id="data_table1">
+                    <thead>
+                        <tr>
+                            <th style="width:15%!important">QB Account</th>
+                            <th style="width:15%!important">Payee Name</th>
+                            <th style="width:15%!important" class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data_body1">
+                        @if (Model != null)
+                        {
+                            {
+                                if (Model.Count() > 0)
+                                {
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            var DivQbAccountlbl = "1DivQbAccountlbl" + @item.id;
+                                            var DivQbAccountddl = "1DivQbAccountddl" + @item.id;
+                                            var EQBAccountReq = "1EQBAccountReq" + @item.id;
+                                            var DivVendorlbl = "1DivVendorlbl" + @item.id;
+                                            var DivVendorddl = "1DivVendorddl" + @item.id;
+                                            var EVendorReq = "1EVendorReq" + @item.id;
+                                            <tr class="even">
+                                                <td style="vertical-align:middle;text-align:left;">
+                                                    <div id="@DivQbAccountlbl">@Html.Raw(item.BankAccountName)</div>
+                                                    <div id="@DivQbAccountddl" style="display:none">
+                                                        @Html.DropDownList("QB1".ToString(), new SelectList(ViewBag.DepartmentList, "value", "text", item.BankAccountID), "Select QB Account", new { @class = "myval", @id = "1EQBAccount_" + @item.id })
+                                                        <span class="highlight" id="@EQBAccountReq" style="display: none;">QB Account Is Required</span>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align:middle;text-align:left;">
+                                                    <div id="@DivVendorlbl">@Html.Raw(item.VendorName)</div>
+                                                    <div id="@DivVendorddl" style="display:none">
+                                                        @Html.DropDownList("VendorId".ToString(), new SelectList(ViewBag.VendorList, "value", "text", item.BankAccountID), "Select Vendor", new { @class = "myval", @id = "1EVendor_" + @item.id })
+                                                        <span class="highlight" id="@EVendorReq" style="display: none;">Vendor Is Required</span>
+                                                    </div>
+                                                </td>
+                                                <td style="vertical-align:middle;text-align:right" class="img_with img_color">
+                                                    <input type="hidden" id="ID" name="ID" value="@item.id" />
+                                                    <a href="#" id="edit1_@item.id" onclick="return Edit1(@item.id);"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a>
+                                                    <input type="submit" id="update1_@item.id" value="Update" onclick="return Updatedata1(@item.id)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                                    <input type="submit" id="cancel1_@item.id" value="Cancel" onclick="return Cancel1(@item.id)" name="" class="btn btnsavebox btn_orange" style="display: none;">
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3" style="text-align:center;">
+                                            No Data Available
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" style="text-align:center;">
+                                    No Data Available
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Form_JS/PayrollBankAccount.js"></script>

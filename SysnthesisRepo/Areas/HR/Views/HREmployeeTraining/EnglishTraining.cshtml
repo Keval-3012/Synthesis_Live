@@ -1,0 +1,667 @@
+﻿@{
+    ViewBag.Title = "Sexual Harassment Training";
+    Layout = "~/Areas/HR/Views/Shared/AdminMaster.cshtml";
+}
+<html>
+<head>
+    <link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+    <link href="~/Content/HRCss/HREmployeeTraining.css" rel="stylesheet" />
+    <link href="~/Content/HRCss/custom-style.css" rel="stylesheet" />
+    <link href="~/Content/HRCss/custom.css" rel="stylesheet" />
+    <link href="~/Content/HRCss/Site.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            
+        var LanguagePrefrence = '@Session["LanguagePrefrence"]';
+            var FirstName = '@Session["FirstName"]';
+            var LastName = '@Session["LastName"]';
+            var UserId = '@Session["HREmployeeId"]';
+            var UserName = '@Session["EmployeeUserName"]';
+        var LastSlideName = '@Session["LastSlideName"]';
+        var IsTraningCompleted ='@Session["IsTraningCompleted"]';
+        setTraning(LanguagePrefrence, FirstName, LastName, UserId, UserName, LastSlideName);
+        checkTrainingStartedOrNot(LastSlideName);
+        var aa = '@Session["IsTraningCompleted"]';
+            if (LastSlideName == ".q14Data" && IsTraningCompleted == "False" || LastSlideName == ".q14DataSp" && IsTraningCompleted == "False") {
+            DownloadCertificate();
+        }
+        console.log(aa);
+        if (aa == 'False') {
+            $(".csscompleteTraning").css('display', 'block');
+            $(".cssResetTest").css('display', 'none');
+        }
+        else {
+            $(".csscompleteTraning").css('display', 'none');
+            $(".cssResetTest").css('display', 'block');
+        }
+    })
+    </script>
+</head>
+<body>
+
+    <div class="card-wrapper">
+        <div class="main-content">
+            <div>
+                <div class="row">
+                    <div class="col-md-12 nopadding" style="max-height: 82vh;">
+
+                        <div class="trainingContainer col-md-12 nopadding" style="height:100vh;max-height:82vh;">
+
+                            <div class="trainingImportantNoticeContainer col-md-12 nopadding hidden" style="justify-content:flex-start;height:100vh;max-height:850px">
+
+                                <img src="~/images/important-notice-english.jpg" class="warrningSign" style="-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+                            filter: grayscale(100%);">
+                                <h1 style="margin-top:50px"> IMPORTANT NOTICE</h1>
+                                <ul>
+                                    <li>The training takes approximately 45 minutes.</li>
+                                    <li>You cannot save your progress. DO NOT REFRESH THIS PAGE!</li>
+                                    <li>If you reload the page, you may lose your place and have to restart the training.</li>
+                                </ul>
+                                <br />
+                                <div class="ChangeLanguage row">
+                                    @{
+                                        { Html.RenderAction("InitialChildForm"); }
+                                    }
+                                </div>
+                                <button class="button" style="height:70px;margin-top:50px" onclick="startTraning()">
+                                    I Agree - Start the training
+                                </button>
+
+                            </div>
+
+                            <div class="video-div col-md-12 col12 video-div-1 hidden" style="display:flex;">
+                                <video controls playsinline id="v1" class="v1 col-md-12 nopadding col12 video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment1.mp4" class="url Segment1" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v1','.video-div-1','.v111','.video-div-1-1')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v1button intialVideoButton"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div col-md-12 col12 video-div-1-1 hidden" style="display:flex;">
+                                <video controls="controls" playsinline id="v111" class="v111 col-md-12 nopadding col12 video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment111.mp4" class="url Segment111" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v111','.video-div-1-1','.v112','.video-div-1-2')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v111button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="video-div col-md-12 col12 video-div-1-2 hidden" style="display:flex;">
+                                <video controls="controls" playsinline id="v112" class="v112 col-md-12 nopadding col12 video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment112.mp4" class="url Segment112" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v112','.video-div-1-2',null,null,'.q1Data','.q1DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v112button intialVideoButton"></button>
+                                </div>
+                            </div>
+
+                            <div class="q1Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Sophie was assigned female at birth and today identifies as a woman.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3><span>This person most likely identifies as:</span></h3>
+                                    <div>
+                                        <div class="customRadio">
+                                            <input type="radio" name="Q1" value="Y" id="Cisgender" onchange="enableButton('.q1Data')" /> <label for="Cisgender">Cisgender</label>
+                                            <input type="radio" name="Q1" value="T" id="Transgender" onchange="enableButton('.q1Data')" /> <label for="Transgender">Transgender</label>
+                                            <input type="radio" name="Q1" value="N" id="Non-Binary" onchange="enableButton('.q1Data')" /> <label for="Non-Binary">Non-Binary</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q1Data','q1DataAnswer','v1')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q1DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is cisgender.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>
+                                        <span>
+                                            Cisgender means your gender is the same as your sex assigned at birth.
+                                            Trangender means your gender is different than your sex assigned at birth.
+                                            Non-binary means you do not identify as a man or as a woman.
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q1DataAnswer','q1Data','v2','video-div-2')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div col-md-12 col12 video-div-2 hidden" style="display:flex;">
+                                <video controls="controls" playsinline id="v2" class="v2 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment2.mp4" class="Segment2" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v2','.video-div-2',null,null,'.q2Data','.q2DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v2button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q2Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Sexual harassment is always directed at one person.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio">
+                                        <input type="radio" name="Q2" value="Y" id="q2True" onchange="enableButton('.q2Data')" /> <label for="q2True">True</label>
+                                        <input type="radio" name="Q2" value="N" id="q2False" onchange="enableButton('.q2Data')" /> <label for="q2False">False</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q2Data','q2DataAnswer','v2')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q2DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is false.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Sexual harassment does not have to be one-on-one. Sexual harassment can exist in the workplace culture.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q2DataAnswer','q2Data','v3','video-div-3')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-3" style="display:flex;">
+                                <video controls="controls" playsinline id="v3" class="v3 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment3.mp4" class="Segment3" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v3','.video-div-3',null,null,'.q3Data','.q3DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v3button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q3Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Sexual harassment only happens at the workplace.</h1>
+                                </div>
+                                <div>
+                                    <div class="customRadio">
+                                        <input type="radio" name="Q3" value="Y" id="q3True" onchange="enableButton('.q3Data')" /> <label for="q3True">True</label>
+                                        <input type="radio" name="Q3" value="N" id="q3False" onchange="enableButton('.q3Data')" /> <label for="q3False">False</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q3Data','q3DataAnswer','v3')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q3DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is false.</h1>
+                                </div>
+                                <div>
+                                    <h3>Sexual harassment can happen offsite and after work hours.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q3DataAnswer','q3Data','v4','video-div-4')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div col-md-12 col12 video-div-4 hidden " style="display:flex;">
+                                <video controls="controls" playsinline id="v4" class="v4 col-md-12 nopadding col12 video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment4.mp4" class="Segment4" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v4','.video-div-4',null,null,'.q4Data','.q4DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v4button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q4Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>A man can be sexually harassed.</h1>
+                                </div>
+                                <div>
+                                    <div class="customRadio">
+                                        <input type="radio" name="Q4" value="Y" id="q4True" onchange="enableButton('.q4Data')" /> <label for="q4True">True</label>
+                                        <input type="radio" name="Q4" value="N" id="q4False" onchange="enableButton('.q4Data')" /> <label for="q4False">False</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q4Data','q4DataAnswer','v4')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q4DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is true.</h1>
+                                </div>
+                                <div>
+                                    <h3>The person being harassed can be any gender.</h3>
+                                </div>
+                                <div>
+                                    <h3>
+                                        The harasser can be any gender.
+                                    </h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q4DataAnswer','q4Data','v5','video-div-5')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-5" style="display:flex;">
+                                <video controls="controls" playsinline id="v5" class="v5 col-md-12 nopadding col12 video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment5.mp4" class="Segment5" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v5','.video-div-5',null,null,'.q5Data','.q5DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v5button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q5Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Sexual harassment is always about sexual desire.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+
+                                    <div>
+                                        <div class="customRadio">
+                                            <input type="radio" name="Q5" value="Y" id="q5True" onchange="enableButton('.q5Data')" /> <label for="q5True">True</label>
+                                            <input type="radio" name="Q5" value="N" id="q5False" onchange="enableButton('.q5Data')" /> <label for="q5False">False</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q5Data','q5DataAnswer','v5')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q5DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is false.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Sexual desire is not necessary for it to be sexual harassment.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q5DataAnswer','q5Data','v6','video-div-6')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-6" style="display:flex;">
+                                <video controls="controls" playsinline id="v6" class="v6 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment6.mp4" class="Segment6" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v6','.video-div-6',null,null,'.q6Data','.q6DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v6button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q6Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Sexual harassment can happen between people who dated.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio">
+                                        <input type="radio" name="Q6" value="Y" id="q6True" onchange="enableButton('.q6Data')" /> <label for="q6True">True</label>
+                                        <input type="radio" name="Q6" value="N" id="q6False" onchange="enableButton('.q6Data')" /> <label for="q6False">False</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q6Data','q6DataAnswer','v6')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q6DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is true.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Even if there was a previous romantic relationship, there can be sexual harassment.<br />There can also be sexual harassment if there is a current romantic relationship.</h3>
+                                    <h3></h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q6DataAnswer','q6Data','v7','video-div-7')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-7" style="display:flex;">
+                                <video controls="controls" playsinline id="v7" class="v7 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment7.mp4" class="Segment6" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v7','.video-div-7',null,null,'.q7Data','.q7DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v7button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q7Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Select all who have workplace rights.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="workSpaceRights" style="display: flex;
+                        flex-direction: column;">
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="Interns" onchange="enableButton('.q7Data')" id="q7Interns" /> <label for="q7Interns" style="margin-left:10px;font-size:20px">Interns</label></div>
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="Undocumented" onchange="enableButton('.q7Data')" id="q7Undocumented" /> <label for="q7Undocumented" style="margin-left:10px;font-size:20px">Undocumented workers</label></div>
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="Part-time" onchange="enableButton('.q7Data')" id="q7Part" /> <label for="q7Part" style="margin-left:10px;font-size:20px">Part-time workers</label></div>
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="independent" onchange="enableButton('.q7Data')" id="q7independent" /> <label for="q7independent" style="margin-left:10px;font-size:20px">Many independent workers</label></div>
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="Temps" onchange="enableButton('.q7Data')" id="q7Temps" /> <label for="q7Temps" style="margin-left:10px;font-size:20px">Temps</label></div>
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="Domestic" onchange="enableButton('.q7Data')" id="q7Domestic" /> <label for="q7Domestic" style="margin-left:10px;font-size:20px">Domestic workers</label></div>
+                                        <div style="margin-top: 10px;"><input type="checkbox" name="Q7" value="books" onchange="enableButton('.q7Data')" id="q7books" /> <label for="q7books" style="margin-left:10px;font-size:20px">Off the books workers</label></div>
+
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q7Data','q7DataAnswer','v7')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q7DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is All.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>All have workplace rights!</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q7DataAnswer','q7Data','v8','video-div-8')" class="btn btn-danger btnTraningQuestionAnswer spBtn nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-8" style="display:flex;">
+                                <video controls="controls" playsinline id="v8" class="v8 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment8.mp4" class="Segment8" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v8','.video-div-8','.v81','.video-div-8-1')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v8button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="video-div hidden col-md-12 col12 video-div-8-1" style="display:flex;">
+                                <video controls="controls" playsinline id="v81" class="v81 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment81.mp4" class="Segment81" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v81','.video-div-8-1',null,null,'.q8Data','.q8DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v81button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q8Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>Employers must act if they know about sexual harassment by a third party.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio">
+                                        <input type="radio" name="Q8" value="Y" id="q8True" onchange="enableButton('.q8Data')" /> <label for="q8True">True</label>
+                                        <input type="radio" name="Q8" value="N" id="q8False" onchange="enableButton('.q8Data')" /> <label for="q8False">False</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q8Data','q8DataAnswer','v8')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q8DataAnswer questions col-md-12 col12  hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is true.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Employers are responsible for sexual harassment by third parties if they know about the behavior.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q8DataAnswer','q8Data','v9','video-div-9')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div col-md-12 col12 video-div-9 hidden " style="display:flex;">
+                                <video controls="controls" playsinline id="v9" class="v9 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment9.mp4" class="Segment9" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v9','.video-div-9','.v91','.video-div-9-1')" class="btn btn-danger btnTraningQuestionAnswer v9button nextButtonText intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="video-div col-md-12 col12 video-div-9-1 hidden " style="display:flex;">
+                                <video controls="controls" playsinline id="v91" class="v91 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment91.mp4" class="Segment91" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v91','.video-div-9-1',null,null,'.q9Data','.q9DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v91button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q9Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>It is illegal to punish an employee for reporting behavior the employee believes is sexual harassment.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio">
+                                        <input type="radio" name="Q9" value="Y" id="q9True" onchange="enableButton('.q9Data')" /> <label for="q9True">True</label>
+                                        <input type="radio" name="Q9" value="N" id="q9False" onchange="enableButton('.q9Data')" /> <label for="q9False">False</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q9Data','q9DataAnswer','v9')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q9DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is true.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>As long as the person believes there was sexual harassment and reports it, the person reporting it is protected from retaliation.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q9DataAnswer','q9Data','v10','video-div-10')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-10" style="display:flex;">
+                                <video controls="controls" playsinline id="v10" class="v10 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment10.mp4" class="Segment10" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v10','.video-div-10',null,null,'.q10Data','.q10DataSp')" class="btn btn-danger btnTraningQuestionAnswer v10button nextButtonText intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q10Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>What did Will do?</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio" style="display: flex;
+                        flex-direction: column;">
+                                        <input type="radio" name="Q10" value="Confronted" id="q10Confronted" onchange="enableButton('.q10Data')" /> <label for="q10Confronted">Confronted the sexual harassment</label>
+                                        <input type="radio" name="Q10" value="Participated" id="q10Participated" onchange="enableButton('.q10Data')" /> <label for="q10Participated">Participated in the sexual harassment</label>
+                                        <input type="radio" name="Q10" value="Talked" id="q10Talked" onchange="enableButton('.q10Data')" /> <label for="q10Talked">Talked to Liang about the sexual harassment</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q10Data','q10DataAnswer','v10')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q10DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is Will confronted the sexual harassment.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>He told his co-workers to stop.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q10DataAnswer','q10Data','v11','video-div-11')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-11" style="display:flex;">
+                                <video controls="controls" playsinline id="v11" class="v11 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment11.mp4" class="Segment11" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v11','.video-div-11',null,null,'.q11Data','.q11DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v11button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q11Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>What did Maria do?</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio" style="display:flex;flex-direction:column">
+                                        <input type="radio" name="Q11" value="Confronted" id="q11Confronted" onchange="enableButton('.q11Data')" /> <label for="q11Confronted">Confronted the harassers and told them to leave Rachel alone</label>
+                                        <input type="radio" name="Q11" value="Told" id="q11Told" onchange="enableButton('.q11Data')" /> <label for="q11Told">Told the lab director</label>
+                                        <input type="radio" name="Q11" value="Documented" id="q11Documented" onchange="enableButton('.q11Data')" /> <label for="q11Documented">Documented the comments</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q11Data','q11DataAnswer','v11')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q11DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is.</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Maria helped Rachel by documenting the comments and giving the notes to Rachel.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q11DataAnswer','q11Data','v12','video-div-12')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-12" style="display:flex;">
+                                <video controls="controls" playsinline id="v12" class="v12 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment12.mp4" class="Segment12" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v12','.video-div-12',null,null,'.q12Data','.q12DataSp')" class="btn btn-danger btnTraningQuestionAnswer v12button nextButtonText intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q12Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>What did Ana’s co-worker do?</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio" style="display:flex;flex-direction:column">
+                                        <input type="radio" name="Q12" value="Confronted" id="q12Confronted" onchange="enableButton('.q12Data')" /> <label for="q12Confronted">Confronted the boss</label>
+                                        <input type="radio" name="Q12" value="Told" id="q12Told" onchange="enableButton('.q12Data')" /> <label for="q12Told">Told Ana to quit</label>
+                                        <input type="radio" name="Q12" value="Offered" id="q12Offered" onchange="enableButton('.q12Data')" /> <label for="q12Offered">Offered to help Ana</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q12Data','q12DataAnswer','v12')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q12DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is...</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Ana’s co-worker supported Ana and told her about her options.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q12DataAnswer','q12Data','v13','video-div-13')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-13" style="display:flex;">
+                                <video controls="controls" playsinline id="v13" class="v13 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment13.mp4" class="Segment13" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v13','.video-div-13',null,null,'.q13Data','.q13DataSp')" class="btn btn-danger btnTraningQuestionAnswer v13button nextButtonText intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q13Data questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p>Question</p>
+                                    <h1>What did Steven do?</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <div class="customRadio" style="display:flex;flex-direction:column">
+                                        <input type="radio" name="Q13" value="Called" id="q13Called" onchange="enableButton('.q13Data')" /> <label for="q13Called">Called one guy to a different area</label>
+                                        <input type="radio" name="Q13" value="Talked" id="q13Talked" onchange="enableButton('.q13Data')" /> <label for="q13Talked">Talked to Mike about the situation</label>
+                                        <input type="radio" name="Q13" value="Told" id="q13Told" onchange="enableButton('.q13Data')" /> <label for="q13Told">Told them to stop</label>
+                                    </div>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestion('q13Data','q13DataAnswer','v13')" class="btn btn-danger btnTraningQuestionAnswer submitButtonText"></button>
+                                </div>
+                            </div>
+                            <div class="q13DataAnswer questions col-md-12 col12 hidden">
+                                <div class="div-default-content-setting">
+                                    <p class="answer">Answer</p>
+                                    <h1>The correct answer is...</h1>
+                                </div>
+                                <div class="div-default-content-setting">
+                                    <h3>Steven interrupted the harassment by calling one of the harassers to a different area.</h3>
+                                </div>
+                                <div class="nextButton">
+                                    <button onclick="hideQuestionAnswer('q13DataAnswer','q13Data','v14','video-div-14')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText"></button>
+                                </div>
+                            </div>
+
+                            <div class="video-div hidden col-md-12 col12 video-div-14" style="display:flex;">
+                                <video controls="controls" playsinline id="v14" class="v14 col-md-12 nopadding col12  video-tag" controlsList="nodownload">
+                                    <source src="~/Traning/Segment14.mp4" class="Segment14" type="video/mp4" />
+                                </video>
+                                <div class="nextButton">
+                                    <button onclick="endofvideoSetting('.v14','.video-div-14',null,null,'.q14Data','.q14DataSp')" class="btn btn-danger btnTraningQuestionAnswer nextButtonText v14button intialVideoButton"></button>
+                                </div>
+                            </div>
+                            <div class="q14Data111 hidden questions col-md-12 col12">
+                                <div class="div-default-content-setting" style="margin: auto;width: 70%;">
+                                    <!--<p>Question</p>-->
+                                    <h1>Congratulations! You have successfully completed this training.</h1>
+                                    <span style="font-size: 25px;margin-top: 50px;">To get your certificate, please click on the button below. If you have any questions regarding this training, contact Mirian Zuleta, directly at the HR Department, at any time via email at MZuleta@wmarketnyc.com. </span>
+                                </div>
+                                <br />
+                                <div class="nextButton">
+                                    <button onclick="showCertificate('q14Data','btnCompleteTraning')" style="width:300px !important;height:90px !important;margin:auto !important" class="btn btn-danger btnTraningQuestionAnswer downloadCertificateText text-center"></button>
+                                </div>
+                            </div>
+                            <div class="q14Data questions col-md-12 col12 hidden" style="display: flex;">
+                                <div class="div-default-content-setting" style="margin: auto;width: 90%;display: flex;justify-content: center;align-items: center;">
+                                    <!--<p>Question</p>-->
+                                    <h1 style="text-align:center;">Congratulations! You have successfully completed this training.</h1>
+                                    <span style="text-align:center; font-size: 25px;margin-top: 50px;">To get your certificate, please click on the button below. If you have any questions regarding this training, contact Mirian Zuleta, directly at the HR Department, at any time via email at <a style="font-size: 25px !important;" href="mailto:MZuleta@wmarketnyc.com">MZuleta@wmarketnyc.com</a>. </span>
+                                </div>
+                                <button class="csscompleteTraning btn btn-danger btnTraningQuestionAnswer downloadCertificateText" style="width:300px !important;height:70px !important;margin:auto !important;font-size:20px;"></button>
+                                <button class="cssResetTest btn btn-danger btnTraningQuestionAnswer TakeTestAgainText" style="width:300px !important;height:70px !important;margin:auto !important;font-size:20px;"></button>
+                            </div>
+                            <div id="editor"></div>
+                            <div class="certificate hidden" id="certificate">
+                                <div style="margin:auto;font-family: Arial, Helvetica, sans-serif;width:1140px;height:802px;">
+                                    <div style="width:1140px;height:802px;background:lightgrey;margin:auto auto;text-align: center;padding:50px;box-sizing: border-box;padding-top:100px;background: url(https://i.ibb.co/sm7F2tF/certificate-bg.jpg)  center top;background-size: cover;">
+                                        <h2 style="font-weight:300;font-size: 34px;margin:0px;">Certificate of Course Completion</h2>
+                                        <div style="margin-top:40px;">
+                                            <span style="font-size:20px;margin-top:50px !important;">This confirms that</span>
+                                            <h1 style="font-weight: 300;font-size: 55px;margin:0px;"><span class="certificateFirstName"></span>&nbsp;<span class="certificateLastName"></span></h1>
+                                            <span style="font-size:20px;margin-top:50px !important;">has successfully completed the training course on</span>
+                                        </div>
+                                        <div style="margin-top:70px;">
+
+                                            <h2 style="font-weight: 600;font-size: 32px;margin:0px;">Confronting Sexual Harassment <br> Tools and Strategies to create a harassment-free workplace</h2>
+
+                                        </div>
+                                        <div style="margin-top:40px;display:block;margin-top:50px !important;">
+                                            <span style="font-size:20px;font-weight:600;">Issued on</span><br /><br /><br /><span style="font-size: 26px;margin:0px;font-weight: 600"><span id="curentDate"></span>&nbsp;<span id="curentTime"></span></span>
+                                            <div><span>___________________________________</span></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <button type="submit" style="width:300px !important;height:90px !important;margin:auto !important" class="csscompleteTraning button btnCompleteTraning hidden">Complete Training</button> @*onclick="completeTraning()"*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+</body>
+</html>
+<script src="~/Content/HRJs/HREmployeeEnglishTraining.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>

@@ -1,0 +1,350 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+
+@{
+
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+
+<div class="employeeTimeCardsTitle">
+    <h1 class="header">Employee Timecards</h1>
+</div>
+<div style="display:flex;">
+
+    <div class="payPeriod">
+        <h3>Pay Period:</h3>
+        @Html.DropDownList("DrpWeekRange", null, htmlAttributes: new { @onchange = "GetValueondrpchnage();" })
+        <div class="payPeriodArrowContainer">
+            <a href="#" onclick="Previous()" class="payPeriodArrow">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a href="#" onclick="Next()" class="payPeriodArrow disabled" id="Next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="payPeriod">
+        <h3 class="Mg" id="lblUserName"></h3>
+        <h3 class="Mg" id="lblShowDate"></h3>
+    </div>
+
+</div>
+
+<div id="gridvaluechange"></div>
+
+
+@Html.EJS().Dialog("ajax_dialog").IsModal(true).Visible(false).Created("created").Header("<div class='emailSection'></div>").ShowCloseIcon(false).CloseOnEscape(true).ContentTemplate(@<div id="dialogTemp">
+</div>).Buttons(ViewBag.DefaultButtons).Width("1000px").Target("body").Render()
+
+<script src="~/Scripts/en-US.js"></script>
+<script src="~/Scripts/core.js"></script>
+<script src="~/Scripts/parser.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var date = $("#DrpWeekRange").val();
+        if (date != null) {
+            var value = date.split('-');
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("UserGridValue", "ManageIPAddress")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: value, method: 3 }),
+            });
+            ajax.send().then((data) => {
+                $("#gridvaluechange").html(data);
+            });
+        }
+    });
+
+
+    function Previous() {
+        
+        var date = $("#DrpWeekRange").val();
+        if (date != null) {
+            var value = date.split('-');
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("UserGridValue", "ManageIPAddress")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: value, method: 1 }),
+            });
+            ajax.send().then((data) => {
+                
+                $("#gridvaluechange").html(data);
+            });
+        }
+        document.getElementById("lblUserName").innerHTML = '';
+        document.getElementById("lblShowDate").innerHTML = '';
+    }
+    function Next() {
+        
+        var date = $("#DrpWeekRange").val();
+        if (date != null) {
+            var value = date.split('-');
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("UserGridValue", "ManageIPAddress")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: value, method: 2 }),
+            });
+            ajax.send().then((data) => {
+                
+                $("#gridvaluechange").html(data);
+            });
+        }
+        document.getElementById("lblUserName").innerHTML = '';
+        document.getElementById("lblShowDate").innerHTML = '';
+    }
+
+    function disableDate(args) {
+        if (args.date.getDay() !== @ViewBag.Day) {
+            args.isDisabled = true;
+        }
+    }
+
+    function OnChange(args) {
+        
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("UserGridValue", "ManageIPAddress")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ value: args.value }),
+        });
+        ajax.send().then((data) => {
+            
+            $("#gridvaluechange").html(data);
+        });
+    }
+
+    function GetValueondrpchnage() {
+
+        var date = $("#DrpWeekRange").val();
+        var value = date.split('-');
+        var ajax = new ej.base.Ajax({
+            url: "@Url.Action("UserGridValue", "ManageIPAddress")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+             data: JSON.stringify({ value: value, method: 4}),
+        });
+        ajax.send().then((data) => {
+            
+            $("#gridvaluechange").html("");
+            $("#gridvaluechange").html(data);
+        });
+    }
+</script>
+
+<script>
+    function actionComplete() {
+        
+        var gridObj = document.getElementById("InlineEditingValue").ej2_instances[0];
+        
+        if (selectrow != null) {
+
+        
+            var selectrow = localStorage.getItem('RowIndex');
+            var getRows = gridObj.getRows();
+        for (var i = 0; i < getRows.length; i++) {
+            
+                const myArray = selectrow.split("^");
+                //if (i == selectrow) {
+                if (getRows[i].cells[1] != null) {
+                    if (getRows[i].cells[1].innerText.toUpperCase() == myArray[1].toUpperCase()) {
+                        getRows[myArray[0]].querySelector('[id="RowIcon"]').classList.add('e-primary');
+                    }
+                    else {
+                        getRows[i].querySelector('[id="RowIcon"]').classList.add('e-hide');
+                    }
+                }
+        }
+
+        //Set active row again after load
+        for (var i = 0; i < getRows.length; i++) {
+            const myArray1 = selectrow.split("^");
+            if (getRows[i].cells[1] != null) {
+                if (getRows[i].cells[1].innerText.toUpperCase() == myArray1[1].toUpperCase()) {
+                    getRows[i].cells[1].classList.add('e-active');
+                    getRows[i].cells[2].classList.add('e-active');
+                    getRows[i].cells[3].classList.add('e-active');
+                    getRows[i].cells[4].classList.add('e-active');
+                    getRows[i].cells[5].classList.add('e-active');
+                    getRows[i].cells[6].classList.add('e-active');
+                }
+                else {
+                    getRows[i].cells[1].classList.remove('e-active');
+                    getRows[i].cells[2].classList.remove('e-active');
+                    getRows[i].cells[3].classList.remove('e-active');
+                    getRows[i].cells[4].classList.remove('e-active');
+                    getRows[i].cells[5].classList.remove('e-active');
+                    getRows[i].cells[6].classList.remove('e-active');
+                }
+            }
+        }
+
+       }
+    }
+    $(document).ready(function () {
+        if ('@Session["weekrange"]' != null) {
+            var range = '@Session["weekrange"].ToString()';
+            //$("#DrpWeekRange").val(range);
+        }
+        if ('@Session["arrow"]' == '1') {
+            $('#Next').addClass('disabled')
+            $('#Next').removeClass('stylecolor')
+        } else {
+            $('#Next').removeClass('disabled')
+            $('#Next').addClass('stylecolor')
+        }
+    });
+    function toolbarClickLine(args) {
+
+        var gridObj = document.getElementById("InlineEditingValue").ej2_instances[0];
+        if (args.item.id === 'InlineEditingValue_pdfexport') {
+
+            gridObj.pdfExport();
+        }
+        else if (args.item.id === 'InlineEditingValue_excelexport') {
+            gridObj.excelExport();
+        }
+
+    }
+
+    var scrollVal = 0;
+
+
+    function created() {
+
+        dialogObj = this;
+        dialogObj.hide();
+    }
+
+    function rowSelected(args) {
+        
+            var grid = document.getElementById("InlineEditingValue").ej2_instances[0];
+            var column = grid.columns[5];
+            localStorage.setItem('RowIndex', args.rowIndex + '^' + args.data.FirstName);
+            grid.showHider.show(column.headerText, 'headerText');
+
+
+           if (args.target.ariaColIndex == '7' || args.target.nodeName=='IMG') {
+                
+                scrollVal = $(window).scrollTop();
+                dialogObj.show()
+                var spinnerTarget = document.getElementById('ajax_dialog')
+               ej.popups.createSpinner({
+                    target: spinnerTarget
+                });
+                ej.popups.showSpinner(spinnerTarget);
+               
+               $(".emailSection").empty();
+               var html = "<h5><b style='font-size:25px;'>Details</b></h5><br/>"+
+                   "To Email :<input type='tel' id='txtto' name='txtto'><br/><br/>" +
+                   "<div><table style='width:100%;'><tr style='border: 1px solid grey;padding: 15px;'><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>Employee Name</th><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>Total Hours Worked</th><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>Regular</th><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>Overtime</th><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>Office Work</th><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>Remote Work</th></tr>" +
+                   "<tr style='border: 1px solid grey;padding: 15px;'><th style='text-align: center;padding-top:10px;padding-bottom:10px;'>" + args.data.FirstName+"</th>"+
+                   "<th style='text-align: center;padding-top:10px;padding-bottom:10px;'>" + args.data.TotalHoursWorked + "</th>" +
+                   "<th style='text-align: center;padding-top:10px;padding-bottom:10px;'>" + args.data.Regular + "</th>" +
+                   "<th style='text-align: center;padding-top:10px;padding-bottom:10px;'>" + args.data.OverTime + "</th>" +
+                   "<th style='text-align: center;padding-top:10px;padding-bottom:10px;'>" + (args.data.OfficeHours == null ? '' : args.data.OfficeHours) + "</th>" +
+                   "<th style='text-align: center;padding-top:10px;padding-bottom:10px;'>" + (args.data.RemoteHours == null ? '' : args.data.RemoteHours) + "</th></tr>" +
+                   "</table></div>";
+
+                $(".emailSection").html(html);
+                ej.popups.hideSpinner(spinnerTarget);
+            }
+            else {
+                var ajax = new ej.base.Ajax({
+                    url: "@Url.Action("GetUserTimeTrack", "ManageIPAddress")", //render the partial view
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ value: args.data }),
+                });
+                ajax.send().then((data) => {
+                    
+                    $("#GridValue").html(data);
+                });
+            }
+        }
+
+    function dlgemailButtonClick(args) {
+        
+        if (args.target.innerText == "Send Mail") {
+            var grid1 = document.getElementById("InlineEditingValue");
+            var selectedrowindex1;
+            var selectedrecords1;
+            var datalist = 0;
+              if (grid1 != null) {
+                  
+                datalist = 1;
+                grid1 = grid1.ej2_instances[0];
+                selectedrowindex1 = grid1.getSelectedRowIndexes();
+                selectedrecords1 = grid1.getSelectedRecords();
+            }
+            
+            var tomail = document.getElementById("txtto");
+
+            var spinnerTarget = document.getElementById('ajax_dialog')
+            ej.popups.createSpinner({
+                target: spinnerTarget
+            });
+            ej.popups.showSpinner(spinnerTarget);
+            var toastObj = document.getElementById('toast_type').ej2_instances[0];
+              
+              if (datalist != 0) {
+                  
+                if (selectedrowindex1.length != 0) {
+                    
+                    var ajax = new ej.base.Ajax({
+                        url: "@Url.Action("SendEmail", "ManageIPAddress")", //render the partial view
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ value: selectedrecords1, toemail: tomail.value })
+                    });
+                    ajax.send().then(function (data) {
+                        if (data == "\"Success\"") {
+                            dialogObj.hide();
+                            toastObj.content = '@ViewBag.EmailSend';
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                            ej.popups.hideSpinner(spinnerTarget);
+                        }
+                        if (data == "\"Error\"") {
+                            dialogObj.hide();
+                            toastObj.content = "Something went wrong!";
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                            ej.popups.hideSpinner(spinnerTarget);
+                        }
+                        $(window).scrollTop(scrollVal);
+                        scrollVal = 0;
+                    });
+                }
+            }
+            else {
+                  dialogObj.hide();
+                  ej.popups.hideSpinner(spinnerTarget);
+            }
+
+
+        }
+       }
+
+    function CancelBouttonClick(args) {
+
+           if (args.action != "enter") {
+               dialogObj.hide();
+           }
+       }
+
+</script>
+
+@Html.EJS().ScriptManager()
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

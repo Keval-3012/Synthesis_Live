@@ -1,0 +1,31 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model SynthesisViewModal.HRViewModel.ValidPayRate
+
+@Html.HiddenFor(s => s.EmployeePayRateId)
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        @Html.EJS().TextBox("password").Type("password").Placeholder("Enter the password").Created("onCreate").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+        @*@Html.EJS().TextBoxFor(s => s.Password).Type("password").Placeholder("Enter the password").Created("onCreate").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()*@
+    </div>
+    <div class="form-group col-md-12">
+        @Html.EJS().TextBox("dPayRate").Placeholder("Pay Rate").Enabled(false).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+    </div>
+</div>
+<script>
+
+    function onCreate() {
+        this.addIcon("append", "e-icons e-eye icon");
+        document.getElementsByClassName("e-eye")[0].addEventListener("click", function (e) {
+            let textObj = document.getElementById("password").ej2_instances[0];
+            if (textObj.element.type === "password") {
+                textObj.element.type = "text";
+            } else {
+                textObj.element.type = "password";
+            }
+        });
+    } 
+</script>
+
+@Html.EJS().ScriptManager()

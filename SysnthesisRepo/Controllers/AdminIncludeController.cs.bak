@@ -1,0 +1,486 @@
+﻿using EntityModels.Models;
+using NLog;
+using Repository;
+using Repository.IRepository;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Security;
+using Utility;
+
+namespace SysnthesisRepo.Controllers
+{
+    public class AdminIncludeController : Controller
+    {
+        private DBContext db = new DBContext();
+        private readonly ICommonRepository _CommonRepository;
+        private readonly IMastersBindRepository _mastersBindRepository;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public AdminIncludeController()
+        {
+            this._CommonRepository = new CommonRepository(new DBContext());
+            this._mastersBindRepository = new MastersBindRepository(new DBContext());
+        }
+
+        /// <summary>
+        /// This is GetIPAddress
+        /// </summary>
+        /// <returns></returns>
+        public string GetIPAddress()
+        {
+            string IPAddress = "";
+            try
+            {
+                if (ConfigurationManager.AppSettings["IPAddress"].ToString() == "")
+                {
+                    IPAddress = Request.UserHostAddress;
+                }
+                else
+                {
+                    IPAddress = "67.207.86.163";
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - GetIpAddress - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return IPAddress;
+        }
+        // GET: Header
+        /// <summary>
+        /// This method return Header 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Header()
+        {
+
+            //
+            Header obj = new Header();
+            try
+            {
+                obj.FirstName = db.UserMasters.Where(s => s.UserName == User.Identity.Name).Count() > 0 ? db.UserMasters.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().FirstName : "";
+                obj.UserRole = db.UserMasters.Where(s => s.UserName == User.Identity.Name).Count() > 0 ? db.UserMasters.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().UserTypeMasters.UserType : "";
+                if (Roles.IsUserInRole("Administrator"))
+                {
+                    var StoreData = db.StoreMasters.Where(s => s.IsActive == true).Select(s => new { s.StoreId, s.NickName }).OrderBy(o => o.NickName).ToList();
+                    if (StoreData.Count() > 1)
+                    {
+                        ViewBag.HeaderStoreId = new SelectList(StoreData, "StoreId", "NickName", Session["StoreId"]);
+                    }
+                    else
+                    {
+                        var SID = StoreData.Count() > 0 ? StoreData.FirstOrDefault().StoreId : 0;
+                        Session["StoreId"] = SID;
+                        ViewBag.HeaderStoreId = new SelectList(StoreData, "StoreId", "NickName", SID);
+                    }
+                    ViewBag.StoreCount = StoreData.Count();
+                }
+                else
+                {
+                    var StoreList = _CommonRepository.GetHeaderStoreList(1);
+                    if (StoreList.Count() > 1)
+                    {
+                        if (Convert.ToInt32(Session["StoreId"]) > 0)
+                        {
+                            ViewBag.HeaderStoreId = new SelectList(StoreList, "StoreId", "NickName", Session["StoreId"]);
+                        }
+                        else
+                        {
+                            ViewBag.HeaderStoreId = new SelectList(StoreList, "StoreId", "NickName");
+                        }
+                    }
+                    else
+                    {
+                        //var SID = StoreList.Count() > 0 ? StoreList.FirstOrDefault().StoreId : 0;
+                        //Session["StoreId"] = SID;
+                        ViewBag.HeaderStoreId = new SelectList(StoreList, "StoreId", "NickName");
+                    }
+                    ViewBag.StoreCount = StoreList.Count();
+
+                }
+                string myIP = GetIPAddress();
+                IpAdressInfo isIpContain = null;
+                isIpContain = db.Database.SqlQuery<IpAdressInfo>("SP_IpAddressInfo @Mode = {0},@IpAddress = {1}", "SelectCheckIP", myIP).FirstOrDefault();
+                var UserName = System.Web.HttpContext.Current.User.Identity.Name;
+                var Userid = _CommonRepository.getUserId(UserName);
+                UserMaster user = db.UserMasters.Where(s => s.UserId == Userid).FirstOrDefault();
+                if (user.TrackHours == true)
+                //Db class for get user Id.
+                {
+                    Session["CheckInOutTrack"] = 1;
+                }
+                else
+                {
+                    Session["CheckInOutTrack"] = 0;
+                }
+                if (isIpContain != null)
+                {
+
+
+                    UserIpInfo isuserAllow = db.UserIpInfos.Where(s => s.UserID == Userid && s.IpAdressInfoID == isIpContain.IpAdressInfoID).FirstOrDefault();
+
+                    if (isuserAllow != null)
+                    {
+                        Session["CheckInOut"] = 1;
+                    }
+                    else
+                    {
+                        Session["CheckInOut"] = 0;
+                    }
+                    UserTimeTrackInfo LastStatus = db.UserTimeTrackInfos.Where(a => a.UserId == Userid).ToArray().OrderByDescending(a => a.StartTime).FirstOrDefault();
+                    if (LastStatus == null)
+                    {
+                        Session["CheckInOutStatus"] = (long)CheckInOutType.CheckIn;
+                        ViewBag.CheckInOutStatusForClass = (long)CheckInOutType.CheckIn;
+
+                    }
+                    else if (LastStatus.InOutType == CheckInOutType.CheckIn)
+                    {
+                        Session["CheckInOutStatus"] = (long)CheckInOutType.CheckOut;
+                        ViewBag.CheckInOutStatusForClass = (long)CheckInOutType.CheckIn;
+                    }
+                    else if (LastStatus.InOutType == CheckInOutType.CheckOut)
+                    {
+                        Session["CheckInOutStatus"] = (long)CheckInOutType.CheckIn;
+                        ViewBag.CheckInOutStatusForClass = (long)CheckInOutType.CheckOut;
+                    }
+                    Session["IpAdressInfoID"] = isIpContain.IpAdressInfoID;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - Header - "  + DateTime.Now + " - "  + ex.Message.ToString());
+            }
+
+            return PartialView(obj);
+        }
+
+
+        /// <summary>
+        /// This method return with curerent header 
+        /// </summary>
+        /// <param name="header"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Header(Header header)
+        {
+            Session["AmtMaximum"] = "";
+            Session["AmtMinimum"] = "";
+            Session["deptname"] = "";
+            Session["startdate"] = "";
+            Session["enddate"] = "";
+            Session["payment"] = "";
+            Session["searchdashbord"] = "";
+            Session["DrpLstStore"] = "";
+            Session["DrpLstVendor"] = "";
+            Session["IPsearchdashbord"] = "";
+            Session["IPstartdate"] = "";
+            Session["IPenddate"] = "";
+            Session["ECstartdate"] = "";
+            Session["ECenddate"] = "";
+            Session["ECLstStore"] = "";
+            Session["ECsearchdashbord"] = "";
+            try
+            {
+                if (header.Flg == 1)
+                {
+                    Session["StoreId"] = header.HeaderStoreId;
+                    //var UserName = User.Identity.Name;
+                    var StoreData = db.StoreMasters.Where(s => s.IsActive == true).Select(s => new { s.StoreId, s.NickName }).OrderBy(o => o.NickName).ToList();
+                    ViewBag.HeaderStoreId = new SelectList(StoreData, "StoreId", "NickName");
+                    ViewBag.StoreCount = StoreData.Count();
+                    //Session["FromInvoicePage"] = "";
+                    if (Session["CurrentPageName"] != null)
+                    {
+                        string[] strCurrent = Session["CurrentPageName"].ToString().Split('/');
+                        if (strCurrent.Count() > 1)
+                        {
+                            if (strCurrent[0] == "invoices" && strCurrent[1] == "edit")
+                            {
+                                return RedirectToAction("index", "Invoices");
+                            }
+                            else if (strCurrent[0] == "journalentries" && strCurrent[1] == "detail")
+                            {
+                                return RedirectToAction("index", "JournalEntries");
+                            }
+                            else if (strCurrent[0] == "report" && strCurrent[1] == "payrollexpensedetail")
+                            {
+                                return RedirectToAction("PayrollExpense", "Report");
+                            }
+                            else if (strCurrent.Length > 2)
+                            {
+                                return RedirectToAction(strCurrent[1], strCurrent[0], new { id = strCurrent[2] });
+                            }
+                            else
+                            {
+                                return RedirectToAction(strCurrent[1], strCurrent[0]);
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToAction("index", "Invoices");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("index", "Invoices");
+                    }
+                }
+                else
+                {
+                    if (header.HeaderStoreId != 0)
+                    {
+                        Session["StoreId"] = header.HeaderStoreId;
+
+                        var StoreData = db.StoreMasters.Where(s => s.IsActive == true).Select(s => new { s.StoreId, s.NickName }).OrderBy(o => o.NickName).ToList();
+                        ViewBag.HeaderStoreId = new SelectList(StoreData, "StoreId", "NickName");
+                        ViewBag.StoreCount = StoreData.Count();
+                        if (Session["CurrentPageName"] != null)
+                        {
+                            string[] strCurrent = Session["CurrentPageName"].ToString().Split('/');
+                            if (strCurrent.Count() > 1)
+                            {
+                                if (strCurrent[0] == "invoices" && strCurrent[1] == "edit")
+                                {
+                                    return RedirectToAction("index", "Invoices");
+                                }
+                                else if (strCurrent[0] == "journalentries" && strCurrent[1] == "detail")
+                                {
+                                    return RedirectToAction("index", "JournalEntries");
+                                }
+                                else if (strCurrent[0] == "report" && strCurrent[1] == "payrollexpensedetail")
+                                {
+                                    return RedirectToAction("PayrollExpense", "Report");
+                                }
+                                else if(strCurrent.Length >2)
+                                {
+                                    return RedirectToAction(strCurrent[1], strCurrent[0], new { id = strCurrent[2] });
+                                }
+                                else
+                                {
+                                    return RedirectToAction(strCurrent[1], strCurrent[0]);
+                                }
+                            }
+                            else
+                            {
+                                return RedirectToAction("index", "Invoices");
+                            }
+                        }
+                        else
+                        {
+                            return RedirectToAction("index", "Invoices");
+                        }
+                    }
+                    else
+                    {
+                        Session["StoreId"] = header.HeaderStoreId;
+
+                        header.FirstName = db.UserMasters.Where(s => s.UserName == User.Identity.Name).Count() > 0 ? db.UserMasters.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().FirstName : "";
+                        var StoreData = db.StoreMasters.Where(s => s.IsActive == true).Select(s => new { s.StoreId, s.NickName }).OrderBy(o => o.NickName).ToList();
+                        ViewBag.HeaderStoreId = new SelectList(StoreData, "StoreId", "NickName");
+                        ViewBag.StoreCount = StoreData.Count();
+                        Session["Form"] = "";
+                        return View(header);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - Header - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return View(header);
+        }
+
+        /// <summary>
+        /// This is get store Wise list using storeid.
+        /// </summary>
+        /// <param name="StoreId"></param>
+        /// <returns></returns>
+        public ActionResult GetStoreWiseList(int StoreId)
+        {
+            try
+            {
+                Session["StoreId"] = StoreId;
+                Session["Form"] = "YES";
+                ViewBag.HeaderStoreId = new SelectList(db.StoreMasters.Where(s => s.IsActive == true).Select(s => new { s.StoreId, s.NickName }).OrderBy(o => o.NickName).ToList(), "StoreId", "NickName");
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - GetStoreWiseList - "  + DateTime.Now + " - " + ex.Message.ToString());
+            }
+
+            return RedirectToAction("index", "Invoices");
+        }
+
+        /// <summary>
+        /// This Method is Manage store. 
+        /// </summary>
+        /// <param name="Store"></param>
+        /// <returns></returns>
+        public ActionResult ManageStore(int Store)
+        {
+            Session["StoreId"] = Store;
+            //WebRoleProvider obj = new WebRoleProvider();
+            //obj.GetRolesForUser(User.Identity.Name);
+            return RedirectToAction("SideMenu");
+        }
+
+        // GET: Footer
+        /// <summary>
+        /// This method is Footer.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Footer()
+        {
+            return View();
+        }
+        /// <summary>
+        /// This is Side Menu.
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        // GET: SideMenu
+        public ActionResult SideMenu()
+        {
+            return View();
+        }
+        // GET: SideMenu
+        /// <summary>
+        /// This method is Error for AdminInclude.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// This method return the User Wise sticky Notes.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetUserWiseStickyNote()
+        {
+            int UserId = UserModule.getUserId();
+            var StickNote = (from dr in db.userWiseStickyNotes where dr.UserId == UserId select dr.Notes).FirstOrDefault();
+            return Json(new { notes = StickNote == null ? "" : StickNote, data = false }, JsonRequestBehavior.AllowGet);
+        }
+        //public string GetIPAddress()
+        //{
+        //    string IPAddress = Request.UserHostAddress;
+        //    return IPAddress;
+        //}
+        /// <summary>
+        /// This methos use for set user Stickynotes.
+        /// </summary>
+        /// <param name="notes"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SetUserWiseStickyNote(string notes)
+        {
+            try
+            {
+                int UserId = UserModule.getUserId();
+                UserWiseStickyNote getdata = (from dr in db.userWiseStickyNotes where dr.UserId == UserId select dr).FirstOrDefault();
+                if (getdata != null)
+                {
+                    getdata.Notes = notes;
+                    db.Entry(getdata).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new { notes = getdata.Notes, msg = "Note updated successfully.", msgstatus = 1, excepetion = "" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    getdata = new UserWiseStickyNote();
+                    getdata.Notes = notes;
+                    getdata.UserId = UserId;
+                    getdata.CreatedOn = DateTime.Now;
+                    db.userWiseStickyNotes.Add(getdata);
+                    db.SaveChanges();
+                    return Json(new { notes = getdata.Notes, msg = "Note added successfully.", msgstatus = 1, excepetion = "" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - SetUserWiseStickyNote - "  + DateTime.Now + " - "  + ex.Message.ToString());
+                return Json(new { notes = "", msg = "An error while updating entry.", msgstatus = 0, excepetion = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        /// <summary>
+        /// This method is get All the data.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetAllData()
+        {
+            IEnumerable<object> Result = null;
+            try
+            {
+                int userid = UserModule.getUserId();
+
+                string storeid = "";
+                if (!string.IsNullOrEmpty(Convert.ToString(Session["storeid"])))
+                {
+                    storeid = Convert.ToString((Session["storeid"]));
+                }
+                else
+                {
+                    RedirectToAction("index", "login");
+                }
+
+                var CurrentUserTypeLevel = db.UserMasters.Where(s => s.UserId == userid).Select(s => s.UserTypeMasters.LevelsApproverId).FirstOrDefault();
+                var UserTypeList = db.UserTypeModuleApprovers.Where(s => s.LevelsApproverId == CurrentUserTypeLevel).Select(s => s.UserTypeId).ToList();
+                var UserList = db.UserMasters.Where(s => UserTypeList.Contains(s.UserTypeId)).Select(s => new { s.UserId, s.UserName }).ToList();
+                var ContainUserList = UserList.Select(s => s.UserId).ToList();
+                var store = db.Database.SqlQuery<int>("SP_GetStore_ForDashboard @Mode={0},@UserTypeId={1}", "GetStore_ForNotification", UserModule.getUserTypeId());
+
+                Result = db.Invoices.Where(s => s.StatusValue == InvoiceStatusEnm.Pending && store.Contains(s.StoreId) && ContainUserList.Contains(s.CreatedBy.Value)).Select(s => new { InvoiceId = s.InvoiceId, StoreName = s.StoreMasters.Name, StoreId = s.StoreId, s.CreatedBy, s.NotificationColor, s.InvoiceNumber, s.InvoiceDate }).ToList().Select(k => new Invoice_Notification
+                {
+                    StoreName = k.StoreName,
+                    StoreId = k.StoreId,
+                    InvoiceId = k.InvoiceId,
+                    NotificationColor = k.NotificationColor,
+                    InvoiceNumber = k.InvoiceNumber,
+                    InvoiceDate = k.InvoiceDate,
+                    UserName = UserList.Where(n => n.UserId == k.CreatedBy).FirstOrDefault().UserName
+                }).ToList();
+                ViewBag.Modalcount = Result.Count();
+                Result = Result.Take(5);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - GetAllData - "  + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return PartialView("~/Views/AdminInclude/_InvoiceNotification.cshtml", Result);
+        }
+        /// <summary>
+        /// This method get CheckIn data.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetCheckInData()
+        {
+            string Clockintime = null;
+            CheckInButtonValues TotalHoursWorked = new CheckInButtonValues();
+            try
+            {
+                int UserId = UserModule.getUserId();
+                Clockintime = db.Database.SqlQuery<string>("SP_Attandanace @Mode = {0}, @UserId = {1}, @startDate = {2}, @endDate = {3}", "GetCheckInButtonValue", UserId, null, null).FirstOrDefault();
+                TotalHoursWorked = db.Database.SqlQuery<CheckInButtonValues>("SP_Attandanace @Mode = {0}, @UserId = {1}, @startDate = {2}, @endDate = {3}", "GetCheckInTotalHours", UserId, null, null).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("AdminIncludeController - GetCheckInData - "  + DateTime.Now + " - "  + ex.Message.ToString());
+            }
+            return Json(new { Clockintime = Clockintime == null ? "" : Clockintime, TotalHoursWorked = TotalHoursWorked == null ? 0 : TotalHoursWorked.TotalHoursWorked }, JsonRequestBehavior.AllowGet);
+        }
+
+        //public ActionResult SomethingWentWrong()
+        //{
+        //    return View();
+        //}
+    }
+}

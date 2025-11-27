@@ -1,0 +1,29 @@
+2025-05-16 12:01:27.7376|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/16/2025 12:01:27 PM
+2025-05-16 12:01:27.7376|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/16/2025 12:01:27 PM
+2025-05-16 12:02:20.9940|ERROR|Repository.UserMastersRepository|UserMastersRepository - GetUserMasterDetails - 5/16/2025 12:02:20 PM - Object reference not set to an instance of an object.
+2025-05-16 12:02:26.6222|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 5/16/2025 12:02:26 PM - Object reference not set to an instance of an object.
+2025-05-16 12:02:42.8065|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 5/16/2025 12:02:42 PM - An error occurred while sending the request.
+2025-05-16 12:03:00.4910|ERROR|Repository.DashboardRepository|DashboardRepository - GetYearlySalesData - 5/16/2025 12:03:00 PM - Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+Divide by zero error encountered.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+The statement has been terminated.
+2025-05-16 12:07:14.4225|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - GetUser - 5/16/2025 12:07:14 PM - An error occurred while sending the request.
+2025-05-16 12:07:18.4849|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - GetModuleandAction - 5/16/2025 12:07:18 PM - An error occurred while sending the request.
+2025-05-16 12:07:18.5196|ERROR|SysnthesisRepo.Controllers.UserLogController|UserLogController - Grid - 5/16/2025 12:07:18 PM - Cannot find table 0.
+2025-05-16 12:07:24.4424|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - GetUserLogDetailsNew - 5/16/2025 12:07:24 PM - An error occurred while sending the request.
+2025-05-16 12:08:00.4464|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - GetUser - 5/16/2025 12:08:00 PM - An error occurred while sending the request.
+2025-05-16 12:08:07.4436|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - GetModuleandAction - 5/16/2025 12:08:07 PM - An error occurred while sending the request.
+2025-05-16 12:08:12.6385|ERROR|SysnthesisRepo.Controllers.UserLogController|UserLogController - Grid - 5/16/2025 12:08:12 PM - Cannot find table 0.
+2025-05-16 12:08:21.0024|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - GetUserLogDetailsNew - 5/16/2025 12:08:21 PM - An error occurred while sending the request.
+2025-05-16 14:31:33.7888|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/16/2025 2:31:33 PM
+2025-05-16 14:35:18.5164|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/16/2025 2:35:18 PM

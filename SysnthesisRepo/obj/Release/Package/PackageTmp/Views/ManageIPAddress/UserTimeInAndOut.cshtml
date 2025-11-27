@@ -1,0 +1,939 @@
+﻿@using Syncfusion.EJ2
+@{
+    var Loction = new Syncfusion.EJ2.DropDowns.DropDownList() { DataSource = ViewBag.Loction, Query = "new ej.data.Query()", Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "Location", Text = "Location" }, AllowFiltering = true };
+
+}
+<style>
+    .fabric .empimg {
+        background-color: #0078d6;
+    }
+
+    .material .empimg {
+        background-color: #e3165b;
+    }
+
+    .highcontrast .empimg {
+        background-color: #ffd939;
+    }
+
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .highcontrast .e-userimg.sf-icon-Male::before,
+    .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .bootstrap .empimg {
+        background-color: #0078d6;
+    }
+
+    .bootstrap4 .empimg,
+    .bootstrap5 .empimg {
+        background-color: #0078d6;
+    }
+
+    .tailwind .empimg {
+        background-color: #4f46e5;
+    }
+
+    .fluent .empimg {
+        background-color: #106EBE;
+    }
+
+    #Emptext {
+        top: -12px;
+        left: 41px;
+        position: relative;
+    }
+
+    .e-grid.e-rtl #Emptext {
+        top: -12px;
+        left: -41px;
+        position: relative;
+    }
+
+    .empimg {
+        height: 27px;
+        width: 29px;
+        border-radius: 14px;
+    }
+
+
+    .e-userimg.sf-icon-Male::before,
+    .e-userimg.sf-icon-FeMale::before {
+        font-size: 13px;
+    }
+
+    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+        margin: 0px 8px;
+        line-height: 26px;
+        color: white;
+        font-size: 13px;
+    }
+
+        .e-userimg.sf-icon-Male::before {
+            content: '\e700';
+        }
+
+        .e-userimg.sf-icon-FeMale::before {
+            content: '\e701';
+        }
+
+
+    td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+    }
+
+    .e-hightheme td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+        color: white;
+    }
+
+    .e-bigger .e-grid .statustxt {
+        position: relative;
+        top: -2px;
+    }
+
+    .rating .star {
+        font-size: 132%;
+        color: var(--light-gray-color);
+    }
+
+        .rating .star.checked {
+            color: #ffa600;
+        }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #00cc00;
+        position: relative;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #e60000;
+        position: relative;
+    }
+
+    .bootstrap5 td.e-rowcell .statustxt.e-inactivecolor,
+    .bootstrap5 td.e-rowcell .statustxt.e-activecolor {
+        top: 8px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        position: relative;
+        top: 1.5px;
+    }
+
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        top: -0.5px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext #Trusttext {
+        margin-left: -4px;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+    }
+
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+    }
+
+    .statustxt.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #e60000;
+    }
+
+    #Trusttext {
+        position: relative;
+        top: 1px;
+    }
+
+    .e-image {
+        height: 13px;
+        width: 14px;
+    }
+
+    .statustemp.e-inactivecolor {
+        width: 64px;
+    }
+
+    .statustemp.e-activecolor {
+        width: 57px;
+    }
+
+    .statustemp {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .highcontrast #msg {
+        color: #FFFFFF
+    }
+
+
+    #msg {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.95;
+        color: #333;
+        float: right;
+        margin-top: 3px;
+    }
+
+    @@media only screen and (max-width: 370px) {
+        #msg {
+            float: left;
+            margin-top: 3px;
+        }
+
+        #GridOverview {
+            margin-top: 36px;
+        }
+    }
+
+    #samplecontainer {
+        padding-top: 5px;
+    }
+
+    #myProgress {
+        position: relative;
+        height: 18px;
+        width: 10em;
+        text-align: left;
+        background-color: white;
+    }
+
+    .highcontrast .e-grid #myProgress {
+        background-color: black;
+    }
+
+    #myBar {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        background-color: #00b300;
+    }
+
+        #myBar.progressdisable {
+            background-color: #df2222;
+        }
+
+    #label {
+        position: relative;
+        left: 10px;
+        line-height: 18px;
+        font-size: 10px;
+        color: white;
+    }
+
+    div#InlineEditing_dialogEdit_wrapper {
+        width: 1100px !important;
+    }
+
+    .Mg {
+        margin: 0px;
+        color: black;
+    }
+
+    .disabled {
+        color: #ccc;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+
+    .OutHour {
+    }
+</style>
+
+@{
+
+    List<object> commands = new List<object>();
+    if (Roles.IsUserInRole("Administrator") || (Roles.IsUserInRole("CreateTimeCard")))
+    {
+        commands.Add(new { text = "Add", buttonOption = new { iconCss = "e-icons e-link-add", cssClass = "e-flat" } });
+    }
+    if (Roles.IsUserInRole("Administrator") || (Roles.IsUserInRole("UpdateTimeCard")))
+    {
+        commands.Add(new { text = "Edit", buttonOption = new { iconCss = "e-icons e-link-edit", cssClass = "e-flat" } });
+    }
+    if (Roles.IsUserInRole("Administrator") || (Roles.IsUserInRole("DeleteTimeCard")))
+    {
+        commands.Add(new { text = "Delete", buttonOption = new { iconCss = "e-icons e-link-delete", cssClass = "e-flat" } });
+    }
+    commands.Add(new { text = "Update", buttonOption = new { iconCss = "e-icons e-link-update", cssClass = "e-flat" } });
+    commands.Add(new { text = "Cancel", buttonOption = new { iconCss = "e-icons e-link-cancle", cssClass = "e-flat" } });
+    commands.Add(new { text = "Print", buttonOption = new { iconCss = "e-icons e-link-print", cssClass = "e-flat" } });
+    commands.Add(new { text = "PdfExport", buttonOption = new { iconCss = "e-icons e-link-pdfExport", cssClass = "e-flat" } });
+}
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+
+<div class="control-section">
+    @*<div class="row">
+            <div class="col-md-3">
+                <h3 class="Mg">@ViewBag.UserName</h3>
+            </div>
+            <div class="col-md-6">
+                <h3 class="Mg">@ViewBag.Showdate</h3>
+            </div>
+        </div>*@
+
+
+    @*<div class="row">
+            <div class="col-md-6">
+                <h3 class="Mg" style="font-weight: 800 !important;">@ViewBag.Date</h3>
+            </div>
+            <div class="col-md-6">
+                <h3 class="Mg" style="float: right; font-weight: 800 !important;">@ViewBag.Location</h3>
+            </div>
+        </div>*@
+
+    @Html.EJS().Grid("InlineEditing").EnablePersistence(true).AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").AllowPdfExport().Load("GridLoad").Columns(col =>
+{
+   col.Type("checkbox").Width("35").Add();
+   col.Field("UserId").HeaderText("User Id").Visible(false).Add();
+   col.Field("dt").HeaderText("Date").ValidationRules(new { required = "true" }).Edit(new { create = "createDate", read = "readDate", destroy = "destroyDate", write = "writeDate" }).Width("60").Add();
+   col.Field("InTime").HeaderText("In Time").Edit(new { create = "createInTime", read = "readInTime", destroy = "destroyInTime" }).Width("60").Add();
+   col.Field("OutTime").HeaderText("Out Time").Edit(new { create = "createOutTime", read = "readOutTime", destroy = "destroyOutTime" }).Width("60").Add();
+   col.Field("InLocation").HeaderText("Location-In").EditType("dropdownedit").Edit(new { @params = Loction }).Width("70").Add();
+   col.Field("OutLocation").HeaderText("Location-Out").EditType("dropdownedit").Edit(new { @params = Loction }).Width("70").Add();
+   col.Field("TotalHours").HeaderText("Total Hours").Width("80").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+   col.Field("InTimeId").HeaderText("InTime Id").IsPrimaryKey(true).Visible(false).Add();
+   col.Field("OutTimeId").HeaderText("OutTime Id").Visible(false).Add();
+}).ActionBegin("ActionBegin").EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Toolbar(commands).BeforePrint("beforePrint").HierarchyPrintMode(Syncfusion.EJ2.Grids.HierarchyGridPrintMode.All).ToolbarClick("toolbarClick").Aggregates(agg =>
+                {
+                    agg.Columns(new List<Syncfusion.EJ2.Grids.GridAggregateColumn>
+                        () { new Syncfusion.EJ2.Grids.GridAggregateColumn() { Field = "TotalHours", Format = "0.00", Type = "Sum", FooterTemplate = "Total Hours: ${Sum}" } }).Add();
+                }).Render()
+
+
+
+
+</div>
+
+<script type="text/x-jsrender" id="Template1">
+    <div id="status" class="statustemp e-activecolor">
+        <span class="statustxt e-activecolor">IN</span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="Template2">
+    <div id="status" class="statustemp e-inactivecolor">
+        <span class="statustxt e-inactivecolor">OUT</span>
+    </div>
+</script>
+
+<script type="text/x-handlebars" id="Templatew">
+    <div id="status" class="statustemp e-inactivecolor">
+        <input type="text" id="startdate" name="trip-start" class="date-picker">
+    </div>
+</script>
+
+
+
+
+<script>
+
+    jQuery.validator.methods["date"] = function (value, element) {
+
+        return true;
+    }
+
+    jQuery.validator.methods["Date"] = function (value, element) {
+
+        return true;
+    }
+</script>
+<script>
+    function dropdown(args) {
+        var ele = args.cell.querySelector('select');
+        var drop = new ej.dropdowns.DropDownList({ popupHeight: 150, popupWidth: 150 });
+        drop.appendTo(ele);
+    }
+</script>
+<script>
+
+    /*$(document).ready(function () {*/
+        document.getElementById("lblUserName").innerHTML = '@ViewBag.UserName';
+        document.getElementById("lblShowDate").innerHTML = '@ViewBag.Showdate';
+    /*});*/
+
+
+    $("#InlineEditing_add").change(function () {
+
+
+    })
+    function GridLoad() {
+
+        this.getColumnByField("InTime").validationRules = {
+            required: [customFn.bind(), "select InTime"]
+        }
+        this.getColumnByField("InLocation").validationRules = {
+            required: [customFn1.bind(), "select In Location"]
+        }
+        this.getColumnByField("OutTime").validationRules = {
+            required: [validateTimeFields.bind(), "Out Time should greater than Intime"]
+        }
+    }
+
+    function customFn1(args) {
+        if (args.value != "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function customFn(args) {
+        if (args.value != "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function validateTimeFields(args) {
+        const outTime = args.value;
+        if (!outTime) return false;
+
+        const inputElement = args.element;
+        const rowElement = inputElement.closest('tr');
+
+        if (!rowElement) return false;
+
+        // Find the input element for InTime in the same row
+        const inTimeInput = rowElement.querySelector("input[name='InTime']");
+        if (!inTimeInput || !inTimeInput.value) return false;
+
+        const inTime = inTimeInput.value;
+
+        const [inHour, inMinute] = inTime.split(':').map(Number);
+        const [outHour, outMinute] = outTime.split(':').map(Number);
+
+        const inMins = inHour * 60 + inMinute;
+        const outMins = outHour * 60 + outMinute;
+
+        return outMins >= inMins;
+    }
+
+    function toolbarClick(args) {
+        var name = $('.Mg').text();
+        var gridObj = document.getElementById("InlineEditing").ej2_instances[0];
+        if (args.item.id === 'InlineEditing_pdfexport') {
+            var exportProperties = {
+                fileName: name + "_TimeSheet.pdf",
+                header: {
+                    fromTop: 0,
+                    height: 130,
+                    contents: [
+                        {
+                            type: 'Text',
+                            value: name,
+                            position: { x: 0, y: 50 },
+                            style: { textBrushColor: '#000000', fontSize: 13 }
+                        },
+
+                    ]
+                }
+            }
+            gridObj.pdfExport(exportProperties);
+        }
+    }
+
+    function beforePrint(args) {
+        var name = $('.Mg').text();
+        var customElem = document.createElement('div');
+        customElem.innerHTML = "<h1>" + name +"</h1>";
+        customElem.appendChild(document.createElement('br'));
+        args.element.prepend(customElem);
+    }
+    var elem;
+    var dObj;
+
+    function create(args) {
+
+
+        // render TimePicker control to edit the column
+        if (args.rowData["InTime"] == null) {
+            dObj = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                placeholder: 'Select DateTime',
+                step: 1,
+                enabled: false,
+                change: function () {
+
+                    dObj1.enabled = true;
+                    var value = new Date(dObj.value);
+                    value.setMinutes(value.getMinutes() + dObj1.step);
+                    dObj1.min = value;
+                }
+            });
+
+        }
+        else {
+            dObj = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                value: new Date(Date.parse(args.rowData["dt"] + ' ' + args.rowData["InTime"])),
+                placeholder: 'Select DateTime',
+                step: 1,
+                change: function () {
+
+                    dObj1.enabled = true;
+                    var value = new Date(dObj.value);
+                    value.setMinutes(value.getMinutes() + dObj1.step);
+                    dObj1.min = value;
+                }
+            });
+        }
+        dObj.appendTo(elem);
+
+        elem = document.createElement('input');
+        return elem;
+    }
+
+    function write(args) {
+
+
+        // render TimePicker control to edit the column
+        if (args.rowData["InTime"] == null) {
+            dObj = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                placeholder: 'Select DateTime',
+                step: 1,
+                enabled: false,
+                change: function () {
+
+                    dObj1.enabled = true;
+                    var value = new Date(dObj.value);
+                    value.setMinutes(value.getMinutes() + dObj1.step);
+                    dObj1.min = value;
+                }
+            });
+
+        }
+        else {
+            dObj = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                value: new Date(Date.parse(args.rowData["dt"] + ' ' +args.rowData["InTime"])),
+                placeholder: 'Select DateTime',
+                step: 1,
+                change: function () {
+
+                    dObj1.enabled = true;
+                    var value = new Date(dObj.value);
+                    value.setMinutes(value.getMinutes() + dObj1.step);
+                    dObj1.min = value;
+                }
+            });
+        }
+        dObj.appendTo(elem);
+    }
+
+    function destroy() {
+
+        dObj.destroy();
+    }
+
+    function read(args) {
+
+        // return the value which will be saved to the controller
+        return dObj.value;
+    }
+
+    var elem1;
+    var dObj1;
+
+    function create1(args) {
+        elem1 = document.createElement('input');
+        return elem1;
+    }
+
+    function write1(args) {
+
+        // render TimePicker control to edit the column
+        var date1;
+        if (args.rowData["InTime"] != null) {
+            date1 = new Date(Date.parse(args.rowData["dt"] + ' ' + args.rowData["InTime"]));
+            date1.setMinutes(date1.getMinutes() + 1);
+        }
+        if (args.rowData["OutTime"] == null && args.rowData["InTime"] == null) {
+            dObj1 = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                placeholder: 'Select DateTime',
+                step: 1,
+                enabled: false
+            });
+        }
+        else if (args.rowData["OutTime"] != null && args.rowData["InTime"] != null) {
+            dObj1 = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                value: new Date(Date.parse(args.rowData["dt"] + ' ' + args.rowData["OutTime"])),
+                placeholder: 'Select DateTime',
+                min: date1,
+                step: 1
+            });
+        }
+        else if (args.rowData["OutTime"] == null && args.rowData["InTime"] != null) {
+            dObj1 = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                placeholder: 'Select DateTime',
+                min: date1,
+                step: 1
+            });
+        }
+        else {
+            dObj1 = new ej.calendars.TimePicker({
+                // bind the cell value to timepicker
+                value: new Date(Date.parse(args.rowData["dt"]+' '+args.rowData["OutTime"])),
+                placeholder: 'Select DateTime',
+                min: date1,
+                step: 1
+            });
+        }
+        dObj1.appendTo(elem1);
+    }
+
+    function destroy1() {
+        dObj1.destroy();
+    }
+
+    function read1(args) {
+        // return the value which will be saved to the controller
+        return dObj1.value;
+    }
+
+
+    var elemDate; var elemtime;
+    var dObjDate;
+
+    function createDate(args) {
+
+        elemDate = document.createElement('input');
+        elemDate.type = "date";
+        elemDate.min = new Date(Date.parse('@ViewBag.StartDate')).toISOString().split("T")[0];
+        elemDate.max = new Date(Date.parse('@ViewBag.EndDate')).toISOString().split("T")[0];
+        if (args.type === "beginEdit") {
+
+            //elemDate.style.visibility = "hidden";
+            elemDate.value = new Date(Date.parse(args.value)).toString("yyyy-MM-dd");
+            elemDate.disabled = true;
+            //elemDate.setAttribute('display', 'disable');
+        }
+
+        return elemDate;
+    }
+
+    function createInTime(args) {
+
+        elemtime = document.createElement('input');
+        elemtime.type = "time";        
+
+        if (args.type === "beginEdit") {
+
+            elemtime.value = new Date(Date.parse(args.value)).toString("HH:mm");
+        }        
+
+        return elemtime;
+    }
+
+    function createOutTime(args) {
+
+        elemtime = document.createElement('input');
+        elemtime.type = "time";        
+
+        if (args.type === "beginEdit") {
+            if (args.value != null && args.value != '') {
+
+                elemtime.value = new Date(Date.parse(args.value)).toString("HH:mm");
+            }
+        }        
+
+        return elemtime;
+    }    
+
+    function writeDate(args) {
+    }
+
+    function incrementDate(dateInput, increment) {
+        var dateFormatTotime = new Date(dateInput);
+        var increasedDate = new Date(dateFormatTotime.getTime() + (increment * 86400000));
+        return increasedDate;
+    }
+    function destroyDate() {
+        //dObjDate.destroy();
+
+    }
+    function destroyInTime() {
+        //dObjDate.destroy();
+
+    } function destroyOutTime() {
+        //dObjDate.destroy();
+
+    }
+    function readDate(args) {
+        // return the value which will be saved to the controller
+
+        return args.value;
+    }
+    function readInTime(args) {
+        // return the value which will be saved to the controller
+
+        return args.value;
+    }
+
+    function readOutTime(args) {
+        // return the value which will be saved to the controller
+
+        return args.value;
+    }
+
+    function created(args) {
+
+        // extending the default UrlAdaptor
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        var gridObj = document.getElementById("InlineEditing").ej2_instances[0];
+        var gridObj1 = document.getElementById("InlineEditingValue").ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+
+                if (!ej.base.isNullOrUndefined(data.success)) {
+
+                    toastObj.content = data.success;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                    gridObj.refresh()
+                    gridObj1.refresh()
+
+
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                    toastObj.content = data.Error;
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    gridObj.refresh()
+                    gridObj1.refresh()
+                }
+                if (!ej.base.isNullOrUndefined(data.data)) {
+                              return data.data;
+                }
+
+                else {
+
+                    return data;
+
+                }
+
+
+            }
+        }
+
+        var grid = document.querySelector('#InlineEditing').ej2_instances[0];
+
+        grid.dataSource = new ej.data.DataManager({
+            url: "/ManageIPAddress/UrlDatasourceUserTime?UserId=" + @ViewBag.UserId,
+            insertUrl: "/ManageIPAddress/InsertUserTime?UserId=" + @ViewBag.UserId,
+            updateUrl: "/ManageIPAddress/UpdateUserTime",
+            removeUrl: "/ManageIPAddress/RemoveUserTime",
+
+            adaptor: new CustomAdaptor()
+        });
+
+    };
+
+    function ActionBegin(args) {
+
+        if (args.requestType === "beginEdit") {
+            this.columns[1].allowEditing = false;
+            this.columns[6].allowEditing = false;
+            this.columns[7].allowEditing = false;
+        }
+        if (args.requestType === "add") {
+            this.columns[1].allowEditing = true;
+             this.columns[6].allowEditing = false;
+            this.columns[7].allowEditing = false;
+        }
+
+        if (args.requestType === "save") {
+
+            var InHour = document.getElementsByName("InTime")[0].value;
+            var OutHour = document.getElementsByName("OutTime")[0].value;
+
+
+            if (InHour != "" && OutHour != "") {
+
+                var Indate = new Date();
+                var Outdate = new Date();
+                var dt = moment(InHour, ["h:mm A"]).format("HH:mm");
+                var dt1 = moment(OutHour, ["h:mm A"]).format("HH:mm");
+
+                Indate = Indate.toDateString();
+                Outdate = Outdate.toDateString();
+
+                Indate = Indate + ' ' + dt;
+                Outdate = Outdate + ' ' + dt1;
+                if (Outdate < Indate || Outdate === Indate) {
+                    var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                    toastObj.content = '@ViewBag.OutGreatIn';
+                    toastObj.target = document.body;
+                    toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    args.cancel = true
+                }
+            }
+
+
+            //Check validation for overlap...
+            var gridObj = document.getElementById('InlineEditing').ej2_instances[0] //Grid Instance
+            var getRows = gridObj.getRows(); //get the grid rows by invoking getRows() method
+
+            for (var i = 0; i < getRows.length; i++) {
+
+                var val = gridObj.getRowInfo(gridObj.getRows()[i]);
+                var dt = val.rowData.dt;
+
+                if (new Date(dt).toString('yyyy-MM-dd') === new Date(Date.parse(args.data.dt)).toString("yyyy-MM-dd") && args.data.InTimeId != val.rowData.InTimeId && args.data.OutTimeId != val.rowData.OutTimeId) {
+
+                    var startdate = new Date(dt).toString('yyyy-MM-dd')  + ' ' + moment(val.rowData.InTime, ["h:mm A"]).format("HH:mm");
+                    var enddate = new Date(dt).toString('yyyy-MM-dd') + ' ' + moment(val.rowData.OutTime, ["h:mm A"]).format("HH:mm");
+
+
+                    if (args.data.OutTime != null) {
+
+                        var startdatenew = new Date(Date.parse(args.data.dt)).toString("yyyy-MM-dd") + ' ' + moment(args.data.InTime, ["h:mm A"]).format("HH:mm");
+                        var enddatenew = new Date(Date.parse(args.data.dt)).toString("yyyy-MM-dd")+ ' ' + moment(args.data.OutTime, ["h:mm A"]).format("HH:mm");
+
+                        if (startdatenew >= startdate) {
+
+                            if (startdatenew <= enddate) {
+                                var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                                toastObj.content = '@ViewBag.BelongstoOther';
+                                toastObj.target = document.body;
+                                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                                args.cancel = true
+                            }
+                        }
+                       else if (enddatenew >= startdate) {
+
+                            if (enddatenew <= enddate) {
+                                var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                                toastObj.content = '@ViewBag.BelongstoOther';
+                                toastObj.target = document.body;
+                                toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                                args.cancel = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+</script>
+
+<script>
+    function outhourChange(args) {
+
+        var a = document.getElementById("InlineEditingOutMin").ej2_instances[0].itemData;
+        if (a == null || a == "") {
+            document.getElementsByClassName('e-gridform')[0].ej2_instances[0].addRules('OutMin', { required: true, number: true, min: 0 });
+        }
+    }
+
+    function outminChange(args) {
+
+        if (this.value == null || this.value == "") {
+            document.getElementsByClassName('e-gridform')[0].ej2_instances[0].addRules('OutMin', { required: true, number: true, min: 0 });
+        }
+        else {
+            document.getElementsByClassName('e-gridform')[0].ej2_instances[0].addRules('OutMin', { required: false, number: true, min: 0 });
+        }
+        var a = document.getElementById("InlineEditingOutMidday").ej2_instances[0].itemData;
+        if (a == null || a == "") {
+            document.getElementsByClassName('e-gridform')[0].ej2_instances[0].addRules('OutMidday', { required: true });
+        }
+    }
+
+    function outmidChange(args) {
+
+        if (this.value == null || this.value == "") {
+            document.getElementsByClassName('e-gridform')[0].ej2_instances[0].addRules('OutMidday', { required: true });
+        }
+        else {
+            document.getElementsByClassName('e-gridform')[0].ej2_instances[0].addRules('OutMidday', { required: false });
+        }
+    }
+</script>
+@Html.EJS().ScriptManager()
+

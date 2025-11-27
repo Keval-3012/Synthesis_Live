@@ -1,0 +1,5 @@
+7/21/2025 3:19:31 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+7/21/2025 3:20:03 PM  Create Expense Request: <Purchase xmlns="http://schema.intuit.com/finance/v3" domain="QBO" sparse="false"><AccountRef>7</AccountRef><EntityRef type="Vendor">2167</EntityRef><TxnDate>2025-07-21</TxnDate><DocNumber>1234656789</DocNumber><PrivateNote>asaas</PrivateNote><TotalAmt>10</TotalAmt><PaymentType>Cash</PaymentType><PaymentMethodRef>1</PaymentMethodRef><Line><Description>asasasa</Description><Amount>10.00</Amount><DetailType>AccountBasedExpenseLineDetail</DetailType><AccountBasedExpenseLineDetail><AccountRef>7</AccountRef></AccountBasedExpenseLineDetail></Line></Purchase>
+7/21/2025 3:20:03 PM  Create Expense Message: Invalid Reference Id
+7/21/2025 3:22:59 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration
+7/21/2025 3:25:11 PM  LiveQBConnectionOperation_POST:SynthesisQBOnline.BAL.QBOnlineconfiguration

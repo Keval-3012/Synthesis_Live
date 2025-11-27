@@ -1,0 +1,762 @@
+@model EntityModels.Models.Invoice
+@using Utility
+@using EntityModels.Models;
+@{ SynthesisQBOnline.BAL.QBResponse qBResponse = new SynthesisQBOnline.BAL.QBResponse(); }
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+@using Syncfusion.EJ2
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+
+<style>
+    .loading-containers {
+        z-index: 200000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.8)url(../Content/Admin/Images/white_trans.png) repeat left top !important;
+    }
+
+        .loading-containers .loaders {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            -webkit-animation: typing 1s linear infinite alternate;
+            -moz-animation: Typing 1s linear infinite alternate;
+            animation: typing 1s linear infinite alternate;
+            margin: 50vh auto;
+            position: relative;
+            left: -12px;
+        }
+
+    .warning {
+        margin: 10px 0px;
+        padding: 15px 10px 15px 45px;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        font-family: 'Maven Pro', sans-serif !important;
+        color: black;
+        background-color: #FFF4E1;
+        background-image: url('/Content/Admin/images/warning-orange.svg');
+        background-size: 24px 24px;
+        margin-left: 30px;
+    }
+
+    .tab-part a:focus, .tab-part a:hover {
+        border-bottom: 3px solid #e53939;
+        color: #e53939;
+        text-decoration: none;
+    }
+
+    .tab-part a.Tab {
+        border-bottom: 3px solid #e53939;
+        color: #e53939;
+    }
+
+    .tab-part a {
+        color: #707478;
+    }
+
+        .tab-part a:hover, .tab-part a:focus {
+            color: #e53939;
+            border-bottom: 3px solid #e53939;
+        }
+
+    .resetclass {
+        margin-right: 10px;
+    }
+
+    span.bothActive {
+        display: flex;
+        width: 14px;
+        height: 14px;
+        background: #57f257;
+        margin: 3px 5px 0px 5px;
+        border-radius: 8px;
+        border: 2px solid green;
+    }
+
+    span.synthesisOnlyActive {
+        display: flex;
+        width: 14px;
+        height: 14px;
+        background: #cef257;
+        margin: 3px 5px 0px 5px;
+        border-radius: 8px;
+        border: 2px solid #e9745f;
+    }
+
+    .msg-review {
+        width: 25px;
+        position: relative;
+        top: -15px;
+        right: 5px;
+    }
+
+    .toast.toast-error {
+        background: #e53939;
+        font-size: 14px;
+    }
+</style>
+
+<style>
+    .below-95 {
+        border: 1px solid #F28705 !important;
+        color: #F28705 !important;
+    }
+
+    .below-85 {
+        border: 1px solid #F23030 !important;
+        color: #F23030 !important;
+    }
+
+    .above-95 {
+        border-bottom: 2px solid #09aadc !important;
+    }
+</style>
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+    .e-icons.e-file-delete-btn {
+        display: none !important;
+    }
+
+    .headertopbox .topRightBar {
+        padding: 0px 0px !important;
+        margin: 0 0 8px auto;
+    }
+
+    #userreviewpopupid {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+    .task-detail {
+        display: flex;
+        flex-direction:column;
+        gap: 15px;
+    }
+    .task-priority {
+        display: flex;
+        gap: 15px;
+    }
+    #dueDateTask{width:100%;height:34px;}
+</style>
+
+<div class="animate-panelmessesgarea padbtmzero">
+
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Success")
+    {
+        <script>
+            MyfunSuccess();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Delete")
+    {
+        <script>
+            MyfunSuccess();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Error")
+    {
+        <script>
+            MyfunError();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "NoItem")
+    {
+        <script>
+            MyfunNoItem();
+        </script>
+    }
+    @if (Convert.ToString(ViewBag.StatusMessage) == "Exists")
+    {
+        <script>
+            MyfunExistsEmpcode();
+        </script>
+    }
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#Invoice_Date').datetimepicker({
+            format: 'MMM DD, YYYY',
+            useCurrent: false
+        });
+    });
+</script>
+
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="modal fade" id="userreviewpopupid" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="margin-top:54%;width:600px;">
+            <div class="modal-header text-center">
+                <button type="button" onclick="reloadpage()" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">User Feedback</h4>
+            </div>
+            <div class="modal-body">
+                <label>
+                    FeedBack
+                </label>
+                @Html.TextAreaFor(model => model.InvoiceReview, new { maxlength = 500, @class = "form-control", rows = "3", @readonly = "readonly" })
+            </div>
+
+            <div class="modal-footer">
+                @*<button type="button" onclick="UpdateUserReview()" class="buttonbox btnsubmit" data-dismiss="modal">Save</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@*user note module*@
+<div class="modal fade" id="usernotepopupid" role="dialog" style="display:none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="margin-top:54%;width:600px;">
+            <div class="modal-header text-center">
+                <button type="button" onclick="reloadpage()" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add to Tasks</h4>
+            </div>
+            <div class="modal-body">
+                <div class="task-detail">
+                    <div>
+                        <label>
+                            Description <span style="color:red;">*</span>
+                        </label>
+                        <input type="hidden" id="InvoiceNumberNT" name="InvoiceNumber" value="@Model.InvoiceNumber" />
+                        <textarea name="InvoiceTasks" id="InvoiceTasks" maxlength="500" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="task-priority">
+                        <div>
+                            <label>Priority <span style="color:red;">*</span></label>
+                            @Html.DropDownList("PriorityDropData", null, "-Select Priority-", htmlAttributes: new { @class = "myval prioritydata" })
+                        </div>
+                        <div>
+                            <label>Assigned to <span style="color:red;">*</span></label>
+                            @Html.DropDownList("UserDropData", null, "-Select User-", htmlAttributes: new { @class = "myval assingtodata" })
+                        </div>
+                        <div>
+                            <label>Due Date <span style="color:red;">*</span></label>
+                            <input type="date" id="dueDateTask" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" onclick="UpdateUserNote()" class="buttonbox btnsubmit" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("Details", "Invoices", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.InvoiceId)
+    @Html.HiddenFor(model => model.CreatedBy)
+    @Html.HiddenFor(model => model.CreatedOn)
+    @Html.HiddenFor(model => model.ApproveRejectBy)
+    @Html.HiddenFor(model => model.ApproveRejectDate)
+    @Html.HiddenFor(a => a.FromInvoicePage)
+    DBContext db = new DBContext();
+
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+
+        <div class="header-small header_invoicedetail marleftzero">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <h3 style="float:left;">Invoice# <span>@Html.DisplayFor(m => m.InvoiceNumber)</span> </h3>
+                    @if (((Roles.IsUserInRole("ApproveInvoice") && Model.invoiceAproveFlg == true) || (Roles.IsUserInRole("Administrator"))) && Model.QBStatusField == true)
+                    {
+                        <div style="float:right;" class="warning"><span data-toggle="tooltip" data-placement="bottom">Selected Store QB Token is Suspended</span></div>
+                    }
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="invoicedetail_text">
+                        <ul>
+                            @{
+                                <li>
+                                    <span class="ttl1">Created By</span> <span class="namebox">@Model.CreatedByUserName</span> <span class="datebox">
+                                        @AdminSiteConfiguration.GetDatestatusmsg(Convert.ToString(Model.CreatedOn))
+                                    </span>
+                                </li>
+                                if (Model.ModifiedBy != null)
+                                {
+                                    <li> <span class="ttl1">Modified By</span> <span class="namebox">@Model.ModifiedByUserName</span> <span class="datebox">@AdminSiteConfiguration.GetDatestatusmsg(Convert.ToString(Model.ModifiedOn))</span> </li>
+                                }
+                                <li>
+                                    @{
+
+                                        if (Model.StatusValue == InvoiceStatusEnm.Approved)
+                                        {
+                                            <span class="ttl1">Approved By</span>
+                                            <span class="namebox">@Model.ApproveRejectUserName</span>
+                                            <span class="datebox">@AdminSiteConfiguration.GetDatestatusmsg(Convert.ToString(Model.ApproveRejectDate))</span>
+                                        }
+                                        else if (Model.StatusValue == InvoiceStatusEnm.Rejected)
+                                        { <span class="ttl1">Rejected By</span>
+                                            <span class="namebox">@Model.ApproveRejectUserName</span>
+                                            <span class="datebox">@AdminSiteConfiguration.GetDatestatusmsg(Convert.ToString(Model.ApproveRejectDate))</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="ttl1">Approved By</span>
+                                            <span class="namebox">Not Approved Yet</span>
+                                        }
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 leftpart">
+            <div>
+                @{
+                    <div class="invocettl" id="divstatus">
+                        @{
+                            var UserIdL = Model.InvoiceId + "L";
+                            <ul class="pull-right invoicedetailnavi">
+                                <li>
+                                    <a class="btn btn-yellow btn-sm" onclick="UserNotes()" href="#" data-toggle="tooltip" data-placement="top" data-original-title="Note"><img src="~/Content/Admin/images/icons/note.svg" style="width: 15px; filter: brightness(0) invert(1); margin-right: 5px;" /><span>Add to Tasks</span></a>
+                                </li>
+                                <li>
+                                    <div id="@UserIdL" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                        <div class="modal-content ">
+                                            <div class="modal-header text-center">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </div>
+                                            <div class="modal-title">Message</div>
+                                            <div class="modal-body "><p id="deleModalbody"> Are you sure you want to delete this Invoice? </p></div>
+                                            <div class="modal-footer" style="text-align:center">
+                                                <a class="btn btn-danger" onclick="Delete(@Model.InvoiceId);">Ok </a>
+                                                <a class="btn btn-default btncancelbutton" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("DeleteInvoice")))
+                                    {
+                                        <a class="btn-danger" href="#" onclick="return ComfirmDelete(@Model.InvoiceId);" data-toggle="tooltip" data-placement="top" data-original-title="Delete" style="display:block;"><i class="fa fa-trash"></i> Delete</a>
+                                    }
+
+                                </li>
+                                @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")))
+                                {
+                                    <li>
+                                        <a class="btn btn-success btn_bule btn-sm" onclick="SetItems()" href="@Url.Action("Edit", "Invoices", new { Id = Model.InvoiceId, @class = "btn btn-success btn_bule btn-sm" })" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i>Edit</a>
+                                    </li>
+                                }
+                                @if (((Roles.IsUserInRole("ApproveInvoice") && Model.invoiceAproveFlg == true) || (Roles.IsUserInRole("Administrator"))) && (Model.StatusValue != InvoiceStatusEnm.Approved))
+                                {
+                                    <li>
+                                        <a onclick="return ComfirmApprove(@Model.InvoiceId);" href="#" class="btn btn-success btn-sm"><i class="fa fa-check"></i>Approve</a>
+                                        @{
+                                            var UserIdD = Model.InvoiceId + "D";
+                                        }
+                                        <div id="@UserIdD" class="divIDClass modal-popup modal-success modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                            <div class="modal-content ">
+                                                <div class="modal-header text-center">
+                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                </div>
+                                                <div class="modal-title">Message</div>
+                                                <div class="modal-body ">Are you sure you want to Approve this Invoice?</div>
+                                                <div class="modal-footer" style="text-align:center">
+                                                    <a class="btn btn-success" onclick="Approve(@Model.InvoiceId);">Ok</a>
+                                                    <a class="btn btn-default btncancelbutton" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                @if (((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("RejectInvoice"))) && Model.StatusValue != InvoiceStatusEnm.Rejected)
+                                {
+                                    <li>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="return ComfirmReject(@Model.InvoiceId);"><i class="fa fa-times"></i>Reject</a>
+                                        @{
+                                            var UserIdR = Model.InvoiceId + "R";
+                                        }
+                                        <div id="@UserIdR" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                            <div class="modal-content ">
+                                                <div class="modal-header text-center">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </div>
+                                                <div class="modal-title">Message</div>
+                                                <div class="modal-body ">Are you sure you want to Reject this Invoice?</div>
+                                                <div class="modal-footer" style="text-align:center">
+                                                    <a class="btn btn-danger" onclick="Reject(@Model.InvoiceId);">Ok</a>
+                                                    <a class="btn btncancelbutton" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                @if (((Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("OnHoldInvoice"))) && Model.StatusValue != InvoiceStatusEnm.OnHold)
+                                {
+                                    <li>
+
+                                        <a href="#" onclick="return ComfirmOnHold(@Model.InvoiceId);" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pause"></i>On Hold</a>
+                                        @{
+                                            var UserIdH = Model.InvoiceId + "H";
+                                        }
+                                        <div id="@UserIdH" class="divIDClass modal-popup modal-warning modal-message" style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                                            <div class="modal-content ">
+                                                <div class="modal-header text-center">
+                                                    <i class="glyphicon glyphicon-pause"></i>
+                                                </div>
+                                                <div class="modal-title">Message</div>
+                                                <div class="modal-body ">Are you sure you want to put this Invoice On Hold?</div>
+                                                <div class="modal-footer" style="text-align:center">
+                                                    <a class="btn " onclick="OnHold(@Model.InvoiceId);">Ok</a>
+                                                    <a class="btn btn-default btncancelbutton" data-dismiss="modal" onclick="closemodal()">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                }
+                <div class="invoiceimage">
+                    @if (!string.IsNullOrEmpty(Model.UploadInvoice))
+                    {
+                        <iframe src="~/UserFiles/Invoices/@Model.UploadInvoice" frameborder="0" width="100%" height="800"></iframe>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 rightpart">
+            <div style="display: flex;justify-content: space-between;align-items: center;" class="tab-part">
+                <h3>
+                    <a href="#" id="InvoiceInformation" class="Tab" onclick="InvoiceInformation();">Invoice Information</a>
+                </h3>
+                <h3 style="margin-right: auto; margin-left: 25px;">
+                    <a href="#" id="LineItems" onclick="LineItem();">Line Items</a>
+                </h3>
+                @*@if (!string.IsNullOrEmpty(Model.InvoiceReview))
+                    {
+                        <h3 style="margin-right: auto; margin-left: 25px;">
+
+                            <a href="#" id="UserFeedBack" onclick="UserFeedBack();">User FeedBack <img src="~/Content/Admin/images/icons/message-icon.svg" class="msg-review" /></a>
+                        </h3>
+                    }
+                    else
+                    {
+                        <h3 style="margin-right: auto; margin-left: 25px;">
+                            <a href="#" id="UserFeedBack" onclick="UserFeedBack();">User FeedBack</a>
+                        </h3>
+                    }*@
+
+                @if (Roles.IsUserInRole("Administrator"))
+                {
+                    <a href="javascript:resetStatus(@Model.InvoiceId);" class="btn btn-info resetclass" data-toggle="tooltip" data-placement="top" data-original-title="Re-Read" id="btnReset" style="display:none">Re-Read</a>
+                }
+                <span id="divBack"></span>
+
+            </div>
+            <div class="formmain" id="1">
+                @{
+                    if (Roles.IsUserInRole("Administrator"))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Store Name</label><br />
+
+                                    <span class="fnt_midam">
+                                        @Html.DisplayFor(m => m.StoreName)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Payment Method</label><br />
+                            <span class="fnt_midam">@Html.DisplayFor(m => m.PaymentType)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Type</label><br />
+                            <span class="fnt_midam">@Html.DisplayFor(m => m.InvoiceType)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Vendor</label><br />
+                            <span class="fnt_midam">@Html.DisplayFor(m => m.VendorName)</span>
+                            <span class="" id="spnActive"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Vendor Phone Number</label><br />
+                            @if (Model.VendorPhoneNumber == "" || Model.VendorPhoneNumber == null)
+                            {
+
+                                <div class="addressbox fnt_midam">
+                                    Not Available
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="addressbox fnt_midam">@Model.VendorPhoneNumber</div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Vendor Address</label><br />
+                            @if (Model.VendorAddress == "" || Model.VendorAddress == null)
+                            {
+                                <div class="addressbox fnt_midam">
+                                    Not Available
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="addressbox fnt_midam">@Model.VendorAddress</div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Invoice #</label><br />
+                            <span class="fnt_midam">@Html.DisplayFor(m => m.InvoiceNumber)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>Invoice Date</label><br />
+                            <span class="fnt_midam">@AdminSiteConfiguration.GetDateformat(Model.InvoiceDate.ToString())</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="whitebox">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Invoice Breakdown</label>
+                        </div>
+                    </div>
+                    <div id="tbladdon" class="padleft15">
+                        <div class="row" id="trrow_1">
+                            @{
+                                var Departmentlist = db.InvoiceDepartmentDetails.Where(x => x.InvoiceId == Model.InvoiceId).ToList();
+                                foreach (var item1 in Departmentlist)
+                                {
+                                    <div class="col-md-7 col-sm-7">
+                                        <div class="form-group">
+                                            @{
+                                                var department = db.DepartmentMasters.Where(x => x.DepartmentId == item1.DepartmentId).FirstOrDefault().DepartmentName;
+                                                @department
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 padleftzero padrightzero fnt_bod">
+                                        <div class="form-group">
+                                            @{
+                                                if (Model.InvoiceTypeId == 2)
+                                                {
+                                                    <span class="minusamount redback"><span>-</span> $ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(item1.Amount))</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>
+                                                        $
+                                                        @AdminSiteConfiguration.PriceWithComma(Convert.ToString(item1.Amount))
+                                                    </span>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 col-sm-7">
+                                <div class="form-group"> <span class="invoiceamttl">Total Invoice Amount</span> </div>
+                            </div>
+                            <div class="col-md-5 col-sm-5 padleftzero">
+                                <div class="form-group">
+                                    <span class="amount">
+                                        <span id="TotalAmtByDept">
+                                        </span>
+
+                                        @if (Model.InvoiceTypeId == 2)
+                                        {
+                                            <span class="minusamount redback">-$ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Html.DisplayFor(m => m.TotalAmount))) </span>
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                $ @AdminSiteConfiguration.PriceWithComma(Convert.ToString(Html.DisplayFor(m => m.TotalAmount)))
+                                            </span>
+
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Convert.ToString(Model.RefInvoiceNumber)))
+                        {
+                            <label class="discountbox" style="font-size:16px!important;">
+                                A discount in the amount of ( $@Model.RefDiscountAmount ) was issued against this invoice <span style="font-weight:600;"> @Model.RefInvoiceNumber</span>.
+                            </label>
+                        }
+                    </div>
+                </div>
+                @{
+                    var qbtransfer = Model.QBTransfer;
+                    var qbvalue = 0;
+                    if (qbtransfer.ToString().ToLower() == "true")
+                    {
+                        qbvalue = 1;
+                    }
+
+                    if (Model.IsSync == 0 || Model.IsSync == null)
+                    {
+                        if (Model.StatusValue == InvoiceStatusEnm.Pending)
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            @if (qbvalue == 1)
+                                            {
+                                                <input class="chk" id="QBtransfer" type="checkbox" checked="checked" name="QBtransferss" value="1">
+                                            }
+                                            else
+                                            {
+                                                <input class="chk" id="QBtransfer" type="checkbox" name="QBtransferss" value="1">
+                                            }
+
+                                            <label for="QBtransfer">No QB transfer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(a => a.QBTransfer)
+                        }
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(a => a.QBTransfer)
+                    }
+                }
+
+                <div class="form-group">
+                    <label>
+                        Note
+                    </label><br />
+                    @Html.TextAreaFor(model => model.Note, new { maxlength = 100, @class = "form-control addinvoiceareasize" })
+                </div>
+                @{
+
+                    <div class="from-group row">
+                        <div class="col-sm-8 ">
+                            @if ((Roles.IsUserInRole("Administrator")) || (Roles.IsUserInRole("UpdateInvoice")))
+                            {
+                                <input type="submit" value="Save" onclick="setitem()"
+                                       class="buttonbox btnsubmit" />
+                            }
+                            <span id="divCancel"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="2" class="hidden">
+                <div class="control-section">
+                    @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dataManager => { dataManager.Url("/Invoices/UrlDatasource?InvoiceID=" + Model.InvoiceId).Adaptor("UrlAdaptor").InsertUrl("/Invoices/Insert").UpdateUrl("/Invoices/Update").RemoveUrl("/Invoices/Remove"); }).SelectionSettings(sel => { sel.PersistSelection(true); }).Columns(col =>
+               {
+                   col.Type("checkbox").Width("50").Add();
+                   col.Field("InvoiceProductId").IsPrimaryKey(true).HeaderText("Invoice Product Id").Visible(false).Add();
+                   col.Field("InvoiceId").HeaderText("Invoice Id").Visible(false).DefaultValue(Model.InvoiceId).Add();
+                   col.Field("UPCCode").HeaderText("UPC Code").Width("150").Add();
+                   col.Field("Description").HeaderText("Name").Width("250").Add();
+                   col.Field("Qty").HeaderText("Qty").EditType("numericedit").Format("n").Width("150").Add();
+                   col.Field("UnitPrice").HeaderText("UnitPrice").EditType("numericedit").Format("C2").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("150").Add();
+                   col.Field("Total").HeaderText("Total").EditType("numericedit").Format("C2").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Right).Width("150").Add();
+                   //col.Field("Approved").HeaderText("Approved").DisplayAsCheckBox(true).EditType("booleanedit").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("150").Add();
+                   col.Field("Approved").HeaderText("Approved").Template("#approveTemplate").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Width("150").Add();
+               }).AllowPaging().QueryCellInfo("customiseCell").PageSettings(page => { page.PageCount(2).PageSize(30); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).ShowDeleteConfirmDialog(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Toolbar(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search" }).Render()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+}
+<script type="text/x-jsrender" id="approveTemplate">
+    ${if(Approvevalue == '1')}
+    <input type="checkbox" name="Approved" id="${InvoiceId}" checked onclick="updatestatus(${InvoiceProductId},this);">
+    ${else}
+    <input type="checkbox" name="Approved" id="${InvoiceId}" onclick="updatestatus(${InvoiceProductId},this);">
+    ${/if}
+
+</script>
+
+<script type="text/javascript">
+    var StatusApp = '@ViewBag.StatusApp';
+    var StatusUnApp = '@ViewBag.StatusUnApp';
+    var Reset = '@ViewBag.Reset';
+    var ResetSuccess = '@ViewBag.ResetSuccess';
+$(document).ready(function () {
+CheckField();
+var Detailstorenamevalue = '@(ViewBag.Detailstorenamevalue)';
+
+if (Detailstorenamevalue != "")
+{
+    var role = '@Roles.IsUserInRole("Data Approver")';
+
+    if (role == 'True')
+    {
+            $('#drp').val([Detailstorenamevalue]).trigger('change');
+    }
+    else
+    {
+            $('#spnStore').html(Detailstorenamevalue);
+    }
+}
+
+});
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    Getvalues();
+});
+</script>
+<script src="~/Form_JS/InvoiceDetails.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>
+@Html.EJS().ScriptManager()

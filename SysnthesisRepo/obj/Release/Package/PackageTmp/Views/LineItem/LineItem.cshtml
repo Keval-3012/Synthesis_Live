@@ -1,0 +1,167 @@
+﻿@using Syncfusion.EJ2
+@using Utility
+
+@{ List<object> commands = new List<object>();
+
+                commands.Add(new { type = "Link", buttonOption = new { iconCss = "e-icons e-link", cssClass = "e-flat" } });
+                commands.Add(new { type = "Linked", buttonOption = new { iconCss = "e-icons e-link-remove", cssClass = "e-flat" } });
+                commands.Add(new { type = "Add to vendor library", buttonOption = new { iconCss = "e-icons e-expand", cssClass = "e-flat" } }); }
+<div class="childgrid">
+    @{
+
+        var ChildGrid = new Syncfusion.EJ2.Grids.Grid()
+        {
+            DataSource = new DataManager() { Url = "/LineItem/UrlDatasourceChildList", InsertUrl = "/Invoices/Insert", UpdateUrl = "/Invoices/Update", RemoveUrl = "/Invoices/Remove", Adaptor = "UrlAdaptor" },
+            QueryString = "InvoiceId",
+            AllowFiltering = true,
+            AllowSorting = true,
+            EditSettings = new Syncfusion.EJ2.Grids.GridEditSettings() { AllowAdding = true, AllowEditing = true, AllowDeleting = true, ShowDeleteConfirmDialog = true },
+            Toolbar = new List<string>() { "Add", "Delete", "Update", "Cancel" },
+            RowDataBound = "rowDataBound",
+            Load = "load",
+            //Created= "collapseAll",
+            QueryCellInfo = "customiseCell",
+            ActionBegin = "actionBegin",
+            ActionComplete = "actionComplete",
+            FilterSettings = new Syncfusion.EJ2.Grids.GridFilterSettings() { Type = Syncfusion.EJ2.Grids.FilterType.CheckBox },
+            Columns = new List<Syncfusion.EJ2.Grids.GridColumn>
+{
+                //new Syncfusion.EJ2.Grids.GridColumn(){ Type="checkbox" ,Width="50" },
+                  //new Syncfusion.EJ2.Grids.GridColumn(){ Field="InvoiceId",HeaderText="Invoice Id",Visible=false, Template="#invoiceidTemplate" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="InvoiceId", HeaderText="Invoice Id",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ProductId", HeaderText="Product Id",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="InvoiceProductId",IsPrimaryKey = true, HeaderText="Invoice Product Id",Visible = false },
+
+                new Syncfusion.EJ2.Grids.GridColumn(){ HeaderText="Item", Width="120" , Template = "#template" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Description",HeaderText="Item Name", Width="120" ,Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="UPCCode", HeaderText="UPCCode",Width="50" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ItemNo", HeaderText="ItemNo" ,Width="50"},
+
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Qty", HeaderText="Qty", Width="50" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="UnitPrice", HeaderText="Unit Price", Width="50", Format="C2", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Right },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Total", HeaderText="Total", Width="50", Format="C2", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Right,Visible=false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ HeaderText="", Width="80", Commands=commands, TextAlign=Syncfusion.EJ2.Grids.TextAlign.Center },
+                //new Syncfusion.EJ2.Grids.GridColumn(){ HeaderText="fgh", Width="50",Field="Approve", Template="#toggleTemplate", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Center },
+                // new Syncfusion.EJ2.Grids.GridColumn(){ HeaderText="",Field="Approved", Width="50",DisplayAsCheckBox=true, EditType="booleanedit",TextAlign=Syncfusion.EJ2.Grids.TextAlign.Center },
+                new Syncfusion.EJ2.Grids.GridColumn(){ HeaderText="",Field="Approved",Width="20", Template="#toggleTemplate",TextAlign=Syncfusion.EJ2.Grids.TextAlign.Center },
+
+                },
+        };
+
+
+    }
+</div>
+
+
+@*col.HeaderText("Action").Width("60").Commands(commands).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();*@
+@*@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()*@
+
+<div class="control-section invoicegrid">
+    @Html.EJS().Grid("InlineEditingValue").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).DataSource(dm => dm.Url("/LineItem/UrlDatasourceValue").Adaptor("UrlAdaptor")).Columns(col =>
+{
+    col.Field("InvoiceId").IsPrimaryKey(true).HeaderText("Invoice ID").Visible(false).Add();
+    col.Field("StoreId").HeaderText("Store Id").Visible(false).Add();
+    col.Field("InvoiceNumber").HeaderText("Invoice Number").Template("#template2").Width("100").Add();
+    //col.Field("InvoiceDate").HeaderText("Invoice Date").Width("100").Add();
+    col.Field("InvoiceDate").HeaderText("Invoice Date").Width("100").Format("MM/dd/yyyy").Add();
+
+    col.Field("VendorName").HeaderText("Vendor Name").Width("150").Add();
+    col.Field("NickName").HeaderText("Store Name").Width("100").Add();
+    col.Template("#approveallTemplate").Width("80").Add();
+    col.Template("#ResetTemplate").Width("100").Add();
+}).Load("OnLoad").ChildGrid(ChildGrid).RowSelected("rowselected").Render()
+
+    @*@Html.EJS().Switch("checked2").Checked(false).Render()*@
+</div>
+
+@*<span class="dot lineItemCompletedStatus"></span><a href="#" onclick='getfile(this);' id="${InvoiceId}">${InvoiceNumber}</a>*@
+@*<span class="dotnull liteItemPendingStatus"></span>  <a href="#" onclick='getfile(this);' id="${InvoiceId}">${InvoiceNumber}</a>*@
+
+<script id="template2" type="text/x-template">
+    <div class="link">
+        ${if(ApproveStatus == '1')}
+        <span class="dot lineItemCompletedStatus"></span>${InvoiceNumber}
+      ${else}
+        <span class="dotnull liteItemPendingStatus"> </span>${InvoiceNumber}
+      ${/if}
+    </div>
+</script>
+
+<script type="text/x-jsrender" id="toggleTemplate">
+    ${if(ProductId != null)}
+        ${if(Approvevalue == '1')}
+        <input type="checkbox" name="Approved" id="${InvoiceId}" checked onclick="updatestatus(${InvoiceProductId},this);">
+        ${else}
+        <input type="checkbox" name="Approved" id="${InvoiceId}" onclick="updatestatus(${InvoiceProductId},this);">
+        ${/if}
+    ${/if}
+
+</script>
+
+<script type="text/x-jsrender" id="approveallTemplate">
+
+    ${if(ApproveStatus == '0')}
+        ${if(ApproveShow == '0')}
+        ${else}
+        <a href="javascript:approveAllStatus(${InvoiceId});" class="btn btn-info" data-toggle="tooltip" data-placement="top" id="btnapproveall">Approve All</a>
+        ${/if}
+    ${/if}
+</script>
+
+<script type="text/x-jsrender" id="ResetTemplate">
+    @if (Roles.IsUserInRole("Administrator"))
+    {
+        <a href="javascript:resetStatus(${InvoiceId});" class="modl" id="modl">
+            <img src="/Content/Admin/images/icons8-reset-35.png" alt="" style="width:25px;" title="Re-Read" id="imgReset" />
+        </a>
+    }
+</script>
+
+<script>
+
+    var ReRead = '@ViewBag.ReRead';
+
+    var UnApprove = '@ViewBag.UnApprove';
+    var ApproveAll = '@ViewBag.ApproveAll';
+    var Submitted = '@ViewBag.Submitted';
+    function resetStatus(iii) {
+
+        var result = confirm(ReRead);
+        if (result) {
+            $.ajax({
+                url: ROOTURL + 'Invoices/ResetStatus',
+                type: "POST",
+                data: JSON.stringify({ id: iii }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+
+                    if (response == "success") {
+
+                        var grid = document.getElementById("InlineEditingValue").ej2_instances[0];
+                        grid.dataSource = new ej.data.DataManager({
+                            url: "/LineItem/UrlDatasourceValue",
+                            adaptor: new ej.data.UrlAdaptor()
+                        });
+                        toastr.success(Submitted);
+                    }
+                    else {
+                        toastObj.content = "Something went wrong!";
+                        toastObj.target = document.body;
+                        toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                    }
+
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+    }
+
+
+</script>
+<script src="~/Form_JS/LineItem_1.js"></script>
+
+@Html.EJS().ScriptManager()
+

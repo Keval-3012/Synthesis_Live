@@ -1,0 +1,92 @@
+﻿@model EntityModels.Models.StoreMaster
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+
+    <div class="page-body headertopbox">
+        <div id="hbreadcrumb" class="pull-right">
+            <ol class="hbreadcrumb breadcrumb fontsize16">
+                <a runat="server" class="btn btn-default btn-maroon" href="@Url.Action("index", "Companies")"><i class="fa fa-backward"></i>Back</a>
+            </ol>
+        </div>
+    </div>
+
+    <div id="globalTabContent">
+        <div id="PanAddUpdate">
+            <div class="header-small special_bg icon_12">
+                <h3>Companies Detail</h3>
+            </div>
+            <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+                <div class="datagrid martop15">
+                    <div class="formmain detailpagecnt">
+                        <table class="table">
+
+                            <tr>
+                                <td width="150"> Store Name </td>
+                                <td width="15" align="center"> : </td>
+                                <td> @Model.Name</td>
+
+                            </tr>
+                            <tr>
+                                <td width="150"> Address </td>
+                                <td width="15" align="center"> : </td>
+                                <td>
+                                    @{
+                                        var addresssata = Model.Address1;
+                                        if (!string.IsNullOrEmpty(Model.Address2))
+                                        {
+                                            addresssata = Model.Address1 + ", " + "</br/>" + Model.Address2;
+                                        }
+                                        @Html.Raw(addresssata)
+                                    }
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td width="150"> Phone Number </td>
+                                <td width="15" align="center"> : </td>
+                                <td>@Model.StoreNo</td>
+                            </tr>
+                            <tr>
+                                <td width="150">  Fax Number </td>
+                                <td width="15" align="center"> : </td>
+                                <td>@Model.FaxNo</td>
+                            </tr>
+                            <tr>
+                                <td width="150">  Email Id </td>
+                                <td width="15" align="center"> : </td>
+                                <td>@Model.EmailId</td>
+                            </tr>
+
+                            <tr>
+                                <td>Nick Name</td>
+                                <td>:</td>
+                                <td>@Model.NickName</td>
+                            </tr>
+
+                            <tr>
+                                <td>Longitude</td>
+                                <td>:</td>
+                                <td>@Model.Longitude</td>
+                            </tr>
+
+                            <tr>
+                                <td>Latitude</td>
+                                <td>:</td>
+                                <td>@Model.Latitude</td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

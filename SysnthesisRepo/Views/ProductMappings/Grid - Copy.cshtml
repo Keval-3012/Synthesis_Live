@@ -1,0 +1,572 @@
+﻿@model List<EntityModels.Models.ProductsList>
+@{
+
+    Layout = null;
+}
+@*<style>
+        table.table tr td, table.table {
+            white-space: normal !important;
+        }
+
+        .divIDClass {
+            z-index: 999999 !important;
+        }
+
+        .overlaytransparent {
+            display: none !important;
+        }
+
+        .headerss {
+            color: #fff;
+            padding: 15px 20px;
+            font-size: 17px;
+            font-weight: 800;
+            background: #56a15c;
+        }
+
+        .container {
+            display: table;
+            width: 100%;
+            height: 80px;
+            background-color: white;
+            padding-top: 22px;
+            padding-left: 10px;
+            border: 1px inset #e3e3e3;
+        }
+
+        .page-body {
+            padding: 18px 10px 0px 10px !important;
+        }
+
+        #modl {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+        #loadbox {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 999;
+            display: none;
+        }
+    </style>*@
+<style>
+
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .datagrid .table tr td img {
+        height: 30px;
+    }
+
+    .showbox {
+        display: none !important;
+    }
+
+    #loadbox {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999;
+        display: none;
+    }
+
+    #modl {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+    .Edit {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+    }
+    .fixeds {
+        top: 248px;
+        position: fixed;
+        width: auto;
+        z-index: 999;
+    }
+</style>
+<div id="loadbox"></div>
+<div id="grddata">
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <input type="hidden" id="hdnpagevalue" value="0" />
+        <div class="page-body headertopbox special_bg">
+            <div class="page-header-main position-relative ">
+                <h3>Items Library Excel</h3>
+
+               
+                    @using (Html.BeginForm("ImportProductExcel", "ProductMappings", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        if (Roles.IsUserInRole("Administrator"))
+                        {
+
+                            <div class="container">
+                                <div class="form-group">
+                                    <label style="font-weight:bold;font-size:medium">Add New Items (Excel) :</label>
+                                    <span style="width:500px;">
+                                        <input type="file" name="postedFile" id="fileinput" /> <input type="submit" id="UploadPDF" value="Import Data" class="btn btn-success" />
+                                    </span>
+                                </div>
+                            </div>
+                            <br />
+                            <span style="color:green">@ViewBag.Message</span>
+                        }
+                    }
+               
+            </div>
+
+            <div class="datagrid">
+                <div class="table-responsive" id="test">
+                    <table class="table table-striped table-hover tbls">
+                        <thead>
+                            <tr>
+                                <th width="10%">UPC Code</th>
+                                @*<th width="10%">Item No</th>*@
+                                <th width="5%">
+                                        Synthesis Id
+                                    </th>
+                                <th width="25%">Name</th>
+                                <th width="10%">Brand</th>
+                                <th width="10%">Size</th>
+                                <th width="30%">Key Word</th>
+                                @*<th width="5%">Action</th>*@
+                                @*<th width="25%">
+                                        Vendors
+                                    </th>*@
+                                @*<th width="25%">
+                                        Departments
+                                    </th>*@
+                                @*<th width="5%">
+                                        Action
+                                    </th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count(); i++)
+                            {
+                            <tr>
+                                @*<td id="UPCCode_@Model[i].ProductId">@Html.DisplayFor(model => model[i].UPCCode)</td>
+                                <td id="ItemNo_@Model[i].ProductId">@Html.DisplayFor(model => model[i].ItemNo)</td>
+                                <td>@Html.DisplayFor(model => model[i].SynthesisId)</td>
+                                <td id="Description_@Model[i].ProductId">@Html.DisplayFor(model => model[i].Description)</td>
+                                <td id="Brand_@Model[i].ProductId">@Html.DisplayFor(model => model[i].Brand)</td>
+                                <td id="Size_@Model[i].ProductId">@Html.DisplayFor(model => model[i].Size)</td>
+                                <td id="KeyWord_@Model[i].ProductId">
+                                    @Html.DisplayFor(model => model[i].KeyWord)
+                                </td>
+                                <td>
+                                    <button type="button" id="@i" value="@Model[i].ProductId" class="Edit">
+                                        <img src="~/Content/Admin/images/edit-2.svg" style="height: 30px;">
+                                    </button>
+                                    <button type="button" id="@i" value="@Model[i].ProductId" class="modl">
+                                        <img src="~/Content/Admin/images/btnadd_row.png" style="height: 30px;">
+                                    </button>
+                                </td>*@
+
+
+                                @*<td id="UPCCode">@Html.TextBoxFor(model => model[i].UPCCode, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId + "_U" })</td>
+                                <td id="ItemNo">@Html.TextBoxFor(model => model[i].ItemNo, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId + "_I" })</td>
+                                <td>@Html.DisplayFor(model => model[i].SynthesisId)</td>
+                                <td id="Description">@Html.TextAreaFor(model => model[i].Description, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId + "_D" })</td>
+                                <td id="Brand">@Html.TextBoxFor(model => model[i].Brand, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId + "_B" })</td>
+                                <td id="Size">@Html.TextBoxFor(model => model[i].Size, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId + "_S" })</td>
+                                <td id="KeyWord">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            @Html.TextAreaFor(model => model[i].KeyWord, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId + "_K" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" id="modl" value="@Model[i].ProductId" class="modl">
+                                                <img src="~/Content/Admin/images/btnadd_row.png" style="height: 30px;   ">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>*@
+                                @*<td>
+                                    <button type="button" id="modl" value="@Model[i].ProductId" class="modl">
+                                        <img src="~/Content/Admin/images/btnadd_row.png" style="height: 30px;   ">
+                                    </button>
+                                </td>*@
+
+                                <td id="UPCCode_@Model[i].ProductId">@Html.DisplayFor(model => model[i].UPCCode)</td>
+                                @*<td id="ItemNo_@Model[i].ProductId">@Html.DisplayFor(model => model[i].ItemNo)</td>*@
+                                <td>@Html.DisplayFor(model => model[i].SynthesisId)</td>
+                                <td id="Description_@Model[i].ProductId">@Html.DisplayFor(model => model[i].Description)</td>
+                                <td id="Brand_@Model[i].ProductId">@Html.DisplayFor(model => model[i].Brand)</td>
+                                <td id="Size_@Model[i].ProductId">@Html.DisplayFor(model => model[i].Size)</td>
+                                <td id="KeyWord">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            @Html.TextAreaFor(model => model[i].KeyWord, new { @class = "form-control", id = "KeyWord_" + Model[i].ProductId })
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" id="modl" value="@Model[i].ProductId" class="modl">
+                                                <img src="~/Content/Admin/images/btnadd_row.png" style="height: 30px;   ">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+
+
+                                @*<td style="word-wrap: break-word">@Html.Raw(item.VendorsStr)</td>*@
+                                @*<td style="word-wrap: break-word">@Html.Raw(item.DepartmentsStr)</td>*@
+                                @*<td><a href="@Url.Action("Edit", "Products", new { id = item.ProductId })" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><img src="~/Content/Admin/images/edit-2.svg" alt="" /></a></td>*@
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<link href="~/daterange/daterangepicker.min.css" rel="stylesheet" />
+    <script src="~/daterange/moment.min.js"></script>
+    <script src="~/daterange/daterangepicker.min.js"></script>
+    <script src="~/Content/Admin/js/NewDatepicker.js"></script>
+    <link href="~/Content/Admin/assets/css/w3.css" rel="stylesheet" />*@
+@*<script src="~/Content/Admin/tablesorter/jquery.metadata.js"></script>*@
+@*<link href="~/Content/Admin/tablesorter/themes/blue/style.css" rel="stylesheet" />*@
+@*<script src="~/Content/Admin/tablesorter/jquery.tablesorter.min.js"></script>*@
+@*<script src="~/Content/Admin/tablesorter/jquery.tablesorter.mod.js"></script>*@
+@*<script>
+    $(".Edit").click(function () {
+        
+        var id = this.value;
+        var no = this.id;
+        var UPCCode = $('#UPCCode_' + id).html().trim();
+        var ItemNo = $('#ItemNo_' + id).html().trim();
+        var Description = $('#Description_' + id).html().trim();
+        var Brand = $('#Brand_' + id).html().trim();
+        var Size = $('#Size_' + id).html().trim();
+        var KeyWord = $('#KeyWord_' + id).html().trim();
+        $('#UPCCode_' + id).html('<input class="form-control" id="KeyWord_'+id+'_U" name="[' + no + '].UPCCode" type="text" value="' + UPCCode + '">');
+        $('#ItemNo_' + id).html('<input class="form-control" id="KeyWord_' + id + '_I" name="[' + no + '].ItemNo" type="text" value="' + ItemNo + '">');
+        $('#Description_' + id).html('<textarea class="form-control" cols="20" id="KeyWord_' + id + '_D" name="[' + no + '].Description" rows="2">' + Description+'</textarea>');
+        $('#Brand_' + id).html('<input class="form-control" id="KeyWord_' + id + '_B" name="[' + no + '].Brand" type="text" value="' + Brand + '">');
+        $('#Size_' + id).html('<input class="form-control" id="KeyWord_' + id + '_S" name="[' + no + '].Size" type="text" value="' + Size + '">');
+        $('#KeyWord_' + id).html('<textarea class="form-control" cols="20" id="KeyWord_' + id + '_K" name="[' + no + '].KeyWord" rows="2">' + KeyWord +'</textarea>');
+    });
+</script>*@
+<script>
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    //$(document).ready(function () {
+    //    //Loader(0);
+    //    $("#productTbl").tablesorter();
+    //});
+
+    var top = 0;
+    function Loader(val) {
+        var doc = document.documentElement;
+        $("[data-toggle=tooltip]").tooltip();
+        if (val == 1) {
+            $(".loading-container").attr("style", "display:block;")
+        }
+        else {
+            $(".loading-container").attr("style", "display:none;")
+        }
+
+    }
+@*</script>
+<script>*@
+
+
+    //var top = 0;
+    //function Loader(val) {
+    //    var doc = document.documentElement;
+    //    if (val == 1) {
+    //        $("#secloader").removeClass('pace-active1');
+    //        $("#secloader").addClass('pace-active');
+    //        $("#dvloader").removeClass('bak1');
+    //        $("#dvloader").addClass('bak');
+    //        $("#globalFooter").addClass('LoaderFooter');
+    //        top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+    //    }
+    //    else {
+    //        $("#secloader").removeClass('pace-active');
+    //        $("#secloader").addClass('pace-active1');
+    //        $("#dvloader").removeClass('bak');
+    //        $("#dvloader").addClass('bak1');
+    //        $("#globalFooter").removeClass('LoaderFooter');
+    //        doc.scrollTop = top;
+    //    }
+    //}
+
+
+@*</script>
+<script>*@
+    $(".modl").click(function () {
+
+        var id = this.value;
+        var KeyWord = $('#KeyWord_' + id).val();
+        $.ajax({
+            url: '@AdminSiteConfiguration.GetURL()/ProductMappings/UpdateKeyWord',
+            data: {ProductID : id,KeyWord : KeyWord},
+            beforeSend: function () { Loader(1); },
+            async: false,
+            success: function (response) {
+                if (response == "Success") {
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.success('Key Word successfully updated.');
+                }
+                Loader(0);
+            },
+            error:function()
+            {
+                Loader(0);
+            }
+        });
+    });
+
+    var pageSize = 50;
+    var pageIndex = 1;
+    var pageCount =@ViewBag.TotalDataCount!= null ?@ViewBag.TotalDataCount: 0;
+    //$(window).scroll(function () {
+    //
+    //    if (Math.round($(window).scrollTop(), 0) == Math.round(($(document).height() - $(window).height()), 0)) {
+
+    //        myCustomFn();
+
+    //    }
+    //});
+
+    $(function () {
+
+        var $win = $(window);
+
+        $win.scroll(function () {
+            if ($win.height() + $win.scrollTop()
+                == $(document).height()) {
+                myCustomFn();
+            }
+        });
+    });
+
+    //$(window).scroll(function () {
+    //    if (Math.round($(window).scrollTop(), 0) + Math.round($(window).height(), 0) == Math.round(getDocHeight(),0)) {
+    //        myCustomFn();
+    //    }
+    //});
+
+    function getDocHeight() {
+
+            // $(document).height() value depends on browser
+            var D = document;
+            return Math.max(
+                D.body.scrollHeight, D.documentElement.scrollHeight,
+                D.body.offsetHeight, D.documentElement.offsetHeight,
+                D.body.clientHeight, D.documentElement.clientHeight
+            );
+        }
+    function myCustomFn() {
+
+        var page_loadsize = parseInt(@ViewBag.PageSize) + parseInt(50);
+        document.getElementById('hdnpagevalue').value = page_loadsize;
+
+        GetData12(pageSize, pageIndex);
+        $("#hdnpagevalue").val(page_loadsize);
+    }
+
+    function GetData12(PageSize, CurrentPageIndex) {
+
+        var Orderby = '@ViewBag.OrderByVal';
+        var IsAsc = '@ViewBag.IsAscVal';
+
+        pageIndex++;
+        if (pageIndex == 2 || pageIndex <= pageCount) {
+            $.ajax({
+                type: 'GET',
+                async: true,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: '/ProductMappings/GetDatapagescroll',
+                data: { PageSize: PageSize, currentPageIndex: CurrentPageIndex,Orderby: Orderby, IsAsc: IsAsc},
+
+                beforeSend: function () {
+                    Loader(1);
+                },
+                timeout: 300000,
+                success: function (data) {
+                    Loader(0);
+                    
+                    var b = @ViewBag.endIndex;
+                    if (data != null) {
+                        for (var i = 0; i < data.length; i++) {
+                            b++;
+                            var html = "";
+                            html += '<tr class="even">';
+                            if (data[i].UPCCode != null) {
+                                html += '<td>' + data[i].UPCCode + '</td>';
+                            }
+                            else {
+                                html += '<td></td>';
+                            }
+
+
+
+                            if (data[i].ItemNo != null) {
+                                html += '<td>' + data[i].ItemNo + '</td>';
+                            }
+                            else {
+                                html += '<td></td>';
+                            }
+
+                            if (data[i].SynthesisId != null) {
+                                html += '<td>' + data[i].SynthesisId + '</td>';
+                            }
+                            else {
+                                html += '<td></td>';
+                            }
+
+                            if (data[i].Description != null) {
+                                html += '<td>' + data[i].Description + '</td>';
+                            }
+                            else {
+                                html += '<td></td>';
+                            }
+
+                            if (data[i].Brand != null) {
+                                html += '<td>' + data[i].Brand + '</td>';
+                            }
+                            else {
+                                html += '<td></td>';
+                            }
+                            
+                            if (data[i].Size != null) {
+                                html += '<td>' + data[i].Size + '</td>';
+                            }
+                            else {
+                                html += '<td></td>';
+                            }
+                            
+                            
+                            html += '<td><div class="row"><div class="col-md-10"><textarea class="form-control" cols="20" id="KeyWord_'+data[i].ProductId+'" name="['+b+'].KeyWord" rows="2"></textarea></div><div class="col-md-2"><button type="button" id="modl" value="'+data[i].ProductId+'" class="modl"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/btnadd_row.png" style="height: 30px;"></button></div></div></td>';
+                            html += '</tr>';
+                            @*var table = $("#test table tbody tr").eq(0).clone(true);
+                            $("#UPCCode", table).html(data[i].UPCCode);
+                            $("#ItemNo", table).html(data[i].ItemNo);
+                            $("#Description", table).html(data[i].Description);
+                            $("#Brand", table).html(data[i].Brand);
+                            $("#Size", table).html(data[i].Size);
+                            $("#KeyWord").html( '<div class="row"><div class="col-md-10"><textarea class="form-control" cols="20" id="KeyWord_'+data[i].ProductId+'" name="['+b+'].KeyWord" rows="2"></textarea></div><div class="col-md-2"><button type="button" id="modl" value="'+data[i].ProductId+'" class="modl"><img src="@AdminSiteConfiguration.GetURL()Content/Admin/images/btnadd_row.png" style="height: 30px;"></button></div></div>')*@
+                            $("#test table tbody").append(html)
+                            
+                        }
+
+                        //$(".loading-container").hide();
+                    }
+                },
+                complete: function () {
+                      Loader(0);
+                                    },
+                error: function (xhr, ajaxOptions, thrownError) {
+                      Loader(0);
+                }
+            });
+        }
+    }
+
+
+    $(window).scroll(function () {
+
+        var scroll = $(window).scrollTop();
+
+        //>=, not <=
+        if (scroll >= 50) {
+            //clearHeader, not clearheader - caps H
+
+            $(".page-header-main").addClass("stikyheader");
+        } else {
+            $(".page-header-main").removeClass("stikyheader");
+        }
+    }); //missing );
+
+    $(document).ready(function () {
+
+        (function ($) {
+            $.fn.fixMe = function () {
+                return this.each(function () {
+                    
+                    var $this = $(this),
+                        $t_fixed;
+                    function init() {
+
+                        $this.wrap('<div class="" />');
+                        $t_fixed = $this.clone();
+                        $t_fixed.find("tbody").remove().end().addClass("fixeds").insertBefore($this);
+                        resizeFixed();
+                    }
+                    function resizeFixed() {
+                        $t_fixed.find("th").each(function (index) {
+                            $(this).css("width", $this.find("th").eq(index).outerWidth() + "px");
+                        });
+                    }
+                    function scrollFixed() {
+                        var offset = $(this).scrollTop(),
+                            tableOffsetTop = $this.offset().top,
+                            tableOffsetBottom = tableOffsetTop + $this.height() - $this.find("thead").height();
+                        if (offset < tableOffsetTop || offset > tableOffsetBottom)
+                            $t_fixed.hide();
+                        else if (offset >= tableOffsetTop && offset <= tableOffsetBottom && $t_fixed.is(":hidden"))
+                            $t_fixed.show();
+                    }
+                    $(window).resize(resizeFixed);
+                    $(window).scroll(scrollFixed);
+                    init();
+                });
+            };
+        })(jQuery);
+
+
+    });
+    $(document).ready(function () {
+        
+        $(".tbls").fixMe();
+
+    });
+</script>
+

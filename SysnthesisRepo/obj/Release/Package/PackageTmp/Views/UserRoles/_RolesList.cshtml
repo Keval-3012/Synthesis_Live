@@ -1,0 +1,1136 @@
+﻿@model List<EntityModels.Models.RightsStore>
+<style>
+    #table1 {
+        border: none;
+    }
+
+    .row1 {
+        padding-top: 5px;
+        border: 2px;
+    }
+
+    .col-md-1 {
+        width: 10%;
+    }
+
+    .LabelRoles {
+        padding-bottom: 10px;
+    }
+
+    hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .clsLeveldrp {
+        height: 30px !important;
+        padding: 2px 12px !important;
+    }
+
+    th {
+        padding: 2px 20px !important;
+    }
+
+    p {
+        font-size: small;
+        color: #e53939;
+    }
+
+    .selected {
+        background-color: lightblue !important;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    .sticky-thead {
+        position: sticky;
+        top: 0;
+        z-index: 9;
+    }
+
+    #dvRoles {
+        height: 750px;
+        overflow-y: scroll;
+    }
+</style>
+@if (Model.Count > 0)
+{
+    <table id="table1" class="table table-striped table-bordered bulk_action dataTable no-footer" style="width:100%;border:none">
+        <thead class="text-nowrap bg-primary sticky-thead" style="background: #56524b">
+            <tr>
+                <th>
+                    <label>Modules Name</label>
+                </th>
+                @foreach (var store in ViewBag.Stores)
+                {
+                    <th>
+                        <label> @store</label>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td colspan="30" style="color:darkred">
+                        @Html.HiddenFor(x => Model[i].ModuleName)
+                        @Html.HiddenFor(x => Model[i].ModuleId)
+                        @Html.HiddenFor(x => Model[i].UserTypeId)
+                        @Html.DisplayFor(modelItem => Model[i].ModuleDispName)
+                    </td>
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() != "Settings" && Model[i].ModuleName.Trim() != "TimeCard" && Model[i].ModuleName.Trim() != "Expense" && Model[i].ModuleName.Trim() != "ExpenseCheck" && Model[i].ModuleName.Trim() != "HRModule" && Model[i].ModuleName.Trim() != "HRSubModule" && Model[i].ModuleName.Trim() != "ProductScanApp")
+                    {
+                        <td>
+                            <label class="LabelRoles">View</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "View_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                            </td>
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "TimeCard")
+                    {
+                        <td>
+                            <label class="LabelRoles">View</label>
+                        </td>
+
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "View_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "View_" + Model[i].ModuleName;
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForViewTimeCard(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForViewTimeCard(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "Expense")
+                    {
+                        <td>
+                            <label class="LabelRoles">View</label>
+                        </td>
+
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "View_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "View_" + Model[i].ModuleName;
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForViewExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("View" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForViewExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document" || Model[i].ModuleName.Trim() == "QBVendor" || Model[i].ModuleName.Trim() == "QBDepartment" || Model[i].ModuleName.Trim() == "BulkUploadFile")
+                    {
+                        <td>
+                            <label class="LabelRoles">Create</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Create" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;" />
+                            </td>
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "TimeCard")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">Create</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "Create_" + Model[i].ModuleName;
+
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Create" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Create" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Create" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;" />
+                                }
+                            </td>
+
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "ExpenseCheck")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">All</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "All_" + Model[i].ModuleName;
+
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("All" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("All" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeexpenseall" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("All" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("All" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeexpenseall" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;" />
+                                }
+                            </td>
+
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document" || Model[i].ModuleName.Trim() == "QBVendor" || Model[i].ModuleName.Trim() == "QBDepartment")
+                    {
+                        <td>
+                            <label class="LabelRoles">Update</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Update" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "TimeCard")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">Update</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "Update_" + Model[i].ModuleName;
+
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Update" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Update" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Update" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;">
+                                }
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "ExpenseCheck")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">Include</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "Include_" + Model[i].ModuleName;
+
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Include" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Include" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeexpense" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Include" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Include" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeexpense" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;">
+                                }
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "Document")
+                    {
+                        <td>
+                            <label class="LabelRoles">Delete</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Delete" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "TimeCard")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">Delete</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "Delete_" + Model[i].ModuleName;
+
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Delete" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Delete" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Delete" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeval" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;">
+                                }
+                            </td>
+
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                    @if (Model[i].ModuleName.Trim() == "ExpenseCheck")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">Exclude</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            var ClassName1 = "Exclude_" + Model[i].ModuleName;
+
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Exclude" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Exclude" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeexpense" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Exclude" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageCheckboxForExpense(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("Exclude" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName @ClassName1 removeexpense" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: none;opacity: unset;">
+                                }
+                            </td>
+
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice" || Model[i].ModuleName.Trim() == "JournalEntries")
+                    {
+                        <td>
+                            <label class="LabelRoles">Approve</label>
+                            @if (Model[i].ModuleName.Trim() == "Invoice")
+                            {
+                                <p>Send for Approve to:</p><span>
+                                    @Html.DropDownList("RoleLevelId", null, "Self", htmlAttributes: new { @class = "form-control clsLeveldrp" })
+                                </span>
+                            }
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td style="text-align:center">
+                                <input type="checkbox" value="@("Approve" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Approve" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">No Need For Approval Invoice</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("nnfapproval" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("nnfapproval" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">No Need For Approval Credit Memo</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("nnfapprovalCrdMemo" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("nnfapprovalCrdMemo" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">Reject</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Reject" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Reject" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">OnHold</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("OnHold" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("OnHold" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">Display Dashboard QB Status</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("DispQBStatus" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("DispQBStatus" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">Create Split Invoice</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("CreateSplit" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("CreateSplit" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">Force QB Sync</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ForceQBSync" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ForceQBSync" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "Invoice")
+                    {
+                        <td>
+                            <label class="LabelRoles">Payment Status</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("PaymentStatus" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("PaymentStatus" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "DailyPOSFeeds" || Model[i].ModuleName.Trim() == "PayrollReports")
+                    {
+                        <td>
+                            <label class="LabelRoles">Upload</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Upload" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Upload" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "COGsReport" || Model[i].ModuleName.Trim() == "ExpenseReport")
+                    {
+                        <td>
+                            <label class="LabelRoles">Download</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Download" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Download" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "OperatingRatioReport" || Model[i].ModuleName.Trim() == "PayrollAnalysisReport" || Model[i].ModuleName.Trim() == "OperatingRatioDailyReport")
+                    {
+                        <td>
+                            <label class="LabelRoles">Export</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Export" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Export" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") @((ViewBag.userRoles.Contains("View" + Model[i].ModuleName.Trim() + storeId)) ? "" : "disabled=\"disabled\"") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "OperatingRatioReport" || Model[i].ModuleName.Trim() == "PayrollAnalysisReport" || Model[i].ModuleName.Trim() == "OperatingRatioDailyReport")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">All Tab</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "AllTab";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("AllTab" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("AllTab" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("AllTab" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("AllTab" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;">
+                                }
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "DailyDashboard")
+                    {
+                        <td>
+                            <label class="LabelRoles">View Bank Account Info</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewBAIF" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewBAIF" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    @if (Model[i].ModuleName.Trim() == "DailyDashboard" || Model[i].ModuleName.Trim() == "WeeklyDashboard" || Model[i].ModuleName.Trim() == "PeriodicDashboard")
+                    {
+                        var i1 = 0;
+                        var Count = Enumerable.Count(ViewBag.StoresIds);
+                        <td>
+                            <label class="LabelRoles">Dashboard All</label>
+                        </td>
+                        foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = Model[i].ModuleName.Trim();
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("ViewDashboard" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("ViewDashboard" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("ViewDashboard" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewDashboard" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;">
+                                }
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+
+                    }
+                </tr>
+                if (Model[i].ModuleName.Trim() == "Settings")
+                {
+                    var i1 = 0;
+                    var Count = Enumerable.Count(ViewBag.StoresIds);
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Company Group</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "CompGroup";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("CompGroup" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("CompGroup" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("CompGroup" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("CompGroup" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+
+                            </td>
+                            if (i1 == Count - 1)
+                            { i1 = 0; }
+                            else
+                            {
+                                i1 = i1 + 1;
+                            }
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Level Approver</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "LevelApprover";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("LevelApprover" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" onclick="ManageSettingsCheckbox(this);" id="SelectedRoles" @((ViewBag.userRoles.Contains("LevelApprover" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("LevelApprover" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("LevelApprover" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <label class="LabelRoles">Users</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Users";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Users" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("Users" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Users" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Users" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Store</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Store";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("Store" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("Store" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("Store" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Store" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Group Account</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "GroupAccount_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("GroupAccount" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("GroupAccount" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Tender Account</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "TenderAccount_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("TenderAccount" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("TenderAccount" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Payroll Account</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "GroupAccount_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("PayrollAccount" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("PayrollAccount" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">User Rights</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "UserRights";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("UserRights" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("UserRights" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("UserRights" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("UserRights" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Document Category</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "DocCategory";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("DocCategory" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("DocCategory" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("DocCategory" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("DocCategory" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Activity Log</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "ActivityLog";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("ActivityLog" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("ActivityLog" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("ActivityLog" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ActivityLog" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Expense Weekly Setting</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "ExpenseWeekly";
+                            <td class="text-align-center">
+                                @if (i1 == 0)
+                                {
+                                    <input type="checkbox" value="@("ViewExpenseWeekly" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" onclick="ManageSettingsCheckbox(this);" @((ViewBag.userRoles.Contains("ViewExpenseWeekly" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;"><span></span>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@("ViewExpenseWeekly" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewExpenseWeekly" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;display:none;"><span></span>
+                                }
+                            </td>
+                            if (i1 == Count - 1) { i1 = 0; }
+                            else { i1 = i1 + 1; }
+                        }
+                    </tr>
+                }
+                if (Model[i].ModuleName.Trim() == "HRModule")
+                {
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Manage Department</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewManageDepartment" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewManageDepartment" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Consent Status</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewConsentStatus" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewConsentStatus" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Employee List</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewEmployeeList" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewEmployeeList" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                }
+                if (Model[i].ModuleName.Trim() == "HRSubModule")
+                {
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Pay Rates</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewPayRates" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewPayRates" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Sick Times</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewSickTimes" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewSickTimes" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Vacation Times</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewVacationTimes" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewVacationTimes" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Insurance</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewInsurance" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewInsurance" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Documents</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewDocuments" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewDocuments" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Notes</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewNotes" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewNotes" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Training History</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("ViewTrainingHistory" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("ViewTrainingHistory" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                }
+
+                if (Model[i].ModuleName.Trim() == "CustomerModule")
+                {
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Create</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("CreateCustomers" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("CreateCustomers" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                }
+
+                if (Model[i].ModuleName.Trim() == "ExpenseCheck")
+                {
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Add Expense</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("AddExpense" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("AddExpense" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Update Expense</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("UpdateExpense" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("UpdateExpense" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Delete Expense</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("DeleteExpense" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("DeleteExpense" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Add Bulk Expenses</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("AddBulkExpenses" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("AddBulkExpenses" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Add Check</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("AddCheck" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("AddCheck" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Update Check</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("UpdateCheck" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("UpdateCheck" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Delete Check</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("DeleteCheck" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("DeleteCheck" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Print Check</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("Print" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("Print" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="LabelRoles">Add Bulk Checks</label>
+                        </td>
+                        @foreach (var storeId in ViewBag.StoresIds)
+                        {
+                            var ClassName = "Chk_" + Model[i].ModuleName + "_" + storeId;
+                            <td class="text-align-center">
+                                <input type="checkbox" value="@("AddBulkChecks" + Model[i].ModuleName.Trim() + "_" + storeId + "_" + Model[i].ModuleId)" name="SelectedRoles" id="SelectedRoles" @((ViewBag.userRoles.Contains("AddBulkChecks" + Model[i].ModuleName.Trim() + storeId)) ? "checked=\"checked\"" : "") class="Remember @ClassName" style="margin: 1px;position: initial;left: 3%;width: 26px;height: 22px;display: inline;opacity: unset;">
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+<script src="~/Form_JS/UserRoles.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>

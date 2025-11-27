@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E45B6303-554D-4964-8DDA-C90D24650E7C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Repository</RootNamespace>
+    <AssemblyName>Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.0.0\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.EJ2">
+      <HintPath>..\SysnthesisRepo\bin\Syncfusion.EJ2.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntesisApi">
+      <HintPath>..\SysnthesisRepo\bin\SyntesisApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExpenseAccountsRepository.cs" />
+    <Compile Include="GroupWiseStateStoreRepository.cs" />
+    <Compile Include="IRepository\IExpenseAccountsRepository.cs" />
+    <Compile Include="IRepository\IGroupWiseStateStoreRepository.cs" />
+    <Compile Include="UserActivityLogRepository.cs" />
+    <Compile Include="InvoiceMultithreadedProcessRepository.cs" />
+    <Compile Include="BankAccountsRepository.cs" />
+    <Compile Include="BulkUploadRepository.cs" />
+    <Compile Include="CheckListExpenseRepository.cs" />
+    <Compile Include="CommonRepository.cs" />
+    <Compile Include="ConfigurationRepository.cs" />
+    <Compile Include="CustomerInfoRepository.cs" />
+    <Compile Include="CustomerReciptRepository.cs" />
+    <Compile Include="DashboardRepository.cs" />
+    <Compile Include="DeleteHourlyFilesRepository.cs" />
+    <Compile Include="ChartofAccountsRepository.cs" />
+    <Compile Include="DocumentCategoriesRepository.cs" />
+    <Compile Include="DocumentsRepository.cs" />
+    <Compile Include="ExpenseReportRepository.cs" />
+    <Compile Include="ExpenseWeeklySettingRepository.cs" />
+    <Compile Include="GroupAccountMasterRepository.cs" />
+    <Compile Include="CompanyGroupsRepository.cs" />
+    <Compile Include="HRAdminsRepository.cs" />
+    <Compile Include="HRConsentMastersRepository.cs" />
+    <Compile Include="HRDepartmentRepository.cs" />
+    <Compile Include="HREmployeeRepository.cs" />
+    <Compile Include="HREmployeeTrainingRepository.cs" />
+    <Compile Include="HRStoreManagersRepository.cs" />
+    <Compile Include="HRTrainingRepository.cs" />
+    <Compile Include="InvoicePreviewRepository.cs" />
+    <Compile Include="InvoiceRepository.cs" />
+    <Compile Include="IRepository\IUserActivityLogRepository.cs" />
+    <Compile Include="IRepository\IInvoiceMultithreadedProcessRepository.cs" />
+    <Compile Include="IRepository\IBankAccountsRepository.cs" />
+    <Compile Include="IRepository\IBulkUploadRepository.cs" />
+    <Compile Include="IRepository\ICheckListExpenseRepository.cs" />
+    <Compile Include="IRepository\ICommonRepository.cs" />
+    <Compile Include="IRepository\IConfigurationRepository.cs" />
+    <Compile Include="IRepository\ICustomerInfoRepository.cs" />
+    <Compile Include="IRepository\ICustomerRecipt.cs" />
+    <Compile Include="IRepository\IDashboardRepository.cs" />
+    <Compile Include="IRepository\IDeleteHourlyFilesRepository.cs" />
+    <Compile Include="IRepository\IChartofAccountsRepository.cs" />
+    <Compile Include="IRepository\IDocumentCategoriesRepository.cs" />
+    <Compile Include="IRepository\IDocumentsRepository.cs" />
+    <Compile Include="IRepository\IExpenseReportRepository.cs" />
+    <Compile Include="IRepository\IExpenseWeeklySettingRepository.cs" />
+    <Compile Include="IRepository\IGroupAccountMasterRepository.cs" />
+    <Compile Include="IRepository\ICompanyGroupsRepository.cs" />
+    <Compile Include="IRepository\IHRAdminsRepository.cs" />
+    <Compile Include="IRepository\IHRConsentMastersRepository.cs" />
+    <Compile Include="IRepository\IHRDepartmentRepository.cs" />
+    <Compile Include="IRepository\IHREmployeeRepository.cs" />
+    <Compile Include="IRepository\IHREmployeeTrainingRepository.cs" />
+    <Compile Include="IRepository\IHRStoreManagersRepository.cs" />
+    <Compile Include="IRepository\IHRTrainingRepository.cs" />
+    <Compile Include="IRepository\IInvoicePreviewRepository.cs" />
+    <Compile Include="IRepository\IInvoiceRepository.cs" />
+    <Compile Include="IRepository\IItemMovementRepository.cs" />
+    <Compile Include="IRepository\IJournalEntriesRepository.cs" />
+    <Compile Include="IRepository\IInvoiceApprovalLevelsRepository.cs" />
+    <Compile Include="IRepository\ILineItemRepository.cs" />
+    <Compile Include="IRepository\ICameraFeedsArchiveRepository.cs" />
+    <Compile Include="IRepository\ILoginRepository.cs" />
+    <Compile Include="IRepository\IManageIPAddressRepository.cs" />
+    <Compile Include="IRepository\IMastersBindRepository.cs" />
+    <Compile Include="IRepository\IMessageMasterRepository.cs" />
+    <Compile Include="IRepository\INotificationReportRepository.cs" />
+    <Compile Include="IRepository\IPayrollAccountRepository.cs" />
+    <Compile Include="IRepository\IPDFReadRepository.cs" />
+    <Compile Include="IRepository\IProductMappingLogRepository.cs" />
+    <Compile Include="IRepository\IProductMappingsRepository.cs" />
+    <Compile Include="IRepository\IProductPriceRepository.cs" />
+    <Compile Include="IRepository\IQBRepository.cs" />
+    <Compile Include="IRepository\IReportRepository.cs" />
+    <Compile Include="IRepository\ISellPriceRepository.cs" />
+    <Compile Include="IRepository\ICompaniesRepository.cs" />
+    <Compile Include="IRepository\ISynthesisApiRepository.cs" />
+    <Compile Include="IRepository\ITerminalRepository.cs" />
+    <Compile Include="IRepository\ITopsellerPriceRepository.cs" />
+    <Compile Include="IRepository\IUserLogRepository.cs" />
+    <Compile Include="IRepository\IUserMastersRepository.cs" />
+    <Compile Include="IRepository\IUserRolesRepository.cs" />
+    <Compile Include="IRepository\IUserTypeRepository.cs" />
+    <Compile Include="IRepository\IVendorMasterRepository.cs" />
+    <Compile Include="IRepository\IWebRoleProviderRepository.cs" />
+    <Compile Include="ItemMovementRepository.cs" />
+    <Compile Include="JournalEntriesRepository.cs" />
+    <Compile Include="InvoiceApprovalLevelsRepository.cs" />
+    <Compile Include="LineItemRepository.cs" />
+    <Compile Include="CameraFeedsArchiveRepository.cs" />
+    <Compile Include="LoginRepository.cs" />
+    <Compile Include="ManageIPAddressRepository.cs" />
+    <Compile Include="MastersBindRepository.cs" />
+    <Compile Include="MessageMasterRepository.cs" />
+    <Compile Include="NotificationReportRepository.cs" />
+    <Compile Include="PayrollAccountRepository.cs" />
+    <Compile Include="PDFReadRepository.cs" />
+    <Compile Include="ProductMappingLogRepository.cs" />
+    <Compile Include="ProductMappingsRepository.cs" />
+    <Compile Include="ProductPriceRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QBRepository.cs" />
+    <Compile Include="ReportRepository.cs" />
+    <Compile Include="SellPriceRepository.cs" />
+    <Compile Include="CompaniesRepository.cs" />
+    <Compile Include="SynthesisApiRepository.cs" />
+    <Compile Include="TerminalRepository.cs" />
+    <Compile Include="TopsellerPriceRepository.cs" />
+    <Compile Include="UserLogRepository.cs" />
+    <Compile Include="UserMastersRepository.cs" />
+    <Compile Include="UserRolesRepository.cs" />
+    <Compile Include="UserTypeRepository.cs" />
+    <Compile Include="VendorMasterRepository.cs" />
+    <Compile Include="WebRoleProviderRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EntityModels\EntityModels.csproj">
+      <Project>{bb5246d8-6f02-495d-8628-7535a89fac41}</Project>
+      <Name>EntityModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SynthesisQBOnline\SynthesisQBOnline.csproj">
+      <Project>{008ec2bf-0ea9-46c2-86a7-1799edfc11d2}</Project>
+      <Name>SynthesisQBOnline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SynthesisViewModal\SynthesisViewModal.csproj">
+      <Project>{3f31bedb-370a-4db0-8e7b-09e6651e7b35}</Project>
+      <Name>SynthesisViewModal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{8AD24E48-618E-445A-8514-583110ADDC49}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

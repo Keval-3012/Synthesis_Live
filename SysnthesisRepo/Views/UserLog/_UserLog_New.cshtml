@@ -1,0 +1,63 @@
+﻿@using Syncfusion.EJ2
+@using Utility
+
+
+<div class="childgrid">
+    @{
+
+        var ChildGrid = new Syncfusion.EJ2.Grids.Grid()
+        {
+            DataSource = new DataManager() { Url = "/UserLog/UrlDatasourceChildList_New", Adaptor = "UrlAdaptor" },
+            AllowSorting = true,
+            QueryString = "AllData",
+            RowDataBound = "rowData",
+            FilterSettings = new Syncfusion.EJ2.Grids.GridFilterSettings() { Type = Syncfusion.EJ2.Grids.FilterType.CheckBox },
+            Columns = new List<Syncfusion.EJ2.Grids.GridColumn>
+             {
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="LandingDate", HeaderText="Date/Time",Width="30" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Action", HeaderText="Action" ,Template="#template1",  Width="10"},
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Message", HeaderText="Message", Width="60",Template="#template3" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ModuleName", HeaderText="ModuleName",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="InvoiceID", HeaderText="InvoiceID",Visible = false },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ProductId", HeaderText="ProductId",Visible = false },
+             },
+        };
+    }
+</div>
+
+<div class="control-section">
+    @Html.EJS().Grid("InlineEditingCopy").AllowSorting().DataSource(dm => dm.Url("/UserLog/UrlDatasourceUnmapped_New").Adaptor("UrlAdaptor")).AllowTextWrap().Columns(col =>
+{
+    col.Field("AllData").HeaderText("AllData").Visible(false).Add();
+    col.Field("ModuleName").HeaderText("Module").Template("#template2").Width("20%").Add();
+    col.Field("LandingDate").HeaderText("ActivityDate").Width("20%").Add();
+    col.Field("StartTime").HeaderText("StartTime").Width("20%").Add();
+    col.Field("EndTime").HeaderText("EndTime").Width("20%").Add();
+    col.Field("TotalTimeSpent").HeaderText("Total Time Spent").Width("20%").Add();
+    //col.Field("Action").HeaderText("Action").Width("20%").Add();
+    
+}).Toolbar(new List<string>() { "PdfExport", "ExcelExport" }).ToolbarClick("toolbarClicks").RowDataBound("rowData").Load("OnLoad").ChildGrid(ChildGrid).AllowPaging().AllowPdfExport().PdfExportComplete("pdfExportComplete").AllowExcelExport().ExcelExportComplete("excelExportComplete").PageSettings(page => { page.PageCount(2).PageSize(100); }).Render()
+</div>
+<script id="template2" type="text/x-template">
+    <span class="${ModuleName}">${ModuleName}</span>
+</script>
+<script id="template3" type="text/x-template">
+    ${if(InvoiceID != "0")}
+    <a target="_blank" href="@(Url.Action("Details","Invoices"))/${InvoiceID}">${Message}</a>
+    ${/if}
+
+    ${if(ProductId != "0")}
+    <a target="_blank" href="@(Url.Action("ProductDetailLineItem","LineItem"))/${ProductId}">${Message}</a>
+    ${/if}
+
+    ${if(InvoiceID == "0" && ProductId == "0")}
+    <span>${Message}</span>
+    ${/if}
+</script>
+<script id="template1" type="text/x-template">
+    <span class="${Action}">${Action}</span>
+</script>
+
+@Html.EJS().ScriptManager()
+
+

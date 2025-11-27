@@ -1,0 +1,232 @@
+﻿@using Syncfusion.EJ2
+@model IEnumerable<EntityModels.Models.ProductsList>
+@{
+    List<EntityModels.Models.productVendorAllList> lstProductVendor = new List<EntityModels.Models.productVendorAllList>();
+    lstProductVendor = ViewBag.lstProductVendor;
+    //EntityModels.Models.ViewBag ViewBag = new EntityModels.Models.ViewBag();
+    //ViewBag = ViewBag.ViewBag;
+}
+<style>
+    #ajax_dialog_dialog-header {
+        padding: 0px !important;
+    }
+
+    .e-dialog .e-dlg-header {
+        width: 100%;
+    }
+
+    .heading {
+        color: white;
+        font-size: 16px;
+    }
+</style>
+<form>
+
+    <div class="popupBackdrop">
+        <div class="lineItemPopupContainer">
+            <div class="lineItempopUpHeader">
+                <h1 style="color:#000;">Map Line Item</h1>
+                <button type="button" onclick="dialogObj.hide()" class="closeButton">x</button>
+            </div>
+            <div class="yourMappingItem">
+                <a href="#" onclick="AddtoLibrary()" class="addtoLibraryLink">+ Add to Library</a>
+                <li class="fullWidthItemRow">
+                    <span class="feildLabel">Item</span>
+                    <span class="feildData">@ViewBag.Description</span>
+                </li>
+                @if (ViewBag.UPCCode != null && ViewBag.UPCCode != "")
+                {
+                    <li>
+                        <span class="feildLabel">UPC</span>
+                        <span class="feildData">@ViewBag.UPCCode</span>
+                    </li>
+                }
+                @if (ViewBag.ItemNo != null && ViewBag.ItemNo != "")
+                {
+                    <li>
+                        <span class="feildLabel">Item No</span>
+                        <span class="feildData">@ViewBag.ItemNo</span>
+                    </li>
+                }
+                <input type="hidden" id="Description" name="Description" value="@ViewBag.Description" />
+                <input type="hidden" id="upccode" name="upccode" value="@ViewBag.UPCCode" />
+                <input type="hidden" id="itemno" name="itemno" value="@ViewBag.ItemNo" />
+                <input type="hidden" id="hdnInvoiceProductId" name="hdnInvoiceProductId" value="@ViewBag.InvoiceProductId" />
+                <input type="hidden" id="hdnInvoiceId" name="hdnInvoiceId" value="@ViewBag.InvoiceId" />
+                <input type="hidden" id="hdnddlProductID" name="hdnddlProductID" value="" />
+                <input type="hidden" id="hdnddlProductVendorID" name="hdnddlProductVendorID" value="" />
+            </div>
+
+            <div>
+
+            </div>
+            <div id="MapContent" class="itemsGridPlaceHolder">
+
+                <input placeholder="search" type="text" id="search" name="search" value="@ViewBag.search" class="searchTextBox" />
+                <div class="masterGridContainer">
+
+                    <div class="gridHeader">
+                        <span>Items - [Master Items Library]</span>
+
+                    </div>
+                    <ul class="recommendedItemsGridHeader">
+                        <li>UPC Code</li>
+                        <li>Item No</li>
+                        <li>Generic No</li>
+                        <li>Description</li>
+                        <li>Brand</li>
+                        <li>Size</li>
+                        <li>Action</li>
+                    </ul>
+                    <div class="lineItemsgridData">
+                        @if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                int VendListcont = 0;
+                                int VendListID = 0;
+                                if (lstProductVendor.Count() > 0)
+                                {
+                                    if (!string.IsNullOrEmpty(item.UPCCode))
+                                    {
+                                        //VendListcont = lstProductVendor.Where(p => p.UPCCode == item.UPCCode).Count();
+                                        var VendList = lstProductVendor.Where(p => p.UPCCode == item.UPCCode).ToList();
+                                        VendListcont = VendList.Count();
+                                        if (VendListcont > 0)
+                                        {
+                                            VendListID = VendList.FirstOrDefault().ProductVendorId;
+                                        }
+                                    }
+
+                                    if (VendListcont == 0 && !string.IsNullOrEmpty(item.ItemNo))
+                                    {
+                                        //VendListcont = lstProductVendor.Where(p => p.ItemNo == item.ItemNo).Count();
+                                        var VendList = lstProductVendor.Where(p => p.ItemNo == item.ItemNo).ToList();
+                                        VendListcont = VendList.Count();
+                                        if (VendListcont > 0)
+                                        {
+                                            VendListID = VendList.FirstOrDefault().ProductVendorId;
+                                        }
+                                    }
+                                }
+
+                                <ul @((Model.Count() > 0 && VendListcont > 0) ? "onclick=FNselectProduct('" + item.ProductId + "','" + VendListID + "',0)" : "") id="recommendedItemlst_@item.ProductId" class="recommendedItemsGrid TempProduct">
+                                    <li>@((!string.IsNullOrEmpty(item.UPCCode))? item.UPCCode  : "" )</li>
+                                    <li>@((!string.IsNullOrEmpty(item.ItemNo))? item.ItemNo : "" )</li>
+                                    <li>@((!string.IsNullOrEmpty(item.GenericID))? item.GenericID : "" )</li>
+                                    <li>@item.Description</li>
+                                    <li>@item.Brand</li>
+                                    <li>@item.Size</li>
+                                    <li>
+                                        @if (Model.Count() > 0 && VendListcont > 0)
+                                        {
+                                            <a href="#">Map</a>
+                                        }
+                                        else
+                                        {
+                                            <a onclick="MapandsyncItem('@item.ProductId',0)" href="#">Map & Sync</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="vendorGridContainer">
+
+                    <div class="gridHeader">
+                        <span>Vendor's Items</span>
+
+                    </div>
+                    <ul class="recommendedItemsGridHeader">
+                        <li>UPC Code</li>
+                        <li>Item No</li>
+                        <li>Description</li>
+                        <li>Brand</li>
+                        <li>Size</li>
+                        <li>Action</li>
+                    </ul>
+                    <div class="lineItemsgridData">
+                        @if (lstProductVendor.Count() > 0)
+                        {
+                            foreach (var item in lstProductVendor)
+                            {
+                                int ProductListcont = 0;
+                                int ProductListID = 0;
+                                if (lstProductVendor.Count() > 0)
+                                {
+                                    if (!string.IsNullOrEmpty(item.UPCCode))
+                                    {
+                                        //ProductListcont = Model.Where(p => p.UPCCode == item.UPCCode).Count();
+                                        var VendList = Model.Where(p => p.UPCCode == item.UPCCode).ToList();
+                                        ProductListcont = VendList.Count();
+                                        if (ProductListcont > 0)
+                                        {
+                                            ProductListID = VendList.FirstOrDefault().ProductId;
+                                        }
+                                    }
+
+                                    if (ProductListcont == 0 && !string.IsNullOrEmpty(item.ItemNo))
+                                    {
+                                        //ProductListcont = Model.Where(p => p.ItemNo == item.ItemNo).Count();
+                                        var VendList = Model.Where(p => p.ItemNo == item.ItemNo).ToList();
+                                        ProductListcont = VendList.Count();
+                                        if (ProductListcont > 0)
+                                        {
+                                            ProductListID = VendList.FirstOrDefault().ProductId;
+                                        }
+                                    }
+                                }
+                                <ul @((lstProductVendor.Count() > 0 && ProductListcont > 0) ? "onclick=FNselectProduct('" + ProductListID + "','" + item.ProductVendorId + "',1)" : "") id="recommendedVendorItemlst_@item.ProductVendorId" class="recommendedItemsGrid TempVendorProduct">
+                                    <li>@((!string.IsNullOrEmpty(item.UPCCode))? item.UPCCode : "" )</li>
+                                    <li>@((!string.IsNullOrEmpty(item.ItemNo))? item.ItemNo : "" )</li>
+                                    <li>@item.Description</li>
+                                    <li>@item.Brand</li>
+                                    <li>@item.Size</li>
+                                    <li>
+                                        @if (lstProductVendor.Count() > 0 && ProductListcont > 0)
+                                        {
+                                            <a href="#">Map</a>
+                                        }
+                                        else
+                                        {
+                                            <a onclick="MapandsyncItem('@item.ProductId',1)" href="#">Map & Sync</a>
+                                        }
+                                    </li>
+                                </ul>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="directionRow">
+                    <button type="button" onclick="AssignProduct()" class="addAndMapBtn">Save and Map</button>
+                    <button type="button" onclick="dialogObj.hide()" class="cancelMapBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@Html.EJS().ScriptManager()
+<script>
+
+    $(document).ready(function () {
+        //$("form").bind("keypress", function (e) {
+        //    if (e.keyCode == 13) {
+        //        FillSearchItemData();
+        //        return false;
+        //    }
+        //});
+
+        $("#search").keypress(function (event) {
+            if (event.which === 13) {
+                FillSearchItemData();
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

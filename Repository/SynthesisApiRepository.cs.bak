@@ -1,0 +1,618 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Text;
+using System.Web;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+//using RestSharp;
+using SynthesisQBOnline.BAL;
+using Newtonsoft.Json;
+//using Org.BouncyCastle.Asn1.Ocsp;
+//using System.Web.Mvc;
+//using Antlr.Runtime.Misc;
+using System.Data;
+using EntityModels.Models;
+using Repository.IRepository;
+using NLog;
+
+namespace Repository
+{
+    public class SynthesisApiRepository : ISynthesisApiRepository
+    {
+        Logger logger = LogManager.GetCurrentClassLogger();
+
+        public SynthesisApiRepository()
+        {
+        }
+
+        public async Task<string> PosttData(string UserName, string Password)
+        {
+            string Response = "", accessToken = "";
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/token");
+                var collection = new List<KeyValuePair<string, string>>();
+                collection.Add(new KeyValuePair<string, string>("username", UserName));
+                collection.Add(new KeyValuePair<string, string>("password", Password));
+                collection.Add(new KeyValuePair<string, string>("grant_type", "password"));
+                var content = new FormUrlEncodedContent(collection);
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                Response = await response.Content.ReadAsStringAsync();
+
+                JObject jsonObject = JObject.Parse(Response);
+                // Get the value of "access_token"
+                accessToken = (string)jsonObject["access_token"];
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - PosttData - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return accessToken;
+        }
+        public void CreateLog(clsActivityLog clsActivityLog)
+        {
+            try
+            {
+                if (clsActivityLog.PageName != "" && clsActivityLog.ModuleName != "" && clsActivityLog.Action != "")
+                {
+                    var jsonString = JsonConvert.SerializeObject(clsActivityLog);
+                    var client = new HttpClient();
+                    var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/api/Log/Write");
+                    request.Headers.Add("Authorization", $"Bearer {Convert.ToString(HttpContext.Current.Session["UserAccessTokan"])}");
+                    var content = new StringContent(jsonString, null, "application/json");
+                    request.Content = content;
+                    var response = client.SendAsync(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - CreateLog - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+        }
+        public clsActivityLog GetActivityDetails(string controllerName, string actionName)
+        {
+            clsActivityLog clsActivityLog = new clsActivityLog();
+            try
+            {
+                switch (controllerName.ToUpper())
+                {
+                    case "DASHBOARD":
+                        switch (actionName.ToUpper())
+                        {
+                            case "DAILY":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Daily Dashbord";
+                                break;
+                            case "WEEKLY":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Weekly Dashbord";
+                                break;
+                            case "PERIODIC":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Periodic Dashbord";
+                                break;
+                            case "YEARLY":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Yearly Dashbord";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "INVOICES":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Invoice";
+                                clsActivityLog.PageName = "Invoices Data";
+                                break;
+                            case "INDEXBETA":
+                                clsActivityLog.ModuleName = "Invoice";
+                                clsActivityLog.PageName = "View Invoices Beta";
+                                break;
+                            case "CREATE":
+                                clsActivityLog.ModuleName = "Invoice";
+                                clsActivityLog.PageName = "Add Invoice";
+                                break;
+                            case "CREATESPLITINVOICE":
+                                clsActivityLog.ModuleName = "Invoice";
+                                clsActivityLog.PageName = "Add Split Invoice";
+                                break;
+                            case "VIEWINVOICE":
+                                clsActivityLog.ModuleName = "Invoice";
+                                clsActivityLog.PageName = "Invoice File Read";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        // code block
+                        break;
+                    case "PRODUCTPRICE":
+                        switch (actionName.ToUpper())
+                        {
+                            case "PRODUCTPRICE":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Cost Price Comparison";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        // code block
+                        break;
+                    case "SELLPRICE":
+                        switch (actionName.ToUpper())
+                        {
+                            case "SELLPRICE":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Sales Price Comparison";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        // code block
+                        break;
+                    case "TOPSELLERPRICE":
+                        switch (actionName.ToUpper())
+                        {
+                            case "TOPSELLERPRICE":
+                                clsActivityLog.ModuleName = "Dashboard";
+                                clsActivityLog.PageName = "Top Seller Items";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        // code block
+                        break;
+                    case "BULKUPLOADFILE":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Invoice";
+                                clsActivityLog.PageName = "Add Bulk Invoice";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "PRODUCTMAPPINGS":
+                        switch (actionName.ToUpper())
+                        {
+                            case "IMPORTPRODUCTEXCEL":
+                                clsActivityLog.ModuleName = "Inventory";
+                                clsActivityLog.PageName = "Items Library";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        // code block
+                        break;
+                    case "INVOICEPREVIEW":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Inventory";
+                                clsActivityLog.PageName = "Vendor Product Lists";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "LINEITEM":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Inventory";
+                                clsActivityLog.PageName = "Line Items";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "ITEMMOVEMENT":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Inventory";
+                                clsActivityLog.PageName = "Items Movement Reports";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "EXPENSECHECKSETTING":
+                        switch (actionName.ToUpper())
+                        {
+                            case "EXPENSECHECKINDEXNEW":
+                                clsActivityLog.ModuleName = "Expense";
+                                clsActivityLog.PageName = "Expense";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "EXPENSEWEEKLYSETTING":
+                        switch (actionName.ToUpper())
+                        {
+                            case "HOMEEXPENSEINDEXNEW":
+                                clsActivityLog.ModuleName = "Expense";
+                                clsActivityLog.PageName = "Home some Expenses";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "CHECKLISTEXPENSE":
+                        switch (actionName.ToUpper())
+                        {
+                            case "CHECKLISTINDEXNEW":
+                                clsActivityLog.ModuleName = "Expense";
+                                clsActivityLog.PageName = "Uncleared Checks";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "PDFREAD":
+                        switch (actionName.ToUpper())
+                        {
+                            case "CREATE":
+                                clsActivityLog.ModuleName = "Payroll";
+                                clsActivityLog.PageName = "Payroll Files";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "MANAGEIPADDRESS":
+                        switch (actionName.ToUpper())
+                        {
+                            case "USERTIMEHOURSE":
+                                clsActivityLog.ModuleName = "Payroll";
+                                clsActivityLog.PageName = "Employee Timecards";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "REPORT":
+                        switch (actionName.ToUpper())
+                        {
+                            case "SALESSUMMARYREPORT":
+                                clsActivityLog.ModuleName = "Report";
+                                clsActivityLog.PageName = "Sales Summary Report";
+                                break;
+                            case "OPERATINGRATIOREPORT":
+                                clsActivityLog.ModuleName = "Report";
+                                clsActivityLog.PageName = "Operating Ratio Report";
+                                break;
+                            case "PAYROLLANALYSISREPORT":
+                                clsActivityLog.ModuleName = "Report";
+                                clsActivityLog.PageName = "Payroll Analysis Report";
+                                break;
+                            case "DAILYPOSFEEDS":
+                                clsActivityLog.ModuleName = "Registers";
+                                clsActivityLog.PageName = "Daily POS Feeds";
+                                break;
+                            case "PAYROLLEXPENSE":
+                                clsActivityLog.ModuleName = "Registers";
+                                clsActivityLog.PageName = "Payroll Expenses";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "INVOICEREPORT":
+                        switch (actionName.ToUpper())
+                        {
+                            case "SALESSUMMARYREPORT":
+                                clsActivityLog.ModuleName = "Report";
+                                clsActivityLog.PageName = "COGS/Bills Report";
+                                break;
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Report";
+                                clsActivityLog.PageName = "COGS/Bills Report";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "EXPENSEREPORT":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Report";
+                                clsActivityLog.PageName = "Expense Report";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "DEPARTMENTMASTERS":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "QuickBooks";
+                                clsActivityLog.PageName = "Departments";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "DELETEHOURLYFILES":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Registers";
+                                clsActivityLog.PageName = "Hourly POS feeds";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "DOCUMENTS":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Documents";
+                                clsActivityLog.PageName = "Documents";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "TERMINAL":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Registers";
+                                clsActivityLog.PageName = "Shifts/Registers Close Out";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "JOURNALENTRIES":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "Registers";
+                                clsActivityLog.PageName = "Journal Entries";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "VENDORMASTERS":
+                        switch (actionName.ToUpper())
+                        {
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "QuickBooks";
+                                clsActivityLog.PageName = "Vendors";
+                                break;
+                            case "MERGEVENDOR":
+                                clsActivityLog.ModuleName = "QuickBooks";
+                                clsActivityLog.PageName = "Merge Vendors";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    case "QBCONFIGURATION":
+                        switch (actionName.ToUpper())
+                        {
+                            case "QBSYNCONLINEDATA":
+                                clsActivityLog.ModuleName = "QuickBooks";
+                                clsActivityLog.PageName = "QuickBooks sync start/stop";
+                                break;
+                            case "INDEX":
+                                clsActivityLog.ModuleName = "QuickBooks";
+                                clsActivityLog.PageName = "QuickBooks Configuration";
+                                break;
+                            default:
+                                // code block
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - GetActivityDetails - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return clsActivityLog;
+        }
+        public void LogEntry(string controller, string action, bool? IsReload = null)
+        {
+            try
+            {
+                clsActivityLog clsActivityLog = new clsActivityLog();
+                if (controller != null && action != null)
+                {
+                    clsActivityLog = GetActivityDetails(controller, action);
+                    if (clsActivityLog.ModuleName != null)
+                    {
+                        if (HttpContext.Current.Session != null && HttpContext.Current.Session["UserId"] != null)
+                        {
+                            if (IsReload != null)
+                            {
+                                if (IsReload == true)
+                                {
+                                    clsActivityLog.Message = "Reload " + clsActivityLog.PageName;
+                                    clsActivityLog.CreatedBy = Convert.ToInt32(HttpContext.Current.Session["UserId"]);
+                                    clsActivityLog.Action = "Reload";
+                                    CreateLog(clsActivityLog);
+                                }
+                                else
+                                {
+                                    clsActivityLog.Message = "Opened " + clsActivityLog.PageName;
+                                    clsActivityLog.CreatedBy = Convert.ToInt32(HttpContext.Current.Session["UserId"]);
+                                    clsActivityLog.Action = "Opened";
+                                    CreateLog(clsActivityLog);
+                                }
+                            }
+                            else
+                            {
+                                clsActivityLog.Message = "Opened " + clsActivityLog.PageName;
+                                clsActivityLog.CreatedBy = Convert.ToInt32(HttpContext.Current.Session["UserId"]);
+                                clsActivityLog.Action = "Opened";
+                                CreateLog(clsActivityLog);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - LogEntry - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+        }
+        public async Task<DataTable> GetUserLogDetails(UserLogDetails UserLogDetails)
+        {
+            string Response = "";
+            DataTable dt = new DataTable();
+            try
+            {
+                var jsonString = JsonConvert.SerializeObject(UserLogDetails);
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/api/Log/GetUserLogDetails");
+                request.Headers.Add("Authorization", $"Bearer {Convert.ToString(HttpContext.Current.Session["UserAccessTokan"])}");
+                var content = new StringContent(jsonString, null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                Response = await response.Content.ReadAsStringAsync();
+                dt = (DataTable)JsonConvert.DeserializeObject(Response, (typeof(DataTable)));
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - GetUserLogDetails - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return dt;
+        }
+
+        public async Task<string> GetUser()
+        {
+            string Response = "";
+            string UserId = "";
+            DataTable dt = new DataTable();
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/api/Log/GetUserName");
+                request.Headers.Add("Authorization", $"Bearer {Convert.ToString(HttpContext.Current.Session["UserAccessTokan"])}");
+                var content = new StringContent("", null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                Response = await response.Content.ReadAsStringAsync();
+                dt = (DataTable)JsonConvert.DeserializeObject(Response, (typeof(DataTable)));
+                UserId = dt.Rows[0]["UserList"].ToString();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - GetUser - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return UserId;
+        }
+
+        public async Task<DataSet> GetModuleandAction()
+        {
+            string Response = "";
+            DataSet dt = new DataSet();
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/api/Log/GetModuleandActionName");
+                request.Headers.Add("Authorization", $"Bearer {Convert.ToString(HttpContext.Current.Session["UserAccessTokan"])}");
+                var content = new StringContent("", null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                Response = await response.Content.ReadAsStringAsync();
+                dt = (DataSet)JsonConvert.DeserializeObject(Response, (typeof(DataSet)));
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - GetModuleandAction - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return dt;
+        }
+
+        public async Task<DataTable> GetUserLogDetailsNew(UserLogDetails UserLogDetails)
+        {
+            string Response = "";
+            DataTable dt = new DataTable();
+            try
+            {
+                var jsonString = JsonConvert.SerializeObject(UserLogDetails);
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/api/Log/GetuserDetailsNew");
+                request.Headers.Add("Authorization", $"Bearer {Convert.ToString(HttpContext.Current.Session["UserAccessTokan"])}");
+                var content = new StringContent(jsonString, null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                Response = await response.Content.ReadAsStringAsync();
+                dt = (DataTable)JsonConvert.DeserializeObject(Response, (typeof(DataTable)));
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - GetUserLogDetailsNew - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return dt;
+        }
+
+        public async Task<DataTable> GetUserLogDetailsNewChild(UserLogDetails UserLogDetails)
+        {
+            string Response = "";
+            DataTable dt = new DataTable();
+            try
+            {
+                var jsonString = JsonConvert.SerializeObject(UserLogDetails);
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, ConfigurationManager.AppSettings["ApiUrl"].ToString() + "/api/Log/GetuserDetailsNewChild");
+                request.Headers.Add("Authorization", $"Bearer {Convert.ToString(HttpContext.Current.Session["UserAccessTokan"])}");
+                var content = new StringContent(jsonString, null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                Response = await response.Content.ReadAsStringAsync();
+                dt = (DataTable)JsonConvert.DeserializeObject(Response, (typeof(DataTable)));
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SynthesisApiRepository - GetUserLogDetailsNewChild - " + DateTime.Now + " - " + ex.Message.ToString());
+            }
+            return dt;
+        }
+    }
+}

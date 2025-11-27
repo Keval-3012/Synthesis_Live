@@ -1,0 +1,1634 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .header {
+        color: black;
+        font-size: 35px;
+        margin: 0px;
+    }
+
+    .change {
+        color: black !important;
+        text-decoration: unset;
+    }
+
+    .tooltipTop {
+        display: inline-block;
+        position: relative;
+        border-bottom: 1px dotted #666;
+        text-align: left;
+    }
+
+        .tooltipTop .top {
+            min-width: 100px;
+            transform: translate(-50%, -100%);
+            padding: 10px 20px;
+            color: #444444;
+            background-color: #EEEEEE;
+            font-weight: normal;
+            font-size: 13px;
+            border-radius: 8px;
+            position: fixed;
+            z-index: 99999;
+            box-sizing: border-box;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            display: none;
+        }
+
+        .tooltipTop:hover .top {
+            display: block;
+        }
+
+        .tooltipTop .top i {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -12px;
+            width: 24px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+            .tooltipTop .top i::after {
+                content: '';
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                left: 50%;
+                transform: translate(-50%,-50%) rotate(45deg);
+                background-color: #EEEEEE;
+                box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+            }
+
+    .greybox {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: var(--light-gray-color);
+        margin-left: 7px;
+    }
+
+    .Green01box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #80D900;
+        margin-left: 7px;
+    }
+
+    .Red01box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #FF6D6D;
+        margin-left: 7px;
+    }
+
+    .Green02box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #538B00;
+        margin-left: 7px;
+        color: white !important;
+    }
+
+    .Green021box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #ff0000;
+        margin-left: 7px;
+        color: white !important;
+    }
+
+    .Red02box {
+        padding: 8px 8px;
+        border-radius: 7px;
+        background: #E70000;
+        margin-left: 7px;
+        color: white !important;
+    }
+
+    .selectedFilterColor {
+        border: 5px solid;
+        border-color: black;
+    }
+
+    .e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
+        /* background-color: red; */
+        /* border-color: #ced4da; */
+        width: 20px;
+        height: 20px;
+    }
+
+    .e-checkbox-wrapper .e-check, .e-css.e-checkbox-wrapper .e-check {
+        font-size: 12px;
+    }
+
+    ul li {
+        list-style-type: none;
+    }
+
+    .gridboxs {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 0px;
+    }
+
+        .gridboxs li {
+            margin: 0px 4px;
+            color: #979797;
+        }
+
+            .gridboxs li:first-child {
+                margin-left: 0px;
+            }
+
+            .gridboxs li:last-child {
+                margin-right: 0px;
+            }
+
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 201px !important;
+    }
+
+    .exludefilterbox span {
+        height: 32px !important;
+        width: 32px !important;
+        margin-right: 12px;
+    }
+
+    .itenInfoContainer {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+        .itenInfoContainer a {
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #596dff;
+        }
+
+        .itenInfoContainer ul.gridProductInfo {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+            .itenInfoContainer ul.gridProductInfo li:nth-child(1) {
+                font-size: 12px;
+                background: #dfdfdf;
+                border: 1px solid #b7b7b7;
+                padding: 2px 4px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+
+            .itenInfoContainer ul.gridProductInfo li:nth-child(2) {
+                font-size: 12px;
+                padding: 3px 5px;
+                border-radius: 5px;
+                margin-right: 5px;
+            }
+
+    #gridvaluechange_toolbarItems.e-sticky {
+        top: 145px !important;
+    }
+
+    .imageSize {
+        height: 64px;
+        width: 72px;
+    }
+
+    .highValSpan {
+        display: flex;
+        background: rgb(48, 136, 48);
+        color: white;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        box-shadow: 0px 5px 5px rgba(48, 136, 48, 0.3);
+        font-family: Maven Pro, Arial;
+        padding: 3px 7px;
+    }
+
+    .lowValSpan {
+        display: flex;
+        background: rgb(198, 27, 27);
+        color: white;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        box-shadow: 0px 5px 5px rgb(198, 27, 27, 0.3);
+        font-family: Maven Pro, Arial;
+        padding: 3px 7px;
+    }
+
+    .gridcustom #content-gridvaluechangecolgroup col:nth-child(1),
+    .gridcustom #gridvaluechangecolgroup col:nth-child(1) {
+        min-width: 100px !important;
+        width: 2vw !important;
+    }
+
+    .e-grid.e-responsive .e-rowcell,
+    .e-grid.e-responsive .e-headercelldiv {
+        white-space: break-spaces !important;
+    }
+
+    .VerticleLable {
+        font-family: "Maven Pro", Arial, Helvetica, sans-serif;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1px 3px;
+        font-size: 11px;
+        font-weight: bold;
+        user-select: none;
+        border-radius: 5px;
+        border: 1px solid rgb(194, 194, 194);
+        width: 70px;
+        margin: 4px 4px;
+    }
+
+    .lostRevenueRed {
+        padding: 5px 10px;
+        color: white;
+        font-family: "Maven Pro", sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        box-shadow: 0px 5px 10px rgba(200,0,0,0.3);
+        border-radius: 5px;
+        background: rgb(220, 48, 48);
+        border: 1px solid rgba(237, 8, 8, 1);
+        margin: 3px;
+    }
+
+    .lostRevenueGreen {
+        padding: 5px 10px;
+        color: white;
+        font-family: "Maven Pro", sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        box-shadow: 0px 5px 10px rgba(0, 200, 30, 0.3);
+        border-radius: 5px;
+        background: rgb(0, 169, 76);
+        border: 1px solid rgba(0, 255, 8, 1);
+        margin: 3px;
+    }
+
+    .zeroQty {
+        padding: 5px 10px;
+        color: rgb(0, 0, 0);
+        font-family: "Maven Pro", sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        box-shadow: 0px 5px 10px rgba(255, 230, 0, 0.3);
+        border-radius: 5px;
+        background: rgb(245, 249, 5);
+        border: 1px solid rgb(214, 214, 9);
+        margin: 3px;
+    }
+</style>
+<div class="synthesisdashboardcontainer">
+    <div class="heading-w-line">
+        <h1>Top Seller Items</h1>
+    </div>
+    <div class="page-header-main position-relative gridPageHeader w-100" style="height: 67px !important; background-color: white;margin:0px">
+        <div class="row">
+            <div class="col-md-3">
+                @Html.EJS().DateRangePicker("daterangepicker").StartDate(ViewBag.StartDate).EndDate(ViewBag.EndDate).Change("OnChange").Max(DateTime.Now).Render()
+            </div>
+
+            <div class="col-md-2">
+                @Html.EJS().DropDownList("Department").Placeholder("Select a Department").DataSource(
+                            (IEnumerable<Object>)ViewBag.Department).Fields(new DropDownListFieldSettings { Text = "DepartmentName", Value = "DepartmentName" }).Value("All Departments").Change("OnChangeVendor").AllowFiltering(true).Filtering("onfiltering").Enabled(true).Render()
+            </div>
+
+
+            <div class="col-md-1">
+                <button type="button" class="btnadddocument" onclick="undofilters();" style="width:100px; border:none;">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div id="gridvaluechange" class="gridcustom" style="margin: 0px"></div>
+
+</div>
+
+<script type="text/x-jsrender" id="ImageDefault">
+    <img class="imageSize" src="/Content/Admin/images/picture.png" />
+</script>
+<script id="template" type="text/x-template">
+    <div>
+        <section class="itenInfoContainer">
+            <ul class="gridProductInfo">
+                <li><span>${ItemCode}</span></li>
+
+            </ul>
+            <span>${ItemName}</span>
+        </section>
+    </div>
+</script>
+<script id="boxItem" type="text/x-template">
+    ${statusDetail(data)}
+</script>
+<script id="ListNameBox" type="text/x-template">
+    ${TypeDetail(data)}
+</script>
+<script>
+
+    $(window).scroll(function () {
+
+        var scroll = $(window).scrollTop();
+        if (scroll >= 50) {
+            $(".page-header-main").addClass("stikyheader");
+        } else {
+            $(".page-header-main").removeClass("stikyheader");
+        }
+    });
+
+    function dataBound(e) {
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+
+
+    function undofilters()
+    {
+        localStorage.removeItem("Colorvalue");
+        window.location.href = "@Url.RouteUrl(new { Controller = "TopsellerPrice", Action = "TopSellerPrice" })";
+    }
+        function onfiltering(e) {
+
+            var CBObj = document.getElementById("Department").ej2_instances[0];
+            var query = new ej.data.Query();
+            query = (e.text !== '') ? query.where('DepartmentName', 'contains', e.text, true) : query;
+            e.updateData(CBObj.dataSource, query)
+        }
+        function onfilteringvendor(e) {
+
+            var CBObj = document.getElementById("Vendor").ej2_instances[0];
+            var query = new ej.data.Query();
+            query = (e.text !== '') ? query.where('VendorName', 'contains', e.text, true) : query;
+            e.updateData(CBObj.dataSource, query)
+        }
+
+    $(document).ready(function () {
+        showloader();
+
+        var daterangepicker = document.getElementById('daterangepicker').ej2_instances[0];
+        $.ajax({
+            url: "@Url.Action("TopSellerPriceGrid", "TopsellerPrice")",
+            type: "POST",
+            data: JSON.stringify({ value: daterangepicker.value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+
+                var columnsIn = parsed[0];
+                console.log(columnsIn);
+                console.log("22");
+                ColumeGrid.push({ headerText: 'Image', width: 60, template: '#ImageDefault', minWidth: 60 },
+                    { field: 'RowType', headerText: 'RowType', width: 120, visible: false },
+                    { field: 'Department', headerText: 'Department', width: 70, minWidth: 100 },
+                    { headerText: 'Item', width: 350, template: '#template',  minWidth: 350},
+                    //{ field: 'HighQty', headerText: 'High Seller Qty', width: 100 },
+                    //{ field: 'LowQty', headerText: 'Low Seller Qty', width: 100 }
+                    /*{ headerText: 'HighLowQty', width: 150, template: '#boxItem', minWidth: 100 }*/
+                )
+                for (var key in columnsIn) {
+                    if (key == "HighLowQty") {
+                        ColumeGrid.push({ field: key, headerText: 'Top Seller in', width: 60, template: '#boxItem', textAlign: 'Center', minWidth: 60 })
+                        ColumeGrid.push({ field: 'RowType', headerText: '', width: 20, template: '#ListNameBox', textAlign: 'Center', minWidth: 10 })
+
+                    }
+                }
+                for (var key in columnsIn) {
+                    if (key == "ItemCode") {
+                    }
+                    else if (key == "Department") {
+                    }
+                    else if (key == "HighQty") {
+                    }
+                    else if (key == "RowType") {
+                    }
+                    else if (key == "LowQty") { }
+                    //else if (key == "HighLowQty") {
+                    //    ColumeGrid.push({ field: key, headerText: key, width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100 })
+                    //}
+                    else if (key == "AvgQtySold") {
+                        ColumeGrid.push({ field: key, headerText: 'Avg. Qty Sold', width: 80, textAlign: 'Center', minWidth: 70 })
+                    } else if (key == "PerformanceGap") {
+                        ColumeGrid.push({ field: key, headerText: 'Performance Gap', format: 'C2',width: 100, textAlign: 'Center', minWidth: 100 })
+                    } else if (key == "AvgPrice") {
+                        ColumeGrid.push({ field: key, headerText: 'Avg. price', width: 100, format: 'C2', textAlign: 'Center', minWidth: 100 })
+                    } else if (key == "LostRevenue") {
+                        ColumeGrid.push({ field: key, headerText: 'Total Lost Revenues', format: 'C2',width: 100, textAlign: 'Center', minWidth: 100 })
+                    }
+                    else if (key == "ItemName"){}
+                    else {
+                        if (key != "HighLowQty") {
+                            ColumeGrid.push({ field: key, headerText: key, width: 100, textAlign: 'Center', minWidth: 100 })
+                       }
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    allowPaging: true,
+                    pageSettings: { pageSize: 99 },
+                    toolbar: ['Search', 'PdfExport', 'ExcelExport'],
+                    allowPdfExport: true,
+                    allowExcelExport: true,
+                    queryCellInfo: QueryCellEvent,
+                    searchSettings: { fields: ['ItemCode', 'Department'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                         if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+                });
+                grid.appendTo('#gridvaluechange');
+                hideloader();
+                grid.toolbarClick = function (args) {
+                    if (args.item.id === 'gridvaluechange_pdfexport') {
+                        //showloader();
+                        for (var i = 0; i < grid.columns.length; i++) {
+                            if (grid.columns[i].headerText == "Image") {
+
+                                grid.columns[i].visible = false;
+                            }
+                            if (grid.columns[i].headerText == "Item") {
+                                grid.columns[i].width = 250;
+                            }
+                            else if (grid.columns[i].headerText == "Total Lost Revenues") {
+                                grid.columns[i].width = 150;
+                            }
+                            else {
+                                grid.columns[i].width = 100;
+                            }
+
+                        }
+                        let exportProperties = {
+                            fileName: "TopSeller.pdf",
+                            pageOrientation: 'Landscape',
+                            pageSize: 'A3',
+                        };
+                        grid.pdfExport(exportProperties);
+                    } else if (args.item.id === 'gridvaluechange_excelexport') {
+                        showloader();
+                        for (var i = 0; i < grid.columns.length; i++) {
+                            if (grid.columns[i].headerText == "Image") {
+
+                                grid.columns[i].visible = false;
+                            }
+                        }
+                        let exportExProperties = {
+                            fileName: "TopSeller.xlsx"
+                        };
+                        grid.excelExport(exportExProperties);
+                        //this.excelExport({ hierarchyExportMode: "All" });
+                    }
+                };
+
+                grid.pdfQueryCellInfo = (args) => {
+                    if (args.column.headerText === 'Department') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Item') {
+                        args.rowSpan = 3;
+                        args.column.rowSpan = 3;
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = args.data.ItemCode + " / " + args.data.ItemName;
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Top Seller in') {
+                        var get = args.value.split("/");
+
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = get[0];
+                        }
+                    }
+
+                    else if (args.column.headerText === '') {
+                        if (args.data.RowType.toString() === 'A') {
+                            args.value = "Quantities";
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            args.value = "Average Price";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "Lost Revenue";
+                        }
+                    }
+                    else {
+                        if (args.data.RowType.toString() === 'A') {
+                            if (args.value.toString() == "0") {
+
+                                var num = args.value;//.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "$" + num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                    }
+                }
+
+                grid.excelQueryCellInfo = (args) => {
+                    if (args.column.headerText === 'Department') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Item') {
+                        args.rowSpan = 3;
+                        args.column.rowSpan = 3;
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = args.data.ItemCode + " / " + args.data.ItemName;
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Top Seller in') {
+                        var get = args.value.split("/");
+
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = get[0];
+                        }
+                    }
+                    else if (args.column.headerText === 'Total Lost Revenues') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                    }
+                    else if (args.column.headerText === '') {
+                        if (args.data.RowType.toString() === 'A') {
+                            args.value = "Quantities";
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            args.value = "Average Price";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "Lost Revenue";
+                        }
+                    }
+                    else {
+                        if (args.data.RowType.toString() === 'A') {
+                            if (args.value.toString() == "0") {
+
+                                var num = args.value;//.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.toString().split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "$" + num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.toString().split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                    }
+                }
+
+                grid.pdfExportComplete = () => {
+                    hideloader();
+                }
+                grid.excelExportComplete = () => {
+                    hideloader();
+                }
+            },
+            error: function (response) {
+                hideloader();
+            }
+        });
+         @*var ajax = new ej.base.Ajax({
+            url: "@Url.Action("ProductPriceGrid", "ProductPrice")", //render the partial view
+            type: "POST",
+            contentType: "application/json",
+             data: JSON.stringify({ value: daterangepicker.value }),
+        });
+        ajax.send().then((data) => {
+
+        });*@
+    });
+    function TypeDetail(e) {
+        var span = document.createElement('span');
+        span.className = 'VerticleLable';
+        if (e[e.column.field] != null) {
+            var value = e[e.column.field];
+            if (value == 'A') {
+                span.textContent = 'Quantities';
+            }
+            else if (value == 'B') {
+                span.textContent = 'Average Price';
+            }
+            else {
+                span.textContent = 'Lost Revenue';
+            }
+        }
+        return span.outerHTML;
+    }
+    //    ${ if (RowType == "A")}
+    //<span class="VerticleLable">Qty</span>
+    //${/if}
+    //${if(RowType == "B"}
+    //<span class="VerticleLable">Average</span>
+    //${/if}
+    //${if(RowType == "C"}
+    //<span class="VerticleLable">Lost Rev</span>
+    //${/if}
+    function statusDetail(e) {
+
+        var grid = document.querySelector(".e-grid").ej2_instances[0]
+        var div = document.createElement('div');
+        var ul = document.createElement('ul');
+        ul.className = 'gridboxs';
+        if (e[e.column.field] != null) {
+            var value = e[e.column.field];
+            var get = value.split("/");
+            var li;
+            var a;
+            var divch;
+            var p;
+
+           /* get.forEach(function (item) {*/
+                console.log(value);
+                li = document.createElement('li');
+                a = document.createElement('a');
+                divch = document.createElement('div');
+            if (value != "") {
+                    a.href = '#';
+                a.className = 'highValSpan';
+                    a.style = 'text-decoration: unset;';
+                    a.target = '_blank';
+                    a.textContent = get[0];
+
+                    li.appendChild(a);
+                    ul.appendChild(li);
+
+                //li = document.createElement('li');
+                //a = document.createElement('a');
+                //divch = document.createElement('div');
+                //    a.href = '#';
+                //a.className = 'lowValSpan';
+                //    a.style = 'text-decoration: unset;';
+                //    a.target = '_blank';
+                //    a.textContent = get[1];
+
+                //    li.appendChild(a);
+                //    ul.appendChild(li);
+                }
+                else {
+                    li.textContent = item;
+                    ul.appendChild(li);
+                }
+            //})
+        }
+        else {
+            li = document.createElement('li');
+            li.textContent = '-';
+            ul.appendChild(li);
+        }
+        div.appendChild(ul);
+        return div.outerHTML;
+    }
+    function QueryCellEvent(args) {
+        if (args.column.headerText === 'Image') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Department') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Item') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'High Seller Qty') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Low Seller Qty') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Top Seller in') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Avg. Qty Sold') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Performance Gap') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Avg. price') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'Total Lost Revenues') {
+            args.rowSpan = 3;
+        }
+        else if (args.column.headerText === 'RowType') {
+        }
+        else if (args.column.headerText === '') {
+        }
+        else
+        {
+            if (args.data.RowType.toString() === 'A') {
+                if (args.data[args.column.field].toString() == "0") {
+                    var num = args.data[args.column.field].toLocaleString(undefined, { minimumFractionDigits: 2 });
+                args.cell.innerHTML = '<span class="zeroQty"> ' + num + '</span>';
+                    args.cell.style.textAlign = "center";
+                }
+            }
+           else if (args.data.RowType.toString() === 'B' ) {
+                if (args.data[args.column.field].toString().split('-').length == 2) {
+                    var num = args.data[args.column.field].toLocaleString(undefined, { minimumFractionDigits: 2 });
+                    args.cell.innerText = '-$' + num.split('-')[1];
+                    args.cell.style.textAlign = "center";
+                    //args.cell.style.color = "White";
+                    //args.cell.style.background = "rgb(198, 27, 27)";
+                }
+                else {
+                    var num = args.data[args.column.field].toLocaleString(undefined, { minimumFractionDigits: 2 });
+                    args.cell.innerText = '$' + num;
+                    args.cell.style.textAlign = "center";
+                }
+            }
+            else  if (args.data.RowType.toString() === 'C') {
+                if (args.data[args.column.field].toString().split('-').length == 2) {
+                    var num = args.data[args.column.field].toLocaleString(undefined, { minimumFractionDigits: 2 });
+                    args.cell.innerHTML = '<span class="lostRevenueRed"> -$' + num.split('-')[1] + '</span>';
+                    args.cell.style.textAlign = "center";
+                    //args.cell.style.color = "White";
+                    //args.cell.style.background = "rgb(198, 27, 27)";
+                }
+                else {
+                    var num = args.data[args.column.field].toLocaleString(undefined, { minimumFractionDigits: 2 });
+                    args.cell.innerHTML = ' <span class="lostRevenueGreen"> $' + num + '</span>';
+                    args.cell.style.textAlign = "center";
+                }
+            }
+        }
+    }
+
+    function OnChange(args) {
+        showloader();
+            var ColorFilter = "";
+            //$(".e-checkbox").each(function (index, obj) {
+            //
+            //    var x = $(obj).is(":checked");
+            //    if (x == true) {
+            //        ColorFilter += obj.value + ",";
+            //    }
+            //})
+            //ColorFilter = ColorFilter.trim();
+        $('#gridvaluechange').html('');
+        var Department = document.getElementById('Department').ej2_instances[0];
+        var one = formatDate(new Date(args.value[0].toDateString()));
+        var two = formatDate(new Date(args.value[1].toDateString()));
+        var onClickText = "Top Seller Items " + one + " To " + two;
+
+        if (onClickText != null && onClickText != "" && onClickText != undefined) {
+            GetActivityLogDetails("Date", onClickText);
+            $.ajax({
+                url: '/UserActivityLog/AddActivityLoad',
+                data: { onClickText: onClickText, ActionName: ActionName, ControllerName: ControllerName, ModuleName: ModuleName, PageName: PageName, LblAction: LblAction, Message: LblMessage },
+                async: false,
+                success: function (response) {
+                    return true;
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+
+         $.ajax({
+            url: "@Url.Action("TopSellerPriceGrid", "TopSellerPrice")",
+             type: "POST",
+             data: JSON.stringify({ value: args.value, Departmentname: Department.value, ColorFilter: ColorFilter}),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Image', width: 60, template: '#ImageDefault', minWidth: 60 },
+                    { field: 'RowType', headerText: 'RowType', width: 120, visible: false },
+                    { field: 'Department', headerText: 'Department', width: 70, minWidth: 100 },
+                    { headerText: 'Item', width: 350, template: '#template', minWidth: 350 },
+                    //{ field: 'HighQty', headerText: 'High Seller Qty', width: 100 },
+                    //{ field: 'LowQty', headerText: 'Low Seller Qty', width: 100 }
+                    /*{ headerText: 'HighLowQty', width: 150, template: '#boxItem', minWidth: 100 }*/
+                )
+                for (var key in columnsIn) {
+                    if (key == "HighLowQty") {
+                        ColumeGrid.push({ field: key, headerText: 'Top Seller in', width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100 })
+                        ColumeGrid.push({ field: 'RowType', headerText: '', width: 20, template: '#ListNameBox', textAlign: 'Center', minWidth: 10 })
+
+                    }
+                }
+                for (var key in columnsIn) {
+                    if (key == "ItemCode") {
+                    }
+                    else if (key == "Department") {
+                    }
+                    else if (key == "HighQty") {
+                    }
+                    else if (key == "RowType") {
+                    }
+                    else if (key == "LowQty") { }
+                    //else if (key == "HighLowQty") {
+                    //    ColumeGrid.push({ field: key, headerText: key, width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100 })
+                    //}
+                    else if (key == "ItemName") { }
+
+                    else if (key == "AvgQtySold") {
+                        ColumeGrid.push({ field: key, headerText: 'Avg. Qty Sold', width: 80, textAlign: 'Center', minWidth: 70 })
+                    } else if (key == "PerformanceGap") {
+                        ColumeGrid.push({ field: key, headerText: 'Performance Gap', format: 'C2', width: 100, textAlign: 'Center', minWidth: 100 })
+                    } else if (key == "AvgPrice") {
+                        ColumeGrid.push({ field: key, headerText: 'Avg. price', width: 100, format: 'C2', textAlign: 'Center', minWidth: 100 })
+                    } else if (key == "LostRevenue") {
+                        ColumeGrid.push({ field: key, headerText: 'Total Lost Revenues', format: 'C2',width: 100, textAlign: 'Center', minWidth: 100 })
+                    }
+                    else {
+                        if (key != "HighLowQty") {
+                            ColumeGrid.push({ field: key, headerText: key, width: 100, textAlign: 'Center', minWidth: 100 })
+                        }
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    allowPaging: true,
+                    pageSettings: { pageSize: 99 },
+                    toolbar: ['Search', 'PdfExport', 'ExcelExport'],
+                    allowPdfExport: true,
+                    allowExcelExport: true,
+                    queryCellInfo: QueryCellEvent,
+                    searchSettings: { fields: ['ItemCode', 'Department'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+
+                });
+                grid.appendTo('#gridvaluechange');
+                hideloader();
+                grid.toolbarClick = function (args) {
+                    if (args.item.id === 'gridvaluechange_pdfexport') {
+                        //showloader();
+                        for (var i = 0; i < grid.columns.length; i++) {
+                            if (grid.columns[i].headerText == "Image") {
+
+                                grid.columns[i].visible = false;
+                            }
+                            if (grid.columns[i].headerText == "Item") {
+                                grid.columns[i].width = 250;
+                            }
+                            else if (grid.columns[i].headerText == "Total Lost Revenues") {
+                                grid.columns[i].width = 150;
+                            }
+                            else {
+                                grid.columns[i].width = 100;
+                            }
+                        }
+                        let exportProperties = {
+                            fileName: "TopSeller.pdf",
+                            pageOrientation: 'Landscape',
+                            pageSize: 'A3',
+                        };
+                        grid.pdfExport(exportProperties);
+                    } else if (args.item.id === 'gridvaluechange_excelexport') {
+                        showloader();
+                        for (var i = 0; i < grid.columns.length; i++) {
+                            if (grid.columns[i].headerText == "Image") {
+
+                                grid.columns[i].visible = false;
+                            }
+                        }
+                        let exportExProperties = {
+                            fileName: "TopSeller.xlsx"
+                        };
+                        grid.excelExport(exportExProperties);
+                        //this.excelExport({ hierarchyExportMode: "All" });
+                    }
+                };
+
+                grid.pdfQueryCellInfo = (args) => {
+                    if (args.column.headerText === 'Department') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Item') {
+                        args.rowSpan = 3;
+                        args.column.rowSpan = 3;
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = args.data.ItemCode + " / " + args.data.ItemName;
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Top Seller in') {
+                        var get = args.value.split("/");
+
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = get[0];
+                        }
+                    }
+
+                    else if (args.column.headerText === '') {
+                        if (args.data.RowType.toString() === 'A') {
+                            args.value = "Quantities";
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            args.value = "Average Price";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "Lost Revenue";
+                        }
+                    }
+                    else {
+                        if (args.data.RowType.toString() === 'A') {
+                            if (args.value.toString() == "0") {
+
+                                var num = args.value;//.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            if (args.value.split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "$" + num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            if (args.value.split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                    }
+                }
+
+                grid.excelQueryCellInfo = (args) => {
+                    if (args.column.headerText === 'Department') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Item') {
+                        args.rowSpan = 3;
+                        args.column.rowSpan = 3;
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = args.data.ItemCode + " / " + args.data.ItemName;
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Top Seller in') {
+                        var get = args.value.split("/");
+
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = get[0];
+                        }
+                    }
+                    else if (args.column.headerText === 'Total Lost Revenues') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                    }
+                    else if (args.column.headerText === '') {
+                        if (args.data.RowType.toString() === 'A') {
+                            args.value = "Quantities";
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            args.value = "Average Price";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "Lost Revenue";
+                        }
+                    }
+                    else {
+                        if (args.data.RowType.toString() === 'A') {
+                            if (args.value.toString() == "0") {
+
+                                var num = args.value;//.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.toString().split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "$" + num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.toString().split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                    }
+                }
+                grid.pdfExportComplete = () => {
+                    hideloader();
+                }
+                grid.excelExportComplete = () => {
+                    hideloader();
+                }
+            },
+             error: function (response) {
+                 hideloader();
+            }
+        });
+
+    }
+    function OnChangeVendor() {
+        showloader();
+        var ColorFilter = "";
+        //$(".e-checkbox").each(function (index, obj) {
+        //
+        //    var x = $(obj).is(":checked");
+        //    if (x == true) {
+        //        ColorFilter += obj.value + ",";
+        //    }
+        //})
+        //ColorFilter = ColorFilter.trim();
+        $('#gridvaluechange').html('');
+        var daterangepicker = document.getElementById('daterangepicker').ej2_instances[0];
+        var Department = document.getElementById('Department').ej2_instances[0];
+         $.ajax({
+            url: "@Url.Action("TopSellerPriceGrid", "TopSellerPrice")",
+             type: "POST",
+             data: JSON.stringify({ value: daterangepicker.value, Departmentname: Department.value,ColorFilter: ColorFilter }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                var parsed = $.parseJSON(response);
+                var ColumeGrid = [];
+                var Field = [];
+                var columnsIn = parsed[0];
+                ColumeGrid.push({ headerText: 'Image', width: 60, template: '#ImageDefault', minWidth: 60 },
+                    { field: 'RowType', headerText: 'RowType', width: 120, visible: false },
+                    { field: 'Department', headerText: 'Department', width: 120, minWidth: 100  },
+                    { headerText: 'Item', width: 350, template: '#template', minWidth: 350 },
+                    //{ field: 'HighQty', headerText: 'High Seller Qty', width: 100 },
+                    //{ field: 'LowQty', headerText: 'Low Seller Qty', width: 100 }
+                    /*{ headerText: 'HighLowQty', width: 150, template: '#boxItem', minWidth: 100 }*/
+                )
+                for (var key in columnsIn) {
+                    if (key == "HighLowQty") {
+                        ColumeGrid.push({ field: key, headerText: 'Top Seller in', width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100 })
+                        ColumeGrid.push({ field: 'RowType', headerText: '', width: 20, template: '#ListNameBox', textAlign: 'Center', minWidth: 10 })
+
+                    }
+                }
+                for (var key in columnsIn) {
+                    if (key == "ItemCode") {
+                    }
+                    else if (key == "Department") {
+                    }
+                    else if (key == "HighQty") {
+                    }
+                    else if (key == "RowType") {
+                    }
+                    else if (key == "LowQty") { }
+                    //else if (key == "HighLowQty") {
+                    //    ColumeGrid.push({ field: key, headerText: key, width: 100, template: '#boxItem', textAlign: 'Center', minWidth: 100 })
+                    //}
+                    else if (key == "ItemName") { }
+
+                    else if (key == "AvgQtySold") {
+                        ColumeGrid.push({ field: key, headerText: 'Avg. Qty Sold', width: 80, textAlign: 'Center', minWidth: 70 })
+                    } else if (key == "PerformanceGap") {
+                        ColumeGrid.push({ field: key, headerText: 'Performance Gap', format: 'C2', width: 100, textAlign: 'Center', minWidth: 100 })
+                    } else if (key == "AvgPrice") {
+                        ColumeGrid.push({ field: key, headerText: 'Avg. price', width: 100, format: 'C2', textAlign: 'Center', minWidth: 100 })
+                    } else if (key == "LostRevenue") {
+                        ColumeGrid.push({ field: key, headerText: 'Total Lost Revenues', format: 'C2', width: 100, textAlign: 'Center', minWidth: 100 })
+                    }
+                    else {
+                        if (key != "HighLowQty") {
+                            ColumeGrid.push({ field: key, headerText: key, width: 100, textAlign: 'Center', minWidth: 100 })
+                        }
+                    }
+                }
+                /*var parsed = JSON.stringify(response);*/
+                var grid = new ej.grids.Grid({
+                    dataSource: parsed,
+                    columns: ColumeGrid,
+                    gridLines: 'Both',
+                    enableStickyHeader: true,
+                    allowPaging: true,
+                    pageSettings: { pageSize: 99 },
+                    toolbar: ['Search', 'PdfExport', 'ExcelExport'],
+                    allowPdfExport: true,
+                    allowExcelExport: true,
+                    queryCellInfo: QueryCellEvent,
+                    searchSettings: { fields: ['ItemCode', 'Department'], operator: 'contains', ignoreCase: true },
+                    dataBound: function () {
+                        grid.autoFitColumns(Field)
+                        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+                            var span = ej.base.createElement('span', {
+                                id: grid.element.id + '_searchcancelbutton',
+                                className: 'e-clear-icon'
+                            });
+                            span.addEventListener('click', (args) => {
+                                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                                grid.search("");
+                            });
+                            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+                            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+                        }
+                    },
+                    resizeSettings: { mode: "Auto" },
+
+                });
+                grid.appendTo('#gridvaluechange');
+                hideloader();
+                grid.toolbarClick = function (args) {
+                    if (args.item.id === 'gridvaluechange_pdfexport') {
+                        showloader();
+                        for (var i = 0; i < grid.columns.length; i++) {
+                            if (grid.columns[i].headerText == "Image") {
+
+                                grid.columns[i].visible = false;
+                            }
+                            if (grid.columns[i].headerText == "Item") {
+                                grid.columns[i].width = 250;
+                            }
+                            else if (grid.columns[i].headerText == "Total Lost Revenues") {
+                                grid.columns[i].width = 150;
+                            }
+                            else {
+                                grid.columns[i].width = 100;
+                            }
+
+                        }
+                        let exportProperties = {
+                            fileName: "TopSeller.pdf",
+                            pageOrientation: 'Landscape',
+                            pageSize: 'A3',
+                        };
+                        grid.pdfExport(exportProperties);
+                    } else if (args.item.id === 'gridvaluechange_excelexport') {
+                        showloader();
+                        for (var i = 0; i < grid.columns.length; i++) {
+                            if (grid.columns[i].headerText == "Image") {
+
+                                grid.columns[i].visible = false;
+                            }
+                        }
+                        let exportExProperties = {
+                            fileName: "TopSeller.xlsx"
+                        };
+                        grid.excelExport(exportExProperties);
+                        //this.excelExport({ hierarchyExportMode: "All" });
+                    }
+                };
+
+                grid.pdfQueryCellInfo = (args) => {
+                   if (args.column.headerText === 'Department') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Item') {
+                        args.rowSpan = 3;
+                        args.column.rowSpan = 3;
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = args.data.ItemCode + " / " + args.data.ItemName;
+                        }
+
+                   }
+                   else if (args.column.headerText === 'Total Lost Revenues') {
+                       if (args.data.RowType.toString() === 'B') {
+                           args.value = "";
+                       }
+                       else if (args.data.RowType.toString() === 'C') {
+                           args.value = "";
+                       }
+                   }
+                    else if (args.column.headerText === 'Top Seller in') {
+                        var get = args.value.split("/");
+
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = get[0];
+                        }
+                    }
+
+                    else if (args.column.headerText === '') {
+                        if (args.data.RowType.toString() === 'A') {
+                            args.value = "Quantities";
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            args.value = "Average Price";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "Lost Revenue";
+                        }
+                    }
+                    else {
+                        if (args.data.RowType.toString() === 'A') {
+                            if (args.value.toString() == "0") {
+
+                                var num = args.value;//.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            if (args.value.split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "$" + num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            if (args.value.split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                    }
+                }
+
+                grid.excelQueryCellInfo = (args) => {
+                    if (args.column.headerText === 'Department') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Item') {
+                        args.rowSpan = 3;
+                        args.column.rowSpan = 3;
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = args.data.ItemCode + " / " + args.data.ItemName;
+                        }
+
+                    }
+                    else if (args.column.headerText === 'Top Seller in') {
+                        var get = args.value.split("/");
+
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                        else {
+                            args.value = get[0];
+                        }
+                    }
+                    else if (args.column.headerText === 'Total Lost Revenues') {
+                        if (args.data.RowType.toString() === 'B') {
+                            args.value = "";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "";
+                        }
+                    }
+                    else if (args.column.headerText === '') {
+                        if (args.data.RowType.toString() === 'A') {
+                            args.value = "Quantities";
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            args.value = "Average Price";
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            args.value = "Lost Revenue";
+                        }
+                    }
+                    else {
+                        if (args.data.RowType.toString() === 'A') {
+                            if (args.value.toString() == "0") {
+
+                                var num = args.value;//.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'B') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.toString().split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "$" + num;
+
+                            }
+                        }
+                        else if (args.data.RowType.toString() === 'C') {
+                            if (args.value.toString().split('-').length == 2) {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = "-$" + num.toString().split("-")[1];
+
+                            }
+                            else {
+
+                                var num = args.value; //.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                                args.value = num;
+
+                            }
+                        }
+                    }
+                }
+
+                grid.pdfExportComplete = () => {
+
+                    hideloader();
+                }
+                grid.excelExportComplete = () => {
+                    hideloader();
+                }
+            },
+             error: function (response) {
+                 hideloader();
+            }
+        });
+
+    }
+</script>
+@Html.EJS().ScriptManager()
+
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+
+

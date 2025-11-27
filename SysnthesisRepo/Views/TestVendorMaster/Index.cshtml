@@ -1,0 +1,958 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+
+
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<style>
+    .page-header-main {
+        padding: 0;
+    }
+
+    .page-sidebar.sidebar-fixed {
+        top: 78px !important;
+    }
+</style>
+<style>
+    .fabric .empimg {
+        background-color: #0078d6;
+    }
+
+    .material .empimg {
+        background-color: #e3165b;
+    }
+
+    .highcontrast .empimg {
+        background-color: #ffd939;
+    }
+
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .highcontrast .e-userimg.sf-icon-Male::before,
+    .highcontrast .e-userimg.sf-icon-FeMale::before {
+        color: black;
+    }
+
+    .bootstrap .empimg {
+        background-color: #0078d6;
+    }
+
+    .bootstrap4 .empimg,
+    .bootstrap5 .empimg {
+        background-color: #0078d6;
+    }
+
+    .tailwind .empimg {
+        background-color: #4f46e5;
+    }
+
+    .fluent .empimg {
+        background-color: #106EBE;
+    }
+
+    #Emptext {
+        top: -12px;
+        left: 41px;
+        position: relative;
+    }
+
+    .e-grid.e-rtl #Emptext {
+        top: -12px;
+        left: -41px;
+        position: relative;
+    }
+
+    .empimg {
+        height: 27px;
+        width: 29px;
+        border-radius: 14px;
+    }
+
+
+    .e-userimg.sf-icon-Male::before,
+    .e-userimg.sf-icon-FeMale::before {
+        font-size: 13px;
+    }
+
+    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+        margin: 0px 8px;
+        line-height: 26px;
+        color: white;
+        font-size: 13px;
+    }
+
+        .e-userimg.sf-icon-Male::before {
+            content: '\e700';
+        }
+
+        .e-userimg.sf-icon-FeMale::before {
+            content: '\e701';
+        }
+
+
+    td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+    }
+
+    .e-hightheme td.e-rowcell.e-selectionbackground.e-active {
+        background-color: transparent;
+        color: white;
+    }
+
+    .e-bigger .e-grid .statustxt {
+        position: relative;
+        top: -2px;
+    }
+
+    .e-bigger .e-grid .statustxts {
+        position: relative;
+        top: -2px;
+    }
+
+    .rating .star {
+        font-size: 132%;
+        color: var(--light-gray-color);
+    }
+
+        .rating .star.checked {
+            color: #ffa600;
+        }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #00cc00;
+        position: relative;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #e60000;
+        position: relative;
+    }
+
+    .bootstrap5 td.e-rowcell .statustxt.e-inactivecolor,
+    .bootstrap5 td.e-rowcell .statustxt.e-activecolor {
+        top: 8px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        position: relative;
+        top: 1.5px;
+    }
+
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+    .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+        top: -0.5px;
+    }
+
+    .bootstrap5 .e-checkboxfiltertext #Trusttext {
+        margin-left: -4px;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+    }
+
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+    }
+
+    .statustemps.e-inactivecolor {
+        background-color: #ffd7cc;
+    }
+
+    .statustemps.e-activecolor {
+        background-color: #ccffcc;
+    }
+
+    .statustxts.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxts.e-inactivecolor {
+        color: #e60000;
+    }
+
+    .statustxt.e-activecolor {
+        color: #00cc00;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #e60000;
+    }
+
+    #Trusttext {
+        position: relative;
+        top: 1px;
+    }
+
+    .e-image {
+        height: 13px;
+        width: 14px;
+    }
+
+    .statustemp.e-inactivecolor {
+        width: 64px;
+    }
+
+    .statustemp.e-activecolor {
+        width: 57px;
+    }
+
+    .statustemp {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .statustemps.e-inactivecolor {
+        width: 64px;
+    }
+
+    .statustemps.e-activecolor {
+        width: 57px;
+    }
+
+    .statustemps {
+        position: relative;
+        height: 19px;
+        border-radius: 5px;
+        text-align: center
+    }
+
+    .highcontrast #msg {
+        color: #FFFFFF
+    }
+
+
+    #msg {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.95;
+        color: #333;
+        float: right;
+        margin-top: 3px;
+    }
+
+    @@media only screen and (max-width: 370px) {
+        #msg {
+            float: left;
+            margin-top: 3px;
+        }
+
+        #GridOverview {
+            margin-top: 36px;
+        }
+    }
+
+    #samplecontainer {
+        padding-top: 5px;
+    }
+
+    #myProgress {
+        position: relative;
+        height: 18px;
+        width: 10em;
+        text-align: left;
+        background-color: white;
+    }
+
+    .highcontrast .e-grid #myProgress {
+        background-color: black;
+    }
+
+    #myBar {
+        position: absolute;
+        width: 10%;
+        height: 100%;
+        background-color: #00b300;
+    }
+
+        #myBar.progressdisable {
+            background-color: #df2222;
+        }
+
+    #label {
+        position: relative;
+        left: 10px;
+        line-height: 18px;
+        font-size: 10px;
+        color: white;
+    }
+
+    div#InlineEditing_dialogEdit_wrapper {
+        width: 1100px !important;
+    }
+</style>
+<style>
+    @@font-face {
+        font-family: 'Toast_icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #toast_types button {
+        margin: 5px;
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+
+    .toast-icons {
+        font-family: 'Toast_icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #toast_type .e-toast-icon.e-icons {
+        height: auto;
+        font-size: 30px;
+    }
+
+    .bootstrap5 #toast_type .e-toast-icon.e-icons,
+    .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+        height: 25px;
+    }
+
+    .toast-icons.e-success::before {
+        content: "\e701";
+    }
+
+    .toast-icons.e-error::before {
+        content: "\e700";
+    }
+
+    .toast-icons.e-info::before {
+        content: "\e704";
+    }
+
+    .toast-icons.e-warning::before {
+        content: "\e703";
+    }
+
+    .e-sticky#InlineEditing_toolbarItems {
+        top: 78px !important;
+    }
+
+    .e-gridheader.e-lib.e-droppable.e-sticky {
+        top: 117px !important;
+    }
+</style>
+@*<div class="loading-containers loading-inactives" style="display:none;">
+        <div class="loaders"></div>
+    </div>*@
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (ViewBag.StatusMessageString != null)
+    {
+        if (ViewBag.StatusMessageString != "")
+        {
+            <script>
+                MyCustomToster('@ViewBag.StatusMessageString');
+            </script>
+        }
+    }
+</div>
+@*@{
+
+    List<object> commands = new List<object>();
+
+    commands.Add(new { type = "Copy Vendor", buttonOption = new { iconCss = "e-icons e-copy e-large", cssClass = "e-flat" } });
+}*@
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+<div class="header-small special_bg">
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Vendors List </h3>
+        </div>
+
+        <!--<div class="col-md-4">
+            <div class="page-header-main position-relative ">
+                <span class="searchinvoicebox ">
+                    <a href="#" class="searchbtn" id="searchicon"></a>
+                    <input id="search-box" type="text" class="form-control inputvendorname" placeholder="Search by Vendor Name, CompanyName" />
+                    <a href="#" class="search_close" onclick="cleartextsearch();">x</a>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h3 hidden> Html.DropDownList("StoreId", null, new { class = "myval" })</h3>
+        </div>
+
+        <div class="col-md-3" style="text-align:end" id="divAdddept">-->
+        @*@if (Roles.IsUserInRole("Administrator") || Roles.IsUserInRole("CreateQBVendor"))
+            {*@
+        <!--<a href="Url.Action("Create", "VendorMasters")" class="buttonbox btnsubmit">New Vendor</a>-->
+        @*}*@
+        <!--</div>-->
+    </div>
+</div>
+@*<input type="text" name="VendorCopyID" id="VendorCopyID" style="display:none;">
+
+<input type="text" name="VendorCopyName" id="VendorCopyName" style="display:none;">*@
+@*.ToolbarClick("toolbarClick").ExcelExportComplete("excelExportComplete")*@
+@*.BeforePrint("beforePrint")*@
+
+@*.ToolbarClick("toolbarClick").AllowPdfExport().AllowExcelExport()
+    .PrintComplete("printComplete")
+    , "ExcelExport", "PdfExport", "Print"
+
+    .PrintMode(Syncfusion.EJ2.Grids.PrintMode.CurrentPage)*@
+
+@if (Roles.IsUserInRole("Administrator") || ((Roles.IsUserInRole("CreateQBVendor")) && (Roles.IsUserInRole("UpdateQBVendor"))))
+{
+    <div class="control-section">
+        @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+   {
+       col.Type("checkbox").Width("50").Add();
+       col.Field("VendorId").IsPrimaryKey(true).HeaderText("Vendor ID").Visible(false).Add();
+       col.Field("StoreId").HeaderText("Store Id").Visible(false).Add();
+       col.Field("VendorName").HeaderText("Display Name").Width("250").Add();
+       col.Field("StoreName").HeaderText("Store Name").Width("150").Add();
+       col.Field("CompanyName").HeaderText("Company Name").Width("250").Add();
+       col.Field("Address").HeaderText("Address").Width("350").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+       col.Field("PhoneNumber").HeaderText("Phone Number").Width("160").Add();
+       col.Field("EMail").HeaderText("Email").Width("200").Add();
+       col.Field("AccountNumber").HeaderText("Account Number").Width("200").Add();
+       col.Field("Departments").HeaderText("Default Accounts").Width("250").Add();
+       col.Field("Status").HeaderText("Status").Width("100").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTemp" }).Template("#statusTemplate").Add();
+       
+   }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").QueryCellInfo("queryCellInfo").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Add", "Edit", "Update", "Cancel", "Search" }).Render()
+    </div>
+}
+else if (Roles.IsUserInRole("CreateQBVendor"))
+{
+    <div class="control-section">
+        @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+   {
+       col.Type("checkbox").Width("50").Add();
+       col.Field("VendorId").IsPrimaryKey(true).HeaderText("Vendor ID").Visible(false).Add();
+       col.Field("StoreId").HeaderText("Store Id").Visible(false).Add();
+       col.Field("VendorName").HeaderText("Display Name").Width("250").Add();
+       col.Field("StoreName").HeaderText("Store Name").Width("150").Add();
+       col.Field("CompanyName").HeaderText("Company Name").Width("250").Add();
+       col.Field("Address").HeaderText("Address").Width("350").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+       col.Field("PhoneNumber").HeaderText("Phone Number").Width("160").Add();
+       col.Field("EMail").HeaderText("Email").Width("200").Add();
+       col.Field("AccountNumber").HeaderText("Account Number").Width("200").Add();
+       col.Field("Departments").HeaderText("Default Accounts").Width("250").Add();
+       col.Field("Status").HeaderText("Status").Width("100").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTemp" }).Template("#statusTemplate").Add();
+      
+   }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").QueryCellInfo("queryCellInfo").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowAdding(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Add", "Cancel", "Search" }).Render()
+    </div>
+}
+else if (Roles.IsUserInRole("UpdateQBVendor"))
+{
+    <div class="control-section">
+        @Html.EJS().Grid("InlineEditing").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+   {
+       col.Type("checkbox").Width("50").Add();
+       col.Field("VendorId").IsPrimaryKey(true).HeaderText("Vendor ID").Visible(false).Add();
+       col.Field("StoreId").HeaderText("Store Id").Visible(false).Add();
+       col.Field("VendorName").HeaderText("Display Name").Width("250").Add();
+       col.Field("StoreName").HeaderText("Store Name").Width("150").Add();
+       col.Field("CompanyName").HeaderText("Company Name").Width("250").Add();
+       col.Field("Address").HeaderText("Address").Width("350").Filter(new { type = "Menu" }).ClipMode(Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip).Add();
+       col.Field("PhoneNumber").HeaderText("Phone Number").Width("160").Add();
+       col.Field("EMail").HeaderText("Email").Width("200").Add();
+       col.Field("AccountNumber").HeaderText("Account Number").Width("200").Add();
+       col.Field("Departments").HeaderText("Default Accounts").Width("250").Add();
+       col.Field("Status").HeaderText("Status").Width("100").Filter(new { type = "CheckBox", itemTemplate = "#StatusItemTemp" }).Template("#statusTemplate").Add();
+       
+   }).DataBound("dataBound").ActionBegin("actionBegin").ActionComplete("actionComplete").QueryCellInfo("queryCellInfo").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).EditSettings(edit => { edit.AllowEditing(true).Mode(Syncfusion.EJ2.Grids.EditMode.Dialog).Template("#dialogtemplates"); }).Toolbar(new List<string>() { "Edit", "Update", "Cancel", "Search" }).HierarchyPrintMode(Syncfusion.EJ2.Grids.HierarchyGridPrintMode.All).Render()
+    </div>
+}
+@Html.EJS().Dialog("ajax_dialog1").IsModal(true).Created("createds").Header("Copy Vendor").ShowCloseIcon(true).CloseOnEscape(true).ContentTemplate(@<div id="dialogTempData">
+</div>).Width("1000px").Target("body").Render()
+
+<script type="text/x-jsrender" id="statusTemplate">
+    <div id="status" class="statustemp">
+        <span class="statustxt">${Status}</span>
+    </div>
+</script>
+<script type="text/x-jsrender" id="StatusItemTemp">
+    ${statusDetail(data)}
+</script>
+<!--<script type="text/x-jsrender" id="statusTemplates">
+    <div id="status" class="statustemps">
+        <span class="statustxts">${Statuss}</span>
+    </div>
+</script>-->
+@*<script type="text/x-jsrender" id="StatusItemTemps">
+    ${statusDetails(data)}
+</script>*@
+<script id='dialogtemplates' type="text/x-template">
+    <div id="dialogTemp">
+    </div>
+</script>
+
+@*<script id="copytemplate" type="text/x-jsrender">
+    ${if(VendorName != "")}
+    <span>Already Exist</span>
+    ${else}
+    <button class="btn btn-primary" onclick="loadgrid();">Paste</button>
+    ${/if}
+</script>*@
+<script>
+    //function rowDataBound(args) {
+    //    //check the condition
+    //    
+    //    if (args.data.Status=="Active") {
+    //        args.row.querySelector('[title="Copy Vendor"]').classList.add('e-primary')
+
+    //    }
+    //    else {
+
+    //        args.row.querySelector('[title="Copy Vendor"]').classList.add('e-hide')
+
+    //    }
+    //}
+    function dataBound(e) {
+
+        var grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+        //  checks whether the cancel icon is already present or not
+        if (!grid.element.getElementsByClassName('e-search')[0].classList.contains('clear')) {
+            var span = ej.base.createElement('span', {
+                id: grid.element.id + '_searchcancelbutton',
+                className: 'e-clear-icon'
+            });
+            span.addEventListener('click', (args) => {
+                document.querySelector('.e-search').getElementsByTagName('input')[0] = "";
+                grid.search("");
+            });
+            grid.element.getElementsByClassName('e-search')[0].appendChild(span);
+            grid.element.getElementsByClassName('e-search')[0].classList.add('clear');
+        }
+
+    }
+
+    @*function loadgrid() {
+            var row = new ej.base.closest(event.target, '.e-row'); // get row element
+            var index = row.getAttribute('aria-rowindex')
+             var grid = document.getElementById('InlineEditingCopy').ej2_instances[0];
+
+            var rowData = grid.currentViewData[index];
+             var vendorId = $("#VendorCopyID").val();
+
+            dialogObj.show()
+            var spinnerTarget = document.getElementById('ajax_dialog')
+            ej.popups.createSpinner({
+                target: spinnerTarget
+            });
+            ej.popups.showSpinner(spinnerTarget);
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("PasteVendordatastoreWise", "TestVendorMaster")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ StoreId: rowData.StoreId, vendorId: vendorId})
+            });
+          ajax.send().then((data) => {
+                $("#dialogTempData").html(data);
+
+            });
+            ej.popups.hideSpinner(spinnerTarget);
+
+    }*@
+    var scrollVal = 0;
+    //$(window).scroll(function (event) {
+    //    scrollVal = $(window).scrollTop();
+    //    // Do something
+    //});
+    function onfiltering(e) {
+        
+        var CBObj = document.getElementById("MultiDepartmentId").ej2_instances[0];
+         var query = new ej.data.Query();
+        query = (e.text !== '') ? query.where('DepartmentName', 'contains', e.text, true) : query;
+            e.updateData(CBObj.dataSource, query)
+    }
+    //function onfiltering(e) {
+    //    var CBObj = document.getElementById("InlineEditing").ej2_instances[0];
+    //    // load overall data when search key empty.
+    //    if (e.text == '')
+    //        e.updateData(CBObj.dataSource);
+    //    else {
+    //        var query = new ej.data.Query().from('MultiDepartmentId').select(['DepartmentName', 'DepartmentId']).take(6);
+    //        query = (e.text !== '') ? query.where('DepartmentName', 'endswith', e.text, true) : query;
+    //        e.updateData(CBObj.dataSource, query);
+    //    }
+    //}
+    //function beforePrint(args) {
+    //    var div = document.createElement("Div")
+    //    div.innerHTML = "Vendor List"
+    //    div.style.textAlign = 'center';
+    //    div.style.color = 'red';
+    //    div.style.padding = '10px 0';
+    //    div.style.fontSize = '25px';
+    //    args.element.insertBefore(div, args.element.childNodes[0]);
+    //}
+    var dialogObj;
+
+
+    function createds() {
+        
+        dialogObj = this;
+        dialogObj.hide();
+    }
+    function toolbarClick(args) {
+        var gridObj = document.getElementById("InlineEditing").ej2_instances[0];
+        if (args.item.id === 'InlineEditing_pdfexport') {
+            gridObj.serverPdfExport("@Url.Action("PdfExport", "TestVendorMaster")");
+            //let pdfDocument = new ej.pdfexport.PdfDocument();
+            //let page = pdfDocument.pages.add();
+            //var grid = document.getElementById('InlineEditing').ej2_instances[0];
+            //var pdfGrid = new ej.pdfexport.PdfGrid();
+            //pdfGrid.style.allowHorizontalOverflow = false;
+            //let format = new ej.pdfexport.PdfLayoutFormat();
+            //var collength = grid.columns.length;
+            //pdfGrid.columns.add(collength);
+
+            //pdfGrid.headers.add(1);
+
+            //var pdfGridHeader = pdfGrid.headers.getHeader(0);
+            //for (let j = 0; j < collength; j++) {
+            //    pdfGridHeader.cells.getCell(j).value = grid.columns[j].headerText;
+            //}
+            //let pdfGridRow1 = [];
+            //for (let k = 0; k < grid.dataSource.length; k++) {
+            //    pdfGridRow1[k] = pdfGrid.rows.addRow();
+            //}
+            //for (let k = 0; k < grid.dataSource.length; k++) {
+            //    for (let r = 0; r < grid.columnModel.length; r++) {
+            //        pdfGridRow1[k].cells.getCell(r).value = grid.dataSource[k][grid.columnModel[r].field].toString();
+            //    }
+            //}
+            //pdfGrid.draw(page, new ej.pdfexport.PointF(0, 0), format);
+            //pdfDocument.save('output.pdf');
+            //pdfDocument.destroy();
+        }
+        if (args.item.id === 'InlineEditing_excelexport') {
+            /*gridObj.showSpinner();*/
+            //Loader(1);
+            gridObj.serverExcelExport("@Url.Action("ExcelExport", "TestVendorMaster")");
+        }
+        if (args.item.id === 'InlineEditing_print') {
+            this.columns[0].visible = false;
+        }
+    }
+
+    function printComplete(args) {
+        this.columns[0].visible = true;
+    }
+    //function excelExport(args) {
+    //    
+    //    Loader(0);
+    //}
+
+    function actionBegin(args) {
+        if (args.requestType == "beginEdit") {
+            scrollVal = $(window).scrollTop();
+        }
+        var storeId = '@Convert.ToString(Session["storeid"])'
+        if (storeId == '') {
+            storeId = '0';
+        }
+        var grid = document.getElementById("InlineEditing").ej2_instances[0];
+        var column = grid.getColumnByField('StoreName');
+        if (storeId != '0') {
+            if (column.visible == true) {
+                column.visible = false;
+                //$("thead tr th").each(function () {
+                //    var row = $(this);
+                //    if (this.textContent == "Store Name") {
+                //        row.addClass("e-hide");
+                //    }
+                //});
+                grid.refresh();
+            }
+        }
+    }
+    //function statusDetails(e) {
+    //    var grid = document.querySelector(".e-grid").ej2_instances[0]
+    //    var div = document.createElement('div');
+    //    var span;
+    //    span = document.createElement('span');
+    //    if (e.Statuss === "Active") {
+    //        span.className = 'statustxts e-activecolor';
+    //        span.textContent = "Active"
+    //        div.className = 'statustemp e-activecolor'
+    //    }
+    //    if (e.Statuss === "Inactive") {
+    //        span = document.createElement('span');
+    //        span.className = 'statustxts e-inactivecolor';
+    //        span.textContent = "Inactive"
+    //        div.className = 'statustemp e-inactivecolor'
+    //    }
+    //    div.appendChild(span);
+    //    return div.outerHTML;
+    //}
+    function statusDetail(e) {
+        var grid = document.querySelector(".e-grid").ej2_instances[0]
+        var div = document.createElement('div');
+        var span;
+        span = document.createElement('span');
+        if (e.Status === "Active") {
+            span.className = 'statustxt e-activecolor';
+            span.textContent = "Active"
+            div.className = 'statustemp e-activecolor'
+        }
+        if (e.Status === "Inactive") {
+            span = document.createElement('span');
+            span.className = 'statustxt e-inactivecolor';
+            span.textContent = "Inactive"
+            div.className = 'statustemp e-inactivecolor'
+        }
+        div.appendChild(span);
+        return div.outerHTML;
+    }
+    function queryCellInfo(args) {
+
+        if (args.column.field === 'Status') {
+            if (args.cell.textContent === "Active") {
+                args.cell.querySelector(".statustxt").classList.add("e-activecolor");
+                args.cell.querySelector(".statustemp").classList.add("e-activecolor");
+            }
+            if (args.cell.textContent === "Inactive") {
+                args.cell.querySelector(".statustxt").classList.add("e-inactivecolor");
+                args.cell.querySelector(".statustemp").classList.add("e-inactivecolor");
+            }
+        }
+    }
+    //function queryCellInfos(args) {
+
+    //    if (args.column.field === 'Statuss') {
+    //        if (args.cell.textContent === "Active") {
+    //            args.cell.querySelector(".statustxts").classList.add("e-activecolor");
+    //            args.cell.querySelector(".statustemps").classList.add("e-activecolor");
+    //        }
+    //        if (args.cell.textContent === "Inactive") {
+    //            args.cell.querySelector(".statustxts").classList.add("e-inactivecolor");
+    //            args.cell.querySelector(".statustemps").classList.add("e-inactivecolor");
+    //        }
+    //    }
+    //}
+    $(document).ready(function () {
+        $(".loading-containers").attr("style", "display:block");
+        sessionStorage.setItem("VendorIsAsc", "1");
+    });
+    function created(args) {
+        
+        // extending the default UrlAdaptor
+        var toastObj = document.getElementById('toast_type').ej2_instances[0];
+        class CustomAdaptor extends ej.data.UrlAdaptor {
+            processResponse(data, ds, query, xhr, request, changes) {
+                if (!ej.base.isNullOrUndefined(data.success)) {
+
+                            toastObj.content = data.success;
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Success!', cssClass: 'e-toast-success', icon: 'e-success toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.Error)) {
+
+                            toastObj.content = data.Error;
+                            toastObj.target = document.body;
+                            toastObj.show({ title: 'Error!', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' });
+                }
+                if (!ej.base.isNullOrUndefined(data.data))
+                    return data.data;
+                else
+                    return data;
+            }
+        }
+        //.DataSource(dataManager => { dataManager.Url("/VendorMasters/UrlDatasource").Adaptor("UrlAdaptor").InsertUrl("/VendorMasters/Insert").UpdateUrl("/VendorMasters/Update").RemoveUrl("/VendorMasters/Remove"); })
+        var grid = document.querySelector('#InlineEditing').ej2_instances[0];
+        grid.dataSource = new ej.data.DataManager({
+            url: "/TestVendorMaster/UrlDatasource",
+            insertUrl: "/TestVendorMaster/Insert",
+            updateUrl: "/TestVendorMaster/Update",
+            //removeUrl: "/VendorMasters/Remove",
+
+            adaptor: new CustomAdaptor()
+        });
+    };
+    @*function load() {
+        
+          this.columns[11].commands[0].buttonOption.click = function (args) {
+            
+
+            var row = new ej.base.closest(event.target, '.e-row'); // get row element
+            var index = row.getAttribute('aria-rowindex')
+              var grid = document.getElementById('InlineEditing').ej2_instances[0];
+            var rowData = grid.currentViewData[index];
+              $("#VendorCopyID").val(rowData.VendorId);
+              $("#VendorName").val(rowData.VendorName);
+            dialogObj.show()
+            var spinnerTarget = document.getElementById('ajax_dialog1')
+            ej.popups.createSpinner({
+                target: spinnerTarget
+            });
+
+            ej.popups.showSpinner(spinnerTarget);
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("GetStorevalueforVendor", "TestVendorMaster")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ vendorId: rowData.VendorId, VendorName: rowData.VendorName})
+            });
+            ajax.send().then((data) => {
+                $("#dialogTempData").html(data);
+
+            });
+            ej.popups.hideSpinner(spinnerTarget);
+        }
+    }*@
+    function actionComplete(args) {
+        //var grid = document.getElementById("InlineEditing").ej2_instances[0];
+        if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+            let spinner = ej.popups.createSpinner({ target: args.dialog.element });
+            ej.popups.showSpinner(args.dialog.element);
+            if (args.requestType === 'beginEdit') {
+                args.dialog.header = 'Edit';
+                var ajax = new ej.base.Ajax({
+                    url: "@Url.Action("Editpartial", "TestVendorMaster")", //render the partial view
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ value: args.rowData })
+                });
+                ajax.send().then(function (data) {
+                    
+                    appendElement(data, args.form); //render the edit form with selected record
+                    args.form.elements.namedItem('VendorName').focus();
+                    ej.popups.hideSpinner(args.dialog.element);
+                }).catch(function (xhr) {
+                    console.log(xhr);
+                    ej.popups.hideSpinner(args.dialog.element);
+                });
+            }
+            if (args.requestType === 'add') {
+                args.dialog.header = 'Add';
+                var ajax = new ej.base.Ajax({
+                    url: "@Url.Action("Addpartial", "TestVendorMaster")", //render the partial view
+                    type: "POST",
+                    contentType: "application/json",
+                });
+                ajax.send().then(function (data) {
+                    appendElement(data, args.form); //Render the edit form with selected record
+                    args.form.elements.namedItem('VendorName').focus();
+                    ej.popups.hideSpinner(args.dialog.element);
+                }).catch(function (xhr) {
+                    console.log(xhr);
+                    ej.popups.hideSpinner(args.dialog.element);
+                });
+            }
+        }
+        if (args.requestType == 'save') {
+            //var grid6 = document.getElementById("InlineEditing").ej2_instances[0];
+            $(window).scrollTop(scrollVal);
+            scrollVal = 0;
+        }
+         //if (args.requestType == "save" || args.requestType == "cancel") {
+         //       $(window).scrollTop(this.getSelectedRows().offset().top - ($(window).height() / 2));
+         //   }
+        //if (args.requestType == "save" || args.requestType == "cancel") {
+        //    var obj = $(".e-grid").ejGrid("instance");
+        //    $(window).scrollTop(obj.getSelectedRows().offset().top - ($(window).height() / 2));
+        //}
+    }
+    function appendElement(elementString, form) {
+        
+        form.querySelector("#dialogTemp").innerHTML = elementString;
+        form.ej2_instances[0].addRules('VendorName', { required: [true, "Display Name is required"] });
+        //form.ej2_instances[0].addRules('CustomerID', { required: true, minLength: 3 }); //adding the form validation rules
+        form.ej2_instances[0].refresh();  // refresh method of the formObj
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        var serverScript = form.querySelector("#dialogTemp").querySelector('script');
+        script.textContent = serverScript.innerHTML;
+        document.head.appendChild(script);
+        serverScript.remove();
+    }
+   
+    function SetDepartmentDropDown(e) {
+        var dropObj = document.getElementById('MultiStoreId').ej2_instances[0];
+        var ddldist = document.getElementById('MultiDepartmentId').ej2_instances[0];
+        if (dropObj.value.length != 0) {
+            $('#VendorName').attr('disabled', false);
+            $('#CompanyName').attr('disabled', false);
+            $('#PrintOnCheck').attr('disabled', false);
+            $('#PhoneNumber').attr('disabled', false);
+            $('#Address').attr('disabled', false);
+            $('#Address2').attr('disabled', false);
+            $('#City').attr('disabled', false);
+            $('#PostalCode').attr('disabled', false);
+            $('#EMail').attr('disabled', false);
+            $('#Instruction').attr('disabled', false);
+            $('#Country').attr('disabled', false);
+            $('#AccountNumber').attr('disabled', false);
+            var PhoneNumber = document.getElementById('PhoneNumber').ej2_instances[0];
+            var state = document.getElementById('State').ej2_instances[0];
+            var IsActive = document.getElementById('IsActive').ej2_instances[0];
+            state.enabled = true;
+            PhoneNumber.enabled = true;
+            IsActive.disabled = false;
+            ddldist.enabled = true;
+        } else {
+            $('#VendorName').attr('disabled', true);
+            $('#CompanyName').attr('disabled', true);
+            $('#PrintOnCheck').attr('disabled', true);
+            $('#PhoneNumber').attr('disabled', true);
+            $('#Address').attr('disabled', true);
+            $('#Address2').attr('disabled', true);
+            $('#City').attr('disabled', true);
+            $('#PostalCode').attr('disabled', true);
+            $('#EMail').attr('disabled', true);
+            $('#Instruction').attr('disabled', true);
+            $('#Country').attr('disabled', true);
+            $('#AccountNumber').attr('disabled', true);
+            var PhoneNumber = document.getElementById('PhoneNumber').ej2_instances[0];
+            var state = document.getElementById('State').ej2_instances[0];
+            var IsActive = document.getElementById('IsActive').ej2_instances[0];
+            state.enabled = false;
+            PhoneNumber.enabled = false;
+            IsActive.disabled = true;
+            ddldist.enabled = false;
+        }
+        $.ajax({
+            url: '@Url.Action("SetDepartment", "TestVendorMaster")',
+            type: "POST",
+            data: JSON.stringify({ Mult: dropObj.value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                //ddldist = ddldist.innerHTML("");
+                //$.each(response, function (data, value) {
+                //    var text = value.DepartmentName;
+                //    var values = value.DepartmentId;
+                //    ddldist.addItem({ text: text, value: values });
+                //});
+                ddldist.dataSource = response;
+                ddldist.dataBind();
+            },
+            error: function (response) {
+            }
+        });
+    }
+    function SetCompanyName() {
+        $("#CompanyName").val($("#VendorName").val());
+    }
+    function SetPrintOnCheck() {
+        $("#PrintOnCheck").val($("#CompanyName").val());
+    }
+
+
+    //document.getElementById('PhoneNumber').addEventListener('input', function (e) {
+    //    var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    //    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    //});
+</script>
+@Html.EJS().ScriptManager()

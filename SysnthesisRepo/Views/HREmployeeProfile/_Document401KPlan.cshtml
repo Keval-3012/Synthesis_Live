@@ -1,0 +1,20 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.HRModels.HREmployeeDocument
+
+@Html.HiddenFor(m => m.EmployeeId)
+@Html.HiddenFor(m => m.EmployeeChildId)
+@Html.HiddenFor(m => m.FileName)
+<div class="form-row">
+    <div class="form-group col-md-12">
+        @Html.EJS().Uploader("UploadFiles").DropArea(".control-fluid").AllowedExtensions(".pdf").AutoUpload(true).Multiple(false).AsyncSettings(new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("~/HREmployeeProfile/SaveDocuments?EmployeeId=" + Model.EmployeeId + "&Type=2"), RemoveUrl = @Url.Content("~/HREmployeeProfile/RemoveDocuments?EmployeeId=" + Model.EmployeeId + "&Type=2") }).Success("onImageUploadSuccess").Render()
+    </div>
+    <div class="form-group col-md-12">
+        <div class="e-float-input e-control-wrapper">
+            @Html.EJS().RadioButton("radio1").Label("Opt-In").Name("rdopt").Value("1").Checked(true).Render()
+            @Html.EJS().RadioButton("radio2").Label("Opt-Out").Name("rdopt").Value("2").Render()
+        </div>
+    </div>
+</div>
+@Html.EJS().ScriptManager()
+

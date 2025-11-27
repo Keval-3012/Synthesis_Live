@@ -1,0 +1,484 @@
+﻿@model EntityModels.Models.Invoice
+@using Utility;
+@using EntityModels.Models;
+@{
+    Layout = "~/Views/Shared/AdminModelMaster.cshtml";
+}
+<style>
+    .loading-containers {
+        z-index: 200000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.8)url(../img/white_trans.png) repeat left top !important;
+    }
+
+        .loading-containers .loaders {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            -webkit-animation: typing 1s linear infinite alternate;
+            -moz-animation: Typing 1s linear infinite alternate;
+            animation: typing 1s linear infinite alternate;
+            margin: 50vh auto;
+            position: relative;
+            left: -12px;
+        }
+
+    .modal-body .select2-container {
+        z-index: unset !important;
+    }
+
+    .tabpanelbox .tab-content .tabsublinks a {
+        padding: 12px 14px !important;
+    }
+
+    .bothActive {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background: #57f257;
+        margin: 3px 5px 0px 5px;
+        border-radius: 8px;
+        border: 2px solid green;
+        float: right;
+    }
+
+    .synthesisOnlyActive {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background: #cef257;
+        margin: 3px 5px 0px 5px;
+        border-radius: 8px;
+        border: 2px solid #e9745f;
+        float: right;
+    }
+</style>
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="animate-panelmessesgarea padbtmzero">
+</div>
+@using (Html.BeginForm("CreateCashInvoice", "Terminal", FormMethod.Post, new { id = "frm2" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    DBContext db = new DBContext();
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="row">
+            @Html.Hidden("storeid3", Model.StoreId)
+            <input type="hidden" id="CurrentDate" value="@ViewBag.CurrentDate" />
+            <div class="col-md-6 col-sm-6 leftpart">
+                <div>
+                    <div class="invoiceimage paddnone0"></div>
+                    <div class="uploadscanbutton">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <span class="btn btn-file" id="spaninvoice">
+                                <span class="fileupload-new"> <span class="btnbox btnupload"> <img src="~/Content/Admin/images/icon_pdfblack.png" alt="" class="blackicon" /> <img src="~/Content/Admin/images/icon_pdfwhite.png" alt="" class="whiteicon" /> <span>Upload Pdf</span> </span> </span> <span class="fileupload-exists">Change</span>
+                                @Html.TextBoxFor(model => model.UploadInvoice, new { type = "file" })
+                            </span><span class="fileupload-preview" id="spnvalue"></span> <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none" id="aclose">×</a>
+                            @Html.ValidationMessageFor(model => model.UploadInvoice)
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div id="popupDepartment" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">Department</div>
+                        <div class="modal-body ">Enter at least In One Department Amount.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupidext" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">PDF</div>
+                        <div class="modal-body ">Please upload only pdf files.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">PDF</div>
+                        <div class="modal-body ">Please import the scanned document before you save the Invoice.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupSize" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">Invalid PDF Size</div>
+                        <div class="modal-body ">File Size is too Big.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a class="btn" data-dismiss="modal" onclick="closemodal()">OK</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupExists" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <button type="button" onclick="Duplicatepopupclose()" class="close">&times;</button>
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">Duplicate found</div>
+                        <div class="modal-body ">This invoice already exists in the database.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <input type="hidden" id="hndinvoiceid" />
+                            <a data-dismiss="modal" onclick="closemodal()" id="hrefopeninvoice" href="@Url.Action("Detail", "InvoiceReport", new { Id = @ViewBag.invoiceid })" target="_blank" class="btn">Open Invoice</a>
+                            <a onclick="Duplicatepopupclose()" class="btn" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupcheckExistsagain" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content duplicatedata">
+                        <div class="modal-header text-center">
+                            <button type="button" onclick="SubDuplicatepopupclose()" class="close">&times;</button>
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">Potential Duplicate</div>
+                        <div class="modal-body ">
+                            Another invoice already exists with this number.
+                            <div style="text-align:center" id="divdisplayduplicateinvoice">
+                            </div>
+                        </div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a dat-dismiss="modal" onclick="KeepandSave()" class="btn" data-dismiss="modal">Keep and Save</a>
+                            <a onclick="SubDuplicatepopupclose()" class="btn" data-dismiss="modal">Cancel</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="popupDisplayduplicateinvoice" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content duplicatedata">
+                        <div class="modal-header text-center">
+                            <button type="button" onclick="DisplayDuplicatepopupclose()" class="close">&times;</button>
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-title">Duplicate found</div>
+                        <div class="modal-body ">
+                            This invoice already exists in the database.
+
+                        </div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a onclick="DisplayDuplicatepopupclose()" class="btn" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="popupPaidAmtHigh" class="divIDClass modal-popup modal-danger modal-message spical_modal " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+                    <div class="modal-content ">
+                        <div class="modal-header text-center">
+                            <button type="button" onclick="PaidAmtHighclose()" class="close">&times;</button>
+                            <i class="glyphicon glyphicon-fire"></i>
+                        </div>
+                        <div class="modal-body ">Total Amount is higher than Paid amount not allowed.</div>
+                        <div class="modal-footer " style="text-align:center">
+                            <a onclick="PaidAmtHighclose()" class="btn" data-dismiss="modal">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 rightpart" style="text-align:left;">
+                <h3>Invoice Information</h3>
+                <div class="formmain">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>Vendor Name</label><span class="highlight">*</span><span class="" id="spnActive"></span>
+                                @Html.DropDownListFor(model => model.VendorId, null, "Select Vendor ", new { @class = "myval", maxlength = 100, @onchange = "BindAddress(this.value);getVendorDepartmentList();" })
+                                @Html.ValidationMessageFor(model => model.VendorId)
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6" id="divvendorphone" style="display:none;">
+                            <div class="form-group">
+                                <label>Vendor Phone Number</label>
+                                <br /><br />
+                                <div class="addressbox" id="PhoneNumber">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="divvendoraddress" style="display:none;">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label>Vendor Address</label>
+                                <div class="addressbox" id="addresss"></div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row" id="divvendorQBStatus" style="display:none;">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Vendor QB Status</label>
+                                    <div class="addressbox" id="VendorQBStatus"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label>Vendor Synthesis Status</label>
+                                    <div class="addressbox" id="VendorSynthesisStatus"></div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+
+                                <label>Invoice #</label><span class="highlight">*</span>
+                                @Html.TextBoxFor(model => model.InvoiceNumber, new { @maxlength = 35, @id = "Invoice_Number", @name = "Invoice_Number", @Type = "text", @class = "form-control required" })
+                                <span class="highlight">@Html.ValidationMessageFor(model => model.InvoiceNumber)</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label>Invoice Date</label><span class="highlight">*</span>
+                                <div class="">
+                                    @Html.HiddenFor(model => model.TotalAmtByDept)
+                                    @{
+
+                                        if (Model.InvoiceDate != null)
+                                        {
+                                            @Html.Hidden("Invoice_Date", @Model.InvoiceDate)
+
+                                            @Html.TextBoxFor(model => model.InvoiceDate, new { onkeydown = "return false", maxlength = 100, @class = "datepicker form-control ", autocomplete = "off" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(model => model.InvoiceDate, new { onkeydown = "return false", maxlength = 100, @class = "datepicker form-control ", autocomplete = "off" })
+                                        }
+                                    }
+                                    @Html.ValidationMessageFor(model => model.InvoiceDate)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="whitebox">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Invoice Breakdown<span class="highlight">*</span> </label>
+                            </div>
+                        </div>
+                        <div id="tbladdon" class="tbladdoncls">
+                            @if (Model.InvoiceDepartmentDetails == null)
+                            {
+                                <input type="hidden" id="hdninvoicecount" value="1" />
+                                <input type="hidden" id="hdnreqval" value="0" />
+                                <div id="trrow_1" class="trrowcls">
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-6 col-sm-5 jquerydiv">
+                                            <div class="form-group bg_red">
+                                                @Html.DropDownListFor(model => model.ChildDepartmentId, new SelectList(Model.DepartmentMasters, "DepartmentId", "DepartmentName"), "Select Department", new { @class = "form-control drpcls wdith255 myval required  myvalssss drpclass", id = "Drp_1", @required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1 visible-xs visible-sm visible-md">
+                                            <span class="spncredit" style="color:red;display:none;"> - </span>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-7 padleftzero padrightzero demonstration">
+                                            <div class="form-group">
+                                                @Html.TextBoxFor(model => model.ChildAmount, new { maxlength = 18, @class = "form-control groupOfTexbox decimalOnly addamtcls setAmount", id = "Amt_1", onkeyup = "AddAmt()" })
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 paddingrightzero">
+                                            <a class="btnaddbox" id="aAdd_1" onclick="AddField(1)"><i class="fa fa-plus"></i></a>
+                                            <a id="aRemove_1" class="aremove" onclick="RemoveField(1)" style="display:none;"><i class="fa fa-minus"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                var k = 0;
+                                var temp = "";
+                                for (var j = 0; j < Model.InvoiceDepartmentDetails.Count; j++)
+                                {
+                                    k = (j + 1);
+                                    <input type="hidden" id="hdninvoicecount" value='@Model.InvoiceDepartmentDetails.Count' />
+                                    <input type="hidden" id="hdnreqval" value="0" />
+                                    <div id="trrow_@k" class="trrowcls">
+                                        <div class="row">
+
+                                            <div class="col-lg-7 col-md-5 col-sm-5 jquerydiv">
+                                                <div class="form-group">
+                                                    @{
+                                                        @Html.DropDownList("ChildDepartmentId", new SelectList(Model.DepartmentMasters, "DepartmentId", "DepartmentName", Model.InvoiceDepartmentDetails[j].DepartmentId), "Select Department", new { @class = "form-control drpcls wdith255 myval myvalssss", id = "Drp_" + k })
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 col-sm-1 col-xs-1 visible-xs visible-sm visible-md">
+                                                <span class="spncredit" style="color:red;display:none;"> - </span>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 padleftzero padrightzero">
+                                                <div class="form-group">
+                                                    @Html.TextBox("ChildAmount", Model.InvoiceDepartmentDetails[j].Amount, new { maxlength = 18, @class = "form-control addamtcls groupOfTexbox decimalOnly", id = "Amt_" + k, onchange = "AddAmt()" })
+                                                    <br />
+                                                    @Html.ValidationMessageFor(model => model.ChildAmount)
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 paddingrightzero">
+                                                <a class="btnaddbox" id="aAdd_@k" onclick="AddField(@k)"><i class="fa fa-plus"></i></a>
+                                                <a id="aRemove_@k" class="aremove" onclick="RemoveField(@k)" style="display:none;"><i class="fa fa-minus"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                            <div class="row" id="divdiscountlabel">
+                                <div class="col-md-12">
+                                    <label>Discount<span class="highlight"></span> </label>
+                                </div>
+                            </div>
+
+                            <div class="row form-group" id="divdiscount">
+                                <div class="col-lg-3 col-md-4 col-sm-3">
+                                    @Html.DropDownList("DiscountTypeId", null, "Select Type", new { @class = "form-control  myval required", @required = "required", id = "discountype", @onchange = "Binddiscount();" })
+                                </div>
+                                <div class="col-lg-1 col-sm-1 dollarpersign" id="divper" style="display:none">%</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 padleftzero padrightzero" id="divpercentage" style="display:none;">
+                                    <div class="form-group marbtmzero">
+                                        @Html.TextBoxFor(model => model.DiscountPercent, new { maxlength = 6, @class = "form-control groupOfTexbox decimalOnly  required", id = "Discount", onchange = "Calculatediscount()", @required = "required" })
+                                    </div>
+                                </div> <div class="col-lg-1 col-sm-1 dollarpersign" id="divdolar" style="display:none">$</div>
+                                <div class="col-lg-3 col-md-3 col-sm-2 col-xs-7 padleftzero padrightzero" id="divdiscountamt" style="display:none;">
+                                    <div class="form-group marbtmzero">
+                                        @Html.TextBoxFor(model => model.DiscountAmount, new { maxlength = 18, @class = "form-control groupOfTexbox decimalOnly  required", id = "Discountamount", @required = "required", onchange = "Calculatediscount()" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group" id="SelectDeptForDisc">
+                                <div class="col-lg-7 col-md-6 col-sm-5">
+                                    <div class="form-group bg_red">
+                                        @Html.DropDownList("Disc_Dept_id", null, "Department", new { @class = "form-control  wdith255 myval ", id = "Disc_Drp_1" })
+                                        @Html.ValidationMessageFor(model => model.Disc_Dept_id)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-7 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <span class="invoiceamttl">Total Invoice Amount</span>
+                                        <input type="hidden" id="totalamounrt" value="@Model.TotalAmount" />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-xs-8 padleftzero">
+                                    <div class="form-group">
+                                        @if (Model.TotalAmount != null)
+                                        {
+                                            <b><span class="spncredit spncredit2" style="color:red;display:none;"> - </span></b>
+                                            <span id="spanamount" class="spanamount spanamountBackcolor" style="padding-left: 0px;">
+                                                @Model.TotalAmount
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <b><span class="spncredit spncredit2" style="color:red;display:none;"> - </span></b><span id="spanamount" class="spanamount spanamountBackcolor" style="padding-left: 0px;display:none">
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Note
+                        </label>
+                        @Html.TextAreaFor(model => model.Note, new { maxlenght = 250, @class = "form-control addinvoicearea" })
+                    </div>
+                    @if (Roles.IsUserInRole("Administrator"))
+                    {
+                        <div class="row" id="divNoNeedForApproval" style="display:none;">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="chk" id="QuickInvoice" checked="checked" type="checkbox" name="QuickInvoice" value="1">
+                                        <label for="QuickInvoice">No need for approval</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (new SysnthesisRepo.WebRoleProvider().GetroleUserRoleWise(UserModule.getUserTypeId(), "nnfapprovalInvoice", Model.StoreId) == true) /*Roles.IsUserInRole("nnfapprovalInvoice")*/
+                    {
+                        <div class="row" id="divNoNeedForApproval">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="chk" id="QuickInvoice" type="checkbox" name="QuickInvoice" value="1">
+                                        <label for="QuickInvoice">No need for approval</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="from-group row">
+                        <div class="col-sm-12">
+                            <input type="button" value="Save" id="btnInvoiceSubmit" name="btnsubmit" class="buttonbox btn_spcial" />
+                            <input type="submit" value="Cancel" id="btnInvoiceCancel" name="btncancel" class="buttonbox btncancel" onclick="closecashmodal()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
+    }    
+    docReady(function () {
+        $('#SelectDeptForDisc').hide();
+        $("#Invoice_Number").autocomplete("off");
+        $("#InvoiceDate").autocomplete("off");
+        $("#Amt_1").autocomplete("off");
+        //var today = document.getElementById("CurrentDate").value;
+        //$('#Invoice_Date').datetimepicker({
+        //format: 'MMM DD,YYYY',
+        //    useCurrent: false,
+        //    maxDate: today
+        //});
+        $('#InvoiceDate').datetimepicker({
+            format: 'MMM DD,YYYY',
+            useCurrent: false,
+            maxDate: moment(),
+            minDate: new Date('@ViewBag.closingyear', 01 - 1, 01),
+        });
+
+        $("#VendorId").select2();
+        $("#discountype").select2();
+        $("#Disc_Dept_id").select2();
+        $("#Disc_Drp_1").select2();
+        $("#Drp_1").select2();
+        $(".myvalssss").select2();
+    });
+    var isValid = '@Html.Raw(Json.Encode(ViewData.ModelState.IsValid))'
+
+</script>
+<script src="~/Form_JS/TerminalCashInvoice.js?version=@System.Configuration.ConfigurationManager.AppSettings["version"].ToString()"></script>

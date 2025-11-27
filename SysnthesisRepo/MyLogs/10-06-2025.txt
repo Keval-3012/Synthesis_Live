@@ -1,0 +1,38 @@
+2025-10-06 10:47:37.7598|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/6/2025 10:47:37 AM
+2025-10-06 10:56:52.2121|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/6/2025 10:56:52 AM - An error occurred while sending the request.
+2025-10-06 11:32:46.5282|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 11:32:46 AM
+2025-10-06 11:32:54.9589|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 11:32:54 AM
+2025-10-06 11:48:24.2886|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 11:48:24 AM
+2025-10-06 11:48:27.2900|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 11:48:27 AM
+2025-10-06 11:49:06.0561|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 11:49:06 AM
+2025-10-06 12:18:45.0509|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/6/2025 12:18:45 PM
+2025-10-06 12:18:59.1113|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/6/2025 12:18:59 PM - An error occurred while sending the request.
+2025-10-06 12:33:43.7965|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:33:43 PM
+2025-10-06 12:33:52.7387|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:33:52 PM
+2025-10-06 12:52:10.5574|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:52:10 PM
+2025-10-06 12:55:21.1545|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:55:21 PM
+2025-10-06 12:55:26.9257|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:55:26 PM
+2025-10-06 12:55:29.2022|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:55:29 PM
+2025-10-06 12:56:56.4391|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 12:56:56 PM
+2025-10-06 14:18:36.8265|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 2:18:36 PM
+2025-10-06 14:18:48.2986|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 2:18:48 PM
+2025-10-06 14:18:56.7445|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 2:18:56 PM
+2025-10-06 14:44:04.0941|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/6/2025 2:44:04 PM
+2025-10-06 14:47:03.5604|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/6/2025 2:47:03 PM - An error occurred while sending the request.
+2025-10-06 14:58:28.1168|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/6/2025 2:58:28 PM
+2025-10-06 14:59:55.4025|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/6/2025 2:59:55 PM - An error occurred while sending the request.
+2025-10-06 15:11:18.3173|ERROR|SynthesisRepo.Controllers.PayrollAccountController|PayrollAccountController - UpdatePayrollAccount - 10/6/2025 3:11:18 PM - Method not found: 'System.Nullable`1<Int32> SynthesisViewModal.UpdatePRAccount.get_NewSortingNo()'.
+2025-10-06 15:11:20.3739|ERROR|SynthesisRepo.Controllers.PayrollAccountController|PayrollAccountController - UpdatePayrollAccount - 10/6/2025 3:11:20 PM - Method not found: 'System.Nullable`1<Int32> SynthesisViewModal.UpdatePRAccount.get_NewSortingNo()'.
+2025-10-06 15:11:20.9464|ERROR|SynthesisRepo.Controllers.PayrollAccountController|PayrollAccountController - UpdatePayrollAccount - 10/6/2025 3:11:20 PM - Method not found: 'System.Nullable`1<Int32> SynthesisViewModal.UpdatePRAccount.get_NewSortingNo()'.
+2025-10-06 15:12:31.9785|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/6/2025 3:12:31 PM
+2025-10-06 15:15:00.1484|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/6/2025 3:15:00 PM - An error occurred while sending the request.
+2025-10-06 15:19:06.2261|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:19:06 PM
+2025-10-06 15:19:10.0001|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:19:10 PM
+2025-10-06 15:19:12.4021|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:19:12 PM
+2025-10-06 15:19:15.6893|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:19:15 PM
+2025-10-06 15:19:17.8578|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:19:17 PM
+2025-10-06 15:19:19.7763|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:19:19 PM
+2025-10-06 15:29:34.4229|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:29:34 PM
+2025-10-06 15:29:38.4438|INFO|SysnthesisRepo.Controllers.ReportController|ReportController - UrlDatasource - 10/6/2025 3:29:38 PM
+2025-10-06 16:42:51.9935|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 10/6/2025 4:42:51 PM
+2025-10-06 16:43:12.1920|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 10/6/2025 4:43:12 PM - An error occurred while sending the request.

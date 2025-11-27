@@ -1,0 +1,249 @@
+﻿@using Syncfusion.EJ2
+@using EntityModels.Models;
+@using Utility;
+@using System.Configuration;
+
+@{
+
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<style>
+    .je-date {
+        display: flex;
+        width: 100%;
+        margin: 0 0 0 auto;
+        justify-content: flex-end;
+    }
+        .je-date input#searchproduct {
+            width:200px;
+        }
+
+    #ReportIssueModal {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: #010101b3;
+    }
+    .report-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .report-proname {
+        font-size: 16px;
+    }
+        .report-proname #selectedproduct {
+            font-size: 16px;
+            font-weight: 500;
+        }
+    .additional-box {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+        .additional-box label {
+            font-size: 16px;margin:0;
+        }
+    #AdditionNote{height:60px;}
+    .total-count {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 20px;
+        color: #000;
+        margin: 0 10px 0 0;
+    }
+</style>
+
+<link href="~/Content/synfusion.css" rel="stylesheet" />
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Item Product Detail</h3>
+        </div>
+        <div class="col-md-6">
+            <div class="je-date">
+                <div class="total-count">Total Product Count: <span id="ProductCountBd"></span></div>
+                <input type="text" id="searchproduct" />
+                <input type="submit" name="btnSearch" value="Search" id="btnSearch" onclick="OnSearchProduct();" class=".searchfinal .btnsearchicon marginleft10">
+            </div> 
+        </div>
+    </div>
+
+</div>
+<div id="listviewdata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().ListView("ProductListView").Width("100%").Template("#tileTemplate").CssClass("e-tile-list").DataSource(dataManager => { dataManager.Url("/ItemProductScanLog/UrlDatasourceBarcodeLookup").Adaptor("UrlAdaptor"); }).Render()
+            @Html.EJS().Pager("pager").PageSize(100).PageCount(5).TotalRecordsCount((int)ViewBag.ProductCount).Render()
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ReportIssueModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Report an Issue</h4>
+            </div>
+            <div class="modal-body">
+                <div class="report-content">
+                    <div class="report-proname">Product Name:<span id="selectedproduct"></span></div>
+                    <input type="hidden" id="HdnProductId" />
+                    @Html.EJS().DropDownList("ReportIssueId").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "Text", Value = "Value" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)ViewBag.ReportIssue).AllowFiltering(true).FilterType(Syncfusion.EJ2.DropDowns.FilterType.Contains).Index(0).Render()
+                    <div class="additional-box">
+                        <label>Additional Note</label>
+                        <textarea id="AdditionNote"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <input type="button" class="buttonbox btnsubmit" detail="Recent Expenses/Checks Upload Docs -" value="Submit" onclick="OnReportSubmit()" />
+                <button type="button" class="buttonbox btncancel" detail="Recent Expenses/Checks Upload Docs -" data-dismiss="modal" onclick="OnRemoveReportVal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="IssueRaisedModal" class="divIDClass modal-popup modal-danger modal-message max_widht300" style="position: fixed; display:none;">
+    <div class="modal-content" style="padding:0px 30px 0px 30px;max-width:max-content;">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"><b><label id="UserDisplayMessage"></label></b></div>
+        <div class="modal-body ">
+            We value your feedback. Our team will investigate and update the product information if needed.
+        </div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Continue </a>
+        </div>
+    </div>
+</div>
+
+
+<script id="tileTemplate" type="text/x-template">
+    <div class="tile-content" style="padding: 10px; text-align: center;">
+        <div class="upc-number" style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">
+            ${BarcodeNumber}
+        </div>
+        <div class="image-container" style="margin-bottom: 10px;">
+            <img src="/ItemProductScanLog/GetProductImage?imagePath=${encodeURIComponent(ImagePath)}"
+                 onerror="this.onerror=null;this.src='/UploadedImages/default.jpg';"
+                 alt="Product Image"
+                 style="width: 150px; height: 150px; border-radius: 5px; object-fit: contain;" />
+        </div>
+        <div class="upc-product-name" style="font-size: 14px;">
+            ${Title}
+        </div>
+        <div style="font-size: 14px;">
+            <img src="/Content/Admin/images/reportissue.png" alt="Product Image" style="border-radius: 5px; object-fit: contain;" onclick="OnReportIssue(this, ${ProductId})" data-detail="${Title}" />
+        </div>
+    </div>
+</script>
+
+<script>
+    document.title = '@ViewBag.Title';
+
+    $(document).ready(function () {
+        var productcount = '@ViewBag.ProductCount';
+        $("#ProductCountBd").text(productcount);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var pager = document.getElementById('pager').ej2_instances[0];
+        pager.addEventListener('click', onPageClick);
+    });
+
+
+    function onPageClick(args) {
+        var listView = document.getElementById('ProductListView').ej2_instances[0];
+        var searchValue = $("#searchproduct").val() || '';
+        var skip = (args.currentPage - 1) * 48;
+
+        listView.dataSource = new ej.data.DataManager({
+            url: "/ItemProductScanLog/UrlDatasourceBarcodeLookup?searchproduct=" +
+                encodeURIComponent(searchValue) + "&skip=" + skip + "&take=48",
+            adaptor: new ej.data.UrlAdaptor()
+        });
+
+        listView.refresh();
+    }
+
+    function OnSearchProduct() {
+        var searchValue = $("#searchproduct").val();
+        var listView = document.getElementById('ProductListView').ej2_instances[0];
+        var pager = document.getElementById('pager').ej2_instances[0];
+        pager.currentPage = 1;
+
+        //listView.dataSource = new ej.data.DataManager({
+        //    url: "/ItemProductScanLog/UrlDatasourceBarcodeLookup?searchproduct=" + encodeURIComponent(searchValue),
+        //    adaptor: new ej.data.UrlAdaptor()
+        //});
+
+        listView.dataSource = new ej.data.DataManager({
+            url: "/ItemProductScanLog/UrlDatasourceBarcodeLookup?searchproduct=" +
+                encodeURIComponent(searchValue) + "&skip=" + 0 + "&take=48",
+            adaptor: new ej.data.UrlAdaptor()
+        });
+
+        listView.refresh();
+    }
+
+    function OnReportIssue(element, productId) {
+        var title = element.getAttribute('data-detail');
+        $("#selectedproduct").text(title);
+        $('#ReportIssueModal').modal('show');
+        $('.modal-backdrop').hide();
+        $("#HdnProductId").val(productId);
+    }
+
+    function OnReportSubmit() {
+        var ProductId = $("#HdnProductId").val();
+        var dropdown = document.getElementById("ReportIssueId").ej2_instances[0];
+        var selectedIssueId = dropdown.value;
+        var AdditionNotes = $("#AdditionNote").val();
+        $.ajax({
+            url: ROOTURL + "ItemProductScanLog/AddReportAnIssueForm",
+            type: 'POST',
+            data: { ProductId: ProductId, selectedIssueId: selectedIssueId, AdditionNotes: AdditionNotes },
+            success: function (response) {
+                if (response.StatusMessage == "Success") {
+                    $('#ReportIssueModal').modal('hide');
+                    RemoveValueModal();
+                    $('#IssueRaisedModal').show();
+                    $("#UserDisplayMessage").text("Thank you " + response.UserName + " for your report!");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function closemodal() {
+        $(".divIDClass").hide();
+    }
+
+    function OnRemoveReportVal() {
+        RemoveValueModal();
+    }
+
+    function RemoveValueModal() {
+        $("#HdnProductId").val("");
+        $("#selectedproduct").text("");
+        var dropdown = document.getElementById("ReportIssueId").ej2_instances[0];
+        dropdown.value = 1;
+        $("#AdditionNote").val("");
+    }
+</script>
+
+@Html.EJS().ScriptManager()

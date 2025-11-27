@@ -1,0 +1,156 @@
+﻿@using Syncfusion.EJ2
+@{
+    ViewBag.Title = "Pdf Viewer";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+<style>
+    .toast-top-right {
+        top: 80px;
+        right: 40% !important;
+    }
+    .modal-backdrop {
+        z-index: 0 !important;
+    }
+
+</style>
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/DocumentBar.css" rel="stylesheet" />
+<div id="grddata">
+    <div class="newdocumentuploadpage">
+        <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+            <div class="control-section">
+                <div class="pdfBar">
+                    <img src="~/Content/image/pdf.svg" />
+                    <span class="documentName">@ViewBag.PdfName</span>
+                    <div class="buttonsContainer">
+                        <a data-toggle="modal" data-target="#EditModel" style="text-decoration: none;"><img src="~/Content/image/edit.svg" />Edit</a>
+
+                        <a onclick="PrintPdf();"><img src="~/Content/image/print.svg" />Print</a>
+                        <a class="downloadButton" onclick="DownloadPdf();"><img src="~/Content/image/download.svg" />Download</a>
+                    </div>
+                </div>
+                <div id="PdfViewer" style="height:900px;width:100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<a href="~/UserFiles/DocFiles/1407/2020/December/07122020_DAILYWORKSHEETWEEK48_453.pdf">~/UserFiles/DocFiles/1407/2020/December/07122020_DAILYWORKSHEETWEEK48_453.pdf</a>*@
+</div>
+<div class="modal fade" id="EditModel" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:14%">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Document</h4>
+            </div>
+            <div class="modal-body">
+                <div id="frmUserType" class="form-horizontal">
+                    @{ Html.RenderAction("EditDocumentsDetali", new { ids = ViewBag.Ids }); }
+                </div>
+            </div>
+            <div class="modal-footer modal-delete-footer">
+                <input form="UpLedger" type="button" class="buttonbox btnsubmit" value="Add" onclick="EditDocument();" />
+                <button type="button" class="buttonbox btncancel" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Initialize PDF Viewer component.
+    var pdfviewer = new ej.pdfviewer.PdfViewer({
+        serviceUrl: '/PdfViewer',
+        documentPath: '@ViewBag.PdfPath',
+    });
+    ej.pdfviewer.PdfViewer.Inject(ej.pdfviewer.TextSelection, ej.pdfviewer.TextSearch, ej.pdfviewer.Navigation, ej.pdfviewer.Print);
+    pdfviewer.appendTo('#PdfViewer');
+
+    window.onload = function () {
+        $('#PdfViewer_open').hide();
+        $('#HeaderStoreId').prop('disabled', true);
+        setTimeout(function () {
+            $("#PdfViewer_toolbarContainer > a").hide();
+            $('#PdfViewer_signElement').closest("a").hide();
+            $('#PdfViewer_stampElement').closest("a").hide();
+        }, 1000);
+    //    
+    }
+</script>
+<script>
+    function DownloadPdf() {
+        
+        var pdfViewer = document.getElementById('PdfViewer').ej2_instances[0];
+        pdfViewer.download();
+    }
+
+    function PrintPdf() {
+        
+        var pdfViewer = document.getElementById('PdfViewer').ej2_instances[0];
+        pdfViewer.print.print();
+    }
+
+    function EditDocument() {
+        
+        var DocumentId = $('#DocumentId').val();
+        var DocumentCategoryId = $('#DocumentCategoryId').val();
+        var KeyWords = $('#KeyWords').val();
+        var Notes = $('#Notes').val();
+        var chkFav = $('#chkFav').val();
+        var Title = $('#Title').val();
+        $.ajax({
+            url: '/Documents/EditDocumentsDetaliValue',
+            type: "post",
+            cache: false,
+            data: { DocumentId: DocumentId, DocumentCategoryId: DocumentCategoryId, KeyWords: KeyWords, Notes: Notes, chkFav: chkFav, Title: Title },
+            success: function (states) {
+                //$('#DocumentId').val("");
+                //$('#KeyWords').val("");
+                //$('#Notes').val("");
+                //$('select#DocumentCategoryId').val("");
+                //$('#chkFav').attr('checked', false); // Unchecks it
+
+                if (states == "Completed") {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.success('@ViewBag.Editsuccess');
+                    $('#EditModel').modal('hide');
+                }
+                else {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "3000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "10000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+
+                    toastr.error('Something went to wrong');
+                }
+            }
+        });
+    }
+</script>

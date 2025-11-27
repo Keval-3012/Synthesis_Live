@@ -1,0 +1,66 @@
+﻿@model List<EntityModels.Models.Products>
+
+@using Utility
+
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml"; }
+
+<div class="header-small special_bg reportlinehight" style="background-color: #247d4f;">
+    <h3 style="color:white">
+        Products List
+    </h3>
+    <div class="clear">
+    </div>
+</div>
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="datagrid martop15">
+            <table class="table table-bordered table-condensed tablesorter" id="productTbl">
+                <thead>
+                    <tr>
+                        <th>
+                            UPC Code
+                        </th>
+                        <th>
+                            Item No
+                        </th>
+                        <th>
+                            Synthesis Id
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Department
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.Raw(item.UPCCode)</td>
+                            <td>@Html.Raw(item.ItemNo)</td>
+                            <td>@Html.Raw(item.SynthesisId)</td>
+                            <td>@Html.Raw(item.Description)</td>
+                            <td>@Html.Raw(item.Departments)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<link href="~/daterange/daterangepicker.min.css" rel="stylesheet" />
+<script src="~/daterange/moment.min.js"></script>
+<script src="~/daterange/daterangepicker.min.js"></script>
+<script src="~/Content/Admin/js/NewDatepicker.js"></script>
+<link href="~/Content/Admin/assets/css/w3.css" rel="stylesheet" />
+<link href="~/Content/Admin/tablesorter/themes/blue/style.css" rel="stylesheet" />
+<script src="~/Content/Admin/tablesorter/jquery.tablesorter.mod.js"></script>
+
+<script src="~/Form_JS/ProductMapping.js"></script>
+
+

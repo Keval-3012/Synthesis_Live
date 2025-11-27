@@ -1,0 +1,174 @@
+.greenBox {
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 7px;
+    /* Permalink - use to edit and share this gradient:
+            http://colorzilla.com/gradient-editor/#4ab487+5,247d4f+63 */
+    background: rgb(74, 180, 135);
+    /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(74, 180, 135, 1) 5%, rgba(36, 125, 79, 1) 63%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(74, 180, 135, 1) 5%, rgba(36, 125, 79, 1) 63%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(74, 180, 135, 1) 5%, rgba(36, 125, 79, 1) 63%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#4ab487', endColorstr='#247d4f', GradientType=1);
+    /* IE6-9 */
+}
+
+.displayFlexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: flex;
+}
+
+.InvoiceSplitContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 35px;
+    margin-top: 24px;
+}
+
+    .InvoiceSplitContainer label {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        color: white;
+    }
+
+        .InvoiceSplitContainer label input[type=radio] {
+            margin-right: 5px;
+            border: solid 1px black;
+            width: 15px;
+            height: 15px;
+        }
+
+.splitFieldLable {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.splitBetweenContainer {
+    display: flex;
+    align-items: stretch;
+    justify-self: center;
+    width: fit-content;
+    flex-wrap: wrap;
+}
+
+    .splitBetweenContainer label {
+        align-items: center;
+        margin-right: 22px;
+        width: auto;
+        justify-self: center;
+        color: white;
+    }
+
+    .splitBetweenContainer div {
+        width: 110px;
+        margin-right: -20px;
+        margin-top: 20px;
+    }
+
+        .splitBetweenContainer div input[type="text"] {
+            width: 60%;
+            height: 30px;
+            display: none;
+        }
+
+.percentage.splitBetweenContainer div input[type="text"] {
+    display: block;
+}
+
+.splitBetweenContainer div label {
+    display: flex;
+    align-items: center;
+    font-size: 12px !important;
+    user-select: none;
+}
+
+.splitBetweenContainer label input[type=checkbox] {
+    margin-right: 5px;
+    width: 14px;
+    position: relative;
+    top: -2px;
+    height: 17px;
+}
+
+.storeWiseDepartments {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 22px 30px;
+    background: rgba(0, 0, 0, 0.35);
+    margin: 20px 0px;
+    border-radius: 10px;
+    box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2);
+}
+
+.storeWiseDepartmentsTitle {
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+}
+
+.storeWiseDepartments select {
+    height: 40px !important;
+    margin-top: 0px !important;
+}
+
+.storeWiseDepartmentsContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+    .storeWiseDepartmentsContainer select {
+        width: 65% !important;
+        margin-right: 17px !important;
+    }
+
+.trrowcls_3, .commonadd{margin:10px 0;}
+.storeWiseDepartmentsContainer input[type="text"] {
+    width: 28.4%;
+    height: 46px;
+    margin-top: 0px;
+    margin-right: 0px;
+}
+
+    .storeWiseDepartmentsContainer i {
+        height: 46px;
+        width: 40px;
+        margin-top: 0px;
+        background: rgb(7, 37, 7);
+        border: 0px;
+        font-size: 13px;
+        color: white;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .storeWiseDepartmentsContainer i:hover {
+            background: rgb(2, 19, 2);
+        }
+
+.splitWiseTotal {
+    display: flex;
+    margin: 10px 0px;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+    width: 100%;
+    padding-right: 40px;
+}
+
+    .splitWiseTotal span {
+        font-size: 20px;
+        font-weight: 600;
+        margin-right: 15px;
+    }

@@ -1,0 +1,152 @@
+﻿@model EntityModels.Models.DepartmentMaster
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Chart of Accounts</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountDetailTypeMasters.DetailType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountDetailTypeMasters.DetailType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountTypeMasters.AccountType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountTypeMasters.AccountType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoreMasters.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoreMasters.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSubAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsSubAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSync)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsSync)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SyncDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SyncDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ListId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DListId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DListId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedBy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

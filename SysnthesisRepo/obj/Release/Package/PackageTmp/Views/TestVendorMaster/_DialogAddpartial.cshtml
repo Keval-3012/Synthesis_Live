@@ -1,0 +1,144 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@model EntityModels.Models.TestVendorMaster
+<div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            @Html.EJS().MultiSelect("MultiStoreId").Mode(VisualMode.Box).Placeholder("Select Store").Change("SetDepartmentDropDown").DataSource((IEnumerable<object>)ViewBag.MultiStoreId).Fields(new MultiSelectFieldSettings { Text = "Name", Value = "StoreId" }).Value((string[])ViewBag.val).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+        </div>
+        @*<div class="form-group col-md-6">
+            </div>*@
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @*@Html.EJS().TextBoxFor(model => model.VendorName).Placeholder("Name").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()*@
+                @Html.TextBoxFor(model => model.VendorName, new { maxlength = 300, placeholder = "Name", autocomplete = "off", disabled = true, @onkeyup = "SetCompanyName();" })
+                <span class="e-float-line"></span>
+                @Html.Label("VendorName", "Display Name", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.CompanyName, new { maxlength = 100, placeholder = "Company Name", autocomplete = "off", disabled = true, @onkeyup = "SetPrintOnCheck();" })
+                <span class="e-float-line"></span>
+                @Html.Label("CompanyName", "Company Name", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.PrintOnCheck, new { maxlength = 200, placeholder = "Print On check", autocomplete = "off", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("PrintOnCheck", "Print On Check", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.EJS().MaskedTextBoxFor(model => model.PhoneNumber).Mask("(000) 000-0000").Placeholder("Phone Number").Enabled(false).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).Render()
+            @*<div class="e-float-input e-control-wrapper">*@
+            @*@Html.TextBoxFor(model => model.PhoneNumber, new { maxlength = 30, placeholder = "(XXX) XXX-XXXX", autocomplete = "off", disabled = true })*@
+            @*<span class="e-float-line"></span>*@
+            @*@Html.Label("PhoneNumber", "Phone Number", new { @class = "e-float-text e-label-top" })*@
+            @*</div>*@
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextAreaFor(model => model.Address, new { maxlength = 500, placeholder = "Address", autocomplete = "off", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("Address", "Address", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        @*<div class="form-group col-md-6">
+                <div class="e-float-input e-control-wrapper">
+                    @Html.TextAreaFor(model => model.Address2, new { maxlength = 500, placeholder = "Address 2", autocomplete = "off", disabled = true })
+                    <span class="e-float-line"></span>
+                    @Html.Label("Address2", "Address 2", new { @class = "e-float-text e-label-top" })
+                </div>
+            </div>*@
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.City, new { maxlength = 50, placeholder = "City", autocomplete = "off", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("City", "City", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.EJS().DropDownList("State").Enabled(false).Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "StateName", Value = "StateName" }).Placeholder("State").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)@ViewBag.State).Index(0).Render()
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.Country, new { maxlength = 50, placeholder = "Country", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("Country", "Country", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.PostalCode, new { maxlength = 50, placeholder = "Postal Code", autocomplete = "off", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("PostalCode", "Postal Code", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.EMail, new { maxlength = 80, @class = "form-control", placeholder = "Email", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("EMail", "Email", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="e-float-input e-control-wrapper">
+                @Html.TextBoxFor(model => model.Instruction, new { placeholder = "Instructions", disabled = true })
+                <span class="e-float-line"></span>
+                @Html.Label("Instruction", "Instruction", new { @class = "e-float-text e-label-top" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="e-float-input e-control-wrapper">
+            @Html.TextBoxFor(model => model.AccountNumber, new { placeholder = "AccountNumber", disabled = true })
+            <span class="e-float-line"></span>
+            @Html.Label("AccountNumber", "Account Number", new { @class = "e-float-text e-label-top" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            @Html.EJS().MultiSelect("MultiDepartmentId").Enabled(false).Mode(VisualMode.Box).Placeholder("Select Department").Fields(new MultiSelectFieldSettings { Text = "DepartmentName", Value = "DepartmentId" }).FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).AllowFiltering(true).Filtering("onfiltering").Render()
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            @Html.EJS().CheckBoxFor(model => model.IsActive).Label("Active").Disabled(true).Render()
+        </div>
+    </div>
+
+    @*<div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.EJS().DropDownList("ShipCountry").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "ShipCountry", Value = "ShipCountry" }).Placeholder("Ship Country").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)@ViewBag.datasource).Render()
+            </div>
+            <div class="form-group col-md-6">
+                @Html.EJS().DropDownList("ShipCity").Fields(new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings { Text = "ShipCity", Value = "ShipCity" }).Placeholder("Ship City").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Always).DataSource((IEnumerable<object>)@ViewBag.datasource).Render()
+            </div>
+        </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <div class="e-float-input e-control-wrapper">
+                        @Html.TextArea("ShipAddress")
+                        <span class="e-float-line"></span>
+                        @Html.Label("ShipAddress", "Ship Address", new { @class = "e-float-text e-label-top" })
+                    </div>
+                </div>
+            </div>*@
+</div>
+
+@Html.EJS().ScriptManager()

@@ -1,0 +1,4 @@
+2025-05-09 14:40:43.1529|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 5/9/2025 2:40:43 PM
+2025-05-09 14:40:56.7749|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 5/9/2025 2:40:56 PM - An error occurred while sending the request.
+2025-05-09 14:43:19.5615|ERROR|SynthesisRepo.Controllers.ManageIPAddressController|ManageIPAddressController - SendEmail - 5/9/2025 2:43:19 PM - The specified string is not in the form required for an e-mail address.
+2025-05-09 14:44:32.9890|ERROR|SynthesisRepo.Controllers.ManageIPAddressController|ManageIPAddressController - SendEmail - 5/9/2025 2:44:32 PM - The specified string is not in the form required for an e-mail address.

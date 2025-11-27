@@ -1,0 +1,22 @@
+2025-11-27 10:21:21.2677|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 10:21:21 AM
+2025-11-27 11:59:39.2058|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 11:59:39 AM - An error occurred while sending the request.
+2025-11-27 12:33:16.7581|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 12:33:16 PM
+2025-11-27 12:33:42.2172|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 12:33:42 PM - An error occurred while sending the request.
+2025-11-27 12:34:09.7106|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 11/27/2025 12:34:09 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<i class="menu-icon"...").
+2025-11-27 12:34:15.6851|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 12:34:15 PM
+2025-11-27 12:34:22.1702|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 12:34:22 PM - An error occurred while sending the request.
+2025-11-27 12:35:30.7570|ERROR|SysnthesisRepo.MvcApplication|Global - Application_Error - 11/27/2025 12:35:30 PM - A potentially dangerous Request.QueryString value was detected from the client (onClickText="<i class="menu-icon"...").
+2025-11-27 14:55:16.2459|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 2:55:16 PM
+2025-11-27 14:55:33.2483|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 2:55:33 PM - An error occurred while sending the request.
+2025-11-27 15:08:56.7421|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 3:08:56 PM
+2025-11-27 15:08:57.2596|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 3:08:57 PM
+2025-11-27 15:09:47.7357|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 3:09:47 PM - An error occurred while sending the request.
+2025-11-27 15:56:02.3768|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 3:56:02 PM
+2025-11-27 15:56:34.0259|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 3:56:34 PM - An error occurred while sending the request.
+2025-11-27 15:57:08.3945|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 3:57:08 PM
+2025-11-27 15:57:50.5687|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 3:57:50 PM - An error occurred while sending the request.
+2025-11-27 16:15:10.3073|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 4:15:10 PM
+2025-11-27 16:16:24.4629|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 4:16:24 PM
+2025-11-27 16:16:39.9303|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 4:16:39 PM - An error occurred while sending the request.
+2025-11-27 16:17:12.0262|INFO|SysnthesisRepo.Controllers.LoginController|LoginController - Index(Method Called) - 11/27/2025 4:17:12 PM
+2025-11-27 16:17:24.0530|ERROR|Repository.SynthesisApiRepository|SynthesisApiRepository - PosttData - 11/27/2025 4:17:24 PM - An error occurred while sending the request.

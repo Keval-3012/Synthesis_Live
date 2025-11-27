@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{83074BE7-3AF5-4F7C-81D6-4C2C9C0545F5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SynthesisQBOnline</RootNamespace>
+    <AssemblyName>SynthesisQBOnline</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.1.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.2.5\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BAL\AccountMaster.cs" />
+    <Compile Include="BAL\Bill.cs" />
+    <Compile Include="BAL\BillDetail.cs" />
+    <Compile Include="BAL\CustomerMaster.cs" />
+    <Compile Include="BAL\Deposit.cs" />
+    <Compile Include="BAL\DepositDetail.cs" />
+    <Compile Include="BAL\Expense.cs" />
+    <Compile Include="BAL\ExpenseDetail.cs" />
+    <Compile Include="BAL\JournalDetail.cs" />
+    <Compile Include="BAL\JournalEntry.cs" />
+    <Compile Include="BAL\PaymentMethod.cs" />
+    <Compile Include="BAL\QBOnlineconfiguration.cs" />
+    <Compile Include="BAL\QBResponse.cs" />
+    <Compile Include="BAL\VendorCredirDetail.cs" />
+    <Compile Include="BAL\VendorCredit.cs" />
+    <Compile Include="BAL\VendorMaster.cs" />
+    <Compile Include="Helper Class\clsCommon.cs" />
+    <Compile Include="Helper Class\DiscoveryData.cs" />
+    <Compile Include="Helper Class\IdToken.cs" />
+    <Compile Include="Helper Class\JWKS.cs" />
+    <Compile Include="Helper Class\UserInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QBClass\QBAccount.cs" />
+    <Compile Include="QBClass\QBBill.cs" />
+    <Compile Include="QBClass\QBCustomer.cs" />
+    <Compile Include="QBClass\QBDeposit.cs" />
+    <Compile Include="QBClass\QBExpense.cs" />
+    <Compile Include="QBClass\QBJournalEntry.cs" />
+    <Compile Include="QBClass\QBPaymentMethod.cs" />
+    <Compile Include="QBClass\QBRequest.cs" />
+    <Compile Include="QBClass\QBVendor.cs" />
+    <Compile Include="QBClass\QBVendorCredit.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

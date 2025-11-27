@@ -1,0 +1,150 @@
+﻿
+@model List<EntityModels.Models.ProductVendorList>
+@using Utility
+
+
+
+
+<style>
+    table.table tr td, table.table {
+        white-space: normal !important;
+    }
+
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .overlaytransparent {
+        display: none !important;
+    }
+
+    .headerss {
+        color: #fff;
+        padding: 15px 20px;
+        font-size: 17px;
+        font-weight: 800;
+        background: #56a15c;
+    }
+
+    .container {
+        display: table;
+        width: 100%;
+        height: 80px;
+        background-color: white;
+        padding-top: 22px;
+        padding-left: 10px;
+        border: 1px inset #e3e3e3;
+    }
+
+    .page-body {
+        padding: 18px 10px 0px 10px !important;
+    }
+</style>
+<div class="header-small special_bg">
+    <h3>Import Product Vendor Excel</h3>
+</div>
+<div class="page-body">
+    @using (Html.BeginForm("ImportProductVendorExcel", "ProductMappings", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        if (Roles.IsUserInRole("Administrator"))
+        {
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="col-md-4">
+                            <label style="font-weight:bold;float:right;">
+                                Vendor Name<span class="highlight">*</span>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBox("VendorName", null, new { @class = "form-control" })
+                            <span style="color:red">@ViewBag.Error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label style="font-weight:bold">
+                                Select Excel File :
+                            </label>
+                            <span>
+                                <input type="file" name="postedFile" id="fileinput" />
+                                <input type="submit" id="UploadPDF" value="Import Data" class="btn btn-success" />
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <span style="color:green">@ViewBag.Message</span>
+        }
+    }
+    @*}*@
+</div>
+
+
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="datagrid martop15">
+            <table class="table table-bordered table-condensed tablesorter" id="productTbl">
+                <thead>
+                    <tr>
+                        <th width="10%">
+                            ItemNo
+                        </th>
+                        <th width="10%">
+                            Brand
+                        </th>
+                        <th width="25%">
+                            Description
+                        </th>
+                        <th width="10%">
+                            Size
+                        </th>
+                        <th width="15%">
+                            UPC
+                        </th>
+                        <th width="10%">
+                            Price
+                        </th>
+                        <th width="20%">
+                            Vendor
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.Raw(item.ItemNo)</td>
+                            <td>@Html.Raw(item.Brand)</td>
+                            <td>@Html.Raw(item.Description)</td>
+                            <td>@Html.Raw(item.Size)</td>
+                            <td>@Html.Raw(item.UPCCode)</td>
+                            <td>@Html.Raw(item.Price)</td>
+                            <td>@Html.Raw(item.Vendors)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<link href="~/daterange/daterangepicker.min.css" rel="stylesheet" />
+<script src="~/daterange/moment.min.js"></script>
+<script src="~/daterange/daterangepicker.min.js"></script>
+<script src="~/Content/Admin/js/NewDatepicker.js"></script>
+<link href="~/Content/Admin/assets/css/w3.css" rel="stylesheet" />
+<link href="~/Content/Admin/tablesorter/themes/blue/style.css" rel="stylesheet" />
+<script src="~/Content/Admin/tablesorter/jquery.tablesorter.mod.js"></script>
+
+<script src="~/Form_JS/ProductMapping.js"></script>
+
+
+
+

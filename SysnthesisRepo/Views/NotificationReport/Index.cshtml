@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EntityModels.Models.Invoice_Notification>
+@{
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+
+<div class="header-small">
+    <h3>Invoice Notification </h3>
+
+</div>
+@{
+    Html.RenderAction("Grid");
+}
+
+<script>
+    $(document).ready(function () {
+
+    var Storenameviewall = '@(ViewBag.storenamevalue)';
+
+    if (Storenameviewall != "") {
+        var role = '@Roles.IsUserInRole("Data Approver")';
+
+        if (role == 'True') {
+            $('#drp').val([Storenameviewall]).trigger('change');
+        }
+        else {
+            $('#spnStore').html(Storenameviewall);
+        }
+    }
+});
+</script>

@@ -1,0 +1,66 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+<link href="~/Content/ej2/bootstrap5.css" rel="stylesheet" />
+<link href="~/Content/HRCss/Syncfusion.css" rel="stylesheet" />
+
+@Html.EJS().Toast("toast_type").NewestOnTop(true).ShowCloseButton(true).Position(p => p.X("Right")).TimeOut(5000).Render()
+@{
+    List<object> toolbarItems = new List<object>();
+    //toolbarItems.Add(new { text = "Expand All", tooltipText = "Expand All", prefixIcon = "e-expand", id = "expandall", align = "Left" });
+    //toolbarItems.Add(new { text = "Collapse All", tooltipText = "Collapse All", prefixIcon = "e-collapse", id = "collapseall", align = "Right" });
+    toolbarItems.Add(new { text = "Add", tooltipText = "Add", prefixIcon = "e-add", id = "Add" });
+    //toolbarItems.Add(new { text = "Search" });
+}
+<div class="loading-containers loading-inactives" style="display:none;">
+    <div class="loaders"></div>
+</div>
+<div class="animate-panelmessesgarea padbtmzero">
+    @if (ViewBag.ToasterMessage != null)
+    {
+        if (ViewBag.ToasterMessage != "")
+        {
+            <script>
+            MyCustomToster('@ViewBag.ToasterMessage');
+            </script>
+        }
+    }
+</div>
+<div class="header-small special_bg" style="margin: 0px;position:sticky;top:78px;z-index:99">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Consent List </h3>
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+
+</div>
+<div id="grddata">
+    <div class="page-body headertopbox addinvoice" style="padding-top:0px!important;">
+        <div class="control-section">
+            @Html.EJS().Grid("HRConsent").AllowSorting().AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.CheckBox); }).Created("created").SelectionSettings(sel => { sel.PersistSelection(true); }).EnableStickyHeader(true).AllowTextWrap().Columns(col =>
+       {
+           col.Field("ConsentId").IsPrimaryKey(true).HeaderText("ConsentId").Visible(false).Add();
+           col.Field("FormType").HeaderText("Form Type").Width("250").Add();
+           col.Template("#actionsTemplate").HeaderText("Actions").Width(180).AllowFiltering(false).Add();
+       }).ActionBegin("actionBegin").ActionComplete("actionComplete").AllowPaging().PageSettings(page => { page.PageCount(2).PageSize(500); }).Toolbar(toolbarItems).ToolbarClick("toolbarClick").Render()
+        </div>
+    </div>
+</div>
+
+<script type="text/x-template" id="actionsTemplate">
+    <a href="javascript:void(0);" id="${ConsentId}" onclick="editClick(this)">
+        <img alt="" src="/Content/images/note-interface-symbol.png" />
+    </a>
+    &nbsp;&nbsp;
+    <a href="javascript:void(0);" id="${ConsentId}" onclick="deleteClick(this)">
+        <img alt="" src="/Content/images/delete.png" />
+
+    </a>
+</script>
+
+<script src="~/Content/HRJs/HRConsent.js"></script>
+@Html.EJS().ScriptManager()

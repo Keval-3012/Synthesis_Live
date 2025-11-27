@@ -1,0 +1,105 @@
+﻿@model EntityModels.Models.UploadPdf
+@using Utility
+@{
+    Layout = "~/Views/Shared/AdminMAster.cshtml";
+}
+<script src='@AdminSiteConfiguration.GetURL()Content/Admin/assets/js/datetime/bootstrap-datepicker.js'></script>
+
+<style>
+    .saa {
+        background: #ff4948 !important;
+        color: #fff !important;
+        border: 1px solid #ff4948 !important;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+</style>
+<div id="popupid" class="divIDClass modal-popup modal-danger modal-message " style="position: fixed;  left:45%; width:300px; top: 10px; display:none">
+    <div class="modal-content ">
+        <div class="modal-header text-center">
+            <i class="glyphicon glyphicon-fire"></i>
+        </div>
+        <div class="modal-title"></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer " style="text-align:center">
+            <a class="btn saa" data-dismiss="modal" onclick="closemodal()">OK</a>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        $(".modal-title").append("@ViewBag.Message");
+        $("#popupid").modal("show");
+    };
+    </script>
+}
+
+
+@using (Html.BeginForm("UploadPDF", "BulkUploadFile", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm1" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div id="globalTabContent">
+
+        <div id="progress" class="modal">
+            <div class="center">
+            </div>
+        </div>
+        <div id="PanAddUpdate">
+            <div class="header-small special_bg">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3>Add Department </h3>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </div>
+            <div class="page-body headertopbox addDepartment" style="padding-top:0px!important;">
+                @Html.HiddenFor(m => m.StoreId)
+                <div class="datagrid martop15">
+                    <div class="formmain">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>
+                                        Upload File <span class="highlight">*</span>
+                                    </label>
+                                    <input type="file" class="form-control" name="DocFiles" multiple="multiple" id="DocFiles" accept=".xls,.xlsx,.Doc,Docx,.Pdf,.jpg,.png,.bmps" data-val="true" data-val-required="File is required" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" id="btnSave"
+                                   class="buttonbox btnsubmit" />
+                            @Html.ActionLink("Cancel", "ViewDepartment", new { id = @ViewBag.id }, new { @class = "buttonbox btncancel" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $("#btnSave").click(function () {
+
+        if ($("#storeid").val() == "0") {
+            alert("select Store");
+            return false;
+        }
+        else {
+            $("#StoreID").val($("#storeid").val());
+        }
+    })
+</script>

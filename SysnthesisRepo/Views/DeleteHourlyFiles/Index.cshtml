@@ -1,0 +1,77 @@
+﻿@model IEnumerable<EntityModels.Models.DeleteHourlyFilesModel>
+@using EntityModels.Models
+@using Utility
+
+@{ Layout = "~/Views/Shared/AdminMAster.cshtml";
+                DBContext db = new DBContext(); }
+
+<style>
+    .divIDClass {
+        z-index: 999999 !important;
+    }
+
+    .table td {
+        position: initial;
+    }
+
+    .datagrid {
+        position: initial;
+        z-index: 0;
+    }
+</style>
+<link href="~/Content/Admin/assets/css/printstyle.css" rel="stylesheet" media="print" />
+<div>
+    <div>
+        @if (Convert.ToString(ViewBag.Storeidvalue) == "0")
+        {
+            <script>
+                PopUpSelectStore()
+            </script>
+        }
+    </div>
+    <div id="popupStoreAlert" class="divIDClass modal-popup modal-danger modal-message" style="position: fixed;  left:45%; width:300px; top: 30%; display:none">
+        <div class="modal-content ">
+            <div class="modal-header text-center">
+                <i class="glyphicon glyphicon-fire"></i>
+            </div>
+            <div class="modal-title">No Store Selected</div>
+            <div class="modal-body ">Please Select Store.</div>
+            <div class="modal-footer " style="text-align:center">
+                <a class="btn btn-danger" data-dismiss="modal" onclick="closemodal()" ;>Ok </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="addinvoice" style="padding-top:0px!important;">
+        <div class="page-body headertopbox purplebox printpadzero">
+            <div class="page-header-main position-relative printarea printpadzero" style="z-index:0 !important">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Hourly POS feeds</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+
+                    </div>
+                </div>
+                <div class="reportsearch">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3">
+                            <label>Filter by Date</label>
+                            <input name="txtstartdate" data-val="true" data-val-date="The field Startdate must be a date." type="text" maxlength="100" id="txtstartdate" placeholder="Date" class="datepicker form-control" onkeydown="return false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="datagrid" id="grddata">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        var Startdate = '@ViewBag.Startdate';   
+</script>
+<script src="~/Form_JS/DeleteHourlyFiles.js"></script>
+<script type="text/javascript">
+document.title = '@ViewBag.Title';
+</script>
+

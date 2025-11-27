@@ -1,0 +1,49 @@
+.select2-container--default .select2-selection--multiple {
+    background-color: #ededed;
+    border: 1px solid #ccc;
+    cursor: text;
+    border-radius: 0px;
+    line-height: 33px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px 0px rgb(0 0 0 / 12%);
+    height: auto;
+}
+
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #2dc3e8;
+    border: 2px solid #00bae8;
+    color: #fff;
+    -webkit-border-radius: 2px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 2px;
+    -moz-background-clip: padding;
+    border-radius: 5px;
+    background-clip: padding-box;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 6px 0px;
+    font-size: 12px;
+    display: flex;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+span.select2-selection.select2-selection--multiple ul li span {
+   
+    display: flex !important;
+    width: 24px;
+    height: 24px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding-top: -5px !important;
+    margin-top: -4px;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+}
+
